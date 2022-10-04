@@ -1,0 +1,13 @@
+Target dependency graph (8 targets)
+Trade Marketplace in Trade Marketplace, no dependencies
+Trade Marketplace in Trade Marketplace, no dependencies
+Trade MarketplaceTests in Trade Marketplace, depends on:
+Trade Marketplace in Trade Marketplace (explicit)
+Trade MarketplaceTests in Trade Marketplace, depends on:
+Trade Marketplace in Trade Marketplace (explicit)
+Trade MarketplaceTests in Trade Marketplace, no dependencies
+Trade MarketplaceUITests in Trade Marketplace, depends on:
+Trade Marketplace in Trade Marketplace (explicit)
+Trade MarketplaceUITests in Trade Marketplace, depends on:
+Trade Marketplace in Trade Marketplace (explicit)
+Trade MarketplaceUITests in Trade Marketplace, no dependencies

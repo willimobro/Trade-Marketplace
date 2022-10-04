@@ -1,0 +1,60 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Views/QuoteAJobView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Review Quote"
+      },
+      {
+        "comment": "",
+        "key": "Title"
+      },
+      {
+        "comment": "",
+        "key": "$%@ %@"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "Hows it going john here from ajs electrical, worked on many mitubishi vehicles and i know for sure how to fix yoor problem, read the quote below for info, Cheers john."
+      },
+      {
+        "comment": "",
+        "key": "Im happy with the quote and accept any terms or conditions"
+      },
+      {
+        "comment": "",
+        "key": "%@"
+      },
+      {
+        "comment": "",
+        "key": "$%@"
+      },
+      {
+        "comment": "",
+        "key": "Time"
+      },
+      {
+        "comment": "",
+        "key": "Material Costs"
+      },
+      {
+        "comment": "",
+        "key": "Fuel Costs"
+      },
+      {
+        "comment": "",
+        "key": "calculated via TM Fuelcalc."
+      },
+      {
+        "comment": "",
+        "key": "Other"
+      }
+    ]
+  },
+  "version": 1
+}

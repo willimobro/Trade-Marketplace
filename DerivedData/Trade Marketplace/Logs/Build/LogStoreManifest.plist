@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>10</integer>
+	<key>logs</key>
+	<dict>
+		<key>5ACFC6AB-7E8E-4725-B97A-3C9635AEFD80</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>5ACFC6AB-7E8E-4725-B97A-3C9635AEFD80.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Trade Marketplace project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Trade Marketplace</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>timeStartedRecording</key>
+			<real>686561856.62494004</real>
+			<key>timeStoppedRecording</key>
+			<real>686561856.65158498</real>
+			<key>title</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>uniqueIdentifier</key>
+			<string>5ACFC6AB-7E8E-4725-B97A-3C9635AEFD80</string>
+		</dict>
+		<key>8384364C-E742-4E4B-9776-1AF4B17220DD</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>8384364C-E742-4E4B-9776-1AF4B17220DD.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Trade Marketplace project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Trade Marketplace</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build Trade Marketplace</string>
+			<key>timeStartedRecording</key>
+			<real>686561844.21297204</real>
+			<key>timeStoppedRecording</key>
+			<real>686561845.57998002</real>
+			<key>title</key>
+			<string>Build Trade Marketplace</string>
+			<key>uniqueIdentifier</key>
+			<string>8384364C-E742-4E4B-9776-1AF4B17220DD</string>
+		</dict>
+		<key>CADA9A35-3466-4609-8A6C-070E2B005A0C</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>CADA9A35-3466-4609-8A6C-070E2B005A0C.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Trade Marketplace project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Trade Marketplace</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>timeStartedRecording</key>
+			<real>686559186.40699399</real>
+			<key>timeStoppedRecording</key>
+			<real>686559186.42024696</real>
+			<key>title</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>uniqueIdentifier</key>
+			<string>CADA9A35-3466-4609-8A6C-070E2B005A0C</string>
+		</dict>
+		<key>DC63224B-12BD-4D13-A3E1-4CD3C080D45A</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>DC63224B-12BD-4D13-A3E1-4CD3C080D45A.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Trade Marketplace project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Trade Marketplace</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>timeStartedRecording</key>
+			<real>686561829.65973604</real>
+			<key>timeStoppedRecording</key>
+			<real>686561838.83329594</real>
+			<key>title</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>uniqueIdentifier</key>
+			<string>DC63224B-12BD-4D13-A3E1-4CD3C080D45A</string>
+		</dict>
+		<key>FCECC8F4-104D-481E-B4EA-2C501021181D</key>
+		<dict>
+			<key>className</key>
+			<string>IDEActivityLogSection</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>FCECC8F4-104D-481E-B4EA-2C501021181D.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Trade Marketplace project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>Trade Marketplace</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>timeStartedRecording</key>
+			<real>686561848.40649199</real>
+			<key>timeStoppedRecording</key>
+			<real>686561848.65200996</real>
+			<key>title</key>
+			<string>Build for Previews Trade Marketplace</string>
+			<key>uniqueIdentifier</key>
+			<string>FCECC8F4-104D-481E-B4EA-2C501021181D</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

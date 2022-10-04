@@ -1,0 +1,16 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/View Content/MyListingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "View Quotes"
+      },
+      {
+        "comment": "",
+        "key": "View & Edit Listing"
+      }
+    ]
+  },
+  "version": 1
+}

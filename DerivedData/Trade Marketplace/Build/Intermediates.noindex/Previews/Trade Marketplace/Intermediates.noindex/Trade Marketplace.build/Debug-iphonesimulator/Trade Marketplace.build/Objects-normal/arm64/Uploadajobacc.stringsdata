@@ -1,0 +1,16 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/Accountview Resources/Uploadajobacc.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Upload a Job"
+      },
+      {
+        "comment": "",
+        "key": "Recieve Quotes instantly for free"
+      }
+    ]
+  },
+  "version": 1
+}

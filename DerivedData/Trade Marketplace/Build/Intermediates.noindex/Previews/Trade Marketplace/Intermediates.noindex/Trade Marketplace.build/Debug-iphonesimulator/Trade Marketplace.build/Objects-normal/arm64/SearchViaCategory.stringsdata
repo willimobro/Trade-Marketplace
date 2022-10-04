@@ -1,0 +1,12 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/SearchViaCategory.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Search in %@"
+      }
+    ]
+  },
+  "version": 1
+}

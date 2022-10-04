@@ -1,0 +1,20 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/View Content/ContentFilter.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Filter"
+      },
+      {
+        "comment": "",
+        "key": "Reset"
+      },
+      {
+        "comment": "",
+        "key": "Subcatergory"
+      }
+    ]
+  },
+  "version": 1
+}

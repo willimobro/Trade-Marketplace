@@ -1,0 +1,12 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/QuoteNowButton.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Quote Now"
+      }
+    ]
+  },
+  "version": 1
+}

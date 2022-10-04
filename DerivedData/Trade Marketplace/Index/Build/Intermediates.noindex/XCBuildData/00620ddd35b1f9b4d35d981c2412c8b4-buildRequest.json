@@ -1,0 +1,66 @@
+{
+  "_buildCommand2" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : true,
+    "targets" : null
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "fad548bb68add30769e541e895e9ff0bb23bb9233f34dd200bb90e51b1d0880e"
+    },
+    {
+      "guid" : "fad548bb68add30769e541e895e9ff0bb162de1caf6dd1b7d9979b33d1b06a21"
+    },
+    {
+      "guid" : "fad548bb68add30769e541e895e9ff0b64723950341dc9922c62485cf36610b1"
+    }
+  ],
+  "containerPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "indexbuild",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphonesimulator",
+      "sdk" : "iphonesimulator15.5",
+      "sdkVariant" : "iphonesimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Index/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Index/Build/Products",
+      "derivedDataPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Index/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Index/PrecompiledHeaders",
+      "pchPath" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Index/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "INDEX_ARENA_INFO_REGULAR_BUILD_PRODUCTS_DIR" : "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/DerivedData/Trade Marketplace/Build/Products",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "qos" : "utility",
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "shouldCollectMetrics" : false,
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}
