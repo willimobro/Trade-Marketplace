@@ -1,0 +1,12 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/TagSub.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Tags"
+      }
+    ]
+  },
+  "version": 1
+}

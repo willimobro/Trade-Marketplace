@@ -1,0 +1,12 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/test.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Hello, World!"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,20 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/Accountview Resources/Quote.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%@"
+      },
+      {
+        "comment": "",
+        "key": "$550 NZD"
+      },
+      {
+        "comment": "",
+        "key": "Sub Wires"
+      }
+    ]
+  },
+  "version": 1
+}

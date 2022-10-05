@@ -1,0 +1,24 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/View Content/ContentLanding.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Save Money, \nMake Money."
+      },
+      {
+        "comment": "",
+        "key": "Trade Marketplace"
+      },
+      {
+        "comment": "",
+        "key": "Log In"
+      },
+      {
+        "comment": "",
+        "key": "Sign Up"
+      }
+    ]
+  },
+  "version": 1
+}

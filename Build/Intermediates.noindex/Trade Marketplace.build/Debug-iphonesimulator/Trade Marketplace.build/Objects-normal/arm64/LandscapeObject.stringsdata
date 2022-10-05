@@ -1,0 +1,28 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Objects/LandscapeObject.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Category"
+      },
+      {
+        "comment": "",
+        "key": "Job title"
+      },
+      {
+        "comment": "",
+        "key": "$00.00"
+      },
+      {
+        "comment": "",
+        "key": "00.00.00"
+      },
+      {
+        "comment": "",
+        "key": "Mike Smith"
+      }
+    ]
+  },
+  "version": 1
+}

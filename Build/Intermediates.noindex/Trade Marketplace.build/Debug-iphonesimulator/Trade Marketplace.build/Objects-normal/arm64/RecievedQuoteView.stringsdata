@@ -1,0 +1,32 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Views/QuoteViews/RecievedQuoteView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Sub Wiring"
+      },
+      {
+        "comment": "",
+        "key": "$%@ %@"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "Placeholder text"
+      },
+      {
+        "comment": "",
+        "key": "John Andrew, Can come to you on Monday at 1.30pm"
+      },
+      {
+        "comment": "",
+        "key": "Review Quote"
+      }
+    ]
+  },
+  "version": 1
+}

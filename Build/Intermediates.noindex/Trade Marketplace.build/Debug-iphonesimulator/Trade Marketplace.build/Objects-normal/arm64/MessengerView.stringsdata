@@ -1,0 +1,16 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Views/MessengerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%@ %@"
+      },
+      {
+        "comment": "",
+        "key": "I know you dont like sparkling water"
+      }
+    ]
+  },
+  "version": 1
+}

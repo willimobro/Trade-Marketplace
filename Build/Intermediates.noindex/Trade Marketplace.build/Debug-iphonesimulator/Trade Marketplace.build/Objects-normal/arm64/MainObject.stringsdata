@@ -1,0 +1,12 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Objects/MainObject.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Electrical"
+      }
+    ]
+  },
+  "version": 1
+}

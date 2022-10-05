@@ -1,0 +1,20 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/ProfileSub.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "J"
+      },
+      {
+        "comment": "",
+        "key": "Name, Surname"
+      },
+      {
+        "comment": "",
+        "key": "Residence"
+      }
+    ]
+  },
+  "version": 1
+}

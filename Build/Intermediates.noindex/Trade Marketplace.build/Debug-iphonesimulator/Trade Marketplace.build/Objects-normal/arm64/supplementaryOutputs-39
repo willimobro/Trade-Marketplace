@@ -1,0 +1,30 @@
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/Accountview Resources/Quote.swift":
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote.dia"
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote.d"
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote.o"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote.swiftdeps"
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/modifiers.swift":
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/modifiers.d"
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/modifiers.o"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/modifiers.swiftdeps"
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/modifiers.dia"
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/SearchViaCategory.swift":
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SearchViaCategory.dia"
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SearchViaCategory.d"
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SearchViaCategory.o"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SearchViaCategory.swiftdeps"
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/View Content/ContentHome.swift":
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentHome.d"
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentHome.o"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentHome.swiftdeps"
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentHome.dia"
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/ContentView.swift":
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentView.d"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentView.swiftdeps"
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentView.o"
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentView.dia"
+"/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/MapView.swift":
+  object: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/MapView.o"
+  swift-dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/MapView.swiftdeps"
+  dependencies: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/MapView.d"
+  diagnostics: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/MapView.dia"

@@ -1,0 +1,16 @@
+{
+  "source": "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/Resources/Navigatior.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Search..."
+      },
+      {
+        "comment": "",
+        "key": "Search"
+      }
+    ]
+  },
+  "version": 1
+}
