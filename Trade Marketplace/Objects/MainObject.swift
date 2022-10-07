@@ -23,17 +23,20 @@ struct MainObject: View {
                     .frame(width: 159, height: 162)
                     .foregroundColor(.white)
                     .shadow(color:Color("dropshadow25"), radius: 8, x: 0, y: 6)
+                    .overlay(RoundedRectangle(cornerRadius: 11)
+                        .fill(LinearGradient(gradient: Gradient(colors: [Color.clear, Color.black]),
+                            startPoint: .top,
+                                             endPoint: .bottom)).opacity(0.5))
                     .overlay(
                         VStack{
                             Text("Electrical")
-                                .font(.headline)
-                                .fontWeight(.heavy)
+                                .font(.title3)
+                                .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .padding(15)
                         }.frame(width: 159, height: 162, alignment: .bottomLeading))
-                    .overlay(RoundedRectangle(cornerRadius: 11)
                     
-                    )
+                    
         }
     }
 }
