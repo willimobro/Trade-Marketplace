@@ -4,13 +4,17 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>AppIcon60x60@2x.png</key>
+		<data>
+		kSGbnoa09XH2hEx3P/OFAV/tqJI=
+		</data>
 		<key>Assets.car</key>
 		<data>
-		7BeuxQa+xY5wqALx9OH+J0MhVj0=
+		fITyH+9/tqXjGbvqZ0SwTGWGReI=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ER1gVyaLMbbkCzVcsfbIdPBJaXE=
+		JvPOQwTbjfJTuyJ/geUL1Yp558w=
 		</data>
 		<key>OFL.txt</key>
 		<data>
@@ -95,11 +99,18 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>AppIcon60x60@2x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Vo31T2z4/W0TjQI/70jXqPltCZXtKqm+FGg6ZZs66ro=
+			</data>
+		</dict>
 		<key>Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0+3cJNR3XL3dz5ra+YBhKNmH4GEOQoUXj/HzFsyxOGA=
+			cjOMCxcc1tIZDHC/wfelkU1yzLwBxd66494psx9tD64=
 			</data>
 		</dict>
 		<key>OFL.txt</key>

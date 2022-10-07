@@ -63,7 +63,7 @@
 		DD875CC128DEA937006CD9B9 /* MyListingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CC028DEA937006CD9B9 /* MyListingsView.swift */; };
 		DD875CC628DEA9FA006CD9B9 /* RecievedQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CC528DEA9FA006CD9B9 /* RecievedQuoteView.swift */; };
 		DD875CCC28DEAB4F006CD9B9 /* QuoteAJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CCB28DEAB4F006CD9B9 /* QuoteAJobView.swift */; };
-		DD875CCE28DEAB70006CD9B9 /* ListJobViewMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CCD28DEAB70006CD9B9 /* ListJobViewMain.swift */; };
+		DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CCD28DEAB70006CD9B9 /* Quote a job.swift */; };
 		DD875CD028DEAB96006CD9B9 /* MessengerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CCF28DEAB96006CD9B9 /* MessengerView.swift */; };
 		DD875CD428DEABCE006CD9B9 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD328DEABCE006CD9B9 /* ProfileView.swift */; };
 		DD875CD828DEAC33006CD9B9 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */; };
@@ -165,7 +165,7 @@
 		DD875CC028DEA937006CD9B9 /* MyListingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsView.swift; sourceTree = "<group>"; };
 		DD875CC528DEA9FA006CD9B9 /* RecievedQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecievedQuoteView.swift; sourceTree = "<group>"; };
 		DD875CCB28DEAB4F006CD9B9 /* QuoteAJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteAJobView.swift; sourceTree = "<group>"; };
-		DD875CCD28DEAB70006CD9B9 /* ListJobViewMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListJobViewMain.swift; sourceTree = "<group>"; };
+		DD875CCD28DEAB70006CD9B9 /* Quote a job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Quote a job.swift"; sourceTree = "<group>"; };
 		DD875CCF28DEAB96006CD9B9 /* MessengerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerView.swift; sourceTree = "<group>"; };
 		DD875CD328DEABCE006CD9B9 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
@@ -376,7 +376,7 @@
 				DD60162228DAF4640051E013 /* ItemView.swift */,
 				DD875CB328DE9E87006CD9B9 /* AccountView.swift */,
 				DD875CCB28DEAB4F006CD9B9 /* QuoteAJobView.swift */,
-				DD875CCD28DEAB70006CD9B9 /* ListJobViewMain.swift */,
+				DD875CCD28DEAB70006CD9B9 /* Quote a job.swift */,
 				DD875CCF28DEAB96006CD9B9 /* MessengerView.swift */,
 				DD875CD328DEABCE006CD9B9 /* ProfileView.swift */,
 				DD29C7EF28DEE936001056D5 /* QuoteViews */,
@@ -617,7 +617,7 @@
 				DD60162028D9BAAF0051E013 /* CategoryViewSortTEST.swift in Sources */,
 				DDE2CF9428D458B500A0C1A4 /* SignupView.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
-				DD875CCE28DEAB70006CD9B9 /* ListJobViewMain.swift in Sources */,
+				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
 				DDAED03A28EAA8730082E114 /* LandingControl.swift in Sources */,
 				DDE2CFA428D4A95700A0C1A4 /* LandscapeObject.swift in Sources */,
 				DD875CCC28DEAB4F006CD9B9 /* QuoteAJobView.swift in Sources */,

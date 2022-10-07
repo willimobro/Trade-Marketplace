@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct CategoryView: View {
+    @State var categoryname = ""
     var body: some View {
         ZStack {
             VStack{
-                CategoryNavigator(category: "Category")
+                CategoryNavigator(category: categoryname)
                 ScrollView(.vertical){
                     SearchViaCategory()
                     HStack(spacing: 15) {

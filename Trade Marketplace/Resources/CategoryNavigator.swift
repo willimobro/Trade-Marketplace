@@ -10,6 +10,8 @@ import SwiftUI
 struct CategoryNavigator: View {
     @Environment(\.dismiss) var dismiss
     @State var category = ""
+    @State var leftbuttonenabled = Bool()
+    @State var rightbuttonenabled = Bool()
     var body: some View {
         Rectangle()
             .frame(height: 84, alignment: .bottom)
@@ -18,9 +20,10 @@ struct CategoryNavigator: View {
                 Button{
                     dismiss()
                 } label:    {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .frame(width: 19, height: 31)
+                    if leftbuttonenabled {
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                        .frame(width: 19, height: 31)}
                 }
                 Text("\(category)")
                     .font(.custom("Poppins-SemiBold", size: 20))
@@ -29,9 +32,10 @@ struct CategoryNavigator: View {
                 Button{
                     print("hello")
                 } label:    {
-                    Image(systemName: "plus.app.fill")
-                        .resizable()
-                        .frame(width: 30, height: 31)
+                    if rightbuttonenabled {
+                        Image(systemName: "plus.app.fill")
+                            .resizable()
+                        .frame(width: 30, height: 31)}
                 }
             }
                 .foregroundColor(.white)
