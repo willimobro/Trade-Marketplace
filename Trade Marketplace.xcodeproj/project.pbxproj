@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1BBC7B28EC046A0074F652 /* modifiers.swift */; };
-		DD1BBC7D28EC17EF0074F652 /* Trade Marketplace.app in Resources */ = {isa = PBXBuildFile; fileRef = DD47D01128D063F500FE1B65 /* Trade Marketplace.app */; };
 		DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBAD28D59E78003BDF7A /* MainObject.swift */; };
 		DD20BBE928D5B539003BDF7A /* ContentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBE828D5B539003BDF7A /* ContentHome.swift */; };
 		DD20BBED28D84FAF003BDF7A /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBEC28D84FAF003BDF7A /* test.swift */; };
@@ -548,7 +547,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD47D01928D063F700FE1B65 /* Assets.xcassets in Resources */,
-				DD1BBC7D28EC17EF0074F652 /* Trade Marketplace.app in Resources */,
 				DD20BC5B28D858B9003BDF7A /* Poppins-Thin.ttf in Resources */,
 				DD20BC5E28D858B9003BDF7A /* Poppins-MediumItalic.ttf in Resources */,
 				DD20BC5628D858B9003BDF7A /* OFL.txt in Resources */,

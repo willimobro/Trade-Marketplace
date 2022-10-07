@@ -23,7 +23,7 @@ struct TabButtonAcc: View {
                         .font(.custom("Poppins-SemiBold", size: 24))
                         Image(systemName: "arrow.right")
                             .resizable()
-                            .frame(width: 27, height: 27)
+                            .frame(width: 17, height: 17)
                     }
                     Text("\(subheadline)")
                         .frame(width: 321, height: 24, alignment: .leading)
