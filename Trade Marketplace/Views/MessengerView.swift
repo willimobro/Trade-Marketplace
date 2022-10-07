@@ -10,7 +10,7 @@ import SwiftUI
 struct MessengerView: View {
     var body: some View {
         VStack (spacing:20){
-            CategoryNavigator(category: "Messages")
+            CategoryNavigator(category: "Messages", rightbuttonenabled: true)
             ScrollView(.vertical){
             SearchViaCategory(category: "Messages")
                 .accentColor(.green)

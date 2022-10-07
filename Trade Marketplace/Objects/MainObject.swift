@@ -30,10 +30,10 @@ struct MainObject: View {
                                 .fontWeight(.heavy)
                                 .foregroundColor(.white)
                                 .padding(15)
-                            
-                        }
-                            .frame(width: 159, height: 162, alignment: .bottomLeading)
-                        )
+                        }.frame(width: 159, height: 162, alignment: .bottomLeading))
+                    .overlay(RoundedRectangle(cornerRadius: 11)
+                    
+                    )
         }
     }
 }
