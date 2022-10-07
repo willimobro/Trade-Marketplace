@@ -21,12 +21,13 @@ struct Uploadajobacc: View {
                         .overlay(
                             VStack{
                                 Text("Upload a Job")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
                                     .frame(width: 300, height: 38, alignment: .center)
-                                    .font(.custom("Poppins-SemiBold", size: 38))
                                     .foregroundColor(.white)
                                 Text("Recieve Quotes instantly for free")
                                     .frame(width: 321, height: 24, alignment: .center)
-                                    .font(.custom("Poppins-SemiBold", size: 14))
+                                    .font(.subheadline)
                                     .foregroundColor(.white)
                             }
                                 .frame(height: 140, alignment: .leading)
