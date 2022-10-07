@@ -4,15 +4,16 @@ import SwiftUI
 
 extension LandingControl_Previews {
     @_dynamicReplacement(for: previews) private static var __preview__previews: some View {
-        #sourceLocation(file: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 37)
+        #sourceLocation(file: "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 37)
         LandingControl()
-   #sourceLocation()
+   
+#sourceLocation()
     }
 }
 
 extension LandingControl {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Users/williamlarsen/Desktop/Trade Marketplace/Trade Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 19)
+        #sourceLocation(file: "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 19)
         ZStack {
             Group{
                 switch selectedbutton {
@@ -26,7 +27,8 @@ extension LandingControl {
                 }
             }
         }
-    #sourceLocation()
+    
+#sourceLocation()
     }
 }
 

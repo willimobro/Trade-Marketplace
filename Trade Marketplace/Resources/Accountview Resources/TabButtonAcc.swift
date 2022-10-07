@@ -12,7 +12,7 @@ struct TabButtonAcc: View {
     @State var subheadline = ""
     var body: some View {
         RoundedRectangle(cornerRadius: 30)
-            .foregroundColor(.white)
+            .foregroundColor(.red)
             .frame(height: 87)
             .shadow(color: .gray, radius: 4, x: 0, y: 4)
             .overlay(
