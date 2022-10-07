@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategorysEnum: View {
     var body: some View {
-        Text("Hello yozzer")
+        Text("Hello")
     }
 }
 
