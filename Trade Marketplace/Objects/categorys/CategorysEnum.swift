@@ -10,6 +10,10 @@ import SwiftUI
 struct CategorysEnum: View {
     var body: some View {
         Text("Hello")
+            .font(.largeTitle)
+            .fontWeight(.black)
+            .foregroundColor(Color.orange)
+            
     }
 }
 
