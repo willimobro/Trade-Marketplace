@@ -9,7 +9,11 @@ import SwiftUI
 
 struct CategorysEnum: View {
     var body: some View {
-        Text("Hello yozzer")
+        VStack {
+            Text("Hello yozzer")
+            Text("sum g")
+        }
+        
     }
 }
 
