@@ -3,4 +3,54 @@
    uuid = "9A647561-32ED-48A9-B3A9-7B7F5C91608D"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5499F0D-4055-4D17-958B-460BB4879783"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Trade Marketplace/Views/QuoteAJobView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "A5499F0D-4055-4D17-958B-460BB4879783 - 732794f1580f311d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Trade_Marketplace.QuoteAJobView.body.getter : some"
+                  moduleName = "Trade Marketplace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mattmacbook/Documents/Trade%20MarketPlace/Trade-Marketplace-Real/Trade%20Marketplace/Views/QuoteAJobView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "432">
+               </Location>
+               <Location
+                  uuid = "A5499F0D-4055-4D17-958B-460BB4879783 - fa6294cee388de46"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.opacity(Swift.Double) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.ignoresSafeArea(_: SwiftUI.SafeAreaRegions, edges: SwiftUI.Edge.Set) -&gt; some&gt;&gt;.0)&gt; in Trade_Marketplace.QuoteAJobView.body.getter : some"
+                  moduleName = "Trade Marketplace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mattmacbook/Documents/Trade%20MarketPlace/Trade-Marketplace-Real/Trade%20Marketplace/Views/QuoteAJobView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "700">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
