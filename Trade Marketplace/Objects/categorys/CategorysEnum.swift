@@ -12,7 +12,7 @@ struct CategorysEnum: View {
         Text("Hello")
             .font(.largeTitle)
             .fontWeight(.black)
-            .foregroundColor(Color.cyan)
+            .foregroundColor(Color.red)
             
     }
 }
