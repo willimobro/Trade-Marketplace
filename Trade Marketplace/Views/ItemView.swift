@@ -9,10 +9,17 @@ import SwiftUI
 
 struct ItemView: View {
     @Environment(\.dismiss) var dismiss
+    @State  var titleItem: String = ""
+    @State  var subtitleItem: String = ""
+    @State  var quotesentItem: Int = 0
+    @State  var locationItem: String = ""
+    @State  var descriptionItem: String = ""
+    @State  var imageItem: String = ""
+    
     var body: some View {
         VStack{
             // BACKEND scrolling image effect + hello
-            Image("money")
+            Image(imageItem)
                 .resizable()
                 .ignoresSafeArea()
                 .scaledToFit()
@@ -30,7 +37,7 @@ struct ItemView: View {
                         .padding(.vertical, 30)
                     )
             Spacer()
-            ContentItem()
+            ContentItem(title: $titleItem, subtitle: $subtitleItem, quotesent: $quotesentItem, location: $locationItem, description: $descriptionItem)
             // text needs to expand content item frame when scrolled
                 .offset(y: -30)
         }
@@ -38,11 +45,5 @@ struct ItemView: View {
         .navigationBarBackButtonHidden(true)
             .navigationBarTitleDisplayMode(.inline)
                .navigationBarHidden(true)
-    }
-}
-
-struct ItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        ItemView()
     }
 }

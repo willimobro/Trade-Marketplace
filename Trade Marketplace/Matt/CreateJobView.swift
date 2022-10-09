@@ -48,10 +48,14 @@ struct CreateJobView: View {
                     Text("Job name")
                         .font(.title)
                         .fontWeight(.bold)
-                    TextField(
-                    "e.g Sink Install",
-                    text: $jobTitle
-                    )
+                    VStack {
+                        TextField(
+                        "e.g Sink Install",
+                        text: $jobTitle)
+                        Divider()
+                            .background(.black)
+                            .padding(0)
+                    }
                     
                     
                 } .padding(.horizontal, 20)

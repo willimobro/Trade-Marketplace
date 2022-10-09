@@ -15,9 +15,15 @@
 import SwiftUI
 
 struct MainObject: View {
+    @Binding  var title: String
+    @Binding  var subtitle: String
+    @Binding  var quotesent: Int
+    @Binding  var location: String
+    @Binding  var description: String
+    @Binding  var image: String
     var body: some View {
-        NavigationLink(destination: ItemView())  {
-                Image("money")
+        NavigationLink(destination: ItemView(titleItem: title, subtitleItem: subtitle, quotesentItem: quotesent, locationItem: location, descriptionItem: description, imageItem: image))  {
+                Image(image)
                     .resizable()
                     .cornerRadius(11)
                     .frame(width: 159, height: 162)
@@ -29,7 +35,7 @@ struct MainObject: View {
                                              endPoint: .bottom)).opacity(0.5))
                     .overlay(
                         VStack{
-                            Text("Electrical")
+                            Text(title)
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
@@ -41,8 +47,8 @@ struct MainObject: View {
     }
 }
 
-struct MainObject_Previews: PreviewProvider {
-    static var previews: some View {
-        MainObject()
-    }
-}
+//struct MainObject_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainObject()
+//    }
+//}

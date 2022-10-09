@@ -10,44 +10,43 @@ import SwiftUI
 struct CategoryView: View {
     @State var categoryname = ""
     var body: some View {
-        ZStack {
-            VStack{
-                CategoryNavigator(category: categoryname)
-                ScrollView(.vertical){
-                    SearchViaCategory()
-                    HStack(spacing: 15) {
-                        VStack(spacing: 15)
-                        {
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
+        NavigationView{
+            ZStack {
+                VStack{
+                    CategoryNavigator(category: categoryname)
+                    ScrollView(.vertical){
+                        SearchViaCategory()
+                        HStack(spacing: 15) {
+                            VStack(spacing: 15)
+                            {
+                                ForEach(totaljobs){item in
+                                    MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+                                               quotesent:.constant(item .quotesent),
+                                               location: .constant(item.location),
+                                               description: .constant(item.description),
+                                               image: .constant(item.images))
+                                }
+                            }
+                            VStack(spacing: 15)
+                            {
+                                ForEach(totaljobs){item in
+                                    MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+                                               quotesent:.constant(item .quotesent),
+                                               location: .constant(item.location),
+                                               description: .constant(item.description),
+                                               image: .constant(item.images))}
+                            }
+                        }
                     }
-                        VStack(spacing: 15)
-                        {
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                                MainObject()
-                    }
-                    }
-                }
-            }.ignoresSafeArea()
-            VStack{
-                Spacer()
-                FilterSort()
-            }.ignoresSafeArea()
-        }.navigationBarBackButtonHidden(true)
-            .navigationBarTitleDisplayMode(.inline)
-               .navigationBarHidden(true)
+                }.ignoresSafeArea()
+                VStack{
+                    Spacer()
+                    FilterSort()
+                }.ignoresSafeArea()
+            }.navigationBarBackButtonHidden(true)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(true)
+        }
     }
 }
 

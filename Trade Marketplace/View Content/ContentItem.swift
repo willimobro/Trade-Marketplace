@@ -8,20 +8,25 @@
 import SwiftUI
 
 struct ContentItem: View {
+    @Binding   var title: String
+    @Binding   var subtitle: String
+    @Binding   var quotesent: Int
+    @Binding   var location: String
+    @Binding  var description: String
     var body: some View {
         RoundedRectangle(cornerRadius: 30)
             .foregroundColor(.white)
             .shadow(color: .gray, radius: 4, x: 0, y: -4)
             .overlay(
                 VStack{
-                Text("Title")
+                Text(title)
                     .frame(width: 359, alignment: .leading)
                     .font(.custom("Poppins-SemiBold", size: 28))
-                Text("Subtitle")
+                Text(subtitle)
                     .frame(width: 359, alignment: .leading)
                     .font(.custom("Poppins-SemiBold", size: 14))
                     .foregroundColor(.gray)
-                Text("# amount of quotes sent")
+                Text("\(quotesent)")
                     .frame(width: 359, height: 28, alignment: .topLeading)
                     .font(.custom("Poppins-SemiBold", size: 14))
                     .foregroundColor(.gray)
@@ -31,11 +36,11 @@ struct ContentItem: View {
                 Text("Details")
                     .frame(width: 359, alignment: .leading)
                     .font(.custom("Poppins-SemiBold", size: 24))
-                Text("were and where")
+                Text(location)
                     .frame(width: 359, alignment: .leading)
                     .font(.custom("Poppins-SemiBold", size: 14))
                     .foregroundColor(.gray)
-                Text("Need someone to check my wires have been trying to it to work and cant figure it out")
+                Text(description)
                     .frame(width: 359, alignment: .leading)
                     .font(.custom("Poppins-SemiBold", size: 16))
                         }
@@ -52,9 +57,9 @@ struct ContentItem: View {
         
     }
 }
-
-struct ContentItem_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentItem()
-    }
-}
+//
+//struct ContentItem_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentItem()
+//    }
+//}

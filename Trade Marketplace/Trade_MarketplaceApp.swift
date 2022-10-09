@@ -11,7 +11,7 @@ import SwiftUI
 struct Trade_MarketplaceApp: App {
     var body: some Scene {
         WindowGroup {
-            LandingControl()
+            TabBar()
         }
     }
 }
