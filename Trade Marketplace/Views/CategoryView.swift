@@ -9,35 +9,37 @@ import SwiftUI
 
 struct CategoryView: View {
     @State var categoryname = ""
+    let columns = [GridItem(.fixed(165)), GridItem(.fixed(165))]
+    
     var body: some View {
         NavigationView{
             ZStack {
                 VStack{
                     CategoryNavigator(category: categoryname)
-                    ScrollView(.vertical){
+                    VStack{
                         SearchViaCategory()
-                        HStack(spacing: 15) {
-                            VStack(spacing: 15)
-                            {
-                                ForEach(totaljobs){item in
-                                    MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                                               quotesent:.constant(item .quotesent),
-                                               location: .constant(item.location),
-                                               description: .constant(item.description),
-                                               image: .constant(item.images))
-                                }
-                            }
-                            VStack(spacing: 15)
-                            {
-                                ForEach(totaljobs){item in
-                                    MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                                               quotesent:.constant(item .quotesent),
-                                               location: .constant(item.location),
-                                               description: .constant(item.description),
-                                               image: .constant(item.images))}
-                            }
-                        }
                     }
+                    ScrollView(.vertical){
+                        LazyVGrid(columns: columns, spacing: 10) {
+                            ForEach(totaljobs){item in
+                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+                                           quotesent:.constant(item .quotesent),
+                                           location: .constant(item.location),
+                                           description: .constant(item.description),
+                                           image: .constant(item.images))}
+
+                        }
+                    }.overlay(
+                        VStack{
+                            Rectangle()
+                                .frame(height:15)
+                                .foregroundStyle(LinearGradient(
+                                    gradient: Gradient(colors: [Color.white, Color.clear]),
+                                    startPoint: .top,
+                                    endPoint: .bottom))
+                            Spacer()
+                        }
+                    )
                 }.ignoresSafeArea()
                 VStack{
                     Spacer()

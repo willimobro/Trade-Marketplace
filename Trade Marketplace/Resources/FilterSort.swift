@@ -35,7 +35,7 @@ struct FilterSort: View {
                     }
                     .frame(width: 71, height: 19, alignment: .center)
                 }
-            ).padding(.bottom, 20)
+            ).padding(.bottom, 80)
         
     }
 }
