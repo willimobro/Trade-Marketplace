@@ -28,20 +28,22 @@ struct ContentHomeData: View {
     @State var Title = String()
     var body: some View {
         VStack{
-            HStack{
+            HStack(){
                 Text(Title)
                     .font(.title)
                     .fontWeight(.semibold)
                     .foregroundColor(.black)
-                    .frame(width: 250, height: 28, alignment: .leading)
+                    .frame(alignment: .leading)
+                Spacer()
                 NavigationLink(destination: CategoryView(categoryname: Title, returnable: true)){
                     Text("see all")
                         .font(.subheadline)
                         .fontWeight(.light)
                         .foregroundColor(Color("ButtonColorSL"))
-                        .frame(width: 71, height: 28, alignment: .bottomTrailing)
+                        .frame(alignment: .bottom)
+                    
                 }
-            }
+            }.frame(maxWidth: 351, maxHeight: 28, alignment: .leading)
     ScrollView(.horizontal){
         LazyHGrid(rows: columns, spacing: 10) {
             ForEach(totaljobs){item in
@@ -51,7 +53,7 @@ struct ContentHomeData: View {
                            description: .constant(item.description),
                            image: .constant(item.images))}
 
-        }.padding(.leading, 40)
+        }.padding(.leading, 10)
         .padding(.bottom, 80)
     }
 }

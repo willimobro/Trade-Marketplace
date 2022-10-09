@@ -14,46 +14,53 @@ struct ContentItem: View {
     @Binding   var location: String
     @Binding  var description: String
     var body: some View {
-        RoundedRectangle(cornerRadius: 30)
-            .foregroundColor(.white)
-            .shadow(color: .gray, radius: 4, x: 0, y: -4)
-            .overlay(
-                VStack{
-                Text(title)
-                    .frame(width: 359, alignment: .leading)
-                    .font(.custom("Poppins-SemiBold", size: 28))
-                Text(subtitle)
-                    .frame(width: 359, alignment: .leading)
-                    .font(.custom("Poppins-SemiBold", size: 14))
-                    .foregroundColor(.gray)
-                Text("\(quotesent)")
-                    .frame(width: 359, height: 28, alignment: .topLeading)
-                    .font(.custom("Poppins-SemiBold", size: 14))
-                    .foregroundColor(.gray)
-                QuoteNowButton()
-                ScrollView(.vertical){
-                VStack{
-                Text("Details")
-                    .frame(width: 359, alignment: .leading)
-                    .font(.custom("Poppins-SemiBold", size: 24))
-                Text(location)
-                    .frame(width: 359, alignment: .leading)
-                    .font(.custom("Poppins-SemiBold", size: 14))
-                    .foregroundColor(.gray)
-                Text(description)
-                    .frame(width: 359, alignment: .leading)
-                    .font(.custom("Poppins-SemiBold", size: 16))
-                        }
-                    }
+            VStack{
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .frame(maxWidth: .infinity, maxHeight: 200)
                 
-                ProfileSub()
-                TagSub()
-                }.edgesIgnoringSafeArea(.bottom)
-                    .padding(.top, 20)
-                
-                
-                
-            )
+                RoundedRectangle(cornerRadius: 30)
+                    .foregroundColor(.white)
+                    .shadow(color: .gray, radius: 4, x: 0, y: -4)
+                    .overlay(
+                        VStack{
+                            Text(title)
+                                .frame(width: 359, alignment: .leading)
+                                .font(.custom("Poppins-SemiBold", size: 28))
+                            Text(subtitle)
+                                .frame(width: 359, alignment: .leading)
+                                .font(.custom("Poppins-SemiBold", size: 14))
+                                .foregroundColor(.gray)
+                            Text("\(quotesent)")
+                                .frame(width: 359, height: 28, alignment: .topLeading)
+                                .font(.custom("Poppins-SemiBold", size: 14))
+                                .foregroundColor(.gray)
+                            QuoteNowButton()
+                            
+                            VStack{
+                                Text("Details")
+                                    .frame(width: 359, alignment: .leading)
+                                    .font(.custom("Poppins-SemiBold", size: 24))
+                                Text(location)
+                                    .frame(width: 359, alignment: .leading)
+                                    .font(.custom("Poppins-SemiBold", size: 14))
+                                    .foregroundColor(.gray)
+                                Text(description)
+                                    .frame(width: 359, alignment: .leading)
+                                    .font(.custom("Poppins-SemiBold", size: 16))
+                                Spacer()
+                            }
+                            
+                            
+                            ProfileSub()
+                            TagSub()
+                        }.edgesIgnoringSafeArea(.bottom)
+                            .padding(.top, 20)
+                        
+                        
+                        
+                    )
+            }
         
     }
 }

@@ -20,15 +20,12 @@ struct HomeView: View {
                 Text("Browse")
                         .font(.custom("Poppins-SemiBold", size: 28))
                         .fontWeight(.semibold)
-                        .frame(width: 321, height: 36, alignment: .leading)
+                        .frame(width: 361, height: 36, alignment: .leading)
                         .foregroundColor(.white)
                 }
                 ScrollView(.horizontal){
                     HStack(spacing: 19){
                             // change to amount in array sometime
-                            Rectangle()
-                            .frame(width: 20, height: 170)
-                            .opacity(0)
                         ForEach(categorysvariables) { item in
                             Categorys(categorybuttontitle: item.categorytitle, categorybuttoncolor: item.categorycolor, categorybuttonimage: item.categoryimage)
                             
@@ -44,7 +41,7 @@ struct HomeView: View {
                             }
                         }   .frame(height: 200, alignment: .leading)
                         
-                }
+                }.padding(.leading, 10)
                 ContentHome()
                     }
                     
