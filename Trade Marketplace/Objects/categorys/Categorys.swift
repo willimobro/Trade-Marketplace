@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct Categorys: View {
+    @State var categorybuttontitle: String = ""
+    @State var categorybuttoncolor: String = ""
+    @State var categorybuttonimage: String = ""
+
     var body: some View {
-        NavigationLink(destination: CategoryView(returnable: true)){
+        NavigationLink(destination: CategoryView(categoryname: categorybuttontitle, returnable: true)){
                 RoundedRectangle(cornerRadius: 11)
                     .frame(width: 129, height: 172)
                     .foregroundColor(.white)
@@ -19,18 +23,14 @@ struct Categorys: View {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 11)
                                     .frame(width: 92, height: 92)
-                                    .foregroundColor(Color("categoryimagecolor1"))
-                                    .opacity(0.3)
-                                Image("categoryimage1")
+                                    .foregroundColor(Color(categorybuttoncolor))
+                                    
+                                Image(categorybuttonimage)
                             }
-                            Text("Electrical")
+                            Text(categorybuttontitle)
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
-                            Text("and related")
-                                .font(.subheadline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.gray)
                             
                         })
         }

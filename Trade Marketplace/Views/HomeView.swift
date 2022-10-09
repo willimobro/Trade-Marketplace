@@ -29,7 +29,10 @@ struct HomeView: View {
                             Rectangle()
                             .frame(width: 20, height: 170)
                             .opacity(0)
-                        Categorys()
+                        ForEach(categorysvariables) { item in
+                            Categorys(categorybuttontitle: item.categorytitle, categorybuttoncolor: item.categorycolor, categorybuttonimage: item.categoryimage)
+                            
+                        }
                             .overlay(
                                 GeometryReader { proxy in
                                     Color.clear.preference(key: TabPreferenceKey.self, value: proxy.frame(in: .global).minY)

@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-struct CategorysEnum: View {
-    var body: some View {
-        Text("Hello")
-            .font(.largeTitle)
-            .fontWeight(.black)
-            .foregroundColor(Color.red)
-            
-    }
+
+struct categoryitem: Identifiable   {
+    var id = UUID()
+    var categorytitle: String
+    var categoryimage: String
+    var categorycolor: String
 }
 
-struct CategorysEnum_Previews: PreviewProvider {
-    static var previews: some View {
-        CategorysEnum()
-    }
-}
+var categorysvariables = [
+    categoryitem(categorytitle: "Electrical", categoryimage: "categoryimage1", categorycolor: "categorycolor1"),
+    categoryitem(categorytitle: "Construction", categoryimage: "categoryimage2", categorycolor: "categorycolor2"),
+    categoryitem(categorytitle: "Plumbing", categoryimage: "categoryimage3", categorycolor: "categorycolor3"),
+    categoryitem(categorytitle: "Gas Fitting", categoryimage: "categoryimage4", categorycolor: "categorycolor4")
+]

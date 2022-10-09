@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "close-up-of-conveyor-belt-in-factory-TTMRP9.jpeg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "close-up-of-conveyor-belt-in-factory-TTMRP9 1.jpeg",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "close-up-of-conveyor-belt-in-factory-TTMRP9 2.jpeg",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
