@@ -28,7 +28,7 @@ struct MainObject: View {
                     .cornerRadius(11)
                     .frame(width: 159, height: 162)
                     .foregroundColor(.white)
-                    .shadow(color:Color("dropshadow25"), radius: 8, x: 0, y: 6)
+                    .shadow(color:Color("dropshadow25"), radius: 12, x: 0, y: 6)
                     .overlay(RoundedRectangle(cornerRadius: 11)
                         .fill(LinearGradient(gradient: Gradient(colors: [Color.clear, Color.black]),
                             startPoint: .top,

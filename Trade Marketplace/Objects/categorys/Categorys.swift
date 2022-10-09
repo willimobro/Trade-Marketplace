@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Categorys: View {
     var body: some View {
-        NavigationLink(destination: CategoryView()){
+        NavigationLink(destination: CategoryView(returnable: true)){
                 RoundedRectangle(cornerRadius: 11)
                     .frame(width: 129, height: 172)
                     .foregroundColor(.white)

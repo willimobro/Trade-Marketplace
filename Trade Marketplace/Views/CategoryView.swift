@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct CategoryView: View {
+    @Environment(\.dismiss) var dismiss
     @State var categoryname = ""
+    @State var returnable = Bool()
     let columns = [GridItem(.fixed(165)), GridItem(.fixed(165))]
     
     var body: some View {
         NavigationView{
             ZStack {
                 VStack{
-                    CategoryNavigator(category: categoryname)
+                    CategoryNavigator(category: categoryname, leftbuttonenabled: returnable)
                     VStack{
                         SearchViaCategory()
                     }
@@ -45,9 +47,10 @@ struct CategoryView: View {
                     Spacer()
                     FilterSort()
                 }.ignoresSafeArea()
-            }.navigationBarBackButtonHidden(true)
+            }
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
+            
         }
     }
 }

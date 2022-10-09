@@ -17,7 +17,7 @@ struct TabBar: View {
             case .home:
                 HomeView()
             case .search:
-                CategoryView(categoryname: "Search")
+                CategoryView(categoryname: "Search", returnable: false)
             case .account:
                 AccountView()
             case .message:

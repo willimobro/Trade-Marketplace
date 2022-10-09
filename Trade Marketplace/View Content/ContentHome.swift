@@ -9,93 +9,53 @@ import SwiftUI
 
 struct ContentHome: View {
     var body: some View {
-        VStack{
-            VStack{
-            Text("Open Jobs")
-                    .font(.custom("Poppins-SemiBold", size: 28))
-                    .fontWeight(.semibold)
-                    .frame(width: 170, height: 36, alignment: .leading)
-                    .foregroundColor(.black)
-            Text("*0* open jobs")
-                    .font(.custom("Poppins-SemiBold", size: 14))
-                    .fontWeight(.regular)
-                    .multilineTextAlignment(.leading)
-                    .frame(width: 170, height: 32, alignment: .leading)
-                    .foregroundColor(.gray)
+        VStack(spacing: 20){
+            ContentHomeData(Title: "Suggested Jobs")
+            ContentHomeData(Title: "Recently Viewed")
+            ContentHomeData(Title: "Watchlist")
         }
-        .frame(width: 321, height: 70, alignment: .leading)
-    ScrollView(.horizontal){
-        VStack(spacing: 15)
-        {
-            HStack(spacing: 15){
-                Rectangle()
-                .frame(width: 20, height: 170)
-                .opacity(0)
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-            }
-            HStack(spacing: 15){
-                Rectangle()
-                .frame(width: 20, height: 170)
-                .opacity(0)
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-//                MainObject()
-                
-            }
-        }
-        .frame(height: 350, alignment: .leading)
     }
-        VStack{
-        Text("Open Jobs")
-                .font(.custom("Poppins-SemiBold", size: 28))
-                .frame(width: 170, height: 36, alignment: .leading)
-                .foregroundColor(.black)
-        Text("*0* open jobs")
-                .font(.custom("Poppins-SemiBold", size: 14))
-                .fontWeight(.regular)
-                .multilineTextAlignment(.leading)
-                .frame(width: 170, height: 32, alignment: .leading)
-                .foregroundColor(.gray)
-    }
-    .frame(width: 321, height: 70, alignment: .leading)
-ScrollView(.horizontal){
-    VStack(spacing: 15)
-    {
-        HStack(spacing: 15){
-            Rectangle()
-            .frame(width: 20, height: 170)
-            .opacity(0)
-//            MainObject()
-//            MainObject()
-//            MainObject()
-//            MainObject()
-//            MainObject()
-//            MainObject()
-//            MainObject()
-//            MainObject()
-        }
-        
-    }
-    .frame(height: 350, alignment: .leading)
-}
-    
-}
-}
 }
 struct ContentHome_Previews: PreviewProvider {
     static var previews: some View {
         ContentHome()
     }
+}
+
+
+struct ContentHomeData: View {
+    let columns = [GridItem(.fixed(165)), GridItem(.fixed(165))]
+    @State var Title = String()
+    var body: some View {
+        VStack{
+            HStack{
+                Text(Title)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.black)
+                    .frame(width: 250, height: 28, alignment: .leading)
+                NavigationLink(destination: CategoryView(categoryname: Title, returnable: true)){
+                    Text("see all")
+                        .font(.subheadline)
+                        .fontWeight(.light)
+                        .foregroundColor(Color("ButtonColorSL"))
+                        .frame(width: 71, height: 28, alignment: .bottomTrailing)
+                }
+            }
+    ScrollView(.horizontal){
+        LazyHGrid(rows: columns, spacing: 10) {
+            ForEach(totaljobs){item in
+                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+                           quotesent:.constant(item .quotesent),
+                           location: .constant(item.location),
+                           description: .constant(item.description),
+                           image: .constant(item.images))}
+
+        }.padding(.leading, 40)
+        .padding(.bottom, 80)
+    }
+}
+        
+
+}
 }
