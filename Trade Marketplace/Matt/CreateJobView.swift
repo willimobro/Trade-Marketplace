@@ -9,7 +9,7 @@ import SwiftUI
 // hello
 struct CreateJobView: View {
     @State private var jobTitle = String()
-    @State private var jobDesc = "String()"
+    @State private var jobDesc: String = "Describe your job and anything else you think may be required." 
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 30){
@@ -70,6 +70,7 @@ struct CreateJobView: View {
                         
                         TextEditor(text: $jobDesc)
                             .foregroundColor(Color.gray)
+                            .frame(height: 300)
    
                   
                         
