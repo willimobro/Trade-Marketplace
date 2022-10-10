@@ -88,7 +88,7 @@ struct CreateJobView: View {
                             .fontWeight(.bold)
                             .padding(.top, 10)
                         
-                        Select()
+
                     }
                     
                     
@@ -149,13 +149,6 @@ struct UploadCameraIcon: View {
 }
 
 
-struct Select: View {
-    var body: some View {
-                Image(systemName: "chevron.right")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.gray)
-                    .frame(width: 15, height: 15)
-        
-    }
-}
+
+
+
