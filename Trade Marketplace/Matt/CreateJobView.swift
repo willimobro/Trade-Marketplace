@@ -69,6 +69,7 @@ struct CreateJobView: View {
 
                         
                         TextEditor(text: $jobDesc)
+                            .foregroundColor(Color.gray)
    
                   
                         
