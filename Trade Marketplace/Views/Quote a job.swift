@@ -106,9 +106,9 @@ struct ListJobContent: View {
        
             Text("Comments")
             .font(.custom("Poppins-SemiBold", size: 28))
-            TextField("Any message to the client", text: $QuotedComment)
+        TextEditor(text: $QuotedComment)
             .font(.headline)
-            .frame(width: .infinity, height: 150, alignment: .topLeading)
+            .frame(height: 150, alignment: .topLeading)
             .textFieldStyle(.roundedBorder)
         VStack(alignment: .leading, spacing: 5){
             Text("Material Costs")
