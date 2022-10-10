@@ -56,6 +56,7 @@ struct ContentItem: View {
                             TagSub()
                         }.edgesIgnoringSafeArea(.bottom)
                             .padding(.top, 20)
+                            .padding(.bottom, 35)
                         
                         
                         

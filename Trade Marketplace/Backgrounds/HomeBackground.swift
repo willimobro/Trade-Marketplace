@@ -13,18 +13,10 @@ struct HomeBackground: View {
         VStack{
             Rectangle()
                 .foregroundColor(Color("Homebackgroundgreen"))
-                .ignoresSafeArea()
-                .overlay(
-                    Rectangle()
-                        .frame(height: 700 + (background - 409))
-                        .foregroundColor(.white)
-                        .offset(y: 200)
-                        .overlay(
-                            Text("\(background)")
-                                .foregroundColor(.red)
-                        )
-                ).frame(alignment: .bottom)
-        }
+                .frame(height: background + 110)
+            Rectangle()
+                .foregroundColor(.white)
+        }.ignoresSafeArea()
     }
 }
 
