@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
     @State var categoryname = ""
+  
     @State var returnable = Bool()
     let columns = [GridItem(.fixed(165)), GridItem(.fixed(165))]
     

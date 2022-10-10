@@ -34,7 +34,8 @@
 		DD20BC6228D85E93003BDF7A /* Navigatior.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BC6128D85E93003BDF7A /* Navigatior.swift */; };
 		DD20BC6528D85EDF003BDF7A /* UploadJobButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BC6428D85EDF003BDF7A /* UploadJobButton.swift */; };
 		DD210BD128DFB8FE001283D8 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD210BD028DFB8FE001283D8 /* MapView.swift */; };
-		DD210BD328E06EA0001283D8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD210BD228E06EA0001283D8 /* ContentView.swift */; };
+		DD22A7C728F16C170062C47D /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD22A7C628F16C170062C47D /* Listing.swift */; };
+		DD22A7C928F16C340062C47D /* TabPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */; };
 		DD29C7F128DEEA04001056D5 /* ReviewQuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD29C7F028DEEA04001056D5 /* ReviewQuoteView.swift */; };
 		DD47D01528D063F500FE1B65 /* Trade_MarketplaceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47D01428D063F500FE1B65 /* Trade_MarketplaceApp.swift */; };
 		DD47D01928D063F700FE1B65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD47D01828D063F700FE1B65 /* Assets.xcassets */; };
@@ -48,8 +49,6 @@
 		DD60161628D9A6F30051E013 /* FilterSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161528D9A6F30051E013 /* FilterSort.swift */; };
 		DD60161828D9AB740051E013 /* ContentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161728D9AB740051E013 /* ContentFilter.swift */; };
 		DD60161A28D9AB840051E013 /* ContentSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161928D9AB840051E013 /* ContentSort.swift */; };
-		DD60161C28D9B9D00051E013 /* CategoryViewFilterTEST.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161B28D9B9D00051E013 /* CategoryViewFilterTEST.swift */; };
-		DD60162028D9BAAF0051E013 /* CategoryViewSortTEST.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161F28D9BAAF0051E013 /* CategoryViewSortTEST.swift */; };
 		DD60162328DAF4640051E013 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162228DAF4640051E013 /* ItemView.swift */; };
 		DD60162528DAF8AF0051E013 /* ProfileSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162428DAF8AF0051E013 /* ProfileSub.swift */; };
 		DD60162728DAF8C70051E013 /* ContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162628DAF8C70051E013 /* ContentItem.swift */; };
@@ -135,7 +134,8 @@
 		DD20BC6128D85E93003BDF7A /* Navigatior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigatior.swift; sourceTree = "<group>"; };
 		DD20BC6428D85EDF003BDF7A /* UploadJobButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadJobButton.swift; sourceTree = "<group>"; };
 		DD210BD028DFB8FE001283D8 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		DD210BD228E06EA0001283D8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DD22A7C628F16C170062C47D /* Listing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabPreferenceKey.swift; sourceTree = "<group>"; };
 		DD29C7F028DEEA04001056D5 /* ReviewQuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewQuoteView.swift; sourceTree = "<group>"; };
 		DD47D01128D063F500FE1B65 /* Trade Marketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trade Marketplace.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD47D01428D063F500FE1B65 /* Trade_MarketplaceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trade_MarketplaceApp.swift; sourceTree = "<group>"; };
@@ -152,8 +152,6 @@
 		DD60161528D9A6F30051E013 /* FilterSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSort.swift; sourceTree = "<group>"; };
 		DD60161728D9AB740051E013 /* ContentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentFilter.swift; sourceTree = "<group>"; };
 		DD60161928D9AB840051E013 /* ContentSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSort.swift; sourceTree = "<group>"; };
-		DD60161B28D9B9D00051E013 /* CategoryViewFilterTEST.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewFilterTEST.swift; sourceTree = "<group>"; };
-		DD60161F28D9BAAF0051E013 /* CategoryViewSortTEST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewSortTEST.swift; sourceTree = "<group>"; };
 		DD60162228DAF4640051E013 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		DD60162428DAF8AF0051E013 /* ProfileSub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSub.swift; sourceTree = "<group>"; };
 		DD60162628DAF8C70051E013 /* ContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentItem.swift; sourceTree = "<group>"; };
@@ -296,7 +294,7 @@
 			children = (
 				DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */,
 				DD47D01428D063F500FE1B65 /* Trade_MarketplaceApp.swift */,
-				DD210BD228E06EA0001283D8 /* ContentView.swift */,
+				6639B8D428F0F612007A016E /* Matt */,
 				DD041ACA28EADA50005A1AD9 /* UserView */,
 				DDAED03828EAA7840082E114 /* Control Files */,
 				DD875CC428DEA96D006CD9B9 /* SHIT TO DO */,
@@ -342,8 +340,6 @@
 			isa = PBXGroup;
 			children = (
 				DD875CBC28DEA905006CD9B9 /* AccountViewEXPANDED.swift */,
-				DD60161B28D9B9D00051E013 /* CategoryViewFilterTEST.swift */,
-				DD60161F28D9BAAF0051E013 /* CategoryViewSortTEST.swift */,
 			);
 			path = "Test Views";
 			sourceTree = "<group>";
@@ -372,6 +368,8 @@
 			isa = PBXGroup;
 			children = (
 				DDAED03428E577890082E114 /* TabControl.swift */,
+				DD22A7C628F16C170062C47D /* Listing.swift */,
+				DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */,
 			);
 			path = "Control Files";
 			sourceTree = "<group>";
@@ -391,7 +389,6 @@
 				DD875CCD28DEAB70006CD9B9 /* Quote a job.swift */,
 				DD875CCF28DEAB96006CD9B9 /* MessengerView.swift */,
 				DD875CD328DEABCE006CD9B9 /* ProfileView.swift */,
-				6639B8D428F0F612007A016E /* Matt */,
 				DD29C7EF28DEE936001056D5 /* QuoteViews */,
 			);
 			path = Views;
@@ -619,7 +616,6 @@
 				DD875CB928DEA11A006CD9B9 /* TabButtonAcc.swift in Sources */,
 				DDE2CF8828D1C1D500A0C1A4 /* LoginView.swift in Sources */,
 				DDE2CF9728D458E700A0C1A4 /* ContentSignup.swift in Sources */,
-				DD60161C28D9B9D00051E013 /* CategoryViewFilterTEST.swift in Sources */,
 				DDAED03528E577890082E114 /* TabControl.swift in Sources */,
 				DD60161028D99E910051E013 /* CategoryNavigator.swift in Sources */,
 				DD875CB728DEA0DD006CD9B9 /* Uploadajobacc.swift in Sources */,
@@ -636,8 +632,8 @@
 				DD60161228D9A1860051E013 /* CategoryView.swift in Sources */,
 				DD47D01528D063F500FE1B65 /* Trade_MarketplaceApp.swift in Sources */,
 				DDE2CF9028D1F1D200A0C1A4 /* ContentLanding.swift in Sources */,
-				DD60162028D9BAAF0051E013 /* CategoryViewSortTEST.swift in Sources */,
 				DDE2CF9428D458B500A0C1A4 /* SignupView.swift in Sources */,
+				DD22A7C728F16C170062C47D /* Listing.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
 				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
 				DDAED03A28EAA8730082E114 /* LandingControl.swift in Sources */,
@@ -645,6 +641,7 @@
 				DD875CCC28DEAB4F006CD9B9 /* QuoteAJobView.swift in Sources */,
 				DD875CC628DEA9FA006CD9B9 /* RecievedQuoteView.swift in Sources */,
 				DD60162728DAF8C70051E013 /* ContentItem.swift in Sources */,
+				DD22A7C928F16C340062C47D /* TabPreferenceKey.swift in Sources */,
 				6639B8D628F0F64B007A016E /* CreateJobView.swift in Sources */,
 				DD875CB428DE9E87006CD9B9 /* AccountView.swift in Sources */,
 				DDE2CF9D28D48D6200A0C1A4 /* HomeView.swift in Sources */,
@@ -657,7 +654,6 @@
 				DD875CBB28DEA73A006CD9B9 /* NavigatorAcc.swift in Sources */,
 				DD875CD428DEABCE006CD9B9 /* ProfileView.swift in Sources */,
 				DD20BBE928D5B539003BDF7A /* ContentHome.swift in Sources */,
-				DD210BD328E06EA0001283D8 /* ContentView.swift in Sources */,
 				DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */,
 				DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */,
 				DD210BD128DFB8FE001283D8 /* MapView.swift in Sources */,

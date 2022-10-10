@@ -1,14 +1,10 @@
 {
-  "source": "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/View Content/ContentHome.swift",
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/View Content/ContentHome.swift",
   "tables": {
     "Localizable": [
       {
         "comment": "",
-        "key": "Open Jobs"
-      },
-      {
-        "comment": "",
-        "key": "*0* open jobs"
+        "key": "see all"
       }
     ]
   },
