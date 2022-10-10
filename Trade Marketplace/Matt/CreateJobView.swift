@@ -69,8 +69,12 @@ struct CreateJobView: View {
 
                         
                         TextEditor(text: $jobDesc)
-                            .foregroundColor(Color.gray)
-                            .frame(height: 300)
+                            .foregroundColor(Color.black)
+                            .frame(height: 200)
+                            .overlay(Rectangle()
+                                .stroke(Color.secondary).opacity(0.5))
+                               
+                            
    
                   
                         
