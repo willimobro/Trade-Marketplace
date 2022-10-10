@@ -9,6 +9,7 @@ import SwiftUI
 // hello
 struct CreateJobView: View {
     @State private var jobTitle = String()
+    @State private var jobDesc = "String()"
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 30){
@@ -44,17 +45,45 @@ struct CreateJobView: View {
                         }
                         UploadCameraIcon()
                     }.padding(.vertical, 10)
-                    
+                //Job Name
                     Text("Job name")
                         .font(.title)
                         .fontWeight(.bold)
-                    VStack {
+                    VStack (alignment: .leading, spacing: 10){
                         TextField(
                         "e.g Sink Install",
                         text: $jobTitle)
                         Divider()
                             .background(.black)
                             .padding(0)
+                        Text("A short job name helps tradies and the like easily identify and respond to your job")
+                            .font(.footnote)
+                            .foregroundColor(Color.gray)
+
+                        
+                    //Description
+                        Text("Description")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.top, 10)
+
+                        
+                        TextEditor(text: $jobDesc)
+                            .foregroundColor(Color.gray)
+   
+                  
+                        
+                        Divider()
+                            .background(.black)
+                            .padding(0)
+                            
+                    // Details
+                        Text("Details")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.top, 10)
+                        
+                        Select()
                     }
                     
                     
@@ -110,6 +139,18 @@ struct UploadCameraIcon: View {
                     .frame(width: 22, height: 22)
                     
             )
+        
+    }
+}
+
+
+struct Select: View {
+    var body: some View {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.gray)
+                    .frame(width: 15, height: 15)
         
     }
 }
