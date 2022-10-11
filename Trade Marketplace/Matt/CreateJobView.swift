@@ -33,6 +33,7 @@ struct CreateJobView: View {
                 .shadow(color: .black, radius: 4, x: 0, y: 0)
                 .opacity(0.5)
                 .frame(height: 20, alignment: .bottom)
+            
                 
             
             ScrollView(.vertical){
@@ -74,23 +75,20 @@ struct CreateJobView: View {
                             .overlay(Rectangle()
                                 .stroke(Color.secondary).opacity(0.5))
                   
-                        
-                        Divider()
-                            .background(.black)
-                            .padding(0)
-                            
                     // Details
-                        Text("Details")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .padding(.top, 10)
+                        Details()
+                    //When
+                        When()
                         
-                        List {
-                            Text("A List Item")
-                            Text("A Second List Item")
-                            Text("A Third List Item")
-                        }.frame(height: 300)
-                            .listStyle(.plain)
+                    //Where
+                        Where()
+                
+                        
+                    //Add tags
+                        Tags()
+                        
+                    //Publish
+                        Publish()
 
                     }
                     
@@ -151,7 +149,157 @@ struct UploadCameraIcon: View {
     }
 }
 
+struct SelectCategory: View {
+    var body: some View {
+       
+        HStack{
+            Text("Select a Category")
+            Spacer()
+            Text("Select")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+            Image(systemName: "chevron.right")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+                .frame(width: 15, height: 15)
+        }
+        
+    }
+}
 
+struct When: View {
+    var body: some View {
+        Text("When")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.top, 10)
+        HStack{
+            Text("Default: ASAP")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+            Spacer()
+            Text("Select")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+            Image(systemName: "calendar.badge.plus")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+                .frame(width: 40, height: 30)
+        }
+            Divider()
+                .background(.black)
+                .padding(0)
+        
+        
+        Text("When do you need the job done")
+            .font(.footnote)
+            .foregroundColor(Color.gray)
+        }
+    }
+
+struct Details: View {
+    var body: some View {
+        Text("Details")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.top, 10)
+        
+        List {
+            SelectCategory()
+            SelectCategory()
+            SelectCategory()
+        }.frame(height: 140)
+            .listStyle(.plain)
+        Text("A short job name helps tradies and the like easily identify and respond to your job")
+            .font(.footnote)
+            .foregroundColor(Color.gray)
+        }
+    }
+
+
+struct Description: View {
+    var body: some View {
+        Text("Details")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.top, 10)
+        }
+    }
+
+struct Where: View {
+    var body: some View {
+            Text("Where")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 10)
+        HStack{
+            LocationSwitch()
+                
+        }
+
+        HStack{
+            Text("Or")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+                .padding(10)
+            Spacer()
+            Text("Select")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+            Image(systemName: "location.magnifyingglass")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+                .frame(width: 40, height: 30)
+        }
+            Divider()
+                .background(.black)
+                .padding(10)
+
+        }
+    }
+
+
+struct Tags: View {
+    var body: some View {
+        Text("Tags")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.top, 10)
+        }
+    }
+
+struct Publish: View {
+    var body: some View {
+        Text("publish")
+            .font(.title)
+            .fontWeight(.bold)
+            .padding(.top, 10)
+        }
+    }
+
+
+
+
+struct LocationSwitch: View {
+    @State private var showLocation = true
+
+    var body: some View {
+        VStack {
+            Toggle("Use My Address?", isOn: $showLocation)
+
+            if showLocation {
+                Text("Users Address")
+                    .foregroundColor(Color.green)
+                    .multilineTextAlignment(.leading)
+
+                    
+            }
+        }
+    }
+}
 
 
 
