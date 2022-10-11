@@ -6,10 +6,39 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+
+
+class AppViewModel: ObservableObject {
+    
+    let auth = Auth.auth()
+    
+    var isSignedIn: Bool {
+        return auth.currentUser != nil
+    }
+    
+    func signIn(email: String, password: String) {
+        auth.signIn(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+            // Success
+        }
+    }
+    func signUp(email: String, password: String) {
+        auth.createUser(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+            // Success
+        }
+    }
+}
+
 
 struct ContentLogin: View {
     @Binding var selectedbutton : Views
-    @State var text = ""
+    @State var email = ""
     @State var password = ""
     @State var loginactive  = false
     @State var signinactive = false
@@ -31,7 +60,7 @@ struct ContentLogin: View {
                     .frame(width: 321, height: 90, alignment: .bottomLeading)
                     
                 ZStack{
-                    TextField("Email address", text: $text)
+                    TextField("Email address", text: $email)
                         .textContentType(.emailAddress)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)

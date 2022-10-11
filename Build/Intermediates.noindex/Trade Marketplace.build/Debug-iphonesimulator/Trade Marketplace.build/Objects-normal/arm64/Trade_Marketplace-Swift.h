@@ -228,6 +228,9 @@ using UInt = size_t;
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import Foundation;
+@import ObjectiveC;
+@import UIKit;
 #endif
 
 #endif
@@ -248,6 +251,14 @@ using UInt = size_t;
 #endif
 
 #if defined(__OBJC__)
+@class UIApplication;
+
+SWIFT_CLASS("_TtC17Trade_Marketplace11AppDelegate")
+@interface AppDelegate : NSObject <UIApplicationDelegate>
+- (BOOL)application:(UIApplication * _Nonnull)application didFinishLaunchingWithOptions:(NSDictionary<UIApplicationLaunchOptionsKey, id> * _Nullable)launchOptions SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 #endif
 #if defined(__cplusplus)
 #endif
