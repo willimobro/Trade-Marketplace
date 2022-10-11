@@ -73,9 +73,6 @@ struct CreateJobView: View {
                             .frame(height: 200)
                             .overlay(Rectangle()
                                 .stroke(Color.secondary).opacity(0.5))
-                               
-                            
-   
                   
                         
                         Divider()
@@ -88,13 +85,19 @@ struct CreateJobView: View {
                             .fontWeight(.bold)
                             .padding(.top, 10)
                         
+                        List {
+                            Text("A List Item")
+                            Text("A Second List Item")
+                            Text("A Third List Item")
+                        }.frame(height: 300)
+                            .listStyle(.plain)
 
                     }
                     
                     
                 } .padding(.horizontal, 20)
+                
             }
-        
         }
         
     }
