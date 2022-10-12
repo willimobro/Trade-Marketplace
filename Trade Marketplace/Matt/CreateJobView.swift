@@ -238,26 +238,26 @@ struct Where: View {
             LocationSwitch()
                 
         }
-
-        HStack{
-            Text("Or")
-                .font(.footnote)
-                .foregroundColor(Color.gray)
-                .padding(10)
-            Spacer()
-            Text("Select")
-                .font(.footnote)
-                .foregroundColor(Color.gray)
-            Image(systemName: "location.magnifyingglass")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.gray)
-                .frame(width: 40, height: 30)
-        }
+        if !showLocation {
+            HStack{
+                Text("Or")
+                    .font(.footnote)
+                    .foregroundColor(Color.gray)
+                    .padding(10)
+                Spacer()
+                Text("Select")
+                    .font(.footnote)
+                    .foregroundColor(Color.gray)
+                Image(systemName: "location.magnifyingglass")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.gray)
+                    .frame(width: 40, height: 30)
+            }
             Divider()
                 .background(.black)
                 .padding(10)
-
+        }
         }
     }
 
@@ -284,7 +284,7 @@ struct Publish: View {
 
 
 struct LocationSwitch: View {
-    @State private var showLocation = true
+    @State fileprivate var showLocation = true
 
     var body: some View {
         VStack {
