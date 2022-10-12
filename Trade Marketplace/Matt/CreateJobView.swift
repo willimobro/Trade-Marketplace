@@ -282,7 +282,9 @@ struct Publish: View {
         Text("publish")
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, 10)
+            .padding(.vertical, 30)
+        
+        SubmitJob()
         }
     }
 
@@ -297,3 +299,35 @@ struct CreateJobView_Previews: PreviewProvider {
         CreateJobView()
     }
 }
+
+
+struct SubmitJob: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 25)
+            .foregroundColor(Color("UploadAJobGreen"))
+            .frame(width: 359, height: 56)
+            .overlay(
+                VStack(alignment: .center, spacing: 0){
+                    HStack{
+ //                       Image (systemName: "plus.app.fill")
+ //                           .resizable()
+//                            .frame(width: 19, height: 19, alignment: .center)
+ //                           .foregroundColor(.white)
+                      Text("Submit Job")
+                          .font(.title)
+                          .fontWeight(.semibold)
+                         .foregroundColor(.white)
+
+                    }}
+                    .frame(width: 319, height: 30, alignment: .center))
+        }
+                    
+    }
+
+
+struct SubmitJob_Previews: PreviewProvider {
+    static var previews: some View {
+        SubmitJob()
+    }
+}
+
