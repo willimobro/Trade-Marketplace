@@ -58,6 +58,7 @@
 		DD6CF00B28F55A560007119F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00A28F55A560007119F /* FirebaseAnalytics */; };
 		DD6CF00D28F55A560007119F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00C28F55A560007119F /* FirebaseAuth */; };
 		DD6CF00F28F55AFA0007119F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF00E28F55AFA0007119F /* ContentView.swift */; };
+		DD6CF01128F56D610007119F /* Server Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF01028F56D610007119F /* Server Control.swift */; };
 		DD875CB428DE9E87006CD9B9 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB328DE9E87006CD9B9 /* AccountView.swift */; };
 		DD875CB728DEA0DD006CD9B9 /* Uploadajobacc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB628DEA0DD006CD9B9 /* Uploadajobacc.swift */; };
 		DD875CB928DEA11A006CD9B9 /* TabButtonAcc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB828DEA11A006CD9B9 /* TabButtonAcc.swift */; };
@@ -163,6 +164,7 @@
 		DD60162A28DB02E10051E013 /* TagSub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSub.swift; sourceTree = "<group>"; };
 		DD6CF00728F55A0D0007119F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Users/williamlarsen/Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD6CF00E28F55AFA0007119F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DD6CF01028F56D610007119F /* Server Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server Control.swift"; sourceTree = "<group>"; };
 		DD875CB328DE9E87006CD9B9 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		DD875CB628DEA0DD006CD9B9 /* Uploadajobacc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uploadajobacc.swift; sourceTree = "<group>"; };
 		DD875CB828DEA11A006CD9B9 /* TabButtonAcc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonAcc.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				DDAED03428E577890082E114 /* TabControl.swift */,
 				DD22A7C628F16C170062C47D /* Listing.swift */,
 				DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */,
+				DD6CF01028F56D610007119F /* Server Control.swift */,
 			);
 			path = "Control Files";
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				DDE2CF9F28D48D9700A0C1A4 /* HomeBackground.swift in Sources */,
 				DD29C7F128DEEA04001056D5 /* ReviewQuoteView.swift in Sources */,
 				DD20BBED28D84FAF003BDF7A /* test.swift in Sources */,
+				DD6CF01128F56D610007119F /* Server Control.swift in Sources */,
 				DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */,
 				DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */,
 				DD60161A28D9AB840051E013 /* ContentSort.swift in Sources */,
