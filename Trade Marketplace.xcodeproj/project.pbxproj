@@ -54,11 +54,11 @@
 		DD60162728DAF8C70051E013 /* ContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162628DAF8C70051E013 /* ContentItem.swift */; };
 		DD60162928DAFA980051E013 /* QuoteNowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162828DAFA980051E013 /* QuoteNowButton.swift */; };
 		DD60162B28DB02E10051E013 /* TagSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162A28DB02E10051E013 /* TagSub.swift */; };
-		DD6CF00828F55A0D0007119F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD6CF00728F55A0D0007119F /* GoogleService-Info.plist */; };
 		DD6CF00B28F55A560007119F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00A28F55A560007119F /* FirebaseAnalytics */; };
 		DD6CF00D28F55A560007119F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00C28F55A560007119F /* FirebaseAuth */; };
 		DD6CF00F28F55AFA0007119F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF00E28F55AFA0007119F /* ContentView.swift */; };
 		DD6CF01128F56D610007119F /* Server Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF01028F56D610007119F /* Server Control.swift */; };
+		DD6CF01328F6B0260007119F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD6CF01228F6B0250007119F /* GoogleService-Info.plist */; };
 		DD875CB428DE9E87006CD9B9 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB328DE9E87006CD9B9 /* AccountView.swift */; };
 		DD875CB728DEA0DD006CD9B9 /* Uploadajobacc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB628DEA0DD006CD9B9 /* Uploadajobacc.swift */; };
 		DD875CB928DEA11A006CD9B9 /* TabButtonAcc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB828DEA11A006CD9B9 /* TabButtonAcc.swift */; };
@@ -162,9 +162,9 @@
 		DD60162628DAF8C70051E013 /* ContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentItem.swift; sourceTree = "<group>"; };
 		DD60162828DAFA980051E013 /* QuoteNowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteNowButton.swift; sourceTree = "<group>"; };
 		DD60162A28DB02E10051E013 /* TagSub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSub.swift; sourceTree = "<group>"; };
-		DD6CF00728F55A0D0007119F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Users/williamlarsen/Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DD6CF00E28F55AFA0007119F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DD6CF01028F56D610007119F /* Server Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Server Control.swift"; sourceTree = "<group>"; };
+		DD6CF01228F6B0250007119F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DD875CB328DE9E87006CD9B9 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		DD875CB628DEA0DD006CD9B9 /* Uploadajobacc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uploadajobacc.swift; sourceTree = "<group>"; };
 		DD875CB828DEA11A006CD9B9 /* TabButtonAcc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonAcc.swift; sourceTree = "<group>"; };
@@ -302,8 +302,8 @@
 		DD47D01328D063F500FE1B65 /* Trade Marketplace */ = {
 			isa = PBXGroup;
 			children = (
-				DD6CF00728F55A0D0007119F /* GoogleService-Info.plist */,
 				DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */,
+				DD6CF01228F6B0250007119F /* GoogleService-Info.plist */,
 				DD47D01428D063F500FE1B65 /* Trade_MarketplaceApp.swift */,
 				DD6CF00E28F55AFA0007119F /* ContentView.swift */,
 				6639B8D428F0F612007A016E /* Matt */,
@@ -604,7 +604,7 @@
 				DD20BC5728D858B9003BDF7A /* Poppins-Regular.ttf in Resources */,
 				DD20BC5328D858B9003BDF7A /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				DD20BC5928D858B9003BDF7A /* Poppins-Bold.ttf in Resources */,
-				DD6CF00828F55A0D0007119F /* GoogleService-Info.plist in Resources */,
+				DD6CF01328F6B0260007119F /* GoogleService-Info.plist in Resources */,
 				DD20BC4D28D858B9003BDF7A /* Poppins-ThinItalic.ttf in Resources */,
 				DD20BC5128D858B9003BDF7A /* Poppins-Medium.ttf in Resources */,
 			);
