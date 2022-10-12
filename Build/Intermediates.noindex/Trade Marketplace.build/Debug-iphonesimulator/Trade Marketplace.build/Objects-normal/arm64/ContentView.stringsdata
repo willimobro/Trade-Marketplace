@@ -1,5 +1,12 @@
 {
-  "source": "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/ContentView.swift",
-  "tables": {},
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Hello, World!"
+      }
+    ]
+  },
   "version": 1
 }

@@ -1,7 +1,7 @@
 version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
 options: "a52da1af00532792ee98e8f551584aeeb79f2643aca79dd17add174a5f5171d6"
-build_start_time: [1665562871, 140286922]
-build_end_time: [1665562871, 384312152]
+build_start_time: [1665564691, 129421949]
+build_end_time: [1665564691, 362916946]
 inputs:
   "/Applications/Trade-Marketplace/AccountSettings.swift": !private [1665217305, 473694324]
   "/Applications/Trade-Marketplace/Trade Marketplace/Backgrounds/BackgroundLogo_Main.swift": !private [1665217306, 955362558]
@@ -12,7 +12,7 @@ inputs:
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/Server Control.swift": !private [1665562539, 728275775]
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/TabControl.swift": !private [1665217306, 955671310]
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/TabPreferenceKey.swift": !private [1665302727, 704216718]
-  "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift": !private [1665474678, 49396038]
+  "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift": !private [1665564682, 595973968]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/LandscapeObject.swift": !private [1665217306, 956343412]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/MainObject.swift": !private [1665295514, 662676811]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/categorys/Categorys.swift": !private [1665305084, 663562297]

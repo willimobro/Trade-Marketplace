@@ -101,13 +101,6 @@ struct CreateJobView: View {
     }
 }
 
-struct CreateJobView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateJobView()
-    }
-}
-
-
 struct UploadPictureIcon: View {
     var body: some View {
        
@@ -229,37 +222,50 @@ struct Description: View {
     }
 
 struct Where: View {
+    @State var manualaddress = String()
+    @State private var showLocation = false
     var body: some View {
+        VStack {
             Text("Where")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.top, 10)
-        HStack{
-            LocationSwitch()
-                
-        }
-        if !showLocation {
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
             HStack{
-                Text("Or")
-                    .font(.footnote)
-                    .foregroundColor(Color.gray)
-                    .padding(10)
-                Spacer()
-                Text("Select")
-                    .font(.footnote)
-                    .foregroundColor(Color.gray)
-                Image(systemName: "location.magnifyingglass")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.gray)
-                    .frame(width: 40, height: 30)
+                VStack {
+                    HStack(alignment: .center, spacing: 30){
+                        Text("You will travel to service provider")
+                            Toggle("", isOn: $showLocation)
+                                .frame(maxWidth: 40)
+                                .padding(.trailing, 15)
+                        Text("Your service provider will tavel to you")
+                    }.font(.subheadline)
+                    Toggle("Use My Address?", isOn: $showLocation)
+                    
+                    
+                    if showLocation {
+                        VStack(spacing: 20){
+                            Text("Users Address")
+                                .foregroundColor(Color.green)
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            MapView()
+                        }
+                    } else {
+                        TextField(
+                            "e.g Sink Install",
+                            text: $manualaddress)
+                        Divider()
+                            .background(.black)
+                            .padding(0)
+                        
+                    }
+                }
             }
-            Divider()
-                .background(.black)
-                .padding(10)
-        }
         }
     }
+}
 
 
 struct Tags: View {
@@ -283,23 +289,11 @@ struct Publish: View {
 
 
 
-struct LocationSwitch: View {
-    @State fileprivate var showLocation = true
 
-    var body: some View {
-        VStack {
-            Toggle("Use My Address?", isOn: $showLocation)
 
-            if showLocation {
-                Text("Users Address")
-                    .foregroundColor(Color.green)
-                    .multilineTextAlignment(.leading)
-
-                    
-            }
-        }
+struct CreateJobView_Previews: PreviewProvider {
+    @Binding fileprivate var showLocation: Bool
+    static var previews: some View {
+        CreateJobView()
     }
 }
-
-
-
