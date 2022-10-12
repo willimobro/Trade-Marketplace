@@ -1,7 +1,7 @@
 version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
 options: "5315a92aeb0fe964b2846fa308a1ee9bd1e3c0c1cc3c45e32f161206c0aaa9b0"
-build_start_time: [1665566371, 195852994]
-build_end_time: [1665566373, 45626163]
+build_start_time: [1665568172, 552399158]
+build_end_time: [1665568173, 957144975]
 inputs:
   "/Applications/Trade-Marketplace/AccountSettings.swift": [1665217305, 473694324]
   "/Applications/Trade-Marketplace/Trade Marketplace/Backgrounds/BackgroundLogo_Main.swift": [1665217306, 955362558]
@@ -12,7 +12,7 @@ inputs:
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/Server Control.swift": [1665562539, 728275775]
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/TabControl.swift": [1665217306, 955671310]
   "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/TabPreferenceKey.swift": [1665302727, 704216718]
-  "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift": [1665566366, 42410373]
+  "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift": [1665568150, 855217456]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/LandscapeObject.swift": [1665217306, 956343412]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/MainObject.swift": [1665295514, 662676811]
   "/Applications/Trade-Marketplace/Trade Marketplace/Objects/categorys/Categorys.swift": [1665305084, 663562297]
@@ -25,7 +25,7 @@ inputs:
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/FilterSort.swift": [1665281690, 518533945]
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/Logo.swift": [1665217306, 969551563]
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/MapView.swift": [1665217306, 969627141]
-  "/Applications/Trade-Marketplace/Trade Marketplace/Resources/Navigatior.swift": [1665217306, 969793796]
+  "/Applications/Trade-Marketplace/Trade Marketplace/Resources/Navigatior.swift": [1665567627, 87630510]
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/ProfileSub.swift": [1665381238, 750716209]
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/QuoteNowButton.swift": [1665217306, 969977140]
   "/Applications/Trade-Marketplace/Trade Marketplace/Resources/SearchViaCategory.swift": [1665217306, 970049381]

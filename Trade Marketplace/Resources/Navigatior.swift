@@ -30,7 +30,7 @@ struct Navigatior: View {
                    )
             
             Spacer()
-            NavigationLink(destination: ListjobView())
+            NavigationLink(destination: CreateJobView())
                 {Image(systemName: "plus.app.fill")
                             .resizable()
                             .foregroundColor(.white)

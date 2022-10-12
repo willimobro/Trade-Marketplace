@@ -8,6 +8,7 @@
 import SwiftUI
 // hello
 struct CreateJobView: View {
+    @Environment(\.dismiss) var dismiss
     @State private var jobTitle = String()
     @State private var jobDesc: String = "Describe your job and anything else you think may be required." 
     var body: some View {
@@ -96,7 +97,7 @@ struct CreateJobView: View {
                 } .padding(.horizontal, 20)
                 
             }
-        }
+        }.padding(.bottom, 60)
         
     }
 }
@@ -224,6 +225,7 @@ struct Description: View {
 struct Where: View {
     @State var manualaddress = String()
     @State private var showLocation = false
+    @State private var showLocationModifier = false
     var body: some View {
         VStack {
             Text("Where")
@@ -235,12 +237,13 @@ struct Where: View {
             HStack{
                 VStack {
                     HStack(alignment: .center, spacing: 30){
-                        Text("You will travel to service provider")
-                            Toggle("", isOn: $showLocation)
+                        Text("Your service provider will tavel to you")
+                            Toggle("", isOn: $showLocationModifier)
                                 .frame(maxWidth: 40)
                                 .padding(.trailing, 15)
-                        Text("Your service provider will tavel to you")
+                        Text("You will travel to service provider")
                     }.font(.subheadline)
+                    if showLocationModifier {
                     Toggle("Use My Address?", isOn: $showLocation)
                     
                     
@@ -259,7 +262,7 @@ struct Where: View {
                         Divider()
                             .background(.black)
                             .padding(0)
-                        
+                    }
                     }
                 }
             }
@@ -283,8 +286,38 @@ struct Publish: View {
             .font(.title)
             .fontWeight(.bold)
             .padding(.top, 10)
+        SubmitJob()
         }
     }
+struct SubmitJob: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 25)
+            .foregroundColor(Color("UploadAJobGreen"))
+            .frame(width: 359, height: 56)
+            .overlay(
+                VStack(alignment: .center, spacing: 0){
+                    HStack{
+ //                       Image (systemName: "plus.app.fill")
+ //                           .resizable()
+//                            .frame(width: 19, height: 19, alignment: .center)
+ //                           .foregroundColor(.white)
+                      Text("Submit Job")
+                          .font(.title)
+                          .fontWeight(.semibold)
+                         .foregroundColor(.white)
+
+                    }}
+                    .frame(width: 319, height: 30, alignment: .center))
+        }
+                    
+    }
+
+
+struct SubmitJob_Previews: PreviewProvider {
+    static var previews: some View {
+        SubmitJob()
+    }
+}
 
 
 
