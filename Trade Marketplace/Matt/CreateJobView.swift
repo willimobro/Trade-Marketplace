@@ -225,7 +225,9 @@ struct Description: View {
 struct Where: View {
     @State var manualaddress = String()
     @State private var showLocation = false
-    @State private var showLocationModifier = false
+    @State var showLocationModifier = "They will come to me."
+    var options = ["I'll go to them.", "They will come to me."]
+    
     var body: some View {
         VStack {
             Text("Where")
@@ -236,33 +238,37 @@ struct Where: View {
             
             HStack{
                 VStack {
-                    HStack(alignment: .center, spacing: 30){
-                        Text("Your service provider will tavel to you")
-                            Toggle("", isOn: $showLocationModifier)
-                                .frame(maxWidth: 40)
-                                .padding(.trailing, 15)
-                        Text("You will travel to service provider")
-                    }.font(.subheadline)
-                    if showLocationModifier {
-                    Toggle("Use My Address?", isOn: $showLocation)
-                    
-                    
-                    if showLocation {
-                        VStack(spacing: 20){
-                            Text("Users Address")
-                                .foregroundColor(Color.green)
-                                .multilineTextAlignment(.leading)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            MapView()
+                    VStack (alignment: .center, spacing: 10){
+                        Picker("Please Select an option", selection: $showLocationModifier) {
+                            ForEach(options, id: \.self) {
+                                Text($0)
+                                   
+                            }  .font(.subheadline)
+                            
                         }
-                    } else {
-                        TextField(
-                            "e.g Sink Install",
-                            text: $manualaddress)
-                        Divider()
-                            .background(.black)
-                            .padding(0)
-                    }
+                        .pickerStyle(.segmented)
+                        
+                        if showLocationModifier == "They will come to me." {
+                            Toggle("Use My Address?", isOn: $showLocation)
+                            
+                            
+                            if showLocation {
+                                VStack(spacing: 20){
+                                    Text("Users Address")
+                                        .foregroundColor(Color.green)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    MapView()
+                                }
+                            } else {
+                                TextField(
+                                    "e.g Sink Install",
+                                    text: $manualaddress)
+                                Divider()
+                                    .background(.black)
+                                    .padding(0)
+                            }
+                        }
                     }
                 }
             }
