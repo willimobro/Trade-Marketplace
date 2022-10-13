@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateJobView: View {
     @Environment(\.dismiss) var dismiss
     @State private var jobTitle = String()
-    @State private var jobDesc: String = "Describe your job and anything else you think may be required." 
+    @State private var jobDesc: String = "Describe your job and anything else you think may be required."
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 30){
@@ -263,7 +263,7 @@ struct Where: View {
                                 }
                             } else {
                                 TextField(
-                                    "e.g Sink Install",
+                                    "123 example street, Invercargill",
                                     text: $manualaddress)
                                 Divider()
                                     .background(.black)
