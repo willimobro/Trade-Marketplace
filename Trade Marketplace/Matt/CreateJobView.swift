@@ -250,6 +250,7 @@ struct Where: View {
                         
                         if showLocationModifier == "They will come to me." {
                             Toggle("Use My Address?", isOn: $showLocation)
+                                .padding(.top, 15)
                             
                             
                             if showLocation {
