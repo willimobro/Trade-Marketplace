@@ -17,14 +17,6 @@ class AppViewModel: ObservableObject {
         return auth.currentUser != nil
     }
     
-    func signIn(email: String, password: String) {
-        auth.signIn(withEmail: email, password: password) { result, error in
-            guard result != nil, error == nil else {
-                return
-            }
-            // Success
-        }
-    }
     func signUp(email: String, password: String) {
         auth.createUser(withEmail: email, password: password) { result, error in
             guard result != nil, error == nil else {
@@ -89,7 +81,7 @@ struct ContentLogin: View {
                     .frame(width: 321, height: 40, alignment: .trailing)
                 
                 Button("Login") {
-                    print("hello")
+                    login()
                         }
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
@@ -112,5 +104,15 @@ struct ContentLogin: View {
             }
     .padding(.top, 300)
 }
+    func login()    {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+            // Success
+        }
+    }
+
+
 }
 

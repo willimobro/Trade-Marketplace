@@ -1,5 +1,6 @@
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentSignup: View {
     @Binding var selectedbutton : Views
@@ -67,7 +68,7 @@ struct ContentSignup: View {
                         .frame(width: 321, height: 55, alignment: .center)
                 
                 Button("Create Account") {
-                    print("hello")
+                    register(email: email, password: password)
                         }
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
@@ -90,5 +91,13 @@ struct ContentSignup: View {
             }
     .padding(.top, 210)
 }
+    func register(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            guard result != nil, error == nil else {
+                return
+            }
+            // Success
+        }
+    }
 }
 
