@@ -278,21 +278,37 @@ struct Where: View {
 
 
 struct Tags: View {
+    @State private var tags: String = "Enter Tags"
     var body: some View {
-        Text("Tags")
-            .font(.title)
-            .fontWeight(.bold)
-            .padding(.top, 10)
+        HStack{
+            Text("Tags")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 10)
+            Spacer()
+            Text("optional")
+                .font(.footnote)
+                .foregroundColor(Color.gray)
+                .padding(.top, 14)
+        }
+        
+        TextEditor(text: $tags)
+            .foregroundColor(Color.black)
+            .frame(height: 100)
+            .overlay(Rectangle()
+            .stroke(Color.secondary).opacity(0.5))
         }
     }
 
 struct Publish: View {
     var body: some View {
-        Text("publish")
+        Text("Publish")
             .font(.title)
             .fontWeight(.bold)
-            .padding(.vertical, 30)
-        
+            .padding(.top, 30)
+        Text("By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace")
+            .font(.footnote)
+            .padding(.bottom, 10)
         SubmitJob()
         }
     }
