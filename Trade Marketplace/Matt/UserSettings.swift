@@ -18,7 +18,7 @@ struct UserSettings: View {
                 }
                 Section {
                     NavigationLink (destination: HomeView()) {
-                        Label("Manual Address", systemImage: "location.circle") }
+                        Label("say bruh if u epic", systemImage: "location.circle") }
                 }
                 Section {
                     Text("Business Account Info")

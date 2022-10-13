@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6639B8D628F0F64B007A016E /* CreateJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8D528F0F64B007A016E /* CreateJobView.swift */; };
+		6639B8E928F7FEC6007A016E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8E828F7FEC6007A016E /* UserSettings.swift */; };
 		DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1BBC7B28EC046A0074F652 /* modifiers.swift */; };
 		DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBAD28D59E78003BDF7A /* MainObject.swift */; };
 		DD20BBE928D5B539003BDF7A /* ContentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBE828D5B539003BDF7A /* ContentHome.swift */; };
@@ -112,6 +113,7 @@
 
 /* Begin PBXFileReference section */
 		6639B8D528F0F64B007A016E /* CreateJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateJobView.swift; sourceTree = "<group>"; };
+		6639B8E828F7FEC6007A016E /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		DD1BBC7B28EC046A0074F652 /* modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modifiers.swift; sourceTree = "<group>"; };
 		DD20BBAD28D59E78003BDF7A /* MainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainObject.swift; sourceTree = "<group>"; };
 		DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Trade-Marketplace-Info.plist"; path = "../Trade-Marketplace-Info.plist"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				6639B8D528F0F64B007A016E /* CreateJobView.swift */,
+				6639B8E828F7FEC6007A016E /* UserSettings.swift */,
 			);
 			path = Matt;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				DDE2CF9D28D48D6200A0C1A4 /* HomeView.swift in Sources */,
 				DDE2CF8E28D1C39800A0C1A4 /* ContentLogin.swift in Sources */,
 				DD60162528DAF8AF0051E013 /* ProfileSub.swift in Sources */,
+				6639B8E928F7FEC6007A016E /* UserSettings.swift in Sources */,
 				DD875CC128DEA937006CD9B9 /* MyListingsView.swift in Sources */,
 				DD875CD828DEAC33006CD9B9 /* AccountSettings.swift in Sources */,
 				DD20BC6228D85E93003BDF7A /* Navigatior.swift in Sources */,
