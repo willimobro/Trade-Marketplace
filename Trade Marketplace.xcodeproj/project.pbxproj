@@ -43,6 +43,8 @@
 		DD47D02628D063F700FE1B65 /* Trade_MarketplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47D02528D063F700FE1B65 /* Trade_MarketplaceTests.swift */; };
 		DD47D03028D063F700FE1B65 /* Trade_MarketplaceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47D02F28D063F700FE1B65 /* Trade_MarketplaceUITests.swift */; };
 		DD47D03228D063F700FE1B65 /* Trade_MarketplaceUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD47D03128D063F700FE1B65 /* Trade_MarketplaceUITestsLaunchTests.swift */; };
+		DD5661AD28F802F100C46AC7 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = DD5661AC28F802F100C46AC7 /* FirebaseDatabase */; };
+		DD5661AF28F802F100C46AC7 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DD5661AE28F802F100C46AC7 /* FirebaseDatabaseSwift */; };
 		DD60161028D99E910051E013 /* CategoryNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60160F28D99E910051E013 /* CategoryNavigator.swift */; };
 		DD60161228D9A1860051E013 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161128D9A1860051E013 /* CategoryView.swift */; };
 		DD60161428D9A1E80051E013 /* SearchViaCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60161328D9A1E80051E013 /* SearchViaCategory.swift */; };
@@ -204,6 +206,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD5661AF28F802F100C46AC7 /* FirebaseDatabaseSwift in Frameworks */,
+				DD5661AD28F802F100C46AC7 /* FirebaseDatabase in Frameworks */,
 				DD6CF00B28F55A560007119F /* FirebaseAnalytics in Frameworks */,
 				DD6CF00D28F55A560007119F /* FirebaseAuth in Frameworks */,
 			);
@@ -286,6 +290,7 @@
 				DD47D02428D063F700FE1B65 /* Trade MarketplaceTests */,
 				DD47D02E28D063F700FE1B65 /* Trade MarketplaceUITests */,
 				DD47D01228D063F500FE1B65 /* Products */,
+				DD5661AB28F802F100C46AC7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -346,6 +351,13 @@
 				DD47D03128D063F700FE1B65 /* Trade_MarketplaceUITestsLaunchTests.swift */,
 			);
 			path = "Trade MarketplaceUITests";
+			sourceTree = "<group>";
+		};
+		DD5661AB28F802F100C46AC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		DD60162128D9BBAB0051E013 /* Test Views */ = {
@@ -490,6 +502,8 @@
 			packageProductDependencies = (
 				DD6CF00A28F55A560007119F /* FirebaseAnalytics */,
 				DD6CF00C28F55A560007119F /* FirebaseAuth */,
+				DD5661AC28F802F100C46AC7 /* FirebaseDatabase */,
+				DD5661AE28F802F100C46AC7 /* FirebaseDatabaseSwift */,
 			);
 			productName = "Trade Marketplace";
 			productReference = DD47D01128D063F500FE1B65 /* Trade Marketplace.app */;
@@ -1029,6 +1043,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DD5661AC28F802F100C46AC7 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD6CF00928F55A560007119F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		DD5661AE28F802F100C46AC7 /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD6CF00928F55A560007119F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
+		};
 		DD6CF00A28F55A560007119F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DD6CF00928F55A560007119F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
