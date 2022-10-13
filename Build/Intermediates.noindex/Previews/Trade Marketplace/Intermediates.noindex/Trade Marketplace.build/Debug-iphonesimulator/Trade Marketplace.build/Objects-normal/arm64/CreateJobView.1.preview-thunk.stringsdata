@@ -1,0 +1,80 @@
+{
+  "source": "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CreateJobView.1.preview-thunk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Submit Job"
+      },
+      {
+        "comment": "",
+        "key": "publish"
+      },
+      {
+        "comment": "",
+        "key": "Tags"
+      },
+      {
+        "comment": "",
+        "key": "Where"
+      },
+      {
+        "comment": "",
+        "key": "Please Select an option"
+      },
+      {
+        "comment": "",
+        "key": "Use My Address?"
+      },
+      {
+        "comment": "",
+        "key": "e.g Sink Install"
+      },
+      {
+        "comment": "",
+        "key": "Users Address"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "A short job name helps tradies and the like easily identify and respond to your job"
+      },
+      {
+        "comment": "",
+        "key": "When"
+      },
+      {
+        "comment": "",
+        "key": "When do you need the job done"
+      },
+      {
+        "comment": "",
+        "key": "Default: ASAP"
+      },
+      {
+        "comment": "",
+        "key": "Select"
+      },
+      {
+        "comment": "",
+        "key": "Select a Category"
+      },
+      {
+        "comment": "",
+        "key": "Create a job"
+      },
+      {
+        "comment": "",
+        "key": "Job name"
+      },
+      {
+        "comment": "",
+        "key": "Description"
+      }
+    ]
+  },
+  "version": 1
+}

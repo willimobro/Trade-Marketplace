@@ -1,0 +1,80 @@
+{
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Create a job"
+      },
+      {
+        "comment": "",
+        "key": "Job name"
+      },
+      {
+        "comment": "",
+        "key": "A short job name helps tradies and the like easily identify and respond to your job"
+      },
+      {
+        "comment": "",
+        "key": "Description"
+      },
+      {
+        "comment": "",
+        "key": "e.g Sink Install"
+      },
+      {
+        "comment": "",
+        "key": "Select a Category"
+      },
+      {
+        "comment": "",
+        "key": "Select"
+      },
+      {
+        "comment": "",
+        "key": "When"
+      },
+      {
+        "comment": "",
+        "key": "When do you need the job done"
+      },
+      {
+        "comment": "",
+        "key": "Default: ASAP"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "Where"
+      },
+      {
+        "comment": "",
+        "key": "Please Select an option"
+      },
+      {
+        "comment": "",
+        "key": "Use My Address?"
+      },
+      {
+        "comment": "",
+        "key": "Users Address"
+      },
+      {
+        "comment": "",
+        "key": "Tags"
+      },
+      {
+        "comment": "",
+        "key": "publish"
+      },
+      {
+        "comment": "",
+        "key": "Submit Job"
+      }
+    ]
+  },
+  "version": 1
+}

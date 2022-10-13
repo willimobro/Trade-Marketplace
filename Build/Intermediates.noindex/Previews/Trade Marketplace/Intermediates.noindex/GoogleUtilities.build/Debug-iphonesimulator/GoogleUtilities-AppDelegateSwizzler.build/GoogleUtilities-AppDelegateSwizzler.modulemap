@@ -1,0 +1,4 @@
+module GoogleUtilities_AppDelegateSwizzler {
+umbrella "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/AppDelegateSwizzler/Public"
+export *
+}

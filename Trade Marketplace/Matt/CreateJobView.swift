@@ -291,10 +291,25 @@ struct Publish: View {
         Text("publish")
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, 10)
+            .padding(.vertical, 30)
+        
         SubmitJob()
         }
     }
+
+
+
+
+
+
+struct CreateJobView_Previews: PreviewProvider {
+    @Binding fileprivate var showLocation: Bool
+    static var previews: some View {
+        CreateJobView()
+    }
+}
+
+
 struct SubmitJob: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
@@ -325,14 +340,3 @@ struct SubmitJob_Previews: PreviewProvider {
     }
 }
 
-
-
-
-
-
-struct CreateJobView_Previews: PreviewProvider {
-    @Binding fileprivate var showLocation: Bool
-    static var previews: some View {
-        CreateJobView()
-    }
-}

@@ -1,0 +1,4 @@
+dependencies: \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/GULHeartbeatDateStorageUserDefaults.m \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorageUserDefaults.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorable.h

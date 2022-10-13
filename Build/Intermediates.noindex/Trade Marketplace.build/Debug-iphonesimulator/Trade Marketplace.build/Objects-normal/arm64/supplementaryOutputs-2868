@@ -1,0 +1,35 @@
+"/Applications/Trade-Marketplace/Trade Marketplace/Control Files/Listing.swift":
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Listing.dia"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Listing.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Listing.swiftdeps"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Listing.o"
+"/Applications/Trade-Marketplace/Trade Marketplace/Views/Quote a job.swift":
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote a job.o"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote a job.swiftdeps"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote a job.d"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote a job.dia"
+"/Applications/Trade-Marketplace/Trade Marketplace/Trade_MarketplaceApp.swift":
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Trade_MarketplaceApp.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Trade_MarketplaceApp.o"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Trade_MarketplaceApp.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Trade_MarketplaceApp.swiftdeps"
+"/Applications/Trade-Marketplace/Trade Marketplace/UserView/TabBar.swift":
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/TabBar.d"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/TabBar.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/TabBar.o"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/TabBar.swiftdeps"
+"/Applications/Trade-Marketplace/Trade Marketplace/Views/SignupView.swift":
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SignupView.swiftdeps"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SignupView.d"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SignupView.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SignupView.o"
+"/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift":
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LandingControl.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LandingControl.o"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LandingControl.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LandingControl.swiftdeps"
+"/Applications/Trade-Marketplace/Trade Marketplace/View Content/ContentLanding.swift":
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.dia"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.d"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.o"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.swiftdeps"

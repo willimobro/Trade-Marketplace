@@ -1,0 +1,60 @@
+{
+  "source": "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteAJobView.1.preview-thunk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Time"
+      },
+      {
+        "comment": "",
+        "key": "Material Costs"
+      },
+      {
+        "comment": "",
+        "key": "Fuel Costs"
+      },
+      {
+        "comment": "",
+        "key": "calculated via TM Fuelcalc."
+      },
+      {
+        "comment": "",
+        "key": "Other"
+      },
+      {
+        "comment": "",
+        "key": "%@"
+      },
+      {
+        "comment": "",
+        "key": "$%@"
+      },
+      {
+        "comment": "",
+        "key": "Review Quote"
+      },
+      {
+        "comment": "",
+        "key": "$%@ %@"
+      },
+      {
+        "comment": "",
+        "key": "Title"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "Hows it going john here from ajs electrical, worked on many mitubishi vehicles and i know for sure how to fix yoor problem, read the quote below for info, Cheers john."
+      },
+      {
+        "comment": "",
+        "key": "Im happy with the quote and accept any terms or conditions"
+      }
+    ]
+  },
+  "version": 1
+}

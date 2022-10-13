@@ -1,0 +1,27 @@
+version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
+options: "bfc2284a53cb13b735a2ed3283a645a0cf5203cb47ad04b2f28ce28919a46592"
+build_start_time: [1665564689, 674689054]
+build_end_time: [1665564689, 790138959]
+inputs:
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/Heartbeat.swift"
+  : !private [1665474473, 620160102]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatController.swift"
+  : !private [1665474473, 620302438]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatStorage.swift"
+  : !private [1665474473, 620435237]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatsBundle.swift"
+  : !private [1665474473, 620587587]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/HeartbeatsPayload.swift"
+  : !private [1665474473, 620726346]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/RingBuffer.swift"
+  : !private [1665474473, 620861530]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/Storage.swift"
+  : !private [1665474473, 620975494]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/StorageFactory.swift"
+  : !private [1665474473, 621078968]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/WeakContainer.swift"
+  : !private [1665474473, 621164798]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/_ObjC_HeartbeatController.swift"
+  : !private [1665474473, 621272563]
+  ? "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Internal/Sources/HeartbeatLogging/_ObjC_HeartbeatsPayload.swift"
+  : !private [1665474473, 621402740]

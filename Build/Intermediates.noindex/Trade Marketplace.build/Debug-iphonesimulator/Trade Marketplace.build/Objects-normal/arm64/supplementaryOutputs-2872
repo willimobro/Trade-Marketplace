@@ -1,0 +1,35 @@
+"/Applications/Trade-Marketplace/Trade Marketplace/View Content/ContentFilter.swift":
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentFilter.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentFilter.swiftdeps"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentFilter.o"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentFilter.dia"
+"/Applications/Trade-Marketplace/Trade Marketplace/Views/QuoteViews/LatestRecievedQuotesView.swift":
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LatestRecievedQuotesView.swiftdeps"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LatestRecievedQuotesView.o"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LatestRecievedQuotesView.dia"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LatestRecievedQuotesView.d"
+"/Applications/Trade-Marketplace/Trade Marketplace/Objects/categorys/Categorys.swift":
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Categorys.o"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Categorys.dia"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Categorys.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Categorys.swiftdeps"
+"/Applications/Trade-Marketplace/Trade Marketplace/Resources/FilterSort.swift":
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/FilterSort.d"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/FilterSort.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/FilterSort.o"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/FilterSort.swiftdeps"
+"/Applications/Trade-Marketplace/Trade Marketplace/Resources/QuoteNowButton.swift":
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteNowButton.o"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteNowButton.dia"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteNowButton.swiftdeps"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteNowButton.d"
+"/Applications/Trade-Marketplace/Trade Marketplace/Objects/categorys/CategorysEnum.swift":
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CategorysEnum.d"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CategorysEnum.o"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CategorysEnum.swiftdeps"
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CategorysEnum.dia"
+"/Applications/Trade-Marketplace/Trade Marketplace/View Content/QuoteDetailView.swift":
+  diagnostics: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteDetailView.dia"
+  object: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteDetailView.o"
+  dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteDetailView.d"
+  swift-dependencies: "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteDetailView.swiftdeps"

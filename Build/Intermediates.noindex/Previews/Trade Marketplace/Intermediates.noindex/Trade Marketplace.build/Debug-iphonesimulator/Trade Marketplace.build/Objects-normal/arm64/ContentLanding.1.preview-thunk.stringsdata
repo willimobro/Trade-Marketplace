@@ -1,0 +1,24 @@
+{
+  "source": "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.1.preview-thunk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Save Money, \nMake Money."
+      },
+      {
+        "comment": "",
+        "key": "Trade Marketplace"
+      },
+      {
+        "comment": "",
+        "key": "Log In"
+      },
+      {
+        "comment": "",
+        "key": "Sign Up"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,12 @@
+{
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/Control Files/Server Control.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Hello, World!"
+      }
+    ]
+  },
+  "version": 1
+}

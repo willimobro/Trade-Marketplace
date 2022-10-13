@@ -1,0 +1,92 @@
+{
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/Views/Quote a job.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Quote a Job"
+      },
+      {
+        "comment": "",
+        "key": "Title"
+      },
+      {
+        "comment": "",
+        "key": "Details"
+      },
+      {
+        "comment": "",
+        "key": "Need someone to check my wires, have been trying to get it to work for days and cant figure it out lol."
+      },
+      {
+        "comment": "",
+        "key": "Prefered Date"
+      },
+      {
+        "comment": "",
+        "key": "Where"
+      },
+      {
+        "comment": "",
+        "key": "Comments"
+      },
+      {
+        "comment": "",
+        "key": "Date"
+      },
+      {
+        "comment": "",
+        "key": "Option1"
+      },
+      {
+        "comment": "",
+        "key": "Option2"
+      },
+      {
+        "comment": "",
+        "key": "You will travel to your Client."
+      },
+      {
+        "comment": "",
+        "key": "Your Client will travel to you."
+      },
+      {
+        "comment": "",
+        "key": "Material Costs"
+      },
+      {
+        "comment": "",
+        "key": "Labour Costs"
+      },
+      {
+        "comment": "",
+        "key": "Fuel Costs"
+      },
+      {
+        "comment": "",
+        "key": "Other Costs"
+      },
+      {
+        "comment": "",
+        "key": "Add a Cost"
+      },
+      {
+        "comment": "",
+        "key": "$"
+      },
+      {
+        "comment": "",
+        "key": "Im happy with the quote and accept any terms or conditions"
+      },
+      {
+        "comment": "",
+        "key": "Final Cost"
+      },
+      {
+        "comment": "",
+        "key": "%lld"
+      }
+    ]
+  },
+  "version": 1
+}

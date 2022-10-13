@@ -1,0 +1,65 @@
+{
+  "_buildCommand2" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "fad548bb68add30769e541e895e9ff0bb23bb9233f34dd200bb90e51b1d0880e"
+    }
+  ],
+  "containerPath" : "/Applications/Trade-Marketplace/Trade Marketplace.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphonesimulator",
+      "sdk" : "iphonesimulator16.0",
+      "sdkVariant" : "iphonesimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+      "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone14,5",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "16.0",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "ENABLE_PREVIEWS" : "NO",
+          "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+          "TARGET_DEVICE_MODEL" : "iPhone14,5",
+          "TARGET_DEVICE_OS_VERSION" : "16.0",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

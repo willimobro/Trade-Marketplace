@@ -1,0 +1,1609 @@
+{
+  "_buildCommand2" : {
+    "command" : "preview"
+  },
+  "buildCommand" : "build",
+  "configuredTargets" : [
+    {
+      "guid" : "fad548bb68add30769e541e895e9ff0bb23bb9233f34dd200bb90e51b1d0880e",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULEnvironment",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:nanopb",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GTMSessionFetcherCore",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:Firebase",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-AppDelegateSwizzler",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-MethodSwizzler",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseInstallations",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseAuth",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FBLPromises",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-Environment",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-Reachability",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-NSData",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:FirebaseAnalytics",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:FirebaseAuth",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULNetwork",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-Logger",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseAnalyticsWrapper",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULMethodSwizzler",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GTMSessionFetcherCore",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseCoreInternal",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-UserDefaults",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleUtilities-Network",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULAppDelegateSwizzler",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GoogleAppMeasurement",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:FBLPromises",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:GoogleAppMeasurementTarget",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULNSData",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseCore",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-TARGET:FirebaseAnalyticsTarget",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:nanopb",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULLogger",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    },
+    {
+      "guid" : "PACKAGE-PRODUCT:GULUserDefaults",
+      "parameters" : {
+        "action" : "build",
+        "activeArchitecture" : "arm64",
+        "activeRunDestination" : {
+          "disableOnlyActiveArch" : false,
+          "platform" : "iphonesimulator",
+          "sdk" : "iphonesimulator16.0",
+          "sdkVariant" : "iphonesimulator",
+          "supportedArchitectures" : [
+            "arm64",
+            "x86_64"
+          ],
+          "targetArchitecture" : "arm64"
+        },
+        "arenaInfo" : {
+          "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+          "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+          "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+          "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+          "indexEnableDataStore" : true,
+          "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+          "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+        },
+        "configurationName" : "Debug",
+        "overrides" : {
+          "synthesized" : {
+            "table" : {
+              "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "",
+              "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "",
+              "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+              "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+              "DSTROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/ReleaseProducts",
+              "ENABLE_ONLY_ACTIVE_RESOURCES" : "NO",
+              "ENABLE_PREVIEWS" : "YES",
+              "OBJROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex",
+              "SYMROOT" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Products",
+              "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+              "TARGET_DEVICE_MODEL" : "iPhone14,5",
+              "TARGET_DEVICE_OS_VERSION" : "16.0",
+              "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "containerPath" : "/Applications/Trade-Marketplace/Trade Marketplace.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphonesimulator",
+      "sdk" : "iphonesimulator16.0",
+      "sdkVariant" : "iphonesimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Applications/Trade-Marketplace/Build/Products",
+      "derivedDataPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Applications/Trade-Marketplace/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone14,5",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "16.0",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone14,5",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "TARGET_DEVICE_IDENTIFIER" : "0B70FE2A-958F-4D38-8C6A-ED83B44243F7",
+          "TARGET_DEVICE_MODEL" : "iPhone14,5",
+          "TARGET_DEVICE_OS_VERSION" : "16.0",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "schemeCommand2" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

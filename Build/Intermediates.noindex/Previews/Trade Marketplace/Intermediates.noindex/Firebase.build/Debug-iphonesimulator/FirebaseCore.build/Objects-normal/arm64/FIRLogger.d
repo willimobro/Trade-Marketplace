@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Sources/FIRLogger.m \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Extension/FIRLogger.h \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/FirebaseCoreInternal.modulemap \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-Logger.modulemap \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-Environment.modulemap \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-NSData.modulemap \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/CoreOnly/Sources/module.modulemap \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/promises/Sources/FBLPromises/include/module.modulemap \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Sources/Public/FirebaseCore/FIRLoggerLevel.h \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade\ Marketplace/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-Environment.modulemap \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/NSURLSession+GULPromises.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULURLSessionDataResponse.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULSecureCoding.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULKeychainUtils.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULKeychainStorage.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorageUserDefaults.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorage.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULHeartbeatDateStorable.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Environment/Public/GoogleUtilities/GULAppEnvironmentUtil.h \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade\ Marketplace/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/FirebaseCoreInternal.modulemap \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade\ Marketplace/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-Logger.modulemap \
+  /Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade\ Marketplace/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/GoogleUtilities-NSData.modulemap \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public/GoogleUtilities/GULLoggerLevel.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/GoogleUtilities/GoogleUtilities/Logger/Public/GoogleUtilities/GULLogger.h \
+  /Users/williamlarsen/Library/Developer/Xcode/DerivedData/Trade_Marketplace-bnukrntsbilxxcfhhpxylbwdfmwq/SourcePackages/checkouts/firebase-ios-sdk/FirebaseCore/Sources/Public/FirebaseCore/FIRVersion.h

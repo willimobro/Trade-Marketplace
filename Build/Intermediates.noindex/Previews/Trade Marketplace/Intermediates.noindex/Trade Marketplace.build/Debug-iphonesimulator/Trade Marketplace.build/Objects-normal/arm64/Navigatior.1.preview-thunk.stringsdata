@@ -1,0 +1,16 @@
+{
+  "source": "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Navigatior.1.preview-thunk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Search"
+      },
+      {
+        "comment": "",
+        "key": "Search..."
+      }
+    ]
+  },
+  "version": 1
+}

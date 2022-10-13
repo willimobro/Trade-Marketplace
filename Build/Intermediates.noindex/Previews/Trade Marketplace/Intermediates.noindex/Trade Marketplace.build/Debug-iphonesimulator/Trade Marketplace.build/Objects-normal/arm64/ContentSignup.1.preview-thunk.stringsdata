@@ -1,0 +1,36 @@
+{
+  "source": "/Applications/Trade-Marketplace/Build/Intermediates.noindex/Previews/Trade Marketplace/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentSignup.1.preview-thunk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Create \nAccount"
+      },
+      {
+        "comment": "",
+        "key": "Create Account"
+      },
+      {
+        "comment": "",
+        "key": "Login"
+      },
+      {
+        "comment": "",
+        "key": "First name"
+      },
+      {
+        "comment": "",
+        "key": "Last name"
+      },
+      {
+        "comment": "",
+        "key": "Email"
+      },
+      {
+        "comment": "",
+        "key": "Password"
+      }
+    ]
+  },
+  "version": 1
+}
