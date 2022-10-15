@@ -8,11 +8,19 @@
       },
       {
         "comment": "",
-        "key": "publish"
+        "key": "Publish"
+      },
+      {
+        "comment": "",
+        "key": "By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace"
       },
       {
         "comment": "",
         "key": "Tags"
+      },
+      {
+        "comment": "",
+        "key": "optional"
       },
       {
         "comment": "",
@@ -28,7 +36,7 @@
       },
       {
         "comment": "",
-        "key": "e.g Sink Install"
+        "key": "123 example street, Invercargill"
       },
       {
         "comment": "",
@@ -69,6 +77,10 @@
       {
         "comment": "",
         "key": "Job name"
+      },
+      {
+        "comment": "",
+        "key": "e.g Sink Install"
       },
       {
         "comment": "",

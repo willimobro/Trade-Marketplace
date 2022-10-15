@@ -11,7 +11,7 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/Backgrounds/HomeBackground.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Views/QuoteViews/ReviewQuoteView.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/test.swift
-/Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/Server\ Control.swift
+/Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/ServerControl.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Backgrounds/BackgroundLogo_Main.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Objects/MainObject.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/ContentSort.swift
@@ -37,6 +37,7 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/Views/HomeView.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/ContentLogin.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/ProfileSub.swift
+/Applications/Trade-Marketplace/Trade\ Marketplace/Matt/UserSettings.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/MyListingsView.swift
 /Applications/Trade-Marketplace/AccountSettings.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/Navigatior.swift

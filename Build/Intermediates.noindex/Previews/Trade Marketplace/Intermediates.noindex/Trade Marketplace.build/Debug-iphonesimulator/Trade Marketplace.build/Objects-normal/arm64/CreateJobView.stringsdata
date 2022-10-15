@@ -60,6 +60,10 @@
       },
       {
         "comment": "",
+        "key": "123 example street, Invercargill"
+      },
+      {
+        "comment": "",
         "key": "Users Address"
       },
       {
@@ -68,7 +72,15 @@
       },
       {
         "comment": "",
-        "key": "publish"
+        "key": "optional"
+      },
+      {
+        "comment": "",
+        "key": "Publish"
+      },
+      {
+        "comment": "",
+        "key": "By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace"
       },
       {
         "comment": "",

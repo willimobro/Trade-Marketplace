@@ -328,6 +328,7 @@ struct CreateJobView_Previews: PreviewProvider {
 
 
 struct SubmitJob: View {
+    let activate = ServerControl()
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .foregroundColor(Color("UploadAJobGreen"))
@@ -339,10 +340,14 @@ struct SubmitJob: View {
  //                           .resizable()
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
-                      Text("Submit Job")
-                          .font(.title)
-                          .fontWeight(.semibold)
-                         .foregroundColor(.white)
+                        Button  {
+                            self.activate.setData()
+                        } label:    {
+                            Text("Submit Job")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                        }
 
                     }}
                     .frame(width: 319, height: 30, alignment: .center))
