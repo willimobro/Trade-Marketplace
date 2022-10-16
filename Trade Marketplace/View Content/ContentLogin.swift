@@ -73,7 +73,7 @@ struct ContentLogin: View {
                         
                 }
                 Button("Forgot Password?"){
-                    print("hello")
+                    selectedbutton = .home
                 }
                     .font(.caption)
                     .foregroundColor(Color("ButtonColorSL"))
@@ -81,8 +81,9 @@ struct ContentLogin: View {
                     .frame(width: 321, height: 40, alignment: .trailing)
                 
                 Button("Login") {
-                    login()
+                    ServerControl().login(email: email, password: password)
                         }
+                    
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
                     .cornerRadius(15)
@@ -104,14 +105,6 @@ struct ContentLogin: View {
             }
     .padding(.top, 300)
 }
-    func login()    {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            guard result != nil, error == nil else {
-                return
-            }
-            // Success
-        }
-    }
 
 
 }

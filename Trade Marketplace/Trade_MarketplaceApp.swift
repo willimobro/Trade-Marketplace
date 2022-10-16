@@ -9,7 +9,7 @@ struct Trade_Marketplace: App   {
     }
     var body: some Scene    {
     WindowGroup {
-     TabBar()
+     LandingControl()
     }
   }
 }

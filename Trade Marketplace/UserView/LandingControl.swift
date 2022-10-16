@@ -11,6 +11,7 @@ enum Views: String {
     case login
     case signup
     case landing
+    case home
 }
 
 struct LandingControl: View {
@@ -25,7 +26,8 @@ struct LandingControl: View {
                     SignupView(selectedbutton: $selectedbutton)
                 case .landing:
                     LandingView(selectedbutton: $selectedbutton)
-                
+                case.home:
+                    TabBar()
                 }
             }
         }

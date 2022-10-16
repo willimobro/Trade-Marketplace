@@ -4,7 +4,7 @@ import SwiftUI
 
 extension LandingControl_Previews {
     @_dynamicReplacement(for: previews) private static var __preview__previews: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 37)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 39)
         LandingControl()
    
 #sourceLocation()
@@ -13,7 +13,7 @@ extension LandingControl_Previews {
 
 extension LandingControl {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 19)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 20)
         ZStack {
             Group{
                 switch selectedbutton {
@@ -23,7 +23,8 @@ extension LandingControl {
                     SignupView(selectedbutton: $selectedbutton)
                 case .landing:
                     LandingView(selectedbutton: $selectedbutton)
-                
+                case.home:
+                    TabBar()
                 }
             }
         }
