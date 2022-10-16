@@ -17,12 +17,25 @@ class ServerControl: UIViewController  {
         }
     let db = Firestore.firestore()
     
-        func setData() {
-        let data: [String: Any] = [:]
-        db.collection("cities").document("new-city-id").setData(data)
-            return
+    func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
+        // [START set_document]
+        // Add a new document in collection "cities"
+        
+        db.collection(Category).document("Work").setData([
+            "JobName": JobName,
+            "Category": Category,
+            "When": When,
+            "Where": Where,
+            "Tags": Tags
+        ])
+        { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
     }
-    
 }
  
 

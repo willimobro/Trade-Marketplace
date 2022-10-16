@@ -2,39 +2,30 @@
 import SwiftUI
 import SwiftUI
 
-extension SubmitJob_Previews {
-    @_dynamicReplacement(for: previews) private static var __preview__previews: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 361)
-        SubmitJob()
-    
-#sourceLocation()
-    }
-}
-
 extension SubmitJob {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 333)
-        RoundedRectangle(cornerRadius: __designTimeInteger("#11718.[12].[1].property.[0].[0].arg[0].value", fallback: 25))
-            .foregroundColor(Color(__designTimeString("#11718.[12].[1].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: "UploadAJobGreen")))
-            .frame(width: __designTimeInteger("#11718.[12].[1].property.[0].[0].modifier[1].arg[0].value", fallback: 359), height: __designTimeInteger("#11718.[12].[1].property.[0].[0].modifier[1].arg[1].value", fallback: 56))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 351)
+        RoundedRectangle(cornerRadius: __designTimeInteger("#1330.[12].[6].property.[0].[0].arg[0].value", fallback: 25))
+            .foregroundColor(Color(__designTimeString("#1330.[12].[6].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: "UploadAJobGreen")))
+            .frame(width: __designTimeInteger("#1330.[12].[6].property.[0].[0].modifier[1].arg[0].value", fallback: 359), height: __designTimeInteger("#1330.[12].[6].property.[0].[0].modifier[1].arg[1].value", fallback: 56))
             .overlay(
-                VStack(alignment: .center, spacing: __designTimeInteger("#11718.[12].[1].property.[0].[0].modifier[2].arg[0].value.arg[1].value", fallback: 0)){
+                VStack(alignment: .center, spacing: __designTimeInteger("#1330.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[1].value", fallback: 0)){
                     HStack{
  //                       Image (systemName: "plus.app.fill")
  //                           .resizable()
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.setData()
+                            self.activate.setDataCreateAJob(JobName: JobName, Category: Category, When: When, Where: Where, Tags: Tags)
                         } label:    {
-                            Text(__designTimeString("#11718.[12].[1].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[1].value.[0].arg[0].value", fallback: "Submit Job"))
+                            Text(__designTimeString("#1330.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[1].value.[0].arg[0].value", fallback: "Submit Job"))
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
                         }
 
                     }}
-                    .frame(width: __designTimeInteger("#11718.[12].[1].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[0].value", fallback: 319), height: __designTimeInteger("#11718.[12].[1].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[1].value", fallback: 30), alignment: .center))
+                    .frame(width: __designTimeInteger("#1330.[12].[6].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[0].value", fallback: 319), height: __designTimeInteger("#1330.[12].[6].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[1].value", fallback: 30), alignment: .center))
         
 #sourceLocation()
     }
@@ -42,7 +33,7 @@ extension SubmitJob {
 
 extension CreateJobView_Previews {
     @_dynamicReplacement(for: previews) private static var __preview__previews: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 325)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 338)
         CreateJobView()
     
 #sourceLocation()
@@ -51,15 +42,14 @@ extension CreateJobView_Previews {
 
 extension Publish {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 306)
-        Text(__designTimeString("#11718.[10].[0].property.[0].[0].arg[0].value", fallback: "Publish"))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 320)
+        Text(__designTimeString("#1330.[10].[0].property.[0].[0].arg[0].value", fallback: "Publish"))
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, __designTimeInteger("#11718.[10].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 30))
-        Text(__designTimeString("#11718.[10].[0].property.[0].[1].arg[0].value", fallback: "By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace"))
+            .padding(.top, __designTimeInteger("#1330.[10].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 30))
+        Text(__designTimeString("#1330.[10].[0].property.[0].[1].arg[0].value", fallback: "By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace"))
             .font(.footnote)
-            .padding(.bottom, __designTimeInteger("#11718.[10].[0].property.[0].[1].modifier[1].arg[1].value", fallback: 10))
-        SubmitJob()
+            .padding(.bottom, __designTimeInteger("#1330.[10].[0].property.[0].[1].modifier[1].arg[1].value", fallback: 10))
         
 #sourceLocation()
     }
@@ -67,24 +57,24 @@ extension Publish {
 
 extension Tags {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 284)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 298)
         HStack{
-            Text(__designTimeString("#11718.[9].[1].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Tags"))
+            Text(__designTimeString("#1330.[9].[1].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Tags"))
                 .font(.title)
                 .fontWeight(.bold)
-                .padding(.top, __designTimeInteger("#11718.[9].[1].property.[0].[0].arg[0].value.[0].modifier[2].arg[1].value", fallback: 10))
+                .padding(.top, __designTimeInteger("#1330.[9].[1].property.[0].[0].arg[0].value.[0].modifier[2].arg[1].value", fallback: 10))
             Spacer()
-            Text(__designTimeString("#11718.[9].[1].property.[0].[0].arg[0].value.[2].arg[0].value", fallback: "optional"))
+            Text(__designTimeString("#1330.[9].[1].property.[0].[0].arg[0].value.[2].arg[0].value", fallback: "optional"))
                 .font(.footnote)
                 .foregroundColor(Color.gray)
-                .padding(.top, __designTimeInteger("#11718.[9].[1].property.[0].[0].arg[0].value.[2].modifier[2].arg[1].value", fallback: 14))
+                .padding(.top, __designTimeInteger("#1330.[9].[1].property.[0].[0].arg[0].value.[2].modifier[2].arg[1].value", fallback: 14))
         }
         
         TextEditor(text: $tags)
             .foregroundColor(Color.black)
-            .frame(height: __designTimeInteger("#11718.[9].[1].property.[0].[1].modifier[1].arg[0].value", fallback: 100))
+            .frame(height: __designTimeInteger("#1330.[9].[1].property.[0].[1].modifier[1].arg[0].value", fallback: 100))
             .overlay(Rectangle()
-            .stroke(Color.secondary).opacity(__designTimeFloat("#11718.[9].[1].property.[0].[1].modifier[2].arg[0].value.modifier[1].arg[0].value", fallback: 0.5)))
+            .stroke(Color.secondary).opacity(__designTimeFloat("#1330.[9].[1].property.[0].[1].modifier[2].arg[0].value.modifier[1].arg[0].value", fallback: 0.5)))
         
 #sourceLocation()
     }
@@ -92,18 +82,18 @@ extension Tags {
 
 extension Where {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 232)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 246)
         VStack {
-            Text(__designTimeString("#11718.[8].[4].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Where"))
+            Text(__designTimeString("#1330.[8].[4].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Where"))
                 .font(.title)
                 .fontWeight(.bold)
-                .padding(.top, __designTimeInteger("#11718.[8].[4].property.[0].[0].arg[0].value.[0].modifier[2].arg[1].value", fallback: 10))
+                .padding(.top, __designTimeInteger("#1330.[8].[4].property.[0].[0].arg[0].value.[0].modifier[2].arg[1].value", fallback: 10))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             HStack{
                 VStack {
-                    VStack (alignment: .center, spacing: __designTimeInteger("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[1].value", fallback: 10)){
-                        Picker(__designTimeString("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[0].arg[0].value", fallback: "Please Select an option"), selection: $showLocationModifier) {
+                    VStack (alignment: .center, spacing: __designTimeInteger("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[1].value", fallback: 10)){
+                        Picker(__designTimeString("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[0].arg[0].value", fallback: "Please Select an option"), selection: $showLocationModifier) {
                             ForEach(options, id: \.self) {
                                 Text($0)
                                    
@@ -113,13 +103,13 @@ extension Where {
                         .pickerStyle(.segmented)
                         
                         if showLocationModifier == "They will come to me." {
-                            Toggle(__designTimeString("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[0].arg[0].value", fallback: "Use My Address?"), isOn: $showLocation)
-                                .padding(.top, __designTimeInteger("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[0].modifier[0].arg[1].value", fallback: 15))
+                            Toggle(__designTimeString("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[0].arg[0].value", fallback: "Use My Address?"), isOn: $showLocation)
+                                .padding(.top, __designTimeInteger("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[0].modifier[0].arg[1].value", fallback: 15))
                             
                             
                             if showLocation {
-                                VStack(spacing: __designTimeInteger("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[0].[0].arg[0].value", fallback: 20)){
-                                    Text(__designTimeString("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[0].[0].arg[1].value.[0].arg[0].value", fallback: "Users Address"))
+                                VStack(spacing: __designTimeInteger("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[0].[0].arg[0].value", fallback: 20)){
+                                    Text(__designTimeString("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[0].[0].arg[1].value.[0].arg[0].value", fallback: "Users Address"))
                                         .foregroundColor(Color.green)
                                         .multilineTextAlignment(.leading)
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -127,11 +117,11 @@ extension Where {
                                 }
                             } else {
                                 TextField(
-                                    __designTimeString("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[1].[0].arg[0].value", fallback: "123 example street, Invercargill"),
+                                    __designTimeString("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[1].[0].arg[0].value", fallback: "123 example street, Invercargill"),
                                     text: $manualaddress)
                                 Divider()
                                     .background(.black)
-                                    .padding(__designTimeInteger("#11718.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[1].[1].modifier[1].arg[0].value", fallback: 0))
+                                    .padding(__designTimeInteger("#1330.[8].[4].property.[0].[0].arg[0].value.[1].arg[0].value.[0].arg[0].value.[0].arg[2].value.[1].[0].[1].[1].[1].modifier[1].arg[0].value", fallback: 0))
                             }
                         }
                     }
@@ -145,11 +135,11 @@ extension Where {
 
 extension Description {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 218)
-        Text(__designTimeString("#11718.[7].[0].property.[0].[0].arg[0].value", fallback: "Details"))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 232)
+        Text(__designTimeString("#1330.[7].[0].property.[0].[0].arg[0].value", fallback: "Details"))
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, __designTimeInteger("#11718.[7].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
+            .padding(.top, __designTimeInteger("#1330.[7].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
         
 #sourceLocation()
     }
@@ -157,19 +147,17 @@ extension Description {
 
 extension Details {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 198)
-        Text(__designTimeString("#11718.[6].[0].property.[0].[0].arg[0].value", fallback: "Details"))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 214)
+        Text(__designTimeString("#1330.[6].[1].property.[0].[0].arg[0].value", fallback: "Details"))
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, __designTimeInteger("#11718.[6].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
+            .padding(.top, __designTimeInteger("#1330.[6].[1].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
         
         List {
-            SelectCategory()
-            SelectCategory()
-            SelectCategory()
-        }.frame(height: __designTimeInteger("#11718.[6].[0].property.[0].[1].modifier[0].arg[0].value", fallback: 140))
+            SelectCategory(category: $category)
+        }.frame(height: __designTimeInteger("#1330.[6].[1].property.[0].[1].modifier[0].arg[0].value", fallback: 140))
             .listStyle(.plain)
-        Text(__designTimeString("#11718.[6].[0].property.[0].[2].arg[0].value", fallback: "A short job name helps tradies and the like easily identify and respond to your job"))
+        Text(__designTimeString("#1330.[6].[1].property.[0].[2].arg[0].value", fallback: "A short job name helps tradies and the like easily identify and respond to your job"))
             .font(.footnote)
             .foregroundColor(Color.gray)
         
@@ -179,31 +167,31 @@ extension Details {
 
 extension When {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 167)
-        Text(__designTimeString("#11718.[5].[0].property.[0].[0].arg[0].value", fallback: "When"))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 182)
+        Text(__designTimeString("#1330.[5].[1].property.[0].[0].arg[0].value", fallback: "When"))
             .font(.title)
             .fontWeight(.bold)
-            .padding(.top, __designTimeInteger("#11718.[5].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
+            .padding(.top, __designTimeInteger("#1330.[5].[1].property.[0].[0].modifier[2].arg[1].value", fallback: 10))
         HStack{
-            Text(__designTimeString("#11718.[5].[0].property.[0].[1].arg[0].value.[0].arg[0].value", fallback: "Default: ASAP"))
+            TextField(__designTimeString("#1330.[5].[1].property.[0].[1].arg[0].value.[0].arg[0].value", fallback: "Default: ASAP"), text: $WhenDataMain)
                 .font(.footnote)
                 .foregroundColor(Color.gray)
             Spacer()
-            Text(__designTimeString("#11718.[5].[0].property.[0].[1].arg[0].value.[2].arg[0].value", fallback: "Select"))
+            Text(__designTimeString("#1330.[5].[1].property.[0].[1].arg[0].value.[2].arg[0].value", fallback: "Select"))
                 .font(.footnote)
                 .foregroundColor(Color.gray)
-            Image(systemName: __designTimeString("#11718.[5].[0].property.[0].[1].arg[0].value.[3].arg[0].value", fallback: "calendar.badge.plus"))
+            Image(systemName: __designTimeString("#1330.[5].[1].property.[0].[1].arg[0].value.[3].arg[0].value", fallback: "calendar.badge.plus"))
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(.gray)
-                .frame(width: __designTimeInteger("#11718.[5].[0].property.[0].[1].arg[0].value.[3].modifier[3].arg[0].value", fallback: 40), height: __designTimeInteger("#11718.[5].[0].property.[0].[1].arg[0].value.[3].modifier[3].arg[1].value", fallback: 30))
+                .frame(width: __designTimeInteger("#1330.[5].[1].property.[0].[1].arg[0].value.[3].modifier[3].arg[0].value", fallback: 40), height: __designTimeInteger("#1330.[5].[1].property.[0].[1].arg[0].value.[3].modifier[3].arg[1].value", fallback: 30))
         }
             Divider()
                 .background(.black)
-                .padding(__designTimeInteger("#11718.[5].[0].property.[0].[2].modifier[1].arg[0].value", fallback: 0))
+                .padding(__designTimeInteger("#1330.[5].[1].property.[0].[2].modifier[1].arg[0].value", fallback: 0))
         
         
-        Text(__designTimeString("#11718.[5].[0].property.[0].[3].arg[0].value", fallback: "When do you need the job done"))
+        Text(__designTimeString("#1330.[5].[1].property.[0].[3].arg[0].value", fallback: "When do you need the job done"))
             .font(.footnote)
             .foregroundColor(Color.gray)
         
@@ -213,19 +201,16 @@ extension When {
 
 extension SelectCategory {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 148)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 165)
        
         HStack{
-            Text(__designTimeString("#11718.[4].[0].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Select a Category"))
-            Spacer()
-            Text(__designTimeString("#11718.[4].[0].property.[0].[0].arg[0].value.[2].arg[0].value", fallback: "Select"))
+            Picker(__designTimeString("#1330.[4].[2].property.[0].[0].arg[0].value.[0].arg[0].value", fallback: "Selected Category"), selection: $category)    {
+                ForEach(categories, id: \.self) {
+                    Text($0)
+                }
+            }
                 .font(.footnote)
                 .foregroundColor(Color.gray)
-            Image(systemName: __designTimeString("#11718.[4].[0].property.[0].[0].arg[0].value.[3].arg[0].value", fallback: "chevron.right"))
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.gray)
-                .frame(width: __designTimeInteger("#11718.[4].[0].property.[0].[0].arg[0].value.[3].modifier[3].arg[0].value", fallback: 15), height: __designTimeInteger("#11718.[4].[0].property.[0].[0].arg[0].value.[3].modifier[3].arg[1].value", fallback: 15))
         }
         
     
@@ -235,19 +220,19 @@ extension SelectCategory {
 
 extension UploadCameraIcon {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 128)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 134)
        
         Rectangle()
-            .stroke(style: StrokeStyle(lineWidth: __designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: 1), dash: [__designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[0].arg[0].value.arg[1].value.[0]", fallback: 3)]))
+            .stroke(style: StrokeStyle(lineWidth: __designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: 1), dash: [__designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[0].arg[0].value.arg[1].value.[0]", fallback: 3)]))
             .foregroundColor(.gray)
-            .frame(width: __designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[2].arg[0].value", fallback: 72), height: __designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 52))
-            .padding(__designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[3].arg[0].value", fallback: 5))
+            .frame(width: __designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[2].arg[0].value", fallback: 72), height: __designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 52))
+            .padding(__designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[3].arg[0].value", fallback: 5))
             .overlay(
-                Image(systemName: __designTimeString("#11718.[3].[0].property.[0].[0].modifier[4].arg[0].value.arg[0].value", fallback: "video.badge.plus"))
+                Image(systemName: __designTimeString("#1330.[3].[0].property.[0].[0].modifier[4].arg[0].value.arg[0].value", fallback: "video.badge.plus"))
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.gray)
-                    .frame(width: __designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[0].value", fallback: 22), height: __designTimeInteger("#11718.[3].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[1].value", fallback: 22))
+                    .frame(width: __designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[0].value", fallback: 22), height: __designTimeInteger("#1330.[3].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[1].value", fallback: 22))
                     
             )
         
@@ -258,19 +243,19 @@ extension UploadCameraIcon {
 
 extension UploadPictureIcon {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 107)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 113)
        
         Rectangle()
-            .stroke(style: StrokeStyle(lineWidth: __designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: 1), dash: [__designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[0].arg[0].value.arg[1].value.[0]", fallback: 3)]))
+            .stroke(style: StrokeStyle(lineWidth: __designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: 1), dash: [__designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[0].arg[0].value.arg[1].value.[0]", fallback: 3)]))
             .foregroundColor(.gray)
-            .frame(width: __designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[2].arg[0].value", fallback: 52), height: __designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 52))
-            .padding(__designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[3].arg[0].value", fallback: 5))
+            .frame(width: __designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[2].arg[0].value", fallback: 52), height: __designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[2].arg[1].value", fallback: 52))
+            .padding(__designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[3].arg[0].value", fallback: 5))
             .overlay(
-                Image(systemName: __designTimeString("#11718.[2].[0].property.[0].[0].modifier[4].arg[0].value.arg[0].value", fallback: "camera"))
+                Image(systemName: __designTimeString("#1330.[2].[0].property.[0].[0].modifier[4].arg[0].value.arg[0].value", fallback: "camera"))
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(.gray)
-                    .frame(width: __designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[0].value", fallback: 22), height: __designTimeInteger("#11718.[2].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[1].value", fallback: 22))
+                    .frame(width: __designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[0].value", fallback: 22), height: __designTimeInteger("#1330.[2].[0].property.[0].[0].modifier[4].arg[0].value.modifier[3].arg[1].value", fallback: 22))
                     
             )
         
@@ -281,93 +266,95 @@ extension UploadPictureIcon {
 
 extension CreateJobView {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 15)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 19)
         VStack(alignment: .leading){
-            HStack(spacing: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].arg[0].value", fallback: 30)){
-                Image(systemName: __designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[0].arg[1].value.[0].arg[0].value", fallback: "xmark"))
+            HStack(spacing: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].arg[0].value", fallback: 30)){
+                Image(systemName: __designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[0].arg[1].value.[0].arg[0].value", fallback: "xmark"))
                     .resizable()
-                    .frame(width: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].arg[1].value.[0].modifier[1].arg[0].value", fallback: 25), height: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].arg[1].value.[0].modifier[1].arg[1].value", fallback: 25))
+                    .frame(width: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].arg[1].value.[0].modifier[1].arg[0].value", fallback: 25), height: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].arg[1].value.[0].modifier[1].arg[1].value", fallback: 25))
                     .scaledToFit()
                 
                     
-                Text(__designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[0].arg[1].value.[1].arg[0].value", fallback: "Create a job"))
+                Text(__designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[0].arg[1].value.[1].arg[0].value", fallback: "Create a job"))
                     .font(.title)
                     .fontWeight(.bold)
                     
                     
-            }.frame(width: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].modifier[0].arg[0].value", fallback: 321), height: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].modifier[0].arg[1].value", fallback: 24), alignment: .leading)
-                .padding(.horizontal, __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[0].modifier[1].arg[1].value", fallback: 20))
+            }.frame(width: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].modifier[0].arg[0].value", fallback: 321), height: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].modifier[0].arg[1].value", fallback: 24), alignment: .leading)
+                .padding(.horizontal, __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[0].modifier[1].arg[1].value", fallback: 20))
         
             
             Divider()
                 .background(.black)
-                .shadow(color: .black, radius: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[1].modifier[1].arg[1].value", fallback: 4), x: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[1].modifier[1].arg[2].value", fallback: 0), y: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[1].modifier[1].arg[3].value", fallback: 0))
-                .opacity(__designTimeFloat("#11718.[1].[3].property.[0].[0].arg[1].value.[1].modifier[2].arg[0].value", fallback: 0.5))
-                .frame(height: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[1].modifier[3].arg[0].value", fallback: 20), alignment: .bottom)
+                .shadow(color: .black, radius: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[1].modifier[1].arg[1].value", fallback: 4), x: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[1].modifier[1].arg[2].value", fallback: 0), y: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[1].modifier[1].arg[3].value", fallback: 0))
+                .opacity(__designTimeFloat("#1330.[1].[7].property.[0].[0].arg[1].value.[1].modifier[2].arg[0].value", fallback: 0.5))
+                .frame(height: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[1].modifier[3].arg[0].value", fallback: 20), alignment: .bottom)
             
                 
             
             ScrollView(.vertical){
-                VStack(alignment: .leading, spacing: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[1].value", fallback: 10)){
+                VStack(alignment: .leading, spacing: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[1].value", fallback: 10)){
                     
                     
                     HStack{
-                        ForEach (__designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].arg[0].value.[0].arg[0].value.[0]", fallback: 1)..<__designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].arg[0].value.[0].arg[0].value.[1]", fallback: 5)) { i in
+                        ForEach (__designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].arg[0].value.[0].arg[0].value.[0]", fallback: 1)..<__designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].arg[0].value.[0].arg[0].value.[1]", fallback: 5)) { i in
                             UploadPictureIcon()
                         }
                         UploadCameraIcon()
-                    }.padding(.vertical, __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].modifier[0].arg[1].value", fallback: 10))
+                    }.padding(.vertical, __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[0].modifier[0].arg[1].value", fallback: 10))
                 //Job Name
-                    Text(__designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[1].arg[0].value", fallback: "Job name"))
+                    Text(__designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[1].arg[0].value", fallback: "Job name"))
                         .font(.title)
                         .fontWeight(.bold)
-                    VStack (alignment: .leading, spacing: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[1].value", fallback: 10)){
+                    VStack (alignment: .leading, spacing: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[1].value", fallback: 10)){
                         TextField(
-                        __designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[0].arg[0].value", fallback: "e.g Sink Install"),
+                        __designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[0].arg[0].value", fallback: "e.g Sink Install"),
                         text: $jobTitle)
                         Divider()
                             .background(.black)
-                            .padding(__designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[1].modifier[1].arg[0].value", fallback: 0))
-                        Text(__designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[2].arg[0].value", fallback: "A short job name helps tradies and the like easily identify and respond to your job"))
+                            .padding(__designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[1].modifier[1].arg[0].value", fallback: 0))
+                        Text(__designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[2].arg[0].value", fallback: "A short job name helps tradies and the like easily identify and respond to your job"))
                             .font(.footnote)
                             .foregroundColor(Color.gray)
 
                         
                     //Description
-                        Text(__designTimeString("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[3].arg[0].value", fallback: "Description"))
+                        Text(__designTimeString("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[3].arg[0].value", fallback: "Description"))
                             .font(.title)
                             .fontWeight(.bold)
-                            .padding(.top, __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[3].modifier[2].arg[1].value", fallback: 10))
+                            .padding(.top, __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[3].modifier[2].arg[1].value", fallback: 10))
 
                         
                         TextEditor(text: $jobDesc)
                             .foregroundColor(Color.black)
-                            .frame(height: __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[4].modifier[1].arg[0].value", fallback: 200))
+                            .frame(height: __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[4].modifier[1].arg[0].value", fallback: 200))
                             .overlay(Rectangle()
-                                .stroke(Color.secondary).opacity(__designTimeFloat("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[4].modifier[2].arg[0].value.modifier[1].arg[0].value", fallback: 0.5)))
-                  
-                    // Details
-                        Details()
-                    //When
-                        When()
-                        
-                    //Where
-                        Where()
-                
-                        
-                    //Add tags
-                        Tags()
-                        
-                    //Publish
-                        Publish()
-
+                                .stroke(Color.secondary).opacity(__designTimeFloat("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].arg[2].value.[2].arg[2].value.[4].modifier[2].arg[0].value.modifier[1].arg[0].value", fallback: 0.5)))
+                        Group{
+                            // Details
+                            Details(category: $category)
+                            //When
+                            When(WhenDataMain: $WhendataMain)
+                            
+                            //Where
+                            Where(manualaddress: $manualaddress)
+                            
+                            
+                            //Add tags
+                            Tags(tags: $tags)
+                            
+                            //Publish
+                            Publish()
+                            //SubmitJob
+                            SubmitJob(JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
+                        }
                     }
                     
                     
-                } .padding(.horizontal, __designTimeInteger("#11718.[1].[3].property.[0].[0].arg[1].value.[2].arg[1].value.[0].modifier[0].arg[1].value", fallback: 20))
+                } .padding(.horizontal, __designTimeInteger("#1330.[1].[7].property.[0].[0].arg[1].value.[2].arg[1].value.[0].modifier[0].arg[1].value", fallback: 20))
                 
             }
-        }.padding(.bottom, __designTimeInteger("#11718.[1].[3].property.[0].[0].modifier[0].arg[1].value", fallback: 60))
+        }.padding(.bottom, __designTimeInteger("#1330.[1].[7].property.[0].[0].modifier[0].arg[1].value", fallback: 60))
         
     
 #sourceLocation()
@@ -386,4 +373,3 @@ import struct Trade_Marketplace.Tags
 import struct Trade_Marketplace.Publish
 import struct Trade_Marketplace.CreateJobView_Previews
 import struct Trade_Marketplace.SubmitJob
-import struct Trade_Marketplace.SubmitJob_Previews

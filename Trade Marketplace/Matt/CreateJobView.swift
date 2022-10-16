@@ -9,8 +9,12 @@ import SwiftUI
 // hello
 struct CreateJobView: View {
     @Environment(\.dismiss) var dismiss
+    @State var WhendataMain: String = "ASAP"
     @State private var jobTitle = String()
     @State private var jobDesc: String = "Describe your job and anything else you think may be required."
+    @State  var manualaddress: String = ""
+    @State var tags: String = "Enter Tags"
+    @State var category: String = ""
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 30){
@@ -75,22 +79,24 @@ struct CreateJobView: View {
                             .frame(height: 200)
                             .overlay(Rectangle()
                                 .stroke(Color.secondary).opacity(0.5))
-                  
-                    // Details
-                        Details()
-                    //When
-                        When()
-                        
-                    //Where
-                        Where()
-                
-                        
-                    //Add tags
-                        Tags()
-                        
-                    //Publish
-                        Publish()
-
+                        Group{
+                            // Details
+                            Details(category: $category)
+                            //When
+                            When(WhenDataMain: $WhendataMain)
+                            
+                            //Where
+                            Where(manualaddress: $manualaddress)
+                            
+                            
+                            //Add tags
+                            Tags(tags: $tags)
+                            
+                            //Publish
+                            Publish()
+                            //SubmitJob
+                            SubmitJob(JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
+                        }
                     }
                     
                     
@@ -144,32 +150,41 @@ struct UploadCameraIcon: View {
 }
 
 struct SelectCategory: View {
+    @Binding var category: String
+    let categories = [
+        "Agricultural",
+        "Construction",
+        "Electrical",
+        "Metal Fabrication",
+        "Painting",
+        "Plumbing",
+        "Refrigeration",
+        "Welding"
+    ]
     var body: some View {
        
         HStack{
-            Text("Select a Category")
-            Spacer()
-            Text("Select")
+            Picker("Selected Category", selection: $category)    {
+                ForEach(categories, id: \.self) {
+                    Text($0)
+                }
+            }
                 .font(.footnote)
                 .foregroundColor(Color.gray)
-            Image(systemName: "chevron.right")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.gray)
-                .frame(width: 15, height: 15)
         }
         
     }
 }
 
 struct When: View {
+    @Binding var WhenDataMain: String
     var body: some View {
         Text("When")
             .font(.title)
             .fontWeight(.bold)
             .padding(.top, 10)
         HStack{
-            Text("Default: ASAP")
+            TextField("Default: ASAP", text: $WhenDataMain)
                 .font(.footnote)
                 .foregroundColor(Color.gray)
             Spacer()
@@ -194,6 +209,7 @@ struct When: View {
     }
 
 struct Details: View {
+    @Binding var category: String
     var body: some View {
         Text("Details")
             .font(.title)
@@ -201,9 +217,7 @@ struct Details: View {
             .padding(.top, 10)
         
         List {
-            SelectCategory()
-            SelectCategory()
-            SelectCategory()
+            SelectCategory(category: $category)
         }.frame(height: 140)
             .listStyle(.plain)
         Text("A short job name helps tradies and the like easily identify and respond to your job")
@@ -223,7 +237,7 @@ struct Description: View {
     }
 // hello
 struct Where: View {
-    @State var manualaddress = String()
+    @Binding var manualaddress: String
     @State private var showLocation = false
     @State var showLocationModifier = "They will come to me."
     var options = ["I'll go to them.", "They will come to me."]
@@ -279,7 +293,7 @@ struct Where: View {
 
 
 struct Tags: View {
-    @State private var tags: String = "Enter Tags"
+    @Binding var tags: String
     var body: some View {
         HStack{
             Text("Tags")
@@ -310,7 +324,6 @@ struct Publish: View {
         Text("By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace")
             .font(.footnote)
             .padding(.bottom, 10)
-        SubmitJob()
         }
     }
 
@@ -329,6 +342,11 @@ struct CreateJobView_Previews: PreviewProvider {
 
 struct SubmitJob: View {
     let activate = ServerControl()
+    @Binding  var JobName: String
+    @Binding  var Category: String
+    @Binding  var When: String
+    @Binding  var Where: String
+    @Binding  var Tags: String
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .foregroundColor(Color("UploadAJobGreen"))
@@ -341,7 +359,7 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.setData()
+                            self.activate.setDataCreateAJob(JobName: JobName, Category: Category, When: When, Where: Where, Tags: Tags)
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)
@@ -355,10 +373,4 @@ struct SubmitJob: View {
                     
     }
 
-
-struct SubmitJob_Previews: PreviewProvider {
-    static var previews: some View {
-        SubmitJob()
-    }
-}
 
