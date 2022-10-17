@@ -10,12 +10,18 @@ import FirebaseAuth
 import Firebase
 
 
+class UserLoggedIn: ObservableObject {
+    @Published var user = 0
+}
+
 class ServerControl: UIViewController  {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
+    @StateObject var loggedin = UserLoggedIn()
     ///
     func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
         // [START set_document]
@@ -49,7 +55,7 @@ class ServerControl: UIViewController  {
                         print("error adding document")
                     }
                 }
-                LandingControl().transition(key: true)
+                self.loggedin.user = 1
 //
             }
         }
@@ -61,7 +67,7 @@ class ServerControl: UIViewController  {
             if err != nil {
                 return
             }
-            LandingControl().transition(key: true)
+            self.loggedin.user = 1
 //
             
         }

@@ -8,7 +8,7 @@ struct Trade_Marketplace: App   {
     }
     var body: some Scene    {
     WindowGroup {
-        LandingControl()
+        ContentView()
     }
   }
 }
