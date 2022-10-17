@@ -16,7 +16,6 @@ class ServerControl: UIViewController  {
     }
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    @State var UserLoggedIn: Bool = false
     ///
     func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
         // [START set_document]
@@ -50,7 +49,8 @@ class ServerControl: UIViewController  {
                         print("error adding document")
                     }
                 }
-                self.UserLoggedIn = true
+                LandingControl().transition(key: true)
+//
             }
         }
     }
@@ -61,7 +61,8 @@ class ServerControl: UIViewController  {
             if err != nil {
                 return
             }
-            self.UserLoggedIn = true
+            LandingControl().transition(key: true)
+//
             
         }
     }

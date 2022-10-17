@@ -4,20 +4,18 @@ import SwiftUI
 
 extension LandingControl {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 20)
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 21)
         ZStack {
             Group{
                 switch selectedbutton {
                 case .login:
-                    LoginView(selectedbutton: $selectedbutton)
+                    LoginView(UserLoggedIn: $UserLoggedIn, selectedbutton: $selectedbutton)
                 case .signup:
                     SignupView(selectedbutton: $selectedbutton)
                 case .landing:
                     LandingView(selectedbutton: $selectedbutton)
-                }
-                if ServerControl().UserLoggedIn == true {
+                case.home:
                     TabBar()
-                
                 }
             }
         }

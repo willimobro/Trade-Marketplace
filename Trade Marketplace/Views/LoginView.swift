@@ -8,12 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
-    @Binding var UserLoggedIn: Bool
     @Binding var selectedbutton : Views
     var body: some View {
                     ZStack{
                         BackgroundLogo_Secoundary()
-                        ContentLogin(UserLoggedIn: $UserLoggedIn, selectedbutton: $selectedbutton)
+                        ContentLogin( selectedbutton: $selectedbutton)
                         VStack{
                             Image("loginphone")
                                 .resizable()
