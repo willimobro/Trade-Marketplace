@@ -29,6 +29,7 @@ class AppViewModel: ObservableObject {
 
 
 struct ContentLogin: View {
+    @Binding var UserLoggedIn: Bool
     @Binding var selectedbutton : Views
     @State var email = ""
     @State var password = ""
@@ -73,7 +74,7 @@ struct ContentLogin: View {
                         
                 }
                 Button("Forgot Password?"){
-                    selectedbutton = .home
+                    print("hello")
                 }
                     .font(.caption)
                     .foregroundColor(Color("ButtonColorSL"))
@@ -82,7 +83,12 @@ struct ContentLogin: View {
                 
                 Button("Login") {
                     ServerControl().login(email: email, password: password)
-                        }
+                    if UserLoggedIn == true{
+                        selectedbutton = .home
+                    }   else {
+                        print("error logging in")
+                    }
+                }
                     
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))

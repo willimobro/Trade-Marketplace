@@ -6,19 +6,17 @@
 //
 
 import SwiftUI
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import FirebaseAuth
+import Firebase
 
 
 class ServerControl: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
-        }
+    }
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    let activate = LandingControl()
+    @State var UserLoggedIn: Bool = false
     ///
     func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
         // [START set_document]
@@ -42,34 +40,32 @@ class ServerControl: UIViewController  {
     ///
     ///
     func register(email: String, password: String, firstnamef: String, lastnamef: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            if error != nil {
-                return
+        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
+            if err != nil {
+                print("error creating user")
                 
             } else {
-                self.db.collection("Users").addDocument(data: ["firstname": firstnamef, "lastname": lastnamef, "uid": result!.user.uid]) { (error) in
+                self.db.collection("users").addDocument(data: ["firstname" : firstnamef, "lastname" : lastnamef, "uid": result!.user.uid])  { (error) in
                     if error != nil {
-                        return
-                    }
-                    else    {
-                        self.activate.selectedbutton = .home
+                        print("error adding document")
                     }
                 }
+                self.UserLoggedIn = true
             }
         }
     }
+    
     ///
     func login(email: String, password: String)    {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            if error != nil {
+        Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
+            if err != nil {
                 return
-            } else {
-                self.activate.selectedbutton = .home
             }
+            self.UserLoggedIn = true
+            
         }
     }
 }
- 
 
 
 

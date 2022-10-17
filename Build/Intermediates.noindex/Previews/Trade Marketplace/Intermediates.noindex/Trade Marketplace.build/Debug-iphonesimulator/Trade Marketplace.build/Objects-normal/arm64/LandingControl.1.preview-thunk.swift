@@ -2,15 +2,6 @@
 import SwiftUI
 import SwiftUI
 
-extension LandingControl_Previews {
-    @_dynamicReplacement(for: previews) private static var __preview__previews: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 39)
-        LandingControl()
-   
-#sourceLocation()
-    }
-}
-
 extension LandingControl {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
         #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/UserView/LandingControl.swift", line: 20)
@@ -23,8 +14,10 @@ extension LandingControl {
                     SignupView(selectedbutton: $selectedbutton)
                 case .landing:
                     LandingView(selectedbutton: $selectedbutton)
-                case.home:
+                }
+                if ServerControl().UserLoggedIn == true {
                     TabBar()
+                
                 }
             }
         }
@@ -35,4 +28,3 @@ extension LandingControl {
 
 import enum Trade_Marketplace.Views
 import struct Trade_Marketplace.LandingControl
-import struct Trade_Marketplace.LandingControl_Previews

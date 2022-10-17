@@ -15,13 +15,14 @@ enum Views: String {
 }
 
 struct LandingControl: View {
+    @State var UserLoggedIn: Bool = false
     @State var selectedbutton : Views = .landing
     var body: some View {
         ZStack {
             Group{
                 switch selectedbutton {
                 case .login:
-                    LoginView(selectedbutton: $selectedbutton)
+                    LoginView(UserLoggedIn: $UserLoggedIn, selectedbutton: $selectedbutton)
                 case .signup:
                     SignupView(selectedbutton: $selectedbutton)
                 case .landing:
@@ -34,8 +35,4 @@ struct LandingControl: View {
     }
 }
 
-struct LandingControl_Previews: PreviewProvider {
-    static var previews: some View {
-        LandingControl()
-   }
-}
+
