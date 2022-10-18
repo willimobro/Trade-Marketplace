@@ -220,7 +220,7 @@ struct Details: View {
             SelectCategory(category: $category)
         }.frame(height: 140)
             .listStyle(.plain)
-        Text("A short job name helps tradies and the like easily identify and respond to your job")
+        Text("Selecting more than one category helps you recvieve more quotes")
             .font(.footnote)
             .foregroundColor(Color.gray)
         }
