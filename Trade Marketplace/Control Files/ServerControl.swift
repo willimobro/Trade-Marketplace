@@ -12,8 +12,11 @@ import Firebase
 class UserLoggedIn: ObservableObject {
     
     // Result variable
-    @Published var key = false
+    @Published var key = 0
     //...
+    func trueid() {
+            key = 1
+    }
 }
 
 class ServerControl: UIViewController  {
@@ -45,7 +48,7 @@ class ServerControl: UIViewController  {
     ///
     ///
     func register(email: String, password: String, firstnamef: String, lastnamef: String) {
-        @StateObject var logintrue = UserLoggedIn()
+        @ObservedObject var userlogin = UserLoggedIn()
         Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 print("error creating user")
@@ -56,7 +59,7 @@ class ServerControl: UIViewController  {
                         print("error adding document")
                     }
                 }
-                logintrue.key.toggle()
+                userlogin.trueid()
 //
             }
         }
@@ -64,13 +67,13 @@ class ServerControl: UIViewController  {
     
     ///
     func login(email: String, password: String)    {
-        @StateObject var logintrue = UserLoggedIn()
+        @ObservedObject var userlogin = UserLoggedIn()
         Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 return
             }
         }
-        logintrue.key.toggle()
+        userlogin.trueid()
     }
 }
 

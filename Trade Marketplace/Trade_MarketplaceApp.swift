@@ -6,6 +6,7 @@ struct Trade_Marketplace: App   {
     init()  {
         FirebaseApp.configure()
     }
+    @StateObject var logintrue = UserLoggedIn()
     var body: some Scene    {
     WindowGroup {
         LandingControl()

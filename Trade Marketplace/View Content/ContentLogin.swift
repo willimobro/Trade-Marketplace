@@ -34,6 +34,7 @@ struct ContentLogin: View {
     @State var password = ""
     @State var loginactive  = false
     @State var signinactive = false
+    @EnvironmentObject var logintrue: UserLoggedIn
     
     var body: some View {
         ZStack{
@@ -72,7 +73,7 @@ struct ContentLogin: View {
                         
                         
                 }
-                Button("Forgot Password?"){
+                Button("Forgot Password?\(logintrue)"){
                     print("hello")
                 }
                     .font(.caption)
