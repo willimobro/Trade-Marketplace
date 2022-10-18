@@ -8,7 +8,8 @@ struct Trade_Marketplace: App   {
     }
     var body: some Scene    {
     WindowGroup {
-        ContentView()
+        LandingControl()
+            .environmentObject(UserLoggedIn())
     }
   }
 }

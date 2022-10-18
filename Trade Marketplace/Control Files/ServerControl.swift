@@ -9,9 +9,11 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
-
 class UserLoggedIn: ObservableObject {
-    @Published var user = 0
+    
+    // Result variable
+    @Published var key = false
+    //...
 }
 
 class ServerControl: UIViewController  {
@@ -21,8 +23,6 @@ class ServerControl: UIViewController  {
     }
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    @StateObject var loggedin = UserLoggedIn()
-    ///
     func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
         // [START set_document]
         // Add a new document in collection "cities"
@@ -45,6 +45,7 @@ class ServerControl: UIViewController  {
     ///
     ///
     func register(email: String, password: String, firstnamef: String, lastnamef: String) {
+        @StateObject var logintrue = UserLoggedIn()
         Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 print("error creating user")
@@ -55,7 +56,7 @@ class ServerControl: UIViewController  {
                         print("error adding document")
                     }
                 }
-                self.loggedin.user = 1
+                logintrue.key.toggle()
 //
             }
         }
@@ -63,14 +64,13 @@ class ServerControl: UIViewController  {
     
     ///
     func login(email: String, password: String)    {
+        @StateObject var logintrue = UserLoggedIn()
         Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 return
             }
-            self.loggedin.user = 1
-//
-            
         }
+        logintrue.key.toggle()
     }
 }
 

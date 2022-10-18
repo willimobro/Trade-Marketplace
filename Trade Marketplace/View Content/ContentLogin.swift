@@ -82,6 +82,7 @@ struct ContentLogin: View {
                 
                 Button("Login") {
                     ServerControl().login(email: email, password: password)
+                    selectedbutton = .home
                 }
                     
                     .frame(width: 321, height: 55, alignment: .center)

@@ -69,7 +69,9 @@ struct ContentSignup: View {
                 
                 Button("Create Account") {
                     ServerControl().register(email: email, password: password, firstnamef: firstname, lastnamef: lastname)
+                    selectedbutton = .home
                         }
+                
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
                     .cornerRadius(15)

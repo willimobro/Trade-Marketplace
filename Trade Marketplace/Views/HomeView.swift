@@ -8,7 +8,16 @@ import SwiftUI
 
 struct HomeView: View {
     @State var background1: CGFloat = 0
+    @EnvironmentObject var logintrue: UserLoggedIn
+    
+    
     var body: some View {
+        if logintrue.key {
+            content
+        }
+    }
+    
+    var content: some View {
         NavigationView  {
         ZStack(){
             HomeBackground(background: $background1)
