@@ -18,18 +18,18 @@ struct LandingControl: View {
     @State var selectedbutton : Views = .landing
     var body: some View {
         ZStack {
-            Group{
-                switch selectedbutton {
-                case .login:
-                    LoginView(selectedbutton: $selectedbutton)
-                case .signup:
-                    SignupView(selectedbutton: $selectedbutton)
-                case .landing:
-                    LandingView(selectedbutton: $selectedbutton)
-                case .home:
-                    HomeView()
+                Group{
+                    switch selectedbutton {
+                    case .login:
+                        LoginView(selectedbutton: $selectedbutton)
+                    case .signup:
+                        SignupView(selectedbutton: $selectedbutton)
+                    case .landing:
+                        LandingView(selectedbutton: $selectedbutton)
+                    case .home:
+                        HomeView()
+                    }
                 }
-            }
         }
     }
 }

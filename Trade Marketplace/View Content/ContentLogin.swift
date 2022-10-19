@@ -29,12 +29,13 @@ class AppViewModel: ObservableObject {
 
 
 struct ContentLogin: View {
+    @StateObject private var vm = ServerControl()
+    @EnvironmentObject var coordinator: Coordinator
     @Binding var selectedbutton : Views
     @State var email = ""
     @State var password = ""
     @State var loginactive  = false
     @State var signinactive = false
-    @EnvironmentObject var logintrue: UserLoggedIn
     
     var body: some View {
         ZStack{
@@ -73,7 +74,7 @@ struct ContentLogin: View {
                         
                         
                 }
-                Button("Forgot Password?\(logintrue)"){
+                Button("Forgot Password?"){
                     print("hello")
                 }
                     .font(.caption)
@@ -82,10 +83,15 @@ struct ContentLogin: View {
                     .frame(width: 321, height: 40, alignment: .trailing)
                 
                 Button("Login") {
-                    ServerControl().login(email: email, password: password)
-                    selectedbutton = .home
-                }
-                    
+                    vm.login(email: email, password: password) { result in
+                        switch result {
+                        case .success(_):
+                            coordinator.path.append(.home)
+                        case .failure(_):
+                            (print("login button error"))
+                        }
+                        }
+                    }
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
                     .cornerRadius(15)

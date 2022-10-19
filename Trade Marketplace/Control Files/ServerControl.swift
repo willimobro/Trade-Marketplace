@@ -9,21 +9,9 @@ import SwiftUI
 import FirebaseAuth
 import Firebase
 
-class UserLoggedIn: ObservableObject {
+class ServerControl: ObservableObject  {
     
-    // Result variable
-    @Published var key = 0
-    //...
-    func trueid() {
-            key = 1
-    }
-}
-
-class ServerControl: UIViewController  {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
@@ -47,33 +35,43 @@ class ServerControl: UIViewController  {
     }
     ///
     ///
-    func register(email: String, password: String, firstnamef: String, lastnamef: String) {
-        @ObservedObject var userlogin = UserLoggedIn()
-        Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
-            if err != nil {
-                print("error creating user")
-                
+    
+    enum FBError: Error, Identifiable {
+        case error(String)
+        var id: UUID {
+            UUID()
+        }
+        var errorMessage: String    {
+            switch self {
+            case .error(let message):
+                return message
+            }
+        }
+    }
+    func register(email: String, password: String, firstnamef: String, lastnamef: String, completion: @escaping (Result<Bool, FBError>) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if error != nil {
+                print("error adding document")
             } else {
                 self.db.collection("users").addDocument(data: ["firstname" : firstnamef, "lastname" : lastnamef, "uid": result!.user.uid])  { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                userlogin.trueid()
+             
 //
             }
         }
     }
     
     ///
-    func login(email: String, password: String)    {
-        @ObservedObject var userlogin = UserLoggedIn()
+    func login(email: String, password: String, completion: @escaping (Result<Bool, FBError>) -> Void)    {
         Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
             if err != nil {
                 return
             }
         }
-        userlogin.trueid()
+       
     }
 }
 
