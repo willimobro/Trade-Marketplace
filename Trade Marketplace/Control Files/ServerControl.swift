@@ -52,8 +52,8 @@ class ServerControl: ObservableObject  {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error {
                 DispatchQueue.main.async {
-                        completion(.failure(.error(error.localizedDescription)))
-                    }
+                    completion(.failure(.error(error.localizedDescription)))
+                }
             } else {
                 DispatchQueue.main.async {
                     completion(.success(true))
@@ -63,8 +63,8 @@ class ServerControl: ObservableObject  {
                         print("error adding document")
                     }
                 }
-             
-//
+                
+                //
             }
         }
     }
@@ -82,9 +82,24 @@ class ServerControl: ObservableObject  {
                 }
             }
         }
-       
+        
+    }
+    func pulluserdata() {
+        let user = Auth.auth().currentUser
+        if let user = user {
+            // The user's ID, unique to the Firebase project.
+            // Do NOT use this value to authenticate with your backend server,
+            // if you have one. Use getTokenWithCompletion:completion: instead.
+            let uid = user.uid
+            db.collection("users").document(uid).getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    print("Document data: \(dataDescription)")
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
     }
 }
-
-
 
