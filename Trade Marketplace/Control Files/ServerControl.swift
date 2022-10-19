@@ -49,10 +49,15 @@ class ServerControl: ObservableObject  {
         }
     }
     func register(email: String, password: String, firstnamef: String, lastnamef: String, completion: @escaping (Result<Bool, FBError>) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if error != nil {
-                print("error adding document")
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error {
+                DispatchQueue.main.async {
+                        completion(.failure(.error(error.localizedDescription)))
+                    }
             } else {
+                DispatchQueue.main.async {
+                    completion(.success(true))
+                }
                 self.db.collection("users").addDocument(data: ["firstname" : firstnamef, "lastname" : lastnamef, "uid": result!.user.uid])  { (error) in
                     if error != nil {
                         print("error adding document")
@@ -66,9 +71,15 @@ class ServerControl: ObservableObject  {
     
     ///
     func login(email: String, password: String, completion: @escaping (Result<Bool, FBError>) -> Void)    {
-        Auth.auth().signIn(withEmail: email, password: password) { (result, err) in
-            if err != nil {
-                return
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if let error {
+                DispatchQueue.main.async {
+                    completion(.failure(.error(error.localizedDescription)))
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(.success(true))
+                }
             }
         }
        
