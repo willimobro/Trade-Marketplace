@@ -30,8 +30,21 @@ class ServerControl: ObservableObject  {
             return dict
         }
     }
+    func DownloadData(collection: String, document: String){
+        let docRef = db.collection(collection).document(document)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+                
+            }
+        }
+    }
+                
         
     
+
+
                 
     ///
     ///

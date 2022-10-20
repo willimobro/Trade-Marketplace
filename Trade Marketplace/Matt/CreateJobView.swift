@@ -359,7 +359,7 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.UploadData(data: [["nah" : "Password"]], collection: "bro", document: "uid")
+                            self.activate.UploadData(data: [["nah" : "Password"]], collection: "bro", document: "lol")
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)

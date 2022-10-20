@@ -34,3 +34,8 @@ struct Trade_Marketplace: App   {
     }
   }
 }
+
+
+ 
+// USER UID CODE
+// user!.uid
