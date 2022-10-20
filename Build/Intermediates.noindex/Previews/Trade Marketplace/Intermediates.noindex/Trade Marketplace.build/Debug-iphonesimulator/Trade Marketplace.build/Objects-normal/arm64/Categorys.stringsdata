@@ -1,16 +1,5 @@
 {
-  "source": "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/Objects/Categorys.swift",
-  "tables": {
-    "Localizable": [
-      {
-        "comment": "",
-        "key": "Electrical"
-      },
-      {
-        "comment": "",
-        "key": "and related"
-      }
-    ]
-  },
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/Objects/categorys/Categorys.swift",
+  "tables": {},
   "version": 1
 }
