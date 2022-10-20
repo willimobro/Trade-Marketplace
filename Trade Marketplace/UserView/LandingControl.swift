@@ -15,29 +15,24 @@ enum Views: String {
 }
 
 struct LandingControl: View {
-    
     @State var selectedbutton : Views = .landing
     var body: some View {
         ZStack {
-            Group{
-                switch selectedbutton {
-                case .login:
-                    LoginView(selectedbutton: $selectedbutton)
-                case .signup:
-                    SignupView(selectedbutton: $selectedbutton)
-                case .landing:
-                    LandingView(selectedbutton: $selectedbutton)
-                case    .home:
-                    TabBar()
+                Group{
+                    switch selectedbutton {
+                    case .login:
+                        LoginView(selectedbutton: $selectedbutton)
+                    case .signup:
+                        SignupView(selectedbutton: $selectedbutton)
+                    case .landing:
+                        LandingView(selectedbutton: $selectedbutton)
+                    case .home:
+                        HomeView()
+                    }
                 }
-            }
-        }
-    }
-    func transition(key: Bool)  {
-        if key == true {
-            self.selectedbutton = .home
         }
     }
 }
+
 
 

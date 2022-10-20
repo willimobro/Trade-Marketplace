@@ -3,6 +3,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct ContentSignup: View {
+    @StateObject private var vm = ServerControl()
+    @EnvironmentObject var coordinator: Coordinator
     @Binding var selectedbutton : Views
     @State var firstname = ""
     @State var lastname = ""
@@ -68,8 +70,17 @@ struct ContentSignup: View {
                         .frame(width: 321, height: 55, alignment: .center)
                 
                 Button("Create Account") {
-                    ServerControl().register(email: email, password: password, firstnamef: firstname, lastnamef: lastname)
-                        }
+                    vm.register(email: email, password: password, firstnamef: firstname, lastnamef: lastname) { result in
+                        switch result {
+                        case .success(_):
+                            coordinator.path.append(.home)
+                        case .failure(_):
+                            (print("register button error"))
+                        
+                            
+                            }
+                    }
+                }
                     .frame(width: 321, height: 55, alignment: .center)
                     .background(Color("ButtonColorSL"))
                     .cornerRadius(15)

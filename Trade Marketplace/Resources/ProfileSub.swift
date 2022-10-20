@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileSub: View {
+    @StateObject private var vm = ServerControl()
     var body: some View {
         HStack{
             Circle()
@@ -18,7 +19,11 @@ struct ProfileSub: View {
                     .foregroundColor(.white)
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .padding(20)
+                    .onTapGesture {
+                        vm.pulluserdata()
+                    }
             VStack{
+                
                 Text("Name, Surname")
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .frame(width: 300, alignment: .leading)
