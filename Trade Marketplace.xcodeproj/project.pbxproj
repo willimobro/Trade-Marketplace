@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6639B8D628F0F64B007A016E /* CreateJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8D528F0F64B007A016E /* CreateJobView.swift */; };
 		6639B8E928F7FEC6007A016E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8E828F7FEC6007A016E /* UserSettings.swift */; };
+		6639B8EB28FE75A7007A016E /* UnderConstructionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */; };
+		6639B8ED28FE7AE8007A016E /* AboutTradeMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */; };
 		DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1BBC7B28EC046A0074F652 /* modifiers.swift */; };
 		DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBAD28D59E78003BDF7A /* MainObject.swift */; };
 		DD20BBE928D5B539003BDF7A /* ContentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBE828D5B539003BDF7A /* ContentHome.swift */; };
@@ -61,7 +63,6 @@
 		DD60162B28DB02E10051E013 /* TagSub.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD60162A28DB02E10051E013 /* TagSub.swift */; };
 		DD6CF00B28F55A560007119F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00A28F55A560007119F /* FirebaseAnalytics */; };
 		DD6CF00D28F55A560007119F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DD6CF00C28F55A560007119F /* FirebaseAuth */; };
-		DD6CF00F28F55AFA0007119F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF00E28F55AFA0007119F /* ContentView.swift */; };
 		DD6CF01128F56D610007119F /* ServerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6CF01028F56D610007119F /* ServerControl.swift */; };
 		DD6CF01328F6B0260007119F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD6CF01228F6B0250007119F /* GoogleService-Info.plist */; };
 		DD875CB428DE9E87006CD9B9 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CB328DE9E87006CD9B9 /* AccountView.swift */; };
@@ -118,6 +119,8 @@
 /* Begin PBXFileReference section */
 		6639B8D528F0F64B007A016E /* CreateJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateJobView.swift; sourceTree = "<group>"; };
 		6639B8E828F7FEC6007A016E /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderConstructionPage.swift; sourceTree = "<group>"; };
+		6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTradeMarketplace.swift; sourceTree = "<group>"; };
 		DD1BBC7B28EC046A0074F652 /* modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modifiers.swift; sourceTree = "<group>"; };
 		DD20BBAD28D59E78003BDF7A /* MainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainObject.swift; sourceTree = "<group>"; };
 		DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Trade-Marketplace-Info.plist"; path = "../Trade-Marketplace-Info.plist"; sourceTree = "<group>"; };
@@ -168,7 +171,6 @@
 		DD60162628DAF8C70051E013 /* ContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentItem.swift; sourceTree = "<group>"; };
 		DD60162828DAFA980051E013 /* QuoteNowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteNowButton.swift; sourceTree = "<group>"; };
 		DD60162A28DB02E10051E013 /* TagSub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSub.swift; sourceTree = "<group>"; };
-		DD6CF00E28F55AFA0007119F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DD6CF01028F56D610007119F /* ServerControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerControl.swift; sourceTree = "<group>"; };
 		DD6CF01228F6B0250007119F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DD875CB328DE9E87006CD9B9 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -241,6 +243,8 @@
 			children = (
 				6639B8D528F0F64B007A016E /* CreateJobView.swift */,
 				6639B8E828F7FEC6007A016E /* UserSettings.swift */,
+				6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */,
+				6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */,
 			);
 			path = Matt;
 			sourceTree = "<group>";
@@ -317,7 +321,6 @@
 				DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */,
 				DD6CF01228F6B0250007119F /* GoogleService-Info.plist */,
 				DD47D01428D063F500FE1B65 /* Trade_MarketplaceApp.swift */,
-				DD6CF00E28F55AFA0007119F /* ContentView.swift */,
 				6639B8D428F0F612007A016E /* Matt */,
 				DD041ACA28EADA50005A1AD9 /* UserView */,
 				DDAED03828EAA7840082E114 /* Control Files */,
@@ -656,7 +659,6 @@
 			files = (
 				DDE2CF8628D1C11400A0C1A4 /* LandingView.swift in Sources */,
 				DD20BC6528D85EDF003BDF7A /* UploadJobButton.swift in Sources */,
-				DD6CF00F28F55AFA0007119F /* ContentView.swift in Sources */,
 				DDE2CF9228D44F2700A0C1A4 /* BackgroundLogo_Secoundary.swift in Sources */,
 				DD875CB928DEA11A006CD9B9 /* TabButtonAcc.swift in Sources */,
 				DDE2CF8828D1C1D500A0C1A4 /* LoginView.swift in Sources */,
@@ -669,6 +671,7 @@
 				DD20BBED28D84FAF003BDF7A /* test.swift in Sources */,
 				DD6CF01128F56D610007119F /* ServerControl.swift in Sources */,
 				DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */,
+				6639B8EB28FE75A7007A016E /* UnderConstructionPage.swift in Sources */,
 				DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */,
 				DD60161A28D9AB840051E013 /* ContentSort.swift in Sources */,
 				DD60162328DAF4640051E013 /* ItemView.swift in Sources */,
@@ -681,6 +684,7 @@
 				DDE2CF9428D458B500A0C1A4 /* SignupView.swift in Sources */,
 				DD22A7C728F16C170062C47D /* Listing.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
+				6639B8ED28FE7AE8007A016E /* AboutTradeMarketplace.swift in Sources */,
 				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
 				DDAED03A28EAA8730082E114 /* LandingControl.swift in Sources */,
 				DDE2CFA428D4A95700A0C1A4 /* LandscapeObject.swift in Sources */,
