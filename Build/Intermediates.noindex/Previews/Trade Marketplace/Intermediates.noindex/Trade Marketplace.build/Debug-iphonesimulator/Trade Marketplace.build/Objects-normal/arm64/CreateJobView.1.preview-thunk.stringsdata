@@ -48,7 +48,7 @@
       },
       {
         "comment": "",
-        "key": "A short job name helps tradies and the like easily identify and respond to your job"
+        "key": "Selecting more than one category helps you recvieve more quotes"
       },
       {
         "comment": "",
@@ -81,6 +81,10 @@
       {
         "comment": "",
         "key": "e.g Sink Install"
+      },
+      {
+        "comment": "",
+        "key": "A short job name helps tradies and the like easily identify and respond to your job"
       },
       {
         "comment": "",

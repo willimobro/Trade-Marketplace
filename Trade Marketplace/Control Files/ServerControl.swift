@@ -8,31 +8,44 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import Foundation
 
 class ServerControl: ObservableObject  {
     
     
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    func setDataCreateAJob(JobName: String, Category: String, When: String, Where: String, Tags: String) {
-        // [START set_document]
-        // Add a new document in collection "cities"
-        
-        db.collection("Users").document(user!.uid).collection("Live Jobs").document(JobName).setData([
-            "JobName": JobName,
-            "Category": Category,
-            "When": When,
-            "Where": Where,
-            "Tags": Tags
-        ])
-        { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written!")
+    func UploadData(data: [[String : String]], collection: String, document: String) {
+            let _: [[String: String]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+            db.collection(collection).document(document).setData(dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+            return dict
+        }
+    }
+    func DownloadData(collection: String, document: String){
+        let docRef = db.collection(collection).document(document)
+        docRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                print("Document data: \(dataDescription)")
+                
             }
         }
     }
+                
+        
+    
+
+
+                
     ///
     ///
     
