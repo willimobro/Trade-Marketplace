@@ -32,6 +32,7 @@ struct Uploadajobacc: View {
                             }
                                 .frame(height: 140, alignment: .leading)
                                 .padding(20)
+                            
                         )
                 )
                 

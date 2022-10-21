@@ -4,28 +4,36 @@ import SwiftUI
 
 extension SubmitJob {
     @_dynamicReplacement(for: body) private var __preview__body: some View {
-        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 351)
-        RoundedRectangle(cornerRadius: __designTimeInteger("#2453.[12].[6].property.[0].[0].arg[0].value", fallback: 25))
-            .foregroundColor(Color(__designTimeString("#2453.[12].[6].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: "UploadAJobGreen")))
-            .frame(width: __designTimeInteger("#2453.[12].[6].property.[0].[0].modifier[1].arg[0].value", fallback: 359), height: __designTimeInteger("#2453.[12].[6].property.[0].[0].modifier[1].arg[1].value", fallback: 56))
+        #sourceLocation(file: "/Applications/Trade-Marketplace/Trade Marketplace/Matt/CreateJobView.swift", line: 353)
+        RoundedRectangle(cornerRadius: __designTimeInteger("#2453.[12].[7].property.[0].[0].arg[0].value", fallback: 25))
+            .foregroundColor(Color(__designTimeString("#2453.[12].[7].property.[0].[0].modifier[0].arg[0].value.arg[0].value", fallback: "UploadAJobGreen")))
+            .frame(width: __designTimeInteger("#2453.[12].[7].property.[0].[0].modifier[1].arg[0].value", fallback: 359), height: __designTimeInteger("#2453.[12].[7].property.[0].[0].modifier[1].arg[1].value", fallback: 56))
             .overlay(
-                VStack(alignment: .center, spacing: __designTimeInteger("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[1].value", fallback: 0)){
+                VStack(alignment: .center, spacing: __designTimeInteger("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[1].value", fallback: 0)){
                     HStack{
  //                       Image (systemName: "plus.app.fill")
  //                           .resizable()
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.DownloadData(data: [[__designTimeString("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[0].key", fallback: "nah") : __designTimeString("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[0].value", fallback: "Password")]], collection: __designTimeString("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[1].value", fallback: "bro"), document: __designTimeString("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[2].value", fallback: "uid"))
+                            self.activate.UploadData(data: [
+                                [__designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[0].key", fallback: "nah") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[0].value", fallback: "Password"),
+                                __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[1].key", fallback: "lol") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[1].value", fallback: "nigga"),
+                                __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[2].key", fallback: "gfs") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[2].value", fallback: "ewe"),
+                                 __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[3].key", fallback: "sdf") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[3].value", fallback: "dasd"),
+                                __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[4].key", fallback: "jghj") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[4].value", fallback: "asdasd"),
+                                __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[5].key", fallback: "ghj") : __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[0].value.[0].[5].value", fallback: "gfdg")]
+                            ],
+                                                     collection: __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[1].value", fallback: "bro"), document: __designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[0].value.[0].arg[2].value", fallback: "lol"))
                         } label:    {
-                            Text(__designTimeString("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[1].value.[0].arg[0].value", fallback: "Submit Job"))
+                            Text(__designTimeString("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.arg[2].value.[0].arg[0].value.[0].arg[1].value.[0].arg[0].value", fallback: "Submit Job"))
                                 .font(.title)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
                         }
 
                     }}
-                    .frame(width: __designTimeInteger("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[0].value", fallback: 319), height: __designTimeInteger("#2453.[12].[6].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[1].value", fallback: 30), alignment: .center))
+                    .frame(width: __designTimeInteger("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[0].value", fallback: 319), height: __designTimeInteger("#2453.[12].[7].property.[0].[0].modifier[2].arg[0].value.modifier[0].arg[1].value", fallback: 30), alignment: .center))
         
 #sourceLocation()
     }

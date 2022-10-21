@@ -341,12 +341,14 @@ struct CreateJobView_Previews: PreviewProvider {
 
 
 struct SubmitJob: View {
+    @Environment(\.dismiss) var dismiss
     let activate = ServerControl()
     @Binding  var JobName: String
     @Binding  var Category: String
     @Binding  var When: String
     @Binding  var Where: String
     @Binding  var Tags: String
+
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .foregroundColor(Color("UploadAJobGreen"))
@@ -359,7 +361,15 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.UploadData(data: [["nah" : "Password"]], collection: "bro", document: "lol")
+                            self.activate.UploadData(data: [
+                                ["nahasd" : "Pasasdsword",
+                                "loasdl" : "niasdga",
+                                "gasds" : "ewasde",
+                                 "sdasdf" : "daasdsd",
+                                "jgasdhj" : "asasddasd",
+                                "ghasdj" : "gfdgaasd"]
+                            ],
+                                                     collection: "bro", document: "lol")
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)

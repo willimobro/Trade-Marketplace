@@ -8,11 +8,12 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import FirebaseFirestoreSwift
 import Foundation
 
 class ServerControl: ObservableObject  {
     
-    
+    @Published var text: String = ""
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func UploadData(data: [[String : String]], collection: String, document: String) {
@@ -30,17 +31,43 @@ class ServerControl: ObservableObject  {
             return dict
         }
     }
-    func DownloadData(collection: String, document: String){
-        let docRef = db.collection(collection).document(document)
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
-                
+    func UploadUserData(data: [[String : String]], collection: String) {
+            let _: [[String: String]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+                db.collection(collection).document(user!.uid).setData(dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
             }
+            return dict
         }
     }
-                
+    func DownloadData(collection: String, wantedtext: String) -> String {
+        let ref = db.collection(collection)
+        ref.getDocuments { snapshot, error in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    
+                    let text = data[wantedtext] as? String ?? ""
+                    print(text)
+                }
+            }
+        }
+        return text
+    }
+        
+        
+
+    
         
     
 
