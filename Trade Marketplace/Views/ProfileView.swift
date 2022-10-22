@@ -25,6 +25,7 @@ struct ProfileView_Previews: PreviewProvider {
 }
 
 struct ProfileViewDescription: View {
+    @EnvironmentObject var servercontrol: ServerControl
     var body: some View {
         HStack{
             Circle()
@@ -36,8 +37,9 @@ struct ProfileViewDescription: View {
                         .resizable()
                         .scaledToFit())
             VStack (alignment: .leading, spacing: 0){
-                Text("John Andrew")
+                Text(servercontrol.text)
                     .font(.custom("Poppins-SemiBold", size: 20))
+                    .onAppear { self.servercontrol.DownloadUserData(field: "firstname")}
                 Text("Invercargill, Southland, NZ")
                     .foregroundColor(.gray)
                 Text("@johnandrew27")

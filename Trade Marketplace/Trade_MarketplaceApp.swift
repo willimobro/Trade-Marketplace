@@ -14,6 +14,7 @@ struct Trade_Marketplace: App   {
     init()  {
         FirebaseApp.configure()
     }
+    @StateObject var servercontrol = ServerControl()
     @ObservedObject var coordinator = Coordinator()
     
     var body: some Scene    {
@@ -28,6 +29,7 @@ struct Trade_Marketplace: App   {
                         }
                     }
             }.environmentObject(coordinator)
+            .environmentObject(servercontrol)
         } else {
             // Fallback on earlier versions
         }
@@ -37,3 +39,6 @@ struct Trade_Marketplace: App   {
 
 // USER UID CODE
 // user!.uid
+// @EnvironmentObject var servercontrol: ServerControl
+// servercontrol.text
+// .onAppear { self.servercontrol.DownloadData(collection: "", document: "", field: "")

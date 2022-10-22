@@ -29,6 +29,8 @@ class AppViewModel: ObservableObject {
 
 
 struct ContentLogin: View {
+    
+    @EnvironmentObject var servercontrol: ServerControl
     @StateObject private var vm = ServerControl()
     @EnvironmentObject var coordinator: Coordinator
     @Binding var selectedbutton : Views
@@ -36,7 +38,6 @@ struct ContentLogin: View {
     @State var password = ""
     @State var loginactive  = false
     @State var signinactive = false
-    
     var body: some View {
         ZStack{
             Rectangle()
@@ -46,12 +47,13 @@ struct ContentLogin: View {
             
             Spacer()
             VStack(spacing: 20) {
-                Text("Welcome \nBack")
+                Text(servercontrol.text)
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.leading)
                     .frame(width: 321, height: 90, alignment: .bottomLeading)
+                    .onAppear { self.servercontrol.DownloadData(collection: "bro", document: "lol", field: "nah") }
                     
                 ZStack{
                     TextField("Email address", text: $email)

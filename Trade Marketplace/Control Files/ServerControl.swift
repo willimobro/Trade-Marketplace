@@ -12,8 +12,7 @@ import FirebaseFirestoreSwift
 import Foundation
 
 class ServerControl: ObservableObject  {
-    
-    @Published var text: String = ""
+    @Published  var text: String = ""
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func UploadData(data: [[String : String]], collection: String, document: String) {
@@ -31,11 +30,11 @@ class ServerControl: ObservableObject  {
             return dict
         }
     }
-    func UploadUserData(data: [[String : String]], collection: String) {
+    func UploadUserData(data: [[String : String]]) {
             let _: [[String: String]] = data.map { dictionary in
             var dict: [String: String] = [:]
             dictionary.forEach { (key, value) in dict[key] = "\(value)" }
-                db.collection(collection).document(user!.uid).setData(dict)
+                db.collection("users").document(user!.uid).setData(dict)
             { err in
                 if let err = err {
                     print("Error writing document: \(err)")
@@ -46,31 +45,35 @@ class ServerControl: ObservableObject  {
             return dict
         }
     }
-    func DownloadData(collection: String, wantedtext: String) -> String {
-        let ref = db.collection(collection)
-        ref.getDocuments { snapshot, error in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            if let snapshot = snapshot {
-                for document in snapshot.documents {
-                    let data = document.data()
-                    
-                    let text = data[wantedtext] as? String ?? ""
-                    print(text)
-                }
-            }
+
+    // ... other your code
+
+    func DownloadData (collection: String, document: String, field: String) { // << async, no immediate return
+//        let uid = Auth.auth().currentUser?.uid
+        let database = Firestore.firestore().collection(collection).document(document)
+        database.getDocument { (docSnapshot, error) in
+               guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
+               let mydata = docSnapshot.data()
+               let dataa = mydata![field] as? String ?? ""
+
+               DispatchQueue.main.async {
+                  self.text = dataa // << store result
+               }
         }
-        return text
     }
-        
-        
+    func DownloadUserData (field: String) { // << async, no immediate return
+//        let uid = Auth.auth().currentUser?.uid
+        let database = Firestore.firestore().collection("users").document(user!.uid)
+        database.getDocument { (docSnapshot, error) in
+               guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
+               let mydata = docSnapshot.data()
+               let dataa = mydata![field] as? String ?? ""
 
-    
-        
-    
-
+               DispatchQueue.main.async {
+                  self.text = dataa // << store result
+               }
+        }
+    }
 
                 
     ///
