@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var downloadeddata: downloadcompletedlistingsdata
     @State var categoryname = ""
   
     @State var returnable = Bool()
@@ -23,13 +24,17 @@ struct CategoryView: View {
                         SearchViaCategory()
                     }
                     ScrollView(.vertical){
-                        LazyVGrid(columns: columns, spacing: 10) {
-                            ForEach(totaljobs){item in
-                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                                           quotesent:.constant(item .quotesent),
-                                           location: .constant(item.location),
-                                           description: .constant(item.description),
-                                           image: .constant(item.images))}
+//                        LazyVGrid(columns: columns, spacing: 10) {
+                            List(downloadeddata.output, id: \.id) { item in
+                                Text(item.title)
+//                            }
+                            
+//                            ForEach(totaljobs){item in
+//                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+//                                           quotesent:.constant(item .quotesent),
+//                                           location: .constant(item.location),
+//                                           description: .constant(item.description),
+//                                           image: .constant(item.images))}
 
                         }
                     }.overlay(
@@ -52,6 +57,7 @@ struct CategoryView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
             
+        }.onAppear { self.downloadeddata.getData()
         }
     }
 }

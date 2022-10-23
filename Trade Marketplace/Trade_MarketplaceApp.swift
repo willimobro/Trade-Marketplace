@@ -15,6 +15,8 @@ struct Trade_Marketplace: App   {
         FirebaseApp.configure()
     }
     @StateObject var servercontrol = ServerControl()
+    @StateObject var profileview = downloadprofileviewdata()
+    @StateObject var a = downloadcompletedlistingsdata()
     @ObservedObject var coordinator = Coordinator()
     
     var body: some Scene    {
@@ -28,8 +30,16 @@ struct Trade_Marketplace: App   {
                             TabBar()
                         }
                     }
-            }.environmentObject(coordinator)
+            }
+            
+            .environmentObject(coordinator)
             .environmentObject(servercontrol)
+            .environmentObject(profileview)
+            .environmentObject(a)
+            
+            
+            
+            
         } else {
             // Fallback on earlier versions
         }

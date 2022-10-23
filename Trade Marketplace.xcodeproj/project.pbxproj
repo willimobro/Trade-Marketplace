@@ -78,6 +78,8 @@
 		DD875CD828DEAC33006CD9B9 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */; };
 		DD875CDA28DEB186006CD9B9 /* QuoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */; };
 		DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CDB28DEC297006CD9B9 /* Quote.swift */; };
+		DD8B15FF2904914800093208 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8B15FE2904914800093208 /* User.swift */; };
+		DD8B16012904B1E000093208 /* AppInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8B16002904B1E000093208 /* AppInitialization.swift */; };
 		DD97695828D066EB00EEC92C /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695728D066EB00EEC92C /* Logo.swift */; };
 		DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */; };
 		DDAED03328E577820082E114 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED03228E577820082E114 /* TabBar.swift */; };
@@ -184,6 +186,8 @@
 		DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
 		DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDetailView.swift; sourceTree = "<group>"; };
 		DD875CDB28DEC297006CD9B9 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
+		DD8B15FE2904914800093208 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DD8B16002904B1E000093208 /* AppInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInitialization.swift; sourceTree = "<group>"; };
 		DD97695728D066EB00EEC92C /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLogo_Main.swift; sourceTree = "<group>"; };
 		DDAED03228E577820082E114 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -387,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */,
+				DD8B15FE2904914800093208 /* User.swift */,
 			);
 			name = "SHIT TO DO";
 			path = ..;
@@ -399,6 +404,7 @@
 				DD22A7C628F16C170062C47D /* Listing.swift */,
 				DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */,
 				DD6CF01028F56D610007119F /* ServerControl.swift */,
+				DD8B16002904B1E000093208 /* AppInitialization.swift */,
 			);
 			path = "Control Files";
 			sourceTree = "<group>";
@@ -659,6 +665,7 @@
 				DDE2CF9728D458E700A0C1A4 /* ContentSignup.swift in Sources */,
 				DDAED03528E577890082E114 /* TabControl.swift in Sources */,
 				DD60161028D99E910051E013 /* CategoryNavigator.swift in Sources */,
+				DD8B16012904B1E000093208 /* AppInitialization.swift in Sources */,
 				DD875CB728DEA0DD006CD9B9 /* Uploadajobacc.swift in Sources */,
 				DDE2CF9F28D48D9700A0C1A4 /* HomeBackground.swift in Sources */,
 				DD29C7F128DEEA04001056D5 /* ReviewQuoteView.swift in Sources */,
@@ -676,6 +683,7 @@
 				DDE2CF9028D1F1D200A0C1A4 /* ContentLanding.swift in Sources */,
 				DDE2CF9428D458B500A0C1A4 /* SignupView.swift in Sources */,
 				DD22A7C728F16C170062C47D /* Listing.swift in Sources */,
+				DD8B15FF2904914800093208 /* User.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
 				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
 				DDAED03A28EAA8730082E114 /* LandingControl.swift in Sources */,

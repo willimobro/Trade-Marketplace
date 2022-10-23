@@ -4,6 +4,10 @@
     "Localizable": [
       {
         "comment": "",
+        "key": "Welcome\nBack"
+      },
+      {
+        "comment": "",
         "key": "Forgot Password?"
       },
       {

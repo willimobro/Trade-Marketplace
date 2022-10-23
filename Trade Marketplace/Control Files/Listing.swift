@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseDatabase
+import FirebaseAuth
 
 struct listingItem: Identifiable   {
     var id = UUID()
@@ -81,3 +84,28 @@ var totaljobs = [
     
 ]
 
+//class downloadMainObjectviewdata: ObservableObject {
+//    let db = Firestore.firestore()
+//    let user = Auth.auth().currentUser
+//    func DownloadMainViewData() { // << async, no immediate return
+//        //        let uid = Auth.auth().currentUser?.uid
+//        let database = Firestore.firestore().collection("users").document("RLJtKAgT5EgmM9n02F6zP3PJHdg1")
+//        database.getDocument { (docSnapshot, error) in
+//            guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
+//            let mydata = docSnapshot.data()
+//            let firstname = mydata!["firstname"] as? String ?? ""
+//            let lastname = mydata!["lastname"] as? String ?? ""
+//            let location = mydata!["location"] as? String ?? ""
+//            let username = mydata!["username"] as? String ?? ""
+//            let reviews = mydata!["reviews"] as? Int ?? 0
+//
+//            DispatchQueue.main.async {
+////                self.firstname = firstname // << store result
+////                self.lastname = lastname // << store result
+////                self.location = location // << store result
+////                self.reviews = reviews // << store result
+////                self.username = username // << store result
+//            }
+//        }
+//    }
+//}

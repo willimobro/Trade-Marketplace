@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileSub: View {
-    @EnvironmentObject var servercontrol: ServerControl
     @StateObject private var vm = ServerControl()
     var body: some View {
         HStack{
@@ -21,12 +20,10 @@ struct ProfileSub: View {
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .padding(20)
             VStack{
-                Text(servercontrol.text)
+                Text("servercontrol.text")
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .frame(width: 300, alignment: .leading)
-                    .onAppear { self.servercontrol.DownloadData(collection: "bro", document: "lol", field: "nah")
-                        
-                    }
+                    
 
                 Text("Residence")
                     .font(.custom("Poppins-SemiBold", size: 14))

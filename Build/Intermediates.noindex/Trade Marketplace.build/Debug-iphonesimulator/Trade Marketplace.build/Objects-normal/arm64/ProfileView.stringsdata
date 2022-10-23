@@ -4,15 +4,7 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Invercargill, Southland, NZ"
-      },
-      {
-        "comment": "",
-        "key": "@johnandrew27"
-      },
-      {
-        "comment": "",
-        "key": "17 Reviews"
+        "key": "%lld Reviews"
       },
       {
         "comment": "",

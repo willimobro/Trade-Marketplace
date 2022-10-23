@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
 // hello
 struct CreateJobView: View {
     @Environment(\.dismiss) var dismiss
@@ -361,15 +364,14 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.UploadData(data: [
-                                ["nahasd" : "Pasasdsword",
-                                "loasdl" : "niasdga",
-                                "gasds" : "ewasde",
-                                 "sdasdf" : "daasdsd",
-                                "jgasdhj" : "asasddasd",
-                                "ghasdj" : "gfdgaasd"]
-                            ],
-                                                     collection: "bro", document: "lol")
+                            UploadJob().UploadjobData(data:
+                            [[
+                                "JobName": JobName,
+                                "Category": Category,
+                                "When": When,
+                                "Where": Where,
+                                "Tags": Tags,
+                            ]], listingname: JobName)
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)
@@ -383,4 +385,22 @@ struct SubmitJob: View {
                     
     }
 
-
+class UploadJob: ObservableObject   {
+    let db = Firestore.firestore()
+    let user = Auth.auth().currentUser
+    func UploadjobData(data: [[String : String]], listingname: String) {
+        let _: [[String: String]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+            db.collection("users").document(self.user!.uid).collection("Listings").document(listingname).setData(dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+            return dict
+        }
+    }
+}
