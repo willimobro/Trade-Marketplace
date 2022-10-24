@@ -403,5 +403,19 @@ class UploadJob: ObservableObject   {
             }
             return dict
         }
+        let _: [[String: String]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+            db.collection("alljobs").addDocument(data: dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+            return dict
+        }
     }
-}
+    }
+

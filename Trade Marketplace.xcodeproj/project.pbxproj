@@ -79,7 +79,6 @@
 		DD875CDA28DEB186006CD9B9 /* QuoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */; };
 		DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CDB28DEC297006CD9B9 /* Quote.swift */; };
 		DD8B15FF2904914800093208 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8B15FE2904914800093208 /* User.swift */; };
-		DD8B16012904B1E000093208 /* AppInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8B16002904B1E000093208 /* AppInitialization.swift */; };
 		DD97695828D066EB00EEC92C /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695728D066EB00EEC92C /* Logo.swift */; };
 		DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */; };
 		DDAED03328E577820082E114 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED03228E577820082E114 /* TabBar.swift */; };
@@ -96,6 +95,7 @@
 		DDE2CF9F28D48D9700A0C1A4 /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CF9E28D48D9700A0C1A4 /* HomeBackground.swift */; };
 		DDE2CFA228D498DE00A0C1A4 /* Categorys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CFA128D498DE00A0C1A4 /* Categorys.swift */; };
 		DDE2CFA428D4A95700A0C1A4 /* LandscapeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CFA328D4A95700A0C1A4 /* LandscapeObject.swift */; };
+		DDE369FF290619F5005577B4 /* Serverloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE369FE290619F5005577B4 /* Serverloader.swift */; };
 		DDFB9DB628F0F1A900E44E06 /* CategorysEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB9DB528F0F1A900E44E06 /* CategorysEnum.swift */; };
 /* End PBXBuildFile section */
 
@@ -187,7 +187,6 @@
 		DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDetailView.swift; sourceTree = "<group>"; };
 		DD875CDB28DEC297006CD9B9 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		DD8B15FE2904914800093208 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		DD8B16002904B1E000093208 /* AppInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInitialization.swift; sourceTree = "<group>"; };
 		DD97695728D066EB00EEC92C /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLogo_Main.swift; sourceTree = "<group>"; };
 		DDAED03228E577820082E114 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -204,6 +203,7 @@
 		DDE2CF9E28D48D9700A0C1A4 /* HomeBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBackground.swift; sourceTree = "<group>"; };
 		DDE2CFA128D498DE00A0C1A4 /* Categorys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categorys.swift; sourceTree = "<group>"; };
 		DDE2CFA328D4A95700A0C1A4 /* LandscapeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeObject.swift; sourceTree = "<group>"; };
+		DDE369FE290619F5005577B4 /* Serverloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serverloader.swift; sourceTree = "<group>"; };
 		DDFB9DB528F0F1A900E44E06 /* CategorysEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorysEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -404,7 +404,7 @@
 				DD22A7C628F16C170062C47D /* Listing.swift */,
 				DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */,
 				DD6CF01028F56D610007119F /* ServerControl.swift */,
-				DD8B16002904B1E000093208 /* AppInitialization.swift */,
+				DDE369FE290619F5005577B4 /* Serverloader.swift */,
 			);
 			path = "Control Files";
 			sourceTree = "<group>";
@@ -665,7 +665,6 @@
 				DDE2CF9728D458E700A0C1A4 /* ContentSignup.swift in Sources */,
 				DDAED03528E577890082E114 /* TabControl.swift in Sources */,
 				DD60161028D99E910051E013 /* CategoryNavigator.swift in Sources */,
-				DD8B16012904B1E000093208 /* AppInitialization.swift in Sources */,
 				DD875CB728DEA0DD006CD9B9 /* Uploadajobacc.swift in Sources */,
 				DDE2CF9F28D48D9700A0C1A4 /* HomeBackground.swift in Sources */,
 				DD29C7F128DEEA04001056D5 /* ReviewQuoteView.swift in Sources */,
@@ -708,6 +707,7 @@
 				DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */,
 				DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */,
 				DD210BD128DFB8FE001283D8 /* MapView.swift in Sources */,
+				DDE369FF290619F5005577B4 /* Serverloader.swift in Sources */,
 				DD60161428D9A1E80051E013 /* SearchViaCategory.swift in Sources */,
 				DDFB9DB628F0F1A900E44E06 /* CategorysEnum.swift in Sources */,
 				DD875CDA28DEB186006CD9B9 /* QuoteDetailView.swift in Sources */,

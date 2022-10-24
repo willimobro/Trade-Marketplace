@@ -17,6 +17,11 @@ struct Trade_Marketplace: App   {
     @StateObject var servercontrol = ServerControl()
     @StateObject var profileview = downloadprofileviewdata()
     @StateObject var a = downloadcompletedlistingsdata()
+    @StateObject var b = downloadlistingsdata()
+    @StateObject var c = downloadrecievedquotesdata()
+    @StateObject var d = downloadSentQuotes()
+    @StateObject var e = downloadWatchlist()
+    @StateObject var f = downloadalljobs()
     @ObservedObject var coordinator = Coordinator()
     
     var body: some Scene    {
@@ -36,6 +41,11 @@ struct Trade_Marketplace: App   {
             .environmentObject(servercontrol)
             .environmentObject(profileview)
             .environmentObject(a)
+            .environmentObject(b)
+            .environmentObject(c)
+            .environmentObject(d)
+            .environmentObject(e)
+            .environmentObject(f)
             
             
             

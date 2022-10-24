@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoryView: View {
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var downloadeddata: downloadcompletedlistingsdata
+    @EnvironmentObject var downloadeddata: downloadalljobs
     @State var categoryname = ""
   
     @State var returnable = Bool()

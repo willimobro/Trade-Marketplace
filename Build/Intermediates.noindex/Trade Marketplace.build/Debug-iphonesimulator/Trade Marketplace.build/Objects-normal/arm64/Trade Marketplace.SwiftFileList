@@ -6,7 +6,6 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/ContentSignup.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/TabControl.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/CategoryNavigator.swift
-/Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/AppInitialization.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/Accountview\ Resources/Uploadajobacc.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Backgrounds/HomeBackground.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Views/QuoteViews/ReviewQuoteView.swift
@@ -49,6 +48,7 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/modifiers.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/Accountview\ Resources/Quote.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/MapView.swift
+/Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/Serverloader.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/SearchViaCategory.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Objects/categorys/CategorysEnum.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/QuoteDetailView.swift
