@@ -82,6 +82,7 @@ struct ContentLogin: View {
                             (print("login button error"))
                         }
                         }
+                    
                 }
                     .font(.caption)
                     .foregroundColor(Color("ButtonColorSL"))

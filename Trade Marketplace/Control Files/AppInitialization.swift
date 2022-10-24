@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseDatabase
+import FirebaseAuth
 
 class downloadprofileviewdata: ObservableObject {
     @Published  var firstname: String = ""
@@ -23,7 +24,8 @@ class downloadprofileviewdata: ObservableObject {
     let user = Auth.auth().currentUser
     func DownloadProfileViewData() { // << async, no immediate return
         //        let uid = Auth.auth().currentUser?.uid
-        let database = Firestore.firestore().collection("users").document("RLJtKAgT5EgmM9n02F6zP3PJHdg1")
+        print(self.user!.uid)
+        let database = Firestore.firestore().collection("users").document(self.user!.uid)
         database.getDocument { (docSnapshot, error) in
             guard let docSnapshot = docSnapshot, docSnapshot.exists else {return}
             let mydata = docSnapshot.data()
@@ -50,31 +52,22 @@ class downloadprofileviewdata: ObservableObject {
 class downloadcompletedlistingsdata: ObservableObject{
     @Published var output: [downloadcompleteddatastruct] = []
     @Published var count: NSNumber = 0
-    
-    init() {
-        getData()
-    }
-    
-    let user = Auth.auth().currentUser
-    let db = Firestore.firestore()
-    let ref = Firestore.firestore().collection("users").document("RLJtKAgT5EgmM9n02F6zP3PJHdg1").collection("CompletedListings")
-    
-     func getData() {
-        output.removeAll()
-         
 
-              ref.getDocuments { (snapshot, error) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            
-                  print("Number of documents: \(snapshot.documents.count ?? -1)")
-                      snapshot.documents.forEach({ (documentSnapshot) in
-                        let documentData = documentSnapshot.data()
-                    let data = documentSnapshot.data()
+    let db = Firestore.firestore()
+    let user = Auth.auth().currentUser
+    
+    func getData() {
+        output.removeAll()
+        print(self.user!.uid)
+        db.collection("users").document(self.user!.uid).collection("Listings").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    print("\(document.documentID) => \(document.data())")
+                    let data = document.data()
                     
-                    let id = data["id"] as? String ?? ""
+                    let id = document.documentID
                     let category = data["category"] as? String ?? ""
                     let title = data["title"] as? String ?? ""
                     let subtitle = data["subtitle"] as? String ?? ""
@@ -87,12 +80,13 @@ class downloadcompletedlistingsdata: ObservableObject{
                     let a = downloadcompleteddatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
                     self.output.append(a)
                     
-                })
+                }
             }
             
         }
         
     }
+}
 
 //    private func collectquerycount() {
 //        let collection = self.ref
@@ -110,7 +104,7 @@ class downloadcompletedlistingsdata: ObservableObject{
    
 /// Store all completed listing data
 struct downloadcompleteddatastruct: Identifiable  {
-    var id: String
+        var id: String
         var category: String
         var title: String
         var subtitle: String

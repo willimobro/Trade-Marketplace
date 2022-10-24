@@ -30,16 +30,21 @@ extension Post{
 
 struct PostsList: View {
     private var posts = [Post.testPost]
- 
+    @EnvironmentObject var downloadeddata: downloadcompletedlistingsdata
     @State private var searchText = ""
  
     var body: some View {
         NavigationView {
-            List(posts) { post in
-                if searchText.isEmpty || post.contains(searchText) {
-                    PostRow(post: post)
+//            List(posts) { post in
+//                if searchText.isEmpty || post.contains(searchText) {
+//                    PostRow(post: post)
+//                }
+//            }
+            ForEach(downloadeddata.output, id: \.id) { item in
+                    Text(item.title)
+                    
                 }
-            }
+            
             .searchable(text: $searchText)
             .navigationTitle("Posts")
         }
@@ -47,8 +52,8 @@ struct PostsList: View {
 }
 
 struct PostRow: View {
+    
     let post: Post
- 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {

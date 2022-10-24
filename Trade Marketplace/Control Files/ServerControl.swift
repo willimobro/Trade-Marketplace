@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 import Foundation
 import Firebase
 
+
 class ServerControl: ObservableObject  {
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
@@ -31,6 +32,7 @@ class ServerControl: ObservableObject  {
         }
     }
     func UploadUserData(data: [[String : String]]) {
+        let user = Auth.auth().currentUser
         let _: [[String: String]] = data.map { dictionary in
             var dict: [String: String] = [:]
             dictionary.forEach { (key, value) in dict[key] = "\(value)" }
@@ -68,36 +70,37 @@ class ServerControl: ObservableObject  {
                 DispatchQueue.main.async {
                     completion(.success(true))
                 }
-                self.db.collection("users").document(self.user!.uid).setData(["firstname" : firstnamef, "lastname" : lastnamef, "uid": self.user!.uid])  { (error) in
+                let user = Auth.auth().currentUser
+                self.db.collection("users").document(user!.uid).collection("Profile").addDocument(data: ["firstname" : firstnamef, "lastname" : lastnamef, "uid": self.user!.uid])  { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                self.db.collection("users").document(self.user!.uid).collection("Listings").document("Listing").setData(["listing 1" : [""]])
+                self.db.collection("users").document(user!.uid).collection("Listings").addDocument(data: ["listing 1" : [""]])
                 { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                self.db.collection("users").document(self.user!.uid).collection("RecievedQuotes").addDocument(data: ["listing 1" : [""]])
+                self.db.collection("users").document(user!.uid).collection("RecievedQuotes").addDocument(data: ["listing 1" : [""]])
                 { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                self.db.collection("users").document(self.user!.uid).collection("SentQuotes").addDocument(data: ["listing 1" : [""]])
+                self.db.collection("users").document(user!.uid).collection("SentQuotes").addDocument(data: ["listing 1" : [""]])
                 { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                self.db.collection("users").document(self.user!.uid).collection("CompletedListings").addDocument(data: ["listing 1" : [""]])
+                self.db.collection("users").document(user!.uid).collection("CompletedListings").addDocument(data: ["listing 1" : [""]])
                 { (error) in
                     if error != nil {
                         print("error adding document")
                     }
                 }
-                self.db.collection("users").document(self.user!.uid).collection("Watchlist").addDocument(data: ["listing 1" : [""]])
+                self.db.collection("users").document(user!.uid).collection("Watchlist").addDocument(data: ["listing 1" : [""]])
                 { (error) in
                     if error != nil {
                         print("error adding document")
@@ -118,6 +121,7 @@ class ServerControl: ObservableObject  {
                 DispatchQueue.main.async {
                     completion(.success(true))
                 }
+                
             }
         }
         

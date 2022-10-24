@@ -24,18 +24,14 @@ struct CategoryView: View {
                         SearchViaCategory()
                     }
                     ScrollView(.vertical){
-//                        LazyVGrid(columns: columns, spacing: 10) {
-                            List(downloadeddata.output, id: \.id) { item in
-                                Text(item.title)
-//                            }
+                        LazyVGrid(columns: columns, spacing: 10) {
+                            ForEach(downloadeddata.output, id: \.id){item in
+                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
+                                           quotesent:.constant(item .quotesent),
+                                           location: .constant(item.location),
+                                           description: .constant(item.description),
+                                           image: .constant(item.images))}
                             
-//                            ForEach(totaljobs){item in
-//                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-//                                           quotesent:.constant(item .quotesent),
-//                                           location: .constant(item.location),
-//                                           description: .constant(item.description),
-//                                           image: .constant(item.images))}
-
                         }
                     }.overlay(
                         VStack{
@@ -57,7 +53,10 @@ struct CategoryView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
             
-        }.onAppear { self.downloadeddata.getData()
+        
+        }
+        .onAppear {
+            downloadeddata.getData()
         }
     }
 }
