@@ -19,51 +19,52 @@ struct ProfileView: View {
     }
 }
     
-    struct ProfileViewDescription: View {
-        @State var shouldShowImagePicker = false
-        @State var image: UIImage?
-        @EnvironmentObject var data: downloadprofileviewdata
-        var body: some View {
-            HStack(spacing: 40){
-                Button {
-                    shouldShowImagePicker.toggle()
-                } label: {
-                    if let image = self.image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .frame(width: 96, height: 96)
-                            .scaledToFill()
-                            .cornerRadius(96)
-                    } else {
-                        Image(systemName: "person.fill")
-                            .resizable()
-                            .frame(width: 96, height: 96)
-                            .scaledToFit()
-                            .cornerRadius(96)
-                            .foregroundColor(Color(.label))
-                    }
-                    
-                }.overlay(
-                    RoundedRectangle(cornerRadius: 96).stroke(Color.black, lineWidth: 3)
-                )
-                VStack (alignment: .leading, spacing: 0){
-                    Text(data.firstname + " " +  data.lastname)
-                        .font(.custom("Poppins-SemiBold", size: 20))
-                    Text(data.location)
-                        .foregroundColor(.gray)
-                    Text(data.username)
-                        .foregroundColor(.gray)
+struct ProfileViewDescription: View {
+    @State var shouldShowImagePicker = false
+    @State var image: UIImage?
+    @EnvironmentObject var data: downloadprofileviewdata
+    var body: some View {
+        HStack(spacing: 40){
+            Button {
+                shouldShowImagePicker.toggle()
+            } label: {
+                if let image = self.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 96, height: 96)
+                        .scaledToFill()
+                        .cornerRadius(96)
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .frame(width: 96, height: 96)
+                        .scaledToFit()
+                        .cornerRadius(96)
+                        .foregroundColor(Color(.label))
                 }
-                }
-            .padding(.horizontal, 20)
-            .onAppear { self.data.DownloadProfileViewData()
-            }
-            .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
-                    ServerControl.ImagePicker(image: $image)
-                        .ignoresSafeArea()
+                
+            }.overlay(
+                RoundedRectangle(cornerRadius: 96).stroke(Color.black, lineWidth: 3)
+            )
+            VStack (alignment: .leading, spacing: 0){
+                Text(data.firstname + " " +  data.lastname)
+                    .font(.custom("Poppins-SemiBold", size: 20))
+                Text(data.location)
+                    .foregroundColor(.gray)
+                Text(data.username)
+                    .foregroundColor(.gray)
             }
         }
+        .padding(.horizontal, 20)
+        .onAppear { self.data.DownloadProfileViewData()
+        }
+        .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
+            ServerControl.ImagePicker(image: $image)
+                .ignoresSafeArea()
+            
+        }
     }
+}
     
     struct ReviewTab: View {
         @State  var profilemenu = String()

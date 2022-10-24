@@ -8,9 +8,11 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
-import FirebaseFirestoreSwift
+import FirebaseCore
+import FirebaseFirestore
 import Foundation
-import Firebase
+import FirebaseDatabase
+import FirebaseStorage
 
 
 class ServerControl: ObservableObject  {
@@ -127,7 +129,6 @@ class ServerControl: ObservableObject  {
         
     }
     struct ImagePicker: UIViewControllerRepresentable {
-        
         @Binding var image: UIImage?
         
         private let controller = UIImagePickerController()
@@ -161,6 +162,37 @@ class ServerControl: ObservableObject  {
         }
         
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+        
+        func ImageUpload() {
+            guard let uid = Auth.auth().currentUser?.uid else {return}
+                    guard let imageData = image?.jpegData(compressionQuality: 0.5)! else {return}
+            let ref = Storage.storage().reference(withPath: uid)
+            ref.putData(imageData, metadata: nil) {metadata, err in
+                if let err = err {
+                    print("errpr")
+                    return
+                }
+                ref.downloadURL { url, err in
+                    if let err = err {
+                        print("error occured")
+                        return
+                    }
+                    
+                    print("Successfully stored image with URL ")
+                    print(url?.absoluteString)
+                    
+                    guard let url = url else {return}
+                    storeUserProfile(imageProfileUrl: url)
+                }
+                
+            }
+            
+        }
+        private func storeUserProfile(imageProfileUrl: URL) {
+            let uid = Auth.auth().currentUser!.uid
+            Firestore.firestore().collection("users").document(uid).collection("profile").addDocument(data: ["profilepicture" : imageProfileUrl.absoluteString])
             
         }
         
