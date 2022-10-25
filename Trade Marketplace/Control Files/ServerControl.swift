@@ -73,7 +73,7 @@ class ServerControl: ObservableObject  {
                     completion(.success(true))
                 }
                 let user = Auth.auth().currentUser
-                self.db.collection("users").document(user!.uid).collection("Profile").addDocument(data: ["firstname" : firstnamef, "lastname" : lastnamef, "uid": self.user!.uid])  { (error) in
+                self.db.collection("users").document(user!.uid).collection("Profile").document(user!.uid).setData(["firstname" : firstnamef, "lastname" : lastnamef, "uid": self.user!.uid])  { (error) in
                     if error != nil {
                         print("error adding document")
                     }
@@ -162,7 +162,7 @@ class ServerControl: ObservableObject  {
         }
         
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
+            self.ImageUpload()
         }
         
         func ImageUpload() {
@@ -192,7 +192,7 @@ class ServerControl: ObservableObject  {
         }
         private func storeUserProfile(imageProfileUrl: URL) {
             let uid = Auth.auth().currentUser!.uid
-            Firestore.firestore().collection("users").document(uid).collection("profile").addDocument(data: ["profilepicture" : imageProfileUrl.absoluteString])
+            Firestore.firestore().collection("users").document(uid).collection("Profile").document(uid).setData(["profilepicture" : imageProfileUrl.absoluteString], merge: true)
             
         }
         

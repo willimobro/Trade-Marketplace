@@ -385,12 +385,13 @@ struct SubmitJob: View {
                     
     }
 
+
 class UploadJob: ObservableObject   {
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    func UploadjobData(data: [[String : String]], listingname: String) {
+    func UploadjobData(data: [[String : Any]], listingname: String) {
         print(self.user!.uid)
-        let _: [[String: String]] = data.map { dictionary in
+        let _: [[String: Any]] = data.map { dictionary in
             var dict: [String: String] = [:]
             dictionary.forEach { (key, value) in dict[key] = "\(value)" }
             db.collection("users").document(self.user!.uid).collection("Listings").addDocument(data: dict)

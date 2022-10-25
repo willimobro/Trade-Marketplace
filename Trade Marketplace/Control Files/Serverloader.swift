@@ -11,6 +11,7 @@ class downloadprofileviewdata: ObservableObject {
     @Published  var location: String = ""
     @Published  var username: String = ""
     @Published  var reviews: Int = 0
+    @Published  var image: UIImage?
     init() {
         DownloadProfileViewData()
     }
@@ -31,19 +32,24 @@ class downloadprofileviewdata: ObservableObject {
                     let location = mydata["location"] as? String ?? ""
                     let username = mydata["username"] as? String ?? ""
                     let reviews = mydata["reviews"] as? Int ?? 0
-                    
+                    let image = mydata["profilepicture"] as? String ?? ""
                     DispatchQueue.main.async {
                         self.firstname = firstname // << store result
                         self.lastname = lastname // << store result
                         self.location = location // << store result
                         self.reviews = reviews // << store result
                         self.username = username // << store result
+                        
+                        let url = URL(string: image)
+                        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                        self.image = UIImage(data: data!)! // << store result UIImage(data: data!)
                     }
                 }
             }
+            }
         }
     }
-}
+
 
 /// Download all completed listing data
 class downloadcompletedlistingsdata: ObservableObject{
@@ -71,8 +77,12 @@ class downloadcompletedlistingsdata: ObservableObject{
                     let quotesent = data["quotesent"] as? Int ?? 0
                     let location = data["location"] as? String ?? ""
                     let description = data["description"] as? String ?? ""
-                    let images = data["images"] as? String ?? ""
+                    let photo = data["images"] as? String ?? ""
                     let bot = data["bot"] as? Bool ?? false
+                    
+                    let url = URL(string: photo)
+                    let dataphoto = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                    let images = UIImage(data: dataphoto!)! // << store result UIImage(data: data!)
                     
                     let a = downloadcompleteddatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
                     self.output.append(a)
@@ -94,7 +104,7 @@ struct downloadcompleteddatastruct: Identifiable  {
     var quotesent: Int
     var location: String
     var description: String
-    var images: String
+    var images: UIImage
     var bot: Bool
 }
 
@@ -230,7 +240,7 @@ class downloadSentQuotes: ObservableObject {
                         let quotesent = data["quotesent"] as? Int ?? 0
                         let location = data["location"] as? String ?? ""
                         let description = data["description"] as? String ?? ""
-                        let images = data["images"] as? String ?? ""
+                        let images = data["profilepicture"] as? String ?? ""
                         let bot = data["bot"] as? Bool ?? false
                         
                         let a = downloadsentquotesdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)

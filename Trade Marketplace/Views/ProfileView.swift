@@ -22,24 +22,25 @@ struct ProfileView: View {
 struct ProfileViewDescription: View {
     @State var shouldShowImagePicker = false
     @State var image: UIImage?
+    
     @EnvironmentObject var data: downloadprofileviewdata
     var body: some View {
         HStack(spacing: 40){
             Button {
                 shouldShowImagePicker.toggle()
             } label: {
-                if let image = self.image {
-                    Image(uiImage: image)
+                if let imagea = self.data.image{
+                    Image(uiImage: imagea)
                         .resizable()
-                        .frame(width: 96, height: 96)
-                        .scaledToFill()
+                        .frame(width: 76, height: 76)
+                        .scaledToFit()
                         .cornerRadius(96)
                 } else {
                     Image(systemName: "person.fill")
                         .resizable()
-                        .frame(width: 96, height: 96)
+                        .frame(width: 76, height: 76)
                         .scaledToFit()
-                        .cornerRadius(96)
+                        .cornerRadius(76)
                         .foregroundColor(Color(.label))
                 }
                 
