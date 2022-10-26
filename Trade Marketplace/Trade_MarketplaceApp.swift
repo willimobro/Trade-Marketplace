@@ -22,6 +22,7 @@ struct Trade_Marketplace: App   {
     @StateObject var d = downloadSentQuotes()
     @StateObject var e = downloadWatchlist()
     @StateObject var f = downloadalljobs()
+    @StateObject var g = UploadJob()
     @ObservedObject var coordinator = Coordinator()
     
     var body: some Scene    {
@@ -46,6 +47,7 @@ struct Trade_Marketplace: App   {
             .environmentObject(d)
             .environmentObject(e)
             .environmentObject(f)
+            .environmentObject(g)
             
             
             

@@ -55,7 +55,7 @@ struct ContentHomeAllJobsData: View {
                            quotesent:.constant(item .quotesent),
                            location: .constant(item.location),
                            description: .constant(item.description),
-                           image: .constant(item.images))}
+                           image: .constant(item.images!))}
 
         }.padding(.leading, 10)
         .padding(.bottom, 80)

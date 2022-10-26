@@ -30,7 +30,7 @@ struct CategoryView: View {
                                            quotesent:.constant(item .quotesent),
                                            location: .constant(item.location),
                                            description: .constant(item.description),
-                                           image: .constant(item.images))}
+                                           image: .constant(item.images!))}
                             
                         }
                     }.overlay(

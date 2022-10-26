@@ -40,338 +40,384 @@ class downloadprofileviewdata: ObservableObject {
                         self.reviews = reviews // << store result
                         self.username = username // << store result
                         
-                        let url = URL(string: image)
-                        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                        self.image = UIImage(data: data!)! // << store result UIImage(data: data!)
+                            if let url = URL(string: image) {
+                                if let data = NSData(contentsOf: url) {
+                                    self.image = UIImage(data: data as Data)
+                                
+                            }
+                        }
+                        
                     }
                 }
             }
-            }
         }
     }
-
-
-/// Download all completed listing data
-class downloadcompletedlistingsdata: ObservableObject{
-    @Published var output: [downloadcompleteddatastruct] = []
-    @Published var count: NSNumber = 0
-    
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
-    
-    func getData() {
-        output.removeAll()
-        print(self.user!.uid)
-        db.collection("users").document(self.user!.uid).collection("CompletedListings").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let data = document.data()
-                    
-                    let id = document.documentID
-                    let category = data["category"] as? String ?? ""
-                    let title = data["title"] as? String ?? ""
-                    let subtitle = data["subtitle"] as? String ?? ""
-                    let quotesent = data["quotesent"] as? Int ?? 0
-                    let location = data["location"] as? String ?? ""
-                    let description = data["description"] as? String ?? ""
-                    let photo = data["images"] as? String ?? ""
-                    let bot = data["bot"] as? Bool ?? false
-                    
-                    let url = URL(string: photo)
-                    let dataphoto = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                    let images = UIImage(data: dataphoto!)! // << store result UIImage(data: data!)
-                    
-                    let a = downloadcompleteddatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                    self.output.append(a)
+}
+        
+        /// Download all completed listing data
+        class downloadcompletedlistingsdata: ObservableObject{
+            @Published var output: [downloadcompleteddatastruct] = []
+            @Published var count: NSNumber = 0
+            
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("users").document(self.user!.uid).collection("CompletedListings").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["images"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            
+                            if let url = URL(string: photo) {
+                                if let data = NSData(contentsOf: url) {
+                                    let images = UIImage(data: data as Data)
+                                    let a = downloadcompleteddatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                    self.output.append(a)
+                                }
+                            }
+                        }
+                    }
                     
                 }
+                
             }
-            
         }
         
-    }
-}
-
-/// Store all completed listing data
-struct downloadcompleteddatastruct: Identifiable  {
-    var id: String
-    var category: String
-    var title: String
-    var subtitle: String
-    var quotesent: Int
-    var location: String
-    var description: String
-    var images: UIImage
-    var bot: Bool
-}
-
-/// Download all listing data
-class downloadlistingsdata: ObservableObject{
-    @Published var output: [downloadlistingdatastruct] = []
-    @Published var count: NSNumber = 0
-    
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
-    
-    func getData() {
-        output.removeAll()
-        print(self.user!.uid)
-        db.collection("users").document(self.user!.uid).collection("Listings").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let data = document.data()
-                    
-                    let id = document.documentID
-                    let category = data["category"] as? String ?? ""
-                    let title = data["title"] as? String ?? ""
-                    let subtitle = data["subtitle"] as? String ?? ""
-                    let quotesent = data["quotesent"] as? Int ?? 0
-                    let location = data["location"] as? String ?? ""
-                    let description = data["description"] as? String ?? ""
-                    let images = data["images"] as? String ?? ""
-                    let bot = data["bot"] as? Bool ?? false
-                    
-                    let a = downloadlistingdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                    self.output.append(a)
-                    
-                }
-            }
-            
+        /// Store all completed listing data
+        struct downloadcompleteddatastruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage
+            var bot: Bool
         }
         
-    }
-}
-
-/// Store all listing data
-struct downloadlistingdatastruct: Identifiable  {
-    var id: String
-    var category: String
-    var title: String
-    var subtitle: String
-    var quotesent: Int
-    var location: String
-    var description: String
-    var images: String
-    var bot: Bool
-}
-
-/// Download all recievedquotes data
-class downloadrecievedquotesdata: ObservableObject{
-    @Published var output: [downloadrecievedquotesstruct] = []
-    @Published var count: NSNumber = 0
-    
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
-    
-    func getData() {
-        output.removeAll()
-        print(self.user!.uid)
-        db.collection("users").document(self.user!.uid).collection("RecievedQuotes").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let data = document.data()
-                    
-                    let id = document.documentID
-                    let category = data["category"] as? String ?? ""
-                    let title = data["title"] as? String ?? ""
-                    let subtitle = data["subtitle"] as? String ?? ""
-                    let quotesent = data["quotesent"] as? Int ?? 0
-                    let location = data["location"] as? String ?? ""
-                    let description = data["description"] as? String ?? ""
-                    let images = data["images"] as? String ?? ""
-                    let bot = data["bot"] as? Bool ?? false
-                    
-                    let a = downloadrecievedquotesstruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                    self.output.append(a)
-                    
-                }
-            }
+        /// Download all listing data
+        class downloadlistingsdata: ObservableObject{
+            @Published var output: [downloadlistingdatastruct] = []
+            @Published var count: NSNumber = 0
             
-        }
-        
-    }
-}
-
-/// Store all recievedquotes data
-struct downloadrecievedquotesstruct: Identifiable  {
-    var id: String
-    var category: String
-    var title: String
-    var subtitle: String
-    var quotesent: Int
-    var location: String
-    var description: String
-    var images: String
-    var bot: Bool
-}
-
-/// Download all SentQuotes data
-class downloadSentQuotes: ObservableObject {
-        @Published var output: [downloadsentquotesdatastruct] = []
-        @Published var count: NSNumber = 0
-        
-        let db = Firestore.firestore()
-        let user = Auth.auth().currentUser
-        
-        func getData() {
-            output.removeAll()
-            print(self.user!.uid)
-            db.collection("users").document(self.user!.uid).collection("SentQuotes").getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        print("\(document.documentID) => \(document.data())")
-                        let data = document.data()
-                        
-                        let id = document.documentID
-                        let category = data["category"] as? String ?? ""
-                        let title = data["title"] as? String ?? ""
-                        let subtitle = data["subtitle"] as? String ?? ""
-                        let quotesent = data["quotesent"] as? Int ?? 0
-                        let location = data["location"] as? String ?? ""
-                        let description = data["description"] as? String ?? ""
-                        let images = data["profilepicture"] as? String ?? ""
-                        let bot = data["bot"] as? Bool ?? false
-                        
-                        let a = downloadsentquotesdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                        self.output.append(a)
-                        
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("users").document(self.user!.uid).collection("Listings").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["images"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            DispatchQueue.main.async {
+                                if let url = URL(string: photo) {
+                                    if let data = NSData(contentsOf: url) {
+                                        let images = UIImage(data: data as Data)
+                                        let a = downloadlistingdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        self.output.append(a)
+                                    }
+                                }
+                            }
+                           
+                            
+                            
+                        }
                     }
                 }
                 
             }
             
         }
-    }
-
-/// Store all SentQuotes data
-struct downloadsentquotesdatastruct: Identifiable  {
-    var id: String
-    var category: String
-    var title: String
-    var subtitle: String
-    var quotesent: Int
-    var location: String
-    var description: String
-    var images: String
-    var bot: Bool
-}
-
-/// Download all Watchlist data
-class downloadWatchlist: ObservableObject {
-    @Published var output: [downloadwatchlistdatastruct] = []
-    @Published var count: NSNumber = 0
-    
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
-    
-    func getData() {
-        output.removeAll()
-        print(self.user!.uid)
-        db.collection("users").document(self.user!.uid).collection("Watchlist").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let data = document.data()
-                    
-                    let id = document.documentID
-                    let category = data["category"] as? String ?? ""
-                    let title = data["title"] as? String ?? ""
-                    let subtitle = data["subtitle"] as? String ?? ""
-                    let quotesent = data["quotesent"] as? Int ?? 0
-                    let location = data["location"] as? String ?? ""
-                    let description = data["description"] as? String ?? ""
-                    let images = data["images"] as? String ?? ""
-                    let bot = data["bot"] as? Bool ?? false
-                    
-                    let a = downloadwatchlistdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                    self.output.append(a)
-                    
-                }
-            }
-            
+        
+        
+        /// Store all listing data
+        struct downloadlistingdatastruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage
+            var bot: Bool
         }
         
-    }
-}
-
-/// Store all Watchlist data
-struct downloadwatchlistdatastruct: Identifiable  {
-var id: String
-var category: String
-var title: String
-var subtitle: String
-var quotesent: Int
-var location: String
-var description: String
-var images: String
-var bot: Bool
-}
-
-/// Download all Watchlist data
-class downloadalljobs: ObservableObject {
-    @Published var output: [downloadalljobsdatastruct] = []
-    @Published var count: NSNumber = 0
-    
-    let db = Firestore.firestore()
-    let user = Auth.auth().currentUser
-    
-    func getData() {
-        output.removeAll()
-        print(self.user!.uid)
-        db.collection("alljobs").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    print("\(document.documentID) => \(document.data())")
-                    let data = document.data()
-                    
-                    let id = document.documentID
-                    let category = data["category"] as? String ?? ""
-                    let title = data["title"] as? String ?? ""
-                    let subtitle = data["subtitle"] as? String ?? ""
-                    let quotesent = data["quotesent"] as? Int ?? 0
-                    let location = data["location"] as? String ?? ""
-                    let description = data["description"] as? String ?? ""
-                    let images = data["images"] as? String ?? ""
-                    let bot = data["bot"] as? Bool ?? false
-                    
-                    let a = downloadalljobsdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images, bot: bot)
-                    self.output.append(a)
+        /// Download all recievedquotes data
+        class downloadrecievedquotesdata: ObservableObject{
+            @Published var output: [downloadrecievedquotesstruct] = []
+            @Published var count: NSNumber = 0
+            
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("users").document(self.user!.uid).collection("RecievedQuotes").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["images"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            DispatchQueue.main.async {
+                                if let url = URL(string: photo) {
+                                    if let data = NSData(contentsOf: url) {
+                                        let images = UIImage(data: data as Data)
+                                        
+                                        let a = downloadrecievedquotesstruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        self.output.append(a)
+                                    }
+                                }
+                            }
+                           
+                            
+                        }
+                    }
                     
                 }
+                
             }
-            
         }
         
-    }
-}
-
-/// Store all Watchlist data
-struct downloadalljobsdatastruct: Identifiable  {
-var id: String
-var category: String
-var title: String
-var subtitle: String
-var quotesent: Int
-var location: String
-var description: String
-var images: String
-var bot: Bool
-}
-
-
-
+        /// Store all recievedquotes data
+        struct downloadrecievedquotesstruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage
+            var bot: Bool
+        }
+        
+        /// Download all SentQuotes data
+        class downloadSentQuotes: ObservableObject {
+            @Published var output: [downloadsentquotesdatastruct] = []
+            @Published var count: NSNumber = 0
+            
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("users").document(self.user!.uid).collection("SentQuotes").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["profilepicture"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            DispatchQueue.main.async {
+                                if let url = URL(string: photo) {
+                                    if let data = NSData(contentsOf: url) {
+                                        let images = UIImage(data: data as Data)
+                                        
+                                        let a = downloadsentquotesdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        self.output.append(a)
+                                    }
+                                }
+                            }
+                           
+                                
+                            
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        /// Store all SentQuotes data
+        struct downloadsentquotesdatastruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage
+            var bot: Bool
+        }
+        
+        /// Download all Watchlist data
+        class downloadWatchlist: ObservableObject {
+            @Published var output: [downloadwatchlistdatastruct] = []
+            @Published var count: NSNumber = 0
+            
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("users").document(self.user!.uid).collection("Watchlist").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["images"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            DispatchQueue.main.async {
+                                if let url = URL(string: photo) {
+                                    if let data = NSData(contentsOf: url) {
+                                        let images = UIImage(data: data as Data)
+                                        
+                                        let a = downloadwatchlistdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        self.output.append(a)
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        /// Store all Watchlist data
+        struct downloadwatchlistdatastruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage
+            var bot: Bool
+        }
+        
+        /// Download all Watchlist data
+        class downloadalljobs: ObservableObject {
+            @Published var output: [downloadalljobsdatastruct] = []
+            @Published var count: NSNumber = 0
+            
+            let db = Firestore.firestore()
+            let user = Auth.auth().currentUser
+            
+            func getData() {
+                output.removeAll()
+                print(self.user!.uid)
+                db.collection("alljobs").getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            let data = document.data()
+                            
+                            let id = document.documentID
+                            let category = data["category"] as? String ?? ""
+                            let title = data["title"] as? String ?? ""
+                            let subtitle = data["subtitle"] as? String ?? ""
+                            let quotesent = data["quotesent"] as? Int ?? 0
+                            let location = data["location"] as? String ?? ""
+                            let description = data["description"] as? String ?? ""
+                            let photo = data["images"] as? String ?? ""
+                            let bot = data["bot"] as? Bool ?? false
+                            DispatchQueue.main.async {
+                                if let url = URL(string: photo) {
+                                    if let data = NSData(contentsOf: url) {
+                                        let images = UIImage(data: data as Data)
+                                        
+                                        let a = downloadalljobsdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        self.output.append(a)
+                                    }
+                                }
+                            }
+                           
+                                    
+                            
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+        
+        /// Store all Watchlist data
+        struct downloadalljobsdatastruct: Identifiable  {
+            var id: String
+            var category: String
+            var title: String
+            var subtitle: String
+            var quotesent: Int
+            var location: String
+            var description: String
+            var images: UIImage!
+            var bot: Bool
+        }
+        
+        
+        
+    

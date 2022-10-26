@@ -9,8 +9,11 @@ import SwiftUI
 import Firebase
 import FirebaseDatabase
 import FirebaseAuth
+import FirebaseStorage
 // hello
 struct CreateJobView: View {
+    @State var createjobshouldShowImagePicker = false
+    @State var createimage: UIImage?
     @Environment(\.dismiss) var dismiss
     @State var WhendataMain: String = "ASAP"
     @State private var jobTitle = String()
@@ -26,15 +29,15 @@ struct CreateJobView: View {
                     .frame(width: 25, height: 25)
                     .scaledToFit()
                 
-                    
+                
                 Text("Create a job")
                     .font(.title)
                     .fontWeight(.bold)
-                    
-                    
+                
+                
             }.frame(width: 321, height: 24, alignment: .leading)
                 .padding(.horizontal, 20)
-        
+            
             
             Divider()
                 .background(.black)
@@ -42,76 +45,85 @@ struct CreateJobView: View {
                 .opacity(0.5)
                 .frame(height: 20, alignment: .bottom)
             
-                
+            
             
             ScrollView(.vertical){
                 VStack(alignment: .leading, spacing: 10){
                     
                     
                     HStack{
-                        ForEach (1..<5) { i in
-                            UploadPictureIcon()
+                        Button {
+                            createjobshouldShowImagePicker.toggle()
+                        } label: {
+                            UploadPictureIcon(createimage: $createimage)
                         }
-                        UploadCameraIcon()
-                    }.padding(.vertical, 10)
-                //Job Name
-                    Text("Job name")
-                        .font(.title)
-                        .fontWeight(.bold)
-                    VStack (alignment: .leading, spacing: 10){
-                        TextField(
-                        "e.g Sink Install",
-                        text: $jobTitle)
-                        Divider()
-                            .background(.black)
-                            .padding(0)
-                        Text("A short job name helps tradies and the like easily identify and respond to your job")
-                            .font(.footnote)
-                            .foregroundColor(Color.gray)
-
-                        
-                    //Description
-                        Text("Description")
+                            UploadCameraIcon()
+                        }.padding(.vertical, 10)
+                        //Job Name
+                        Text("Job name")
                             .font(.title)
                             .fontWeight(.bold)
-                            .padding(.top, 10)
-
-                        
-                        TextEditor(text: $jobDesc)
-                            .foregroundColor(Color.black)
-                            .frame(height: 200)
-                            .overlay(Rectangle()
-                                .stroke(Color.secondary).opacity(0.5))
-                        Group{
-                            // Details
-                            Details(category: $category)
-                            //When
-                            When(WhenDataMain: $WhendataMain)
-                            
-                            //Where
-                            Where(manualaddress: $manualaddress)
+                        VStack (alignment: .leading, spacing: 10){
+                            TextField(
+                                "e.g Sink Install",
+                                text: $jobTitle)
+                            Divider()
+                                .background(.black)
+                                .padding(0)
+                            Text("A short job name helps tradies and the like easily identify and respond to your job")
+                                .font(.footnote)
+                                .foregroundColor(Color.gray)
                             
                             
-                            //Add tags
-                            Tags(tags: $tags)
+                            //Description
+                            Text("Description")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .padding(.top, 10)
                             
-                            //Publish
-                            Publish()
-                            //SubmitJob
-                            SubmitJob(JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
+                            
+                            TextEditor(text: $jobDesc)
+                                .foregroundColor(Color.black)
+                                .frame(height: 200)
+                                .overlay(Rectangle()
+                                    .stroke(Color.secondary).opacity(0.5))
+                            Group{
+                                // Details
+                                Details(category: $category)
+                                //When
+                                When(WhenDataMain: $WhendataMain)
+                                
+                                //Where
+                                Where(manualaddress: $manualaddress)
+                                
+                                
+                                //Add tags
+                                Tags(tags: $tags)
+                                
+                                //Publish
+                                Publish()
+                                //SubmitJob
+                                SubmitJob(JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
+                            }
                         }
-                    }
+                        
+                        
+                    } .padding(.horizontal, 20)
                     
-                    
-                } .padding(.horizontal, 20)
-                
+                }
             }
-        }.padding(.bottom, 60)
-        
+        .padding(.bottom, 60)
+        .fullScreenCover(isPresented: $createjobshouldShowImagePicker, onDismiss: nil) {
+            ImagePicker(image: $createimage, JobName: $jobTitle)
+                .ignoresSafeArea()
+            
+        }
+        }
     }
-}
+
 
 struct UploadPictureIcon: View {
+    @Binding var createimage: UIImage?
     var body: some View {
        
         Rectangle()
@@ -351,6 +363,7 @@ struct SubmitJob: View {
     @Binding  var When: String
     @Binding  var Where: String
     @Binding  var Tags: String
+    @EnvironmentObject var data: UploadJob
 
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
@@ -371,6 +384,7 @@ struct SubmitJob: View {
                                 "When": When,
                                 "Where": Where,
                                 "Tags": Tags,
+                                "images" : data.imageob!
                             ]], listingname: JobName)
                         } label:    {
                             Text("Submit Job")
@@ -387,6 +401,7 @@ struct SubmitJob: View {
 
 
 class UploadJob: ObservableObject   {
+    @Published var imageob: URL?
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func UploadjobData(data: [[String : Any]], listingname: String) {
@@ -394,7 +409,7 @@ class UploadJob: ObservableObject   {
         let _: [[String: Any]] = data.map { dictionary in
             var dict: [String: String] = [:]
             dictionary.forEach { (key, value) in dict[key] = "\(value)" }
-            db.collection("users").document(self.user!.uid).collection("Listings").addDocument(data: dict)
+            db.collection("users").document(self.user!.uid).collection("Listings").document(listingname).setData(dict)
             { err in
                 if let err = err {
                     print("Error writing document: \(err)")
@@ -407,7 +422,7 @@ class UploadJob: ObservableObject   {
         let _: [[String: String]] = data.map { dictionary in
             var dict: [String: String] = [:]
             dictionary.forEach { (key, value) in dict[key] = "\(value)" }
-            db.collection("alljobs").addDocument(data: dict)
+            db.collection("alljobs").document(listingname).setData(dict)
             { err in
                 if let err = err {
                     print("Error writing document: \(err)")
@@ -420,3 +435,66 @@ class UploadJob: ObservableObject   {
     }
     }
 
+struct ImagePicker: UIViewControllerRepresentable {
+    @EnvironmentObject var data: UploadJob
+    @Binding var image: UIImage?
+    @Binding  var JobName: String
+    private let controller = UIImagePickerController()
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        
+        let parent: ImagePicker
+        
+        init(parent: ImagePicker) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            parent.image = info[.originalImage] as? UIImage
+            picker.dismiss(animated: true)
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
+        
+    }
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        controller.delegate = context.coordinator
+        return controller
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        self.ImageUpload()
+    }
+    
+    func ImageUpload() {
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        guard let imageData = image?.jpegData(compressionQuality: 0.5)! else {return}
+        let ref = Storage.storage().reference(withPath: uid)
+        ref.putData(imageData, metadata: nil) {metadata, err in
+            if err != nil {
+                print("errpr")
+                return
+            }
+            ref.downloadURL { url, err in
+                if err != nil {
+                    print("error occured")
+                    return
+                }
+                
+                print("Successfully stored image with URL ")
+                print(url!.absoluteString)
+                data.imageob = url!.absoluteURL
+                guard url != nil else {return}
+            }
+            
+        }
+        
+    }
+}

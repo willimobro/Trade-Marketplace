@@ -20,10 +20,11 @@ struct MainObject: View {
     @Binding  var quotesent: Int
     @Binding  var location: String
     @Binding  var description: String
-    @Binding  var image: String
+    @Binding  var image: UIImage
     var body: some View {
         NavigationLink(destination: ItemView(titleItem: title, subtitleItem: subtitle, quotesentItem: quotesent, locationItem: location, descriptionItem: description, imageItem: image))  {
-                Image(image)
+            if let imagea = image {
+                Image(uiImage: imagea)
                     .resizable()
                     .cornerRadius(11)
                     .frame(width: 159, height: 162)
@@ -41,6 +42,27 @@ struct MainObject: View {
                                 .foregroundColor(.white)
                                 .padding(15)
                         }.frame(width: 159, height: 162, alignment: .bottomLeading))
+            } else {
+                Image(systemName: "perosn.fill")
+                    .resizable()
+                    .cornerRadius(11)
+                    .frame(width: 159, height: 162)
+                    .foregroundColor(.white)
+                    .shadow(color:Color("dropshadow25"), radius: 12, x: 0, y: 6)
+                    .overlay(RoundedRectangle(cornerRadius: 11)
+                        .fill(LinearGradient(gradient: Gradient(colors: [Color.clear, Color.black]),
+                            startPoint: .top,
+                                             endPoint: .bottom)).opacity(0.5))
+                    .overlay(
+                        VStack{
+                            Text(title)
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(15)
+                        }.frame(width: 159, height: 162, alignment: .bottomLeading))
+            }
+                
                     
                     
         }
