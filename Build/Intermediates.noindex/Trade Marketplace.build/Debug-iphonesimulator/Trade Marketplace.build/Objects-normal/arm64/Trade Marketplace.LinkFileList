@@ -23,6 +23,7 @@
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/ContentLanding.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SignupView.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Listing.o
+/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/User.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/TabBar.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote a job.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/LandingControl.o
@@ -47,6 +48,7 @@
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/modifiers.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Quote.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/MapView.o
+/Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/Serverloader.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/SearchViaCategory.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/CategorysEnum.o
 /Applications/Trade-Marketplace/Build/Intermediates.noindex/Trade Marketplace.build/Debug-iphonesimulator/Trade Marketplace.build/Objects-normal/arm64/QuoteDetailView.o
@@ -82,8 +84,11 @@
 /Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/openssl_grpc.o
 /Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/gRPC-Core.o
 /Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseFirestore.o
-/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseAuth.o
-/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/GTMSessionFetcherCore.o
-/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseFirestoreSwiftTarget.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseStorage.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseAppCheckInterop.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseAuthInterop.o
 /Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseCoreExtension.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/GTMSessionFetcherCore.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseAuth.o
+/Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseFirestoreSwiftTarget.o
 /Applications/Trade-Marketplace/Build/Products/Debug-iphonesimulator/FirebaseFirestoreSwift.o

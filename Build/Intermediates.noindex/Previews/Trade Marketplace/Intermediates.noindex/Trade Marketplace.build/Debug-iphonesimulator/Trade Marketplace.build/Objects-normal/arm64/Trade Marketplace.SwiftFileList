@@ -23,6 +23,7 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/ContentLanding.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Views/SignupView.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/Listing.swift
+/Applications/Trade-Marketplace/User.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/UserView/TabBar.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Views/Quote\ a\ job.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/UserView/LandingControl.swift
@@ -47,6 +48,7 @@
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/modifiers.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/Accountview\ Resources/Quote.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/MapView.swift
+/Applications/Trade-Marketplace/Trade\ Marketplace/Control\ Files/Serverloader.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Resources/SearchViaCategory.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/Objects/categorys/CategorysEnum.swift
 /Applications/Trade-Marketplace/Trade\ Marketplace/View\ Content/QuoteDetailView.swift

@@ -19,14 +19,12 @@ struct ProfileSub: View {
                     .foregroundColor(.white)
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .padding(20)
-                    .onTapGesture {
-                        vm.pulluserdata()
-                    }
             VStack{
-                
-                Text("Name, Surname")
+                Text("servercontrol.text")
                     .font(.custom("Poppins-SemiBold", size: 28))
                     .frame(width: 300, alignment: .leading)
+                    
+
                 Text("Residence")
                     .font(.custom("Poppins-SemiBold", size: 14))
                     .frame(width: 300, alignment: .leading)

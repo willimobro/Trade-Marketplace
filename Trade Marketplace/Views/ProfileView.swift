@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var data: downloadprofileviewdata
     var body: some View {
         VStack {
             CategoryNavigator(category: "Profile")
@@ -17,86 +18,116 @@ struct ProfileView: View {
         }.ignoresSafeArea()
     }
 }
-
-struct ProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-    }
-}
-
-struct ProfileViewDescription: View {
-    var body: some View {
-        HStack{
-            Circle()
-                .foregroundColor(Color("Homebackgroundgreen"))
-                .scaledToFit()
-                .frame(width: 80, height: 80)
-                .overlay(
-                    Image("greenvan")
-                        .resizable()
-                        .scaledToFit())
-            VStack (alignment: .leading, spacing: 0){
-                Text("John Andrew")
-                    .font(.custom("Poppins-SemiBold", size: 20))
-                Text("Invercargill, Southland, NZ")
-                    .foregroundColor(.gray)
-                Text("@johnandrew27")
-                    .foregroundColor(.gray)
-            }.frame(height: 60)
-        }.frame(width: 351, alignment: .leading)
-    }
-}
-
-struct ReviewTab: View {
-    @State  var profilemenu = String()
     
+struct ProfileViewDescription: View {
+    @State var shouldShowImagePicker = false
+    @State var image: UIImage?
+    
+    @EnvironmentObject var data: downloadprofileviewdata
     var body: some View {
-        VStack{
-            HStack {
-                HStack{
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.fill")
-                    Image(systemName: "star.leadinghalf.filled")
-                    Image(systemName: "star")
-                }.foregroundColor(.green)
-                    .frame(width: 150)
-                Spacer()
-                Text("17 Reviews")
-                    .font(.custom("Poppins-SemiBold", size: 20))
-            }.padding(.horizontal, 20)
-            Divider()
-                .background(.black)
-            HStack{
-                Picker("Quoted", selection: $profilemenu) {
-                    Text("Quoted")
+        HStack(spacing: 40){
+            Button {
+                shouldShowImagePicker.toggle()
+            } label: {
+                if let imagea = self.data.image{
+                    Image(uiImage: imagea)
+                        .resizable()
+                        .frame(width: 76, height: 76)
+                        .scaledToFit()
+                        .cornerRadius(96)
+                } else {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .frame(width: 76, height: 76)
+                        .scaledToFit()
+                        .cornerRadius(76)
+                        .foregroundColor(Color(.label))
                 }
-                Picker("Reviews", selection: $profilemenu) {
-                    Text("Reviews")
-                    }
-                Picker("Jobs", selection: $profilemenu) {
-                    Text("Jobs")
-                    }
-            }.pickerStyle(.segmented)
-                .padding(.horizontal, 20)
-            ScrollView(.vertical){
-                HStack(spacing: 60){
-                    VStack{
-                        Quote()
-                        Quote()
-                        Quote()
-                        Quote()
-                    }
-                    VStack{
-                        Quote()
-                        Quote()
-                        Quote()
-                        Quote()
-                    }
-                }.padding(.horizontal, 26)
+                
+            }.overlay(
+                RoundedRectangle(cornerRadius: 96).stroke(Color.black, lineWidth: 3)
+            )
+            VStack (alignment: .leading, spacing: 0){
+                Text(data.firstname + " " +  data.lastname)
+                    .font(.custom("Poppins-SemiBold", size: 20))
+                Text(data.location)
+                    .foregroundColor(.gray)
+                Text(data.username)
+                    .foregroundColor(.gray)
             }
-        
+        }
+        .padding(.horizontal, 20)
+        .onAppear { self.data.DownloadProfileViewData()
+        }
+        .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
+            ServerControl.ImagePicker(image: $image)
+                .ignoresSafeArea()
+            
         }
     }
 }
+    
+    struct ReviewTab: View {
+        @State  var profilemenu = String()
+        @EnvironmentObject var data: downloadprofileviewdata
+        var body: some View {
+            VStack{
+                HStack {
+                    HStack{
+                        Image(systemName: "star.fill")
+                        Image(systemName: "star.fill")
+                        Image(systemName: "star.fill")
+                        Image(systemName: "star.leadinghalf.filled")
+                        Image(systemName: "star")
+                    }.foregroundColor(.green)
+                        .frame(width: 150)
+                    Spacer()
+                    Text("\(data.reviews) Reviews")
+                        .font(.custom("Poppins-SemiBold", size: 20))
+                }.padding(.horizontal, 20)
+                Divider()
+                    .background(.black)
+                HStack{
+                    Picker("Quoted", selection: $profilemenu) {
+                        Text("Quoted")
+                    }
+                    Picker("Reviews", selection: $profilemenu) {
+                        Text("Reviews")
+                    }
+                    Picker("Jobs", selection: $profilemenu) {
+                        Text("Jobs")
+                    }
+                }.pickerStyle(.segmented)
+                    .padding(.horizontal, 20)
+                ScrollView(.vertical){
+                    HStack(spacing: 60){
+                        VStack{
+                            Quote()
+                            Quote()
+                            Quote()
+                            Quote()
+                        }
+                        VStack{
+                            Quote()
+                            Quote()
+                            Quote()
+                            Quote()
+                        }
+                    }.padding(.horizontal, 26)
+                }
+                
+            }
+        }
+    }
+    
+    
+    struct ProfileView_Previews: PreviewProvider {
+        @EnvironmentObject var data: downloadprofileviewdata
+        @Binding var shouldShowImagePicker: Bool
+        @Binding var image: UIImage?
+        static var previews: some View {
+            ProfileView()
+        }
+    }
+
 

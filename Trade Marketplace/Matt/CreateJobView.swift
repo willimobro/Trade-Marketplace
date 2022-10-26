@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseDatabase
+import FirebaseAuth
 // hello
 struct CreateJobView: View {
     @Environment(\.dismiss) var dismiss
@@ -341,12 +344,14 @@ struct CreateJobView_Previews: PreviewProvider {
 
 
 struct SubmitJob: View {
+    @Environment(\.dismiss) var dismiss
     let activate = ServerControl()
     @Binding  var JobName: String
     @Binding  var Category: String
     @Binding  var When: String
     @Binding  var Where: String
     @Binding  var Tags: String
+
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .foregroundColor(Color("UploadAJobGreen"))
@@ -359,7 +364,14 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            self.activate.UploadData(data: [["nah" : "Password"]], collection: "bro", document: "lol")
+                            UploadJob().UploadjobData(data:
+                            [[
+                                "title": JobName,
+                                "category": Category,
+                                "When": When,
+                                "Where": Where,
+                                "Tags": Tags,
+                            ]], listingname: JobName)
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)
@@ -373,4 +385,38 @@ struct SubmitJob: View {
                     
     }
 
+
+class UploadJob: ObservableObject   {
+    let db = Firestore.firestore()
+    let user = Auth.auth().currentUser
+    func UploadjobData(data: [[String : Any]], listingname: String) {
+        print(self.user!.uid)
+        let _: [[String: Any]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+            db.collection("users").document(self.user!.uid).collection("Listings").addDocument(data: dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+            return dict
+        }
+        let _: [[String: String]] = data.map { dictionary in
+            var dict: [String: String] = [:]
+            dictionary.forEach { (key, value) in dict[key] = "\(value)" }
+            db.collection("alljobs").addDocument(data: dict)
+            { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+            return dict
+        }
+    }
+    }
 

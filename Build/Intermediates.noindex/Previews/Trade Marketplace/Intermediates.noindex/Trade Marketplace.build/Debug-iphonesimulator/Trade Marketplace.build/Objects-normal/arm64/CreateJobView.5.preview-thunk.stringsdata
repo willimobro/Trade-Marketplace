@@ -4,7 +4,15 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "publish"
+        "key": "Submit Job"
+      },
+      {
+        "comment": "",
+        "key": "Publish"
+      },
+      {
+        "comment": "",
+        "key": "By clicking the submit button below, I hereby agree to and accept the following [terms](https://example.com) , [conditions](https://example.com) and [Privacy Policy](https://example.com) of Trade Marketplace"
       },
       {
         "comment": "",
@@ -12,7 +20,15 @@
       },
       {
         "comment": "",
+        "key": "optional"
+      },
+      {
+        "comment": "",
         "key": "Where"
+      },
+      {
+        "comment": "",
+        "key": "Please Select an option"
       },
       {
         "comment": "",
@@ -20,19 +36,7 @@
       },
       {
         "comment": "",
-        "key": "e.g Sink Install"
-      },
-      {
-        "comment": "",
-        "key": "You will travel to service provider"
-      },
-      {
-        "comment": "",
-        "key": ""
-      },
-      {
-        "comment": "",
-        "key": "Your service provider will tavel to you"
+        "key": "123 example street, Invercargill"
       },
       {
         "comment": "",
@@ -44,7 +48,7 @@
       },
       {
         "comment": "",
-        "key": "A short job name helps tradies and the like easily identify and respond to your job"
+        "key": "Selecting more than one category helps you recvieve more quotes"
       },
       {
         "comment": "",
@@ -64,7 +68,7 @@
       },
       {
         "comment": "",
-        "key": "Select a Category"
+        "key": "Selected Category"
       },
       {
         "comment": "",
@@ -73,6 +77,14 @@
       {
         "comment": "",
         "key": "Job name"
+      },
+      {
+        "comment": "",
+        "key": "e.g Sink Install"
+      },
+      {
+        "comment": "",
+        "key": "A short job name helps tradies and the like easily identify and respond to your job"
       },
       {
         "comment": "",

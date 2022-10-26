@@ -80,6 +80,7 @@
 		DD875CD828DEAC33006CD9B9 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */; };
 		DD875CDA28DEB186006CD9B9 /* QuoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */; };
 		DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD875CDB28DEC297006CD9B9 /* Quote.swift */; };
+		DD8B15FF2904914800093208 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8B15FE2904914800093208 /* User.swift */; };
 		DD97695828D066EB00EEC92C /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695728D066EB00EEC92C /* Logo.swift */; };
 		DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */; };
 		DDAED03328E577820082E114 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAED03228E577820082E114 /* TabBar.swift */; };
@@ -96,6 +97,8 @@
 		DDE2CF9F28D48D9700A0C1A4 /* HomeBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CF9E28D48D9700A0C1A4 /* HomeBackground.swift */; };
 		DDE2CFA228D498DE00A0C1A4 /* Categorys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CFA128D498DE00A0C1A4 /* Categorys.swift */; };
 		DDE2CFA428D4A95700A0C1A4 /* LandscapeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2CFA328D4A95700A0C1A4 /* LandscapeObject.swift */; };
+		DDE369FF290619F5005577B4 /* Serverloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE369FE290619F5005577B4 /* Serverloader.swift */; };
+		DDE36A0129065726005577B4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DDE36A0029065726005577B4 /* FirebaseStorage */; };
 		DDFB9DB628F0F1A900E44E06 /* CategorysEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFB9DB528F0F1A900E44E06 /* CategorysEnum.swift */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +191,7 @@
 		DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
 		DD875CD928DEB186006CD9B9 /* QuoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteDetailView.swift; sourceTree = "<group>"; };
 		DD875CDB28DEC297006CD9B9 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
+		DD8B15FE2904914800093208 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DD97695728D066EB00EEC92C /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		DD97695B28D07A8200EEC92C /* BackgroundLogo_Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLogo_Main.swift; sourceTree = "<group>"; };
 		DDAED03228E577820082E114 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 		DDE2CF9E28D48D9700A0C1A4 /* HomeBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBackground.swift; sourceTree = "<group>"; };
 		DDE2CFA128D498DE00A0C1A4 /* Categorys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categorys.swift; sourceTree = "<group>"; };
 		DDE2CFA328D4A95700A0C1A4 /* LandscapeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeObject.swift; sourceTree = "<group>"; };
+		DDE369FE290619F5005577B4 /* Serverloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serverloader.swift; sourceTree = "<group>"; };
 		DDFB9DB528F0F1A900E44E06 /* CategorysEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorysEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,6 +221,7 @@
 				DD5661AD28F802F100C46AC7 /* FirebaseDatabase in Frameworks */,
 				DD6CF00B28F55A560007119F /* FirebaseAnalytics in Frameworks */,
 				DD2A735E28FA38CC00155105 /* FirebaseFirestore in Frameworks */,
+				DDE36A0129065726005577B4 /* FirebaseStorage in Frameworks */,
 				DD6CF00D28F55A560007119F /* FirebaseAuth in Frameworks */,
 				DD2A736028FA38D700155105 /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -393,6 +399,7 @@
 			isa = PBXGroup;
 			children = (
 				DD875CD728DEAC33006CD9B9 /* AccountSettings.swift */,
+				DD8B15FE2904914800093208 /* User.swift */,
 			);
 			name = "SHIT TO DO";
 			path = ..;
@@ -405,6 +412,7 @@
 				DD22A7C628F16C170062C47D /* Listing.swift */,
 				DD22A7C828F16C340062C47D /* TabPreferenceKey.swift */,
 				DD6CF01028F56D610007119F /* ServerControl.swift */,
+				DDE369FE290619F5005577B4 /* Serverloader.swift */,
 			);
 			path = "Control Files";
 			sourceTree = "<group>";
@@ -516,6 +524,7 @@
 				DD5661AE28F802F100C46AC7 /* FirebaseDatabaseSwift */,
 				DD2A735D28FA38CC00155105 /* FirebaseFirestore */,
 				DD2A735F28FA38D700155105 /* FirebaseFirestoreSwift */,
+				DDE36A0029065726005577B4 /* FirebaseStorage */,
 			);
 			productName = "Trade Marketplace";
 			productReference = DD47D01128D063F500FE1B65 /* Trade Marketplace.app */;
@@ -683,6 +692,7 @@
 				DDE2CF9028D1F1D200A0C1A4 /* ContentLanding.swift in Sources */,
 				DDE2CF9428D458B500A0C1A4 /* SignupView.swift in Sources */,
 				DD22A7C728F16C170062C47D /* Listing.swift in Sources */,
+				DD8B15FF2904914800093208 /* User.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
 				6639B8ED28FE7AE8007A016E /* AboutTradeMarketplace.swift in Sources */,
 				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
@@ -708,6 +718,7 @@
 				DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */,
 				DD875CDC28DEC297006CD9B9 /* Quote.swift in Sources */,
 				DD210BD128DFB8FE001283D8 /* MapView.swift in Sources */,
+				DDE369FF290619F5005577B4 /* Serverloader.swift in Sources */,
 				DD60161428D9A1E80051E013 /* SearchViaCategory.swift in Sources */,
 				DDFB9DB628F0F1A900E44E06 /* CategorysEnum.swift in Sources */,
 				DD875CDA28DEB186006CD9B9 /* QuoteDetailView.swift in Sources */,
@@ -1086,6 +1097,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DD6CF00928F55A560007119F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		DDE36A0029065726005577B4 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD6CF00928F55A560007119F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

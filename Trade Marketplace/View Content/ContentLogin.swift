@@ -36,7 +36,6 @@ struct ContentLogin: View {
     @State var password = ""
     @State var loginactive  = false
     @State var signinactive = false
-    
     var body: some View {
         ZStack{
             Rectangle()
@@ -46,7 +45,7 @@ struct ContentLogin: View {
             
             Spacer()
             VStack(spacing: 20) {
-                Text("Welcome \nBack")
+                Text("Welcome\nBack")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .foregroundColor(.primary)
@@ -75,7 +74,15 @@ struct ContentLogin: View {
                         
                 }
                 Button("Forgot Password?"){
-                    print("hello")
+                    vm.login(email: "willimobro@gmail.com", password: "copypaste456") { result in
+                        switch result {
+                        case .success(_):
+                            coordinator.path.append(.home)
+                        case .failure(_):
+                            (print("login button error"))
+                        }
+                        }
+                    
                 }
                     .font(.caption)
                     .foregroundColor(Color("ButtonColorSL"))
