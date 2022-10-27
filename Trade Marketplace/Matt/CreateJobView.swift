@@ -114,7 +114,7 @@ struct CreateJobView: View {
             }
         .padding(.bottom, 60)
         .fullScreenCover(isPresented: $createjobshouldShowImagePicker, onDismiss: nil) {
-            ImagePicker(image: $createimage, JobName: $jobTitle)
+            ImagePicker(image1: $createimage, JobName: $jobTitle)
                 .ignoresSafeArea()
             
         }
@@ -132,13 +132,22 @@ struct UploadPictureIcon: View {
             .frame(width: 52, height: 52)
             .padding(5)
             .overlay(
-                Image(systemName: "camera")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.gray)
-                    .frame(width: 22, height: 22)
-                    
-            )
+                VStack{
+                    if let image = self.createimage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .foregroundColor(.gray)
+                            .frame(width: 22, height: 22)
+                    } else {
+                        Image(systemName: "camera")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(.gray)
+                            .frame(width: 22, height: 22)
+                    }
+                }
+                )
         
     }
 }
@@ -437,7 +446,7 @@ class UploadJob: ObservableObject   {
 
 struct ImagePicker: UIViewControllerRepresentable {
     @EnvironmentObject var data: UploadJob
-    @Binding var image: UIImage?
+    @Binding var image1: UIImage?
     @Binding  var JobName: String
     private let controller = UIImagePickerController()
     
@@ -454,7 +463,7 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            parent.image = info[.originalImage] as? UIImage
+            parent.image1 = info[.originalImage] as? UIImage
             picker.dismiss(animated: true)
         }
         
@@ -476,7 +485,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func ImageUpload() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
         let lol = "images/\(uid)/\(JobName)/image1"
-        guard let imageData = image?.jpegData(compressionQuality: 0.1)! else {return}
+        guard let imageData = image1?.jpegData(compressionQuality: 0.1)! else {return}
         let ref = Storage.storage().reference(withPath: lol)
         ref.putData(imageData, metadata: nil) {metadata, err in
             if err != nil {
