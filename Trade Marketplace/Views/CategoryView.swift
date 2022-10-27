@@ -25,12 +25,12 @@ struct CategoryView: View {
                     }
                     ScrollView(.vertical){
                         LazyVGrid(columns: columns, spacing: 10) {
-                            ForEach(downloadeddata.output, id: \.id){item in
-                                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                                           quotesent:.constant(item .quotesent),
-                                           location: .constant(item.location),
-                                           description: .constant(item.description),
-                                           image: .constant(item.images!))}
+                            ForEach(downloadeddata.output, id: \.id) { item in
+                                MainObject(title: item.title, subtitle: item.subtitle,
+                                           quotesent:item .quotesent,
+                                           location: item.location,
+                                           description: item.description,
+                                           url: item.url)}
                             
                         }
                     }.overlay(

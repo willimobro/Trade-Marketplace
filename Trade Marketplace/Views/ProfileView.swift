@@ -29,13 +29,13 @@ struct ProfileViewDescription: View {
             Button {
                 shouldShowImagePicker.toggle()
             } label: {
-                if let imagea = self.data.image{
-                    Image(uiImage: imagea)
+                AsyncImage(url: URL(string: data.image!)) { image in
+                    image
                         .resizable()
                         .frame(width: 76, height: 76)
                         .scaledToFit()
                         .cornerRadius(96)
-                } else {
+                } placeholder: {
                     Image(systemName: "person.fill")
                         .resizable()
                         .frame(width: 76, height: 76)

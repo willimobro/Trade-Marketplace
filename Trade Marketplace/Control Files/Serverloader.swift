@@ -11,7 +11,7 @@ class downloadprofileviewdata: ObservableObject {
     @Published  var location: String = ""
     @Published  var username: String = ""
     @Published  var reviews: Int = 0
-    @Published  var image: UIImage?
+    @Published  var image: String?
     init() {
         DownloadProfileViewData()
     }
@@ -33,21 +33,15 @@ class downloadprofileviewdata: ObservableObject {
                     let username = mydata["username"] as? String ?? ""
                     let reviews = mydata["reviews"] as? Int ?? 0
                     let image = mydata["profilepicture"] as? String ?? ""
-                    DispatchQueue.main.async {
+                    
                         self.firstname = firstname // << store result
                         self.lastname = lastname // << store result
                         self.location = location // << store result
                         self.reviews = reviews // << store result
                         self.username = username // << store result
+                        self.image = image // << store result
                         
-                            if let url = URL(string: image) {
-                                if let data = NSData(contentsOf: url) {
-                                    self.image = UIImage(data: data as Data)
-                                
-                            }
-                        }
-                        
-                    }
+                    
                 }
             }
         }
@@ -139,15 +133,10 @@ class downloadprofileviewdata: ObservableObject {
                             let description = data["description"] as? String ?? ""
                             let photo = data["images"] as? String ?? ""
                             let bot = data["bot"] as? Bool ?? false
-                            DispatchQueue.main.async {
-                                if let url = URL(string: photo) {
-                                    if let data = NSData(contentsOf: url) {
-                                        let images = UIImage(data: data as Data)
-                                        let a = downloadlistingdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                           
+                                        let a = downloadlistingdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, bot: bot, url: photo)
                                         self.output.append(a)
-                                    }
-                                }
-                            }
+                       
                            
                             
                             
@@ -169,8 +158,8 @@ class downloadprofileviewdata: ObservableObject {
             var quotesent: Int
             var location: String
             var description: String
-            var images: UIImage
             var bot: Bool
+            var url: String
         }
         
         /// Download all recievedquotes data
@@ -329,7 +318,7 @@ class downloadprofileviewdata: ObservableObject {
                                     if let data = NSData(contentsOf: url) {
                                         let images = UIImage(data: data as Data)
                                         
-                                        let a = downloadwatchlistdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        let a = downloadwatchlistdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot, url: photo)
                                         self.output.append(a)
                                     }
                                 }
@@ -354,6 +343,7 @@ class downloadprofileviewdata: ObservableObject {
             var description: String
             var images: UIImage
             var bot: Bool
+            var url: String
         }
         
         /// Download all Watchlist data
@@ -384,16 +374,10 @@ class downloadprofileviewdata: ObservableObject {
                             let description = data["description"] as? String ?? ""
                             let photo = data["images"] as? String ?? ""
                             let bot = data["bot"] as? Bool ?? false
-                            DispatchQueue.main.async {
-                                if let url = URL(string: photo) {
-                                    if let data = NSData(contentsOf: url) {
-                                        let images = UIImage(data: data as Data)
                                         
-                                        let a = downloadalljobsdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, images: images!, bot: bot)
+                                        let a = downloadalljobsdatastruct(id: id, category: category, title: title, subtitle: subtitle, quotesent: quotesent, location: location, description: description, bot: bot, url: photo)
                                         self.output.append(a)
-                                    }
-                                }
-                            }
+                      
                            
                                     
                             
@@ -414,8 +398,8 @@ class downloadprofileviewdata: ObservableObject {
             var quotesent: Int
             var location: String
             var description: String
-            var images: UIImage!
             var bot: Bool
+            var url: String
         }
         
         

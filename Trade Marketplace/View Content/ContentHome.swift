@@ -51,11 +51,11 @@ struct ContentHomeAllJobsData: View {
     ScrollView(.horizontal){
         LazyHGrid(rows: columns, spacing: 10) {
             ForEach(alljobs.output, id: \.id){item in
-                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                           quotesent:.constant(item .quotesent),
-                           location: .constant(item.location),
-                           description: .constant(item.description),
-                           image: .constant(item.images!))}
+                MainObject(title: item.title, subtitle: item.subtitle,
+                           quotesent:item .quotesent,
+                           location: item.location,
+                           description: item.description,
+                            url: item.url)}
 
         }.padding(.leading, 10)
         .padding(.bottom, 80)
@@ -93,11 +93,11 @@ struct ContentHomeListingsData: View {
     ScrollView(.horizontal){
         LazyHGrid(rows: columns, spacing: 10) {
             ForEach(jobs.output, id: \.id){item in
-                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                           quotesent:.constant(item .quotesent),
-                           location: .constant(item.location),
-                           description: .constant(item.description),
-                           image: .constant(item.images))}
+                MainObject(title: item.title, subtitle: item.subtitle,
+                           quotesent:item .quotesent,
+                           location: item.location,
+                           description: item.description,
+                            url: item.url)}
 
         }.padding(.leading, 10)
         .padding(.bottom, 80)
@@ -135,11 +135,11 @@ struct ContentHomewatchlistData: View {
     ScrollView(.horizontal){
         LazyHGrid(rows: columns, spacing: 10) {
             ForEach(jobs.output, id: \.id){item in
-                MainObject(title: .constant(item.title), subtitle: .constant(item.subtitle),
-                           quotesent:.constant(item .quotesent),
-                           location: .constant(item.location),
-                           description: .constant(item.description),
-                           image: .constant(item.images))}
+                MainObject(title: item.title, subtitle: item.subtitle,
+                           quotesent:item .quotesent,
+                           location: item.location,
+                           description: item.description,
+                            url: item.url)}
 
         }.padding(.leading, 10)
         .padding(.bottom, 80)

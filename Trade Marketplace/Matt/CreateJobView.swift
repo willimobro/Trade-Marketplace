@@ -475,8 +475,9 @@ struct ImagePicker: UIViewControllerRepresentable {
     
     func ImageUpload() {
         guard let uid = Auth.auth().currentUser?.uid else {return}
+        let lol = "images/\(uid)/\(JobName)/image1"
         guard let imageData = image?.jpegData(compressionQuality: 0.1)! else {return}
-        let ref = Storage.storage().reference(withPath: uid)
+        let ref = Storage.storage().reference(withPath: lol)
         ref.putData(imageData, metadata: nil) {metadata, err in
             if err != nil {
                 print("errpr")

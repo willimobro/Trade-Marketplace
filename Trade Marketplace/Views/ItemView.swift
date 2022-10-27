@@ -14,59 +14,50 @@ struct ItemView: View {
     @State  var quotesentItem: Int = 0
     @State  var locationItem: String = ""
     @State  var descriptionItem: String = ""
-    @State  var imageItem: UIImage?
+    @State  var url: String = ""
     
     var body: some View {
             ZStack{
                 VStack{
-                    if let imagea = imageItem {
-                        Image(uiImage: imageItem!)
+                    AsyncImage(url: URL(string: url)) { image in
+                        image
                             .resizable()
                             .ignoresSafeArea()
                             .scaledToFit()
-                            .overlay(
-                                Button {
-                                    dismiss()
-                                } label:    {
-                                    Image(systemName: "chevron.left")
-                                        .resizable()
-                                        .frame(width: 19, height: 31)
-                                        .foregroundColor(.white)
-                                        .shadow(color: .black, radius: 4, x: 0, y: 0)
-                                }   .frame(maxWidth: .infinity, maxHeight:.infinity, alignment: .topLeading)
-                                    .padding(.horizontal, 30)
-                                    .padding(.vertical, 30)
-                            )
-                    } else {
+                    } placeholder: {
                         Image(systemName: "perosn.fill")
                             .resizable()
                             .ignoresSafeArea()
                             .scaledToFit()
-                            .overlay(
-                                Button {
-                                    dismiss()
-                                } label:    {
-                                    Image(systemName: "chevron.left")
-                                        .resizable()
-                                        .frame(width: 19, height: 31)
-                                        .foregroundColor(.white)
-                                        .shadow(color: .black, radius: 4, x: 0, y: 0)
-                                }   .frame(maxWidth: .infinity, maxHeight:.infinity, alignment: .topLeading)
-                                    .padding(.horizontal, 30)
-                                    .padding(.vertical, 30)
-                            )
                     }
-                         
-                        Spacer()
-                    }
-                }
+                                .overlay(
+                                    Button {
+                                        dismiss()
+                                    } label:    {
+                                        Image(systemName: "chevron.left")
+                                            .resizable()
+                                            .frame(width: 19, height: 31)
+                                            .foregroundColor(.white)
+                                            .shadow(color: .black, radius: 4, x: 0, y: 0)
+                                    }   .frame(maxWidth: .infinity, maxHeight:.infinity, alignment: .topLeading)
+                                        .padding(.horizontal, 30)
+                                        .padding(.vertical, 30)
+                                )
+                    Spacer()
+                        }
                 .ignoresSafeArea()
                 .navigationBarBackButtonHidden(true)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarHidden(true)
                 ContentItem(title: $titleItem, subtitle: $subtitleItem, quotesent: $quotesentItem, location: $locationItem, description: $descriptionItem)
                 // text needs to expand content item frame when scrolled
-            }
+                    }
+                    }
+                         
+                    }
+
+                
+
         
-    }
+
 
