@@ -13,11 +13,13 @@ struct Uploadajobacc: View {
             .foregroundColor(.white)
                 .frame(height: 140)
                 .shadow(color: .gray, radius: 4, x: 0, y: 4)
+                .padding(.horizontal, 5.0)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16.5)
                         .foregroundColor(Color("logogreen"))
                         .frame(height: 130)
                         .padding(5)
+                        .padding(.horizontal, 5.0)
                         .overlay(
                             VStack{
                                 Text("Upload a Job")

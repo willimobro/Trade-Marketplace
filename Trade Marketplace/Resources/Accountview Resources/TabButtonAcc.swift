@@ -11,9 +11,10 @@ struct TabButtonAcc: View {
     @State var headline = ""
     @State var subheadline = ""
     var body: some View {
-        RoundedRectangle(cornerRadius: 30)
+        RoundedRectangle(cornerRadius: 16.5)
             .foregroundColor(.white)
             .frame(height: 87)
+            .padding(.horizontal, 5.0)
             .shadow(color: .gray, radius: 4, x: 0, y: 4)
             .overlay(
                 VStack{

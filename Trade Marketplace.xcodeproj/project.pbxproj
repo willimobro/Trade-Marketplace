@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6639B8D628F0F64B007A016E /* CreateJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8D528F0F64B007A016E /* CreateJobView.swift */; };
 		6639B8E928F7FEC6007A016E /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8E828F7FEC6007A016E /* UserSettings.swift */; };
+		6639B8EB28FE75A7007A016E /* UnderConstructionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */; };
+		6639B8ED28FE7AE8007A016E /* AboutTradeMarketplace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */; };
 		DD1BBC7C28EC046A0074F652 /* modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1BBC7B28EC046A0074F652 /* modifiers.swift */; };
 		DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBAD28D59E78003BDF7A /* MainObject.swift */; };
 		DD20BBE928D5B539003BDF7A /* ContentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD20BBE828D5B539003BDF7A /* ContentHome.swift */; };
@@ -120,6 +122,8 @@
 /* Begin PBXFileReference section */
 		6639B8D528F0F64B007A016E /* CreateJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateJobView.swift; sourceTree = "<group>"; };
 		6639B8E828F7FEC6007A016E /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderConstructionPage.swift; sourceTree = "<group>"; };
+		6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTradeMarketplace.swift; sourceTree = "<group>"; };
 		DD1BBC7B28EC046A0074F652 /* modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modifiers.swift; sourceTree = "<group>"; };
 		DD20BBAD28D59E78003BDF7A /* MainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainObject.swift; sourceTree = "<group>"; };
 		DD20BBE228D5B0D4003BDF7A /* Trade-Marketplace-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Trade-Marketplace-Info.plist"; path = "../Trade-Marketplace-Info.plist"; sourceTree = "<group>"; };
@@ -245,6 +249,8 @@
 			children = (
 				6639B8D528F0F64B007A016E /* CreateJobView.swift */,
 				6639B8E828F7FEC6007A016E /* UserSettings.swift */,
+				6639B8EA28FE75A7007A016E /* UnderConstructionPage.swift */,
+				6639B8EC28FE7AE8007A016E /* AboutTradeMarketplace.swift */,
 			);
 			path = Matt;
 			sourceTree = "<group>";
@@ -674,6 +680,7 @@
 				DD20BBED28D84FAF003BDF7A /* test.swift in Sources */,
 				DD6CF01128F56D610007119F /* ServerControl.swift in Sources */,
 				DD97695C28D07A8200EEC92C /* BackgroundLogo_Main.swift in Sources */,
+				6639B8EB28FE75A7007A016E /* UnderConstructionPage.swift in Sources */,
 				DD20BBAE28D59E78003BDF7A /* MainObject.swift in Sources */,
 				DD60161A28D9AB840051E013 /* ContentSort.swift in Sources */,
 				DD60162328DAF4640051E013 /* ItemView.swift in Sources */,
@@ -687,6 +694,7 @@
 				DD22A7C728F16C170062C47D /* Listing.swift in Sources */,
 				DD8B15FF2904914800093208 /* User.swift in Sources */,
 				DDAED03328E577820082E114 /* TabBar.swift in Sources */,
+				6639B8ED28FE7AE8007A016E /* AboutTradeMarketplace.swift in Sources */,
 				DD875CCE28DEAB70006CD9B9 /* Quote a job.swift in Sources */,
 				DDAED03A28EAA8730082E114 /* LandingControl.swift in Sources */,
 				DDE2CFA428D4A95700A0C1A4 /* LandscapeObject.swift in Sources */,
