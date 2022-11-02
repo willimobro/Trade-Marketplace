@@ -10,10 +10,9 @@ import Firebase
 import FirebaseDatabase
 import FirebaseAuth
 import FirebaseStorage
+import PhotosUI
 // hello
 struct CreateJobView: View {
-    @State var createjobshouldShowImagePicker = false
-    @State var createimage: UIImage?
     @Environment(\.dismiss) var dismiss
     @State var WhendataMain: String = "ASAP"
     @State private var jobTitle = String()
@@ -21,6 +20,8 @@ struct CreateJobView: View {
     @State  var manualaddress: String = ""
     @State var tags: String = "Enter Tags"
     @State var category: String = ""
+    @State private var isPresented: Bool = false
+    @State var images : [UIImage] = []
     var body: some View {
         VStack(alignment: .leading){
             HStack(spacing: 30){
@@ -50,15 +51,18 @@ struct CreateJobView: View {
             ScrollView(.vertical){
                 VStack(alignment: .leading, spacing: 10){
                     
-                    
-                    HStack{
-                        Button {
-                            createjobshouldShowImagePicker.toggle()
-                        } label: {
-                            UploadPictureIcon(createimage: $createimage)
-                        }
-                            UploadCameraIcon()
+                    ScrollView(.horizontal){
+                        HStack{
+                            ForEach(images, id: \.self){img in
+                                UploadPictureIcon(imagesarray: img)
+                            }
+                            Button{
+                                isPresented.toggle()
+                            } label: {
+                                UploadPictureIconNil()
+                            }
                         }.padding(.vertical, 10)
+                    }
                         //Job Name
                         Text("Job name")
                             .font(.title)
@@ -113,17 +117,16 @@ struct CreateJobView: View {
                 }
             }
         .padding(.bottom, 60)
-        .fullScreenCover(isPresented: $createjobshouldShowImagePicker, onDismiss: nil) {
-            ImagePicker(image1: $createimage, JobName: $jobTitle)
-                .ignoresSafeArea()
-            
-        }
+        .sheet(isPresented: $isPresented) {
+            let configuration = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+            PhotoPicker(configuration: configuration, isPresented: $isPresented, images: $images)
+                }
         }
     }
 
 
 struct UploadPictureIcon: View {
-    @Binding var createimage: UIImage?
+    @State var imagesarray : UIImage
     var body: some View {
        
         Rectangle()
@@ -133,7 +136,7 @@ struct UploadPictureIcon: View {
             .padding(5)
             .overlay(
                 VStack{
-                    if let image = self.createimage {
+                    if let image = self.imagesarray {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFill()
@@ -147,6 +150,26 @@ struct UploadPictureIcon: View {
                             .frame(width: 22, height: 22)
                     }
                 }
+                )
+        
+    }
+}
+struct UploadPictureIconNil: View {
+    var body: some View {
+       
+        Rectangle()
+            .stroke(style: StrokeStyle(lineWidth: 1, dash: [3]))
+            .foregroundColor(.gray)
+            .frame(width: 52, height: 52)
+            .padding(5)
+            .overlay(
+                        Image(systemName: "camera")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(.gray)
+                            .frame(width: 22, height: 22)
+                    
+                
                 )
         
     }
@@ -358,6 +381,7 @@ struct Publish: View {
 
 struct CreateJobView_Previews: PreviewProvider {
     @Binding fileprivate var showLocation: Bool
+    @Binding var images : UIImage
     static var previews: some View {
         CreateJobView()
     }
@@ -444,67 +468,80 @@ class UploadJob: ObservableObject   {
     }
     }
 
-struct ImagePicker: UIViewControllerRepresentable {
-    @EnvironmentObject var data: UploadJob
-    @Binding var image1: UIImage?
-    @Binding  var JobName: String
-    private let controller = UIImagePickerController()
-    
+struct PhotoPicker: UIViewControllerRepresentable {
+    let configuration: PHPickerConfiguration
+    @Binding var isPresented: Bool
+    @Binding var images : [UIImage]
     func makeCoordinator() -> Coordinator {
-        return Coordinator(parent: self)
+        Coordinator(self)
     }
-    
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        
-        let parent: ImagePicker
-        
-        init(parent: ImagePicker) {
-            self.parent = parent
-        }
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            parent.image1 = info[.originalImage] as? UIImage
-            picker.dismiss(animated: true)
-        }
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            picker.dismiss(animated: true)
-        }
-        
-    }
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        let controller = PHPickerViewController(configuration: configuration)
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 10
         controller.delegate = context.coordinator
         return controller
     }
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) { }
     
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        self.ImageUpload()
-    }
-    
-    func ImageUpload() {
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let lol = "images/\(uid)/\(JobName)/image1"
-        guard let imageData = image1?.jpegData(compressionQuality: 0.1)! else {return}
-        let ref = Storage.storage().reference(withPath: lol)
-        ref.putData(imageData, metadata: nil) {metadata, err in
-            if err != nil {
-                print("errpr")
-                return
-            }
-            ref.downloadURL { url, err in
-                if err != nil {
-                    print("error occured")
-                    return
-                }
-                
-                print("Successfully stored image with URL ")
-                print(url!.absoluteString)
-                data.imageob = url!.absoluteURL
-                guard url != nil else {return}
-            }
-            
+    // Use a Coordinator to act as your PHPickerViewControllerDelegate
+    class Coordinator: PHPickerViewControllerDelegate {
+      
+        private var parent: PhotoPicker
+        
+        init(_ parent: PhotoPicker) {
+            self.parent = parent
         }
         
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult])
+        {
+            for img in results {
+                if img.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    
+                    img.itemProvider.loadObject(ofClass: UIImage.self) { (image, err) in
+                        guard image != nil else {
+                            print(err!)
+                            return
+                        }
+                        // appending image to the main array
+                        self.parent.images.append(image as! UIImage)
+                        
+                    }
+                }
+                else {
+                    // cannot be loaded lol
+                    print("images cannot be loaded")
+                }
+            }
+        }
     }
 }
+
+    
+//    func ImageUpload() {
+//        guard let uid = Auth.auth().currentUser?.uid else {return}
+//        let lol = "images/\(uid)/\(JobName)/image1"
+//        guard let imageData = image1?.jpegData(compressionQuality: 0.1)! else {return}
+//        let ref = Storage.storage().reference(withPath: lol)
+//        ref.putData(imageData, metadata: nil) {metadata, err in
+//            if err != nil {
+//                print("errpr")
+//                return
+//            }
+//            ref.downloadURL { url, err in
+//                if err != nil {
+//                    print("error occured")
+//                    return
+//                }
+//
+//                print("Successfully stored image with URL ")
+//                print(url!.absoluteString)
+//                data.imageob = url!.absoluteURL
+//                guard url != nil else {return}
+//            }
+//
+//        }
+//
+//    }
+
