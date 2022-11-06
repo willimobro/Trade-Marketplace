@@ -12,9 +12,7 @@ class downloadprofileviewdata: ObservableObject {
     @Published  var username: String = ""
     @Published  var reviews: Int = 0
     @Published  var image: String?
-    init() {
-        DownloadProfileViewData()
-    }
+
     
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser

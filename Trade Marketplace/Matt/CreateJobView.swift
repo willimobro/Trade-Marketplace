@@ -3,7 +3,14 @@
 //  Trade Marketplace
 //
 //  Created by Matthew Larsen on 8/10/22.
-//
+//// TOMMOROW
+///IMAGE PICKER TO UII ARRAY IS WORKING, FIGURE OUT HOW TO OCNVERT UII ARRAY TO STRING ARRAY, THEN RUN FOREACH LOOP FOR URL STRING ARRAY UPLOAD SEQUENCE FOR JOB PHOTOS
+
+
+
+
+
+
 
 import SwiftUI
 import Firebase
@@ -59,7 +66,9 @@ struct CreateJobView: View {
                             Button{
                                 isPresented.toggle()
                             } label: {
-                                UploadPictureIconNil()
+                                if images.count < 10 {
+                                    UploadPictureIconNil()
+                                }
                             }
                         }.padding(.vertical, 10)
                     }
@@ -107,7 +116,7 @@ struct CreateJobView: View {
                                 //Publish
                                 Publish()
                                 //SubmitJob
-                                SubmitJob(JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
+                                SubmitJob(images: $images, JobName: $jobTitle, Category: $category, When: $WhendataMain, Where: $manualaddress, Tags: $tags)
                             }
                         }
                         
@@ -391,6 +400,8 @@ struct CreateJobView_Previews: PreviewProvider {
 struct SubmitJob: View {
     @Environment(\.dismiss) var dismiss
     let activate = ServerControl()
+    let randomInt = Int.random(in: 0..<20)
+    @Binding var images : [UIImage]
     @Binding  var JobName: String
     @Binding  var Category: String
     @Binding  var When: String
@@ -417,8 +428,12 @@ struct SubmitJob: View {
                                 "When": When,
                                 "Where": Where,
                                 "Tags": Tags,
-                                "images" : data.imageob!
+                                "images" : images,
                             ]], listingname: JobName)
+                            
+                            for img in images {
+                                ImageUpload(JobName: JobName, ID: "\(randomInt)", image: img)
+                            }
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)
@@ -434,7 +449,7 @@ struct SubmitJob: View {
 
 
 class UploadJob: ObservableObject   {
-    @Published var imageob: URL?
+    @Published var imageob: [URL]?
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func UploadjobData(data: [[String : Any]], listingname: String) {
@@ -476,10 +491,10 @@ struct PhotoPicker: UIViewControllerRepresentable {
         Coordinator(self)
     }
     func makeUIViewController(context: Context) -> PHPickerViewController {
-        let controller = PHPickerViewController(configuration: configuration)
-        var config = PHPickerConfiguration()
+        var config = self.configuration
         config.filter = .images
         config.selectionLimit = 10
+        let controller = PHPickerViewController(configuration: config)
         controller.delegate = context.coordinator
         return controller
     }
@@ -514,34 +529,38 @@ struct PhotoPicker: UIViewControllerRepresentable {
                     print("images cannot be loaded")
                 }
             }
+            picker.dismiss(animated: true, completion: nil)
+                    guard !results.isEmpty else { return }
         }
     }
+    
 }
 
-    
-//    func ImageUpload() {
-//        guard let uid = Auth.auth().currentUser?.uid else {return}
-//        let lol = "images/\(uid)/\(JobName)/image1"
-//        guard let imageData = image1?.jpegData(compressionQuality: 0.1)! else {return}
-//        let ref = Storage.storage().reference(withPath: lol)
-//        ref.putData(imageData, metadata: nil) {metadata, err in
-//            if err != nil {
-//                print("errpr")
-//                return
-//            }
-//            ref.downloadURL { url, err in
-//                if err != nil {
-//                    print("error occured")
-//                    return
-//                }
-//
-//                print("Successfully stored image with URL ")
-//                print(url!.absoluteString)
-//                data.imageob = url!.absoluteURL
-//                guard url != nil else {return}
-//            }
-//
-//        }
-//
-//    }
+    func ImageUpload(JobName: String, ID: String, image: UIImage?) {
+        @EnvironmentObject var data: UploadJob
+        guard let uid = Auth.auth().currentUser?.uid else {return}
+        let lol = "images/\(uid)/\(JobName)/\(ID)"
+        guard let imageData = image?.jpegData(compressionQuality: 0.1)! else {return}
+        let ref = Storage.storage().reference(withPath: lol)
+        ref.putData(imageData, metadata: nil) {metadata, err in
+            if err != nil {
+                print("errpr")
+                return
+            }
+            ref.downloadURL { url, err1 in
+                if err1 != nil {
+                    print("error occured")
+                    return
+                }
+                
+                print("Successfully stored image with URL ")
+                print(url!.absoluteString)
+                data.imageob?.append(url!.absoluteURL)
+                guard url != nil else {return}
+            }
+            
+        }
+        
+    }
+
 
