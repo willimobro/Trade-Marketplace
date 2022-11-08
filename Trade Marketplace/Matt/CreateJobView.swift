@@ -401,6 +401,7 @@ struct SubmitJob: View {
     @Environment(\.dismiss) var dismiss
     let activate = ServerControl()
     let randomInt = Int.random(in: 0..<20)
+    var imagesurl = ImageUpload
     @Binding var images : [UIImage]
     @Binding  var JobName: String
     @Binding  var Category: String
@@ -408,7 +409,6 @@ struct SubmitJob: View {
     @Binding  var Where: String
     @Binding  var Tags: String
     @EnvironmentObject var data: UploadJob
-
     var body: some View {
         RoundedRectangle(cornerRadius: 25)
             .foregroundColor(Color("UploadAJobGreen"))
@@ -421,6 +421,7 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
+                            ImageUpload(JobName: JobName, ID: "\(randomInt)", images: images)
                             UploadJob().UploadjobData(data:
                             [[
                                 "title": JobName,
@@ -428,12 +429,9 @@ struct SubmitJob: View {
                                 "When": When,
                                 "Where": Where,
                                 "Tags": Tags,
-                                "images" : images,
+                                "images" : imagesurl
                             ]], listingname: JobName)
                             
-                            for img in images {
-                                ImageUpload(JobName: JobName, ID: "\(randomInt)", image: img)
-                            }
                         } label:    {
                             Text("Submit Job")
                                 .font(.title)
@@ -449,7 +447,7 @@ struct SubmitJob: View {
 
 
 class UploadJob: ObservableObject   {
-    @Published var imageob: [URL]?
+    @Published var imageob: [String]!
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
     func UploadjobData(data: [[String : Any]], listingname: String) {
@@ -536,13 +534,19 @@ struct PhotoPicker: UIViewControllerRepresentable {
     
 }
 
-    func ImageUpload(JobName: String, ID: String, image: UIImage?) {
-        @EnvironmentObject var data: UploadJob
-        guard let uid = Auth.auth().currentUser?.uid else {return}
-        let lol = "images/\(uid)/\(JobName)/\(ID)"
-        guard let imageData = image?.jpegData(compressionQuality: 0.1)! else {return}
-        let ref = Storage.storage().reference(withPath: lol)
-        ref.putData(imageData, metadata: nil) {metadata, err in
+func ImageUpload(JobName: String, ID: String, images: [UIImage]) -> [String] {
+    @EnvironmentObject var file: UploadJob
+    var data : [Data] = []
+    var output: [String] = []
+    let uid = Auth.auth().currentUser?.uid
+    guard let lol = "images/\(uid)/\(JobName)/\(ID)" else {return}
+    images.enumerated().forEach { (index, image) in
+        data.append(image.jpegData(compressionQuality: 0.2)! )
+        print("\(data)")
+    }
+    let ref = Storage.storage().reference(withPath: lol)
+    data.enumerated().forEach { (index, data) in
+        ref.putData(data, metadata: nil) {metadata, err in
             if err != nil {
                 print("errpr")
                 return
@@ -555,12 +559,15 @@ struct PhotoPicker: UIViewControllerRepresentable {
                 
                 print("Successfully stored image with URL ")
                 print(url!.absoluteString)
-                data.imageob?.append(url!.absoluteURL)
+                output.append(url!.absoluteString)
                 guard url != nil else {return}
+                
+                
             }
-            
         }
-        
     }
-
+    return output
+}
+    
+// just need to fix uploadijg to firebase multiple images, rewrite the code i say lolol
 
