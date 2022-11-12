@@ -400,8 +400,6 @@ struct CreateJobView_Previews: PreviewProvider {
 struct SubmitJob: View {
     @Environment(\.dismiss) var dismiss
     let activate = ServerControl()
-    let randomInt = Int.random(in: 0..<20)
-    var imagesurl = ImageUpload
     @Binding var images : [UIImage]
     @Binding  var JobName: String
     @Binding  var Category: String
@@ -421,16 +419,16 @@ struct SubmitJob: View {
 //                            .frame(width: 19, height: 19, alignment: .center)
  //                           .foregroundColor(.white)
                         Button  {
-                            ImageUpload(JobName: JobName, ID: "\(randomInt)", images: images)
-                            UploadJob().UploadjobData(data:
-                            [[
-                                "title": JobName,
-                                "category": Category,
-                                "When": When,
-                                "Where": Where,
-                                "Tags": Tags,
-                                "images" : imagesurl
-                            ]], listingname: JobName)
+                               
+                                UploadJob().UploadjobData(data:
+                                [[
+                                    "title": JobName,
+                                    "category": Category,
+                                    "When": When,
+                                    "Where": Where,
+                                    "Tags": Tags,
+                                ]], listingname: JobName)
+                            ImageUpload(JobName: JobName, images: images)
                             
                         } label:    {
                             Text("Submit Job")
@@ -448,9 +446,11 @@ struct SubmitJob: View {
 
 class UploadJob: ObservableObject   {
     @Published var imageob: [String]!
+    @Published var output: [String]!
     let db = Firestore.firestore()
     let user = Auth.auth().currentUser
-    func UploadjobData(data: [[String : Any]], listingname: String) {
+    
+    func UploadjobData(data: [[String : Any]], listingname: String)  {
         print(self.user!.uid)
         let _: [[String: Any]] = data.map { dictionary in
             var dict: [String: String] = [:]
@@ -534,39 +534,42 @@ struct PhotoPicker: UIViewControllerRepresentable {
     
 }
 
-func ImageUpload(JobName: String, ID: String, images: [UIImage]) -> [String] {
+func ImageUpload(JobName: String, images: [UIImage]) {
+    let db = Firestore.firestore()
     @EnvironmentObject var file: UploadJob
-    var data : [Data] = []
-    var output: [String] = []
-    let uid = Auth.auth().currentUser?.uid
-    guard let lol = "images/\(uid)/\(JobName)/\(ID)" else {return}
-    images.enumerated().forEach { (index, image) in
-        data.append(image.jpegData(compressionQuality: 0.2)! )
-        print("\(data)")
-    }
-    let ref = Storage.storage().reference(withPath: lol)
-    data.enumerated().forEach { (index, data) in
-        ref.putData(data, metadata: nil) {metadata, err in
-            if err != nil {
-                print("errpr")
-                return
-            }
-            ref.downloadURL { url, err1 in
-                if err1 != nil {
-                    print("error occured")
+    let uid = Auth.auth().currentUser!.uid
+    var ID : Int = 0
+    var IDA : Int = 0
+        images.forEach { image in
+            let lol = "images/\(uid)/\(JobName)/\(ID)"
+            let data = image.jpegData(compressionQuality: 0.5)
+            let ref = Storage.storage().reference().child(lol)
+            print(data!)
+            ref.putData(data!, metadata: nil) {metadata, err in
+                if err != nil {
+                    print("error putdata")
                     return
                 }
-                
-                print("Successfully stored image with URL ")
-                print(url!.absoluteString)
-                output.append(url!.absoluteString)
-                guard url != nil else {return}
-                
+                print("Putdata excecuted successfully")
+                ref.downloadURL { url, err1 in
+                    if err1 != nil {
+                        print("error occured")
+                        return
+                    }
+                    guard url != nil else {return}
+                    var urlx = String()
+                    urlx.append(url!.absoluteString)
+                    db.collection("users").document(uid).collection("Listings").document(JobName).setData(["image\(IDA)" : urlx], merge: true)
+                    db.collection("alljobs").document(JobName).setData(["image\(IDA)" : urlx], merge: true)
+                    IDA += 1
+                    
+
+                }
                 
             }
+            print(ID)
+            ID += 1
         }
-    }
-    return output
 }
     
 // just need to fix uploadijg to firebase multiple images, rewrite the code i say lolol

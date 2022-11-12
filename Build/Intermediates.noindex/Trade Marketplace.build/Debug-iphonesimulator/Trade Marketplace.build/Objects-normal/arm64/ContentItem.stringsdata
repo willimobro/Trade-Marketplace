@@ -1,30 +1,14 @@
 {
-  "source": "/Users/williamlarsen/Documents/Trade-Marketplace/Trade Marketplace/View Content/ContentItem.swift",
+  "source": "/Applications/Trade-Marketplace/Trade Marketplace/View Content/ContentItem.swift",
   "tables": {
     "Localizable": [
       {
         "comment": "",
-        "key": "Title"
-      },
-      {
-        "comment": "",
-        "key": "Subtitle"
-      },
-      {
-        "comment": "",
-        "key": "# amount of quotes sent"
+        "key": "%lld"
       },
       {
         "comment": "",
         "key": "Details"
-      },
-      {
-        "comment": "",
-        "key": "were and where"
-      },
-      {
-        "comment": "",
-        "key": "Need someone to check my wires have been trying to it to work and cant figure it out"
       }
     ]
   },
