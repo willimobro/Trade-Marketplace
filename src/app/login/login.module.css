@@ -1,0 +1,60 @@
+@font-face { font-family: 'Original SF Regular'; src: local('SFPro-Regular'); font-weight: 400; }
+@font-face { font-family: 'Original SF Bold'; src: local('SFPro-Bold'); font-weight: 700; }
+@font-face { font-family: 'Original SF Expanded'; src: local('SFPro-ExpandedBold'); font-weight: 760; }
+.screen { position: relative; width: 390px; height: 844px; margin: 0 auto; overflow: hidden; background: #0c251d; color: #0c251d; font-family: 'Original SF Regular', sans-serif; font-optical-sizing:none; font-variation-settings:'wdth' 100, 'opsz' 28; isolation: isolate; }
+.art { position: absolute; pointer-events: none; max-width: none; }
+.bolt { left:38px; top:-100px; width:418.9999084472656px; height:693.5527954101562px; mix-blend-mode:screen; }
+.panel { left:0; top:324px; width:390px; height:530px; }
+.mark { left:331px; top:31px; width:25.778669357299805px; height:42.67031478881836px; }
+.illustration { left:56px; top:87px; width:282px; height:281px; }
+.title { position:absolute; left:36px; top:356px; width:302px; height:155px; margin:0; pointer-events:none; }
+.title text { font-family:'Original SF Expanded',sans-serif; font-size:36px; font-weight:760; font-kerning:normal; font-variation-settings:'wdth' 132, 'opsz' 28, 'wght' 760; fill:#0c251d; }
+.back { position:absolute; left:22px; top:36px; width:39px; height:39px; color:white; }
+.back text { font-family:'Original SF Regular',sans-serif; font-size:26px; font-weight:400; fill:currentColor; }
+.form { position:absolute; inset:0; pointer-events:none; }
+.form input,.form button,.form a { pointer-events:auto; }
+.input { position:absolute; padding:0; border:0; border-radius:0; outline-offset:5px; background:transparent; color:rgb(53.75000238418579% 53.75000238418579% 53.75000238418579%); height:26px; line-height:19px; box-shadow:none; }
+.input::placeholder { color:inherit; opacity:1; }
+.email { left:69.234375px; top:476px; width:254px; font:400 14px/19px 'Original SF Regular',sans-serif; }
+.password { left:64.046875px; top:538px; width:259px; font:700 16px/19px 'Original SF Bold',sans-serif; }
+.rule { transform:translateY(-1px); position:absolute; left:36px; width:320px; border-top:1px solid rgb(53.75000238418579% 53.75000238418579% 53.75000238418579%); }
+.emailRule { top:506px; }
+.passwordRule { top:572px; }
+.icon { position:absolute; height:19px; pointer-events:none; overflow:visible; }
+.icon text { font-family:'Original SF Bold',sans-serif; font-size:16px; font-weight:700; }
+.mail { left:39px; top:480px; width:25px; fill:#898989; }
+.mail text { font-family:'Original SF Regular',sans-serif; font-weight:400; }
+.lock { left:38px; top:542px; width:25px; fill:#898989; }
+.emailCheck { left:337.59375px; top:480px; width:18.40625px; fill:#6cbd45; }
+.showPassword { position:absolute; left:323px; top:533px; width:41px; height:44px; padding:0; border:0; background:none; color:#6cbd45; }
+.showPassword svg { position:absolute; left:8px; top:13px; overflow:visible; }
+.showPassword text { font-family:'Original SF Bold',sans-serif; font-size:16px; font-weight:700; fill:currentColor; }
+.forgot { position:absolute; left:189px; top:580px; width:167px; height:27px; }
+.forgot text,.action text,.or text { font-family:'Original SF Bold',sans-serif; font-size:14px; font-weight:700; }
+.forgot text { fill:#6cbd45; }
+.action { position:absolute; left:35px; width:321px; height:55px; padding:0; border-radius:11px; border:0; display:block; }
+.action svg { display:block; width:321px; height:55px; }
+.action text { fill:rgb(8.861111104488373% 9.166666865348816% 9.068889170885086%); }
+.primary { top:647px; background:#6cbd45; }
+.primary text { fill:#fff; }
+.primary:disabled { opacity:.65; }
+.secondary { top:747px; background:white; box-shadow:inset 0 0 0 2px #6cbd45; }
+.or { position:absolute; left:112px; top:715px; width:167px; height:19px; }
+.or text { fill:#898989; }
+.separator { transform:translateY(-1px); position:absolute; top:725px; width:130px; border-top:1px solid #898989; }
+.separatorLeft { left:36px; }
+.separatorRight { left:226px; }
+.error { position:absolute; left:35px; top:609px; width:321px; margin:0; color:#a12424; font:400 12px/16px 'Original SF Regular',sans-serif; }
+.srOnly { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.screen a:focus-visible,.screen button:focus-visible,.screen input:focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
+
+.fontNotice { position:absolute; z-index:2; top:806px; left:20px; width:350px; margin:0; padding:4px; background:#fff5d6; color:#5b4000; font:12px/14px sans-serif; }
+
+/* Empty-state glyph positions from8:31/8:32; input remains the editable control. */
+.emptyText { position:absolute; overflow:visible; pointer-events:none; fill:rgb(53.75000238418579% 53.75000238418579% 53.75000238418579%); }
+.emptyEmail { left:39px; top:480px; }
+.emptyEmail text { font:400 14px 'Original SF Regular',sans-serif; }
+.emptyPassword { left:38px; top:542px; }
+.emptyPassword text { font:700 16px 'Original SF Bold',sans-serif; }
+.input:autofill + .emptyText { display:none; }
+.input:-webkit-autofill + .emptyText { display:none; }

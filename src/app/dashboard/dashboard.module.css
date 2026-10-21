@@ -1,0 +1,51 @@
+@font-face { font-family:'Dashboard SF Regular'; src:local('SFPro-Regular'); font-weight:400; }
+@font-face { font-family:'Dashboard SF Bold'; src:local('SFPro-Bold'); font-weight:700; }
+@font-face { font-family:'Dashboard SF Expanded'; src:local('SFPro-ExpandedBold'); font-weight:760; }
+/* Original8:79/16:38: forest277px header; Open Quotes8:118 at29,374,
+   SF Expanded36. Quote cards8:129–131 are322×85, radius11, shadow0 4 4/.25;
+   photos13:135/142/144 are60×60 radius6. Live stage/pay/next-action text
+   needs variable card heights. Payroll and status filters are current additions. */
+.page { width:min(100%,390px); margin:0 auto; padding:0 0 24px; background:#fff; color:#0c251d; font:400 14px/19px 'Dashboard SF Regular',sans-serif; }
+.header { min-height:277px; padding:0 29px 24px; background:#0c251d; color:#fff; }
+.nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; min-height:64px; margin:0 -9px 16px; }
+.nav a { display:inline-flex; align-items:center; min-height:39px; padding:6px 8px; text-decoration:underline; }
+.eyebrow { margin-bottom:12px; font:400 14px/19px 'Dashboard SF Regular',sans-serif; }
+.heading { margin:0 0 12px; font:760 36px/43px 'Dashboard SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; overflow-wrap:anywhere; }
+.subtitle { font:400 14px/19px 'Dashboard SF Regular',sans-serif; }
+.actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:20px; }
+.primary,.secondary { display:inline-flex; min-height:55px; align-items:center; justify-content:center; border-radius:11px; padding:12px 16px; font:700 14px/19px 'Dashboard SF Bold',sans-serif; text-align:center; }
+.primary { background:#6cbd45; color:#fff; }
+.secondary { background:#fff; color:#0c251d; border:2px solid #6cbd45; }
+.section { margin:32px 34px 0; }
+.sectionTitle { margin:0 0 14px; font:760 24px/29px 'Dashboard SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; }
+.jobsTitle { margin:28px -5px 14px; font:760 36px/43px 'Dashboard SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; }
+.copy { margin:0 0 18px; font:400 14px/19px 'Dashboard SF Regular',sans-serif; color:#52645b; }
+.attention { padding:16px; border-radius:11px; background:#f1ece5; box-shadow:0 4px 4px rgb(0 0 0 / 25%); }
+.attention h2 { margin:8px 0 12px; font:700 16px/19px 'Dashboard SF Bold',sans-serif; }
+.attention p { font:400 14px/19px 'Dashboard SF Regular',sans-serif; }
+.attention a { margin-top:14px; }
+.filter { display:flex; flex-wrap:wrap; gap:12px; align-items:end; margin-bottom:24px; }
+.filter label { display:block; margin-bottom:8px; font-family:'Dashboard SF Bold',sans-serif; }
+.filter select { width:100%; min-height:39px; border:1px solid #898989; padding:8px 10px; border-radius:11px; background:#fff; font-family:inherit; }
+.filter p { margin:0; }
+.jobList { display:grid; gap:17px; }
+.jobItem { min-width:0; }
+.jobList :global(.card) { min-height:85px; border:0; border-radius:11px; padding:13px 14px; gap:13px; background:#fff; box-shadow:0 4px 4px rgb(0 0 0 / 25%); }
+.jobList :global(.card) > div:first-child { width:60px; height:60px; border-radius:6px; overflow:hidden; }
+.jobList :global(.card) > div:nth-child(2) { padding:0; }
+.jobList h3 { font:700 16px/19px 'Dashboard SF Bold',sans-serif; }
+.jobList p,.jobList span { font-family:'Dashboard SF Regular',sans-serif; }
+.jobList :global(.chip) { white-space:normal; }
+.price { font:760 18px/22px 'Dashboard SF Expanded',sans-serif !important; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; color:#0c251d; }
+.next { margin:12px 0 0; font-size:14px; line-height:19px; color:#52645b; }
+.receipt { display:inline-flex; align-items:center; min-height:39px; text-decoration:underline; }
+.stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:32px 29px; }
+.stat { padding:14px; border-radius:11px; box-shadow:0 6px 8px rgb(0 0 0 / 25%); background:#fff; overflow-wrap:anywhere; }
+.stat p:first-child { font-size:14px; line-height:19px; }
+.stat p:last-child { margin-top:8px; font:760 18px/22px 'Dashboard SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; }
+.payroll { border-radius:11px; box-shadow:0 4px 4px rgb(0 0 0 / 25%); overflow:hidden; }
+.payroll a { display:flex; flex-wrap:wrap; align-items:center; gap:12px; padding:14px; border-bottom:1px solid #ddd; }
+.payroll strong { font-family:'Dashboard SF Bold',sans-serif; }
+.page :focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
+.page :global(.card) h3 { font-family:'Dashboard SF Bold',sans-serif; }
+@media(max-width:350px) { .section { margin-left:20px; margin-right:20px; } .header { padding-left:20px; padding-right:20px; } }

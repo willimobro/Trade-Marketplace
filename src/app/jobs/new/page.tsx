@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/session";
+import styles from "./post-job.module.css";
 import { JobForm } from "./JobForm";
 
 export default async function NewJobPage() {
@@ -16,9 +17,9 @@ export default async function NewJobPage() {
       </div>
     );
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold">Get a price</h1>
-      <p className="mt-1 text-sm text-muted">
+    <div className={styles.screen}>
+      <header className={styles.header}><Link href="/dashboard" className={styles.back} aria-label="Back to your jobs">←</Link><h1 className={styles.heading}>List a job</h1></header>
+      <p className={styles.intro}>
         Describe your electrical work and add photos. Electricians provide private estimates, then Trade Marketplace reviews them and sets one fixed price for you.
       </p>
       <JobForm defaultRegion={user.region} />

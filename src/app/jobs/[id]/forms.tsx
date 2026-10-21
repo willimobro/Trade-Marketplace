@@ -169,9 +169,19 @@ export function CocForm({ action }: { action: BoundAction }) {
 export function CancelForm({ action, paid }: { action: BoundAction; paid: boolean }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   const [open, setOpen] = useState(false);
+  const cancelTrigger = useRef<HTMLButtonElement>(null);
+  const reasonInput = useRef<HTMLTextAreaElement>(null);
+  const restoreCancelFocus = useRef(false);
+  useEffect(() => {
+    if (open) reasonInput.current?.focus();
+    else if (restoreCancelFocus.current) {
+      cancelTrigger.current?.focus();
+      restoreCancelFocus.current = false;
+    }
+  }, [open]);
   if (!open)
     return (
-      <button type="button" onClick={() => setOpen(true)} className="text-sm text-muted underline hover:text-ink">
+      <button ref={cancelTrigger} type="button" onClick={() => setOpen(true)} className="text-sm text-muted underline hover:text-ink">
         Cancel this job
       </button>
     );
@@ -183,13 +193,13 @@ export function CancelForm({ action, paid }: { action: BoundAction; paid: boolea
           : "You haven't paid yet, so you can cancel straight away."}
       </p>
       <label className="label" htmlFor="cancel-reason">Reason for cancellation</label>
-      <textarea id="cancel-reason" className="input min-h-16" name="reason" minLength={5} maxLength={1000} placeholder="Why are you cancelling?" required />
+      <textarea ref={reasonInput} id="cancel-reason" className="input min-h-16" name="reason" minLength={5} maxLength={1000} placeholder="Why are you cancelling?" required />
       <FormMessage state={state} />
       <div className="flex gap-2">
         <SubmitButton className="btn bg-red-600 text-white hover:bg-red-700" pending="Sending…">
           {paid ? "Request cancellation" : "Cancel job"}
         </SubmitButton>
-        <button type="button" onClick={() => setOpen(false)} className="btn-ghost">Keep job</button>
+        <button type="button" onClick={() => { restoreCancelFocus.current = true; setOpen(false); }} className="btn-ghost">Keep job</button>
       </div>
     </RetainedForm>
   );

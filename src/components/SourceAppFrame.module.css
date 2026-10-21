@@ -1,0 +1,20 @@
+@font-face { font-family: 'Shell SF Regular'; src: local('SFPro-Regular'); font-weight: 400; }
+@font-face { font-family: 'Shell SF Expanded'; src: local('SFPro-ExpandedBold'); font-weight: 760; }
+/* Residual routes are business adaptations. No original desktop/admin layout exists. */
+.frame { width: min(390px, 100%); min-height: 100dvh; margin: 0 auto; background: #fff; color: #0c251d; font-family: 'Shell SF Regular', sans-serif; display: flex; flex-direction: column; }
+.frame :is(input, textarea, select, button, p, a, span, div) { font-family: 'Shell SF Regular', sans-serif; }
+.frame :is(h1, h2, h3) { font-family: 'Shell SF Expanded', sans-serif; font-weight: 760; font-variation-settings: 'wdth' 132, 'opsz' 28, 'wght' 760; }
+.header { display: flex; align-items: center; gap: 6px; min-height: 61px; padding: 0 26px; background: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 5%); }
+.back { display: inline-flex; width: 44px; min-height: 44px; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; }
+.header .title { font-family: 'Shell SF Expanded', sans-serif; font-size: 20px; font-weight: 760; font-variation-settings: 'wdth' 132, 'opsz' 28, 'wght' 760; line-height: normal; margin: 0; overflow-wrap: anywhere; }
+.disclosure { margin: 0; padding: 12px 20px; font-size: 12px; line-height: 1.4; color: #0c251d; border-bottom: 1px solid #d9d9d9; }
+.notice { margin: 0; padding: 12px 20px; font-size: 14px; line-height: 1.4; background: #fff5d6; color: #5b4000; }
+.content { min-width: 0; flex: 1; outline: none; overflow-wrap: anywhere; }
+.utilities { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 20px; font-size: 14px; }
+.utilities a, .utilities button { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; }
+.navigation { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); min-height: 64px; background: white; position: sticky; bottom: 0; z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
+.navigation a { min-width: 0; min-height: 64px; text-align: center; color: #898989; display: flex; align-items: flex-start; justify-content: center; padding-top: 14px; }
+.navigation a[aria-current='page'] { color: #0c251d; }
+.glyph { font-size: 26px; line-height: normal; font-weight: 400; }
+.fallback { font-size: 12px; line-height: 26px; color: #0c251d; }
+.frame :is(a, button):focus-visible { outline: 2px solid #2163c6; outline-offset: -2px; }

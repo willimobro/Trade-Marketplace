@@ -1,0 +1,19 @@
+@font-face { font-family:'Original SF Regular'; src:local('SFPro-Regular'); font-weight:400; }
+@font-face { font-family:'Original SF Bold'; src:local('SFPro-Bold'); font-weight:700; }
+@font-face { font-family:'Original SF Semibold'; src:local('SFPro-Semibold'); font-weight:600; }
+@font-face { font-family:'Original SF Expanded'; src:local('SFPro-ExpandedBold'); font-weight:760; }
+.wrapper { width:390px; margin:0 auto; color:#0c251d; background:white; }
+.screen { width:390px; position:relative; isolation:isolate; overflow:hidden; background:#fff; }
+.source { position:absolute; inset:0; pointer-events:none; }
+.source svg { display:block; width:390px; max-width:none; }
+.hotspot { position:absolute; display:block; border:0; background:transparent; }
+.hotspot:focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
+.adaptation { padding:24px 16px; border-top:1px solid #afacac; font:400 14px/1.5 'Original SF Regular',sans-serif; }
+.adaptation h1 { margin:0 0 12px; font:700 18px/1.3 'Original SF Bold',sans-serif; }
+.adaptation p { margin:12px 0; }
+.adaptation nav { display:flex; flex-wrap:wrap; gap:8px 16px; }
+.adaptation a { padding:12px 0; text-decoration:underline; }
+.searchInput { position:absolute; height:17px; margin:0; padding:0; border:0; border-radius:0; background:transparent; color:white; font:400 14px/17px 'Original SF Regular',sans-serif; appearance:none; }
+.searchInput::placeholder { color:white; opacity:1; }
+.searchInput:focus-visible { outline:2px solid white; outline-offset:3px; }
+.searchSubmit { position:absolute; border:0; margin:0; padding:0; background:transparent; cursor:pointer; }

@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
-/* Recovered Trade Marketplace brand; neutral values follow the shared redesign contract. */
+/* Source font names are local-only: no Apple font binaries are distributed.
+   Remaining layout components are being reconciled with original Figma. */
+@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Regular'); font-weight: 400; }
+@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Medium'); font-weight: 500; }
+@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Semibold'); font-weight: 600; }
+@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Bold'); font-weight: 700; }
+
 @theme {
   --color-forest: #0c251d;
   --color-forest-2: #143a2d;
@@ -16,7 +22,7 @@
   --color-warning: #805400;
   --color-focus: #2163c6;
   --container-6xl: 75rem;
-  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Trade Source SF', ui-sans-serif, system-ui, sans-serif;
 }
 
 :root { color-scheme: light; }

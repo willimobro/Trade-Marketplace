@@ -1,0 +1,117 @@
+{
+  "source": "https://www.figma.com/design/WurSo76mY67lO23D4Zlu7v/Trade-Marketplace-1",
+  "archiveSHA256": "d94d9a8189941ade8852ae17e4deadc1edd6d85a115699606a9fac26d2fb794f",
+  "notes": "Original assets extracted read-only. No font binaries included. Browse reference examples are not live jobs.",
+  "assets": [
+    {
+      "file": "browse-07073effd959dfe2bad64f56c4e79fee8a892e33.jpg",
+      "sha256": "296434246806590dc2b0dd517f82b35fb1bea2a5ab4fc02f33bc7f11ec5ff231",
+      "bytes": 20067
+    },
+    {
+      "file": "browse-249fd3327fd1d6e6f768e528f621c062116af6f9.jpg",
+      "sha256": "25f990f483b78c28b4b48803224fb5aaf45c88e62717db66cce48c5b8b46544c",
+      "bytes": 149623
+    },
+    {
+      "file": "browse-2a782790be5cf1dfe155a220bd9c8853f067a73f.png",
+      "sha256": "004c78fda33a302cf7000ac7466d585a8ae905495dc8d4a07cdcb395f4c0d6a8",
+      "bytes": 285481
+    },
+    {
+      "file": "browse-7905217e5451f25e95c4bbe9aca6b4d14008dafb.jpg",
+      "sha256": "3dc838bc94a38f5129de648742874511514509feef988536800b9828cc578d6a",
+      "bytes": 6993
+    },
+    {
+      "file": "browse-9a4c6fb946a4a0e617181226bbb34099c8b040c9.png",
+      "sha256": "83e090ce409f066e479f69b74ec1df95f0b99a523ad2b0b11a7e668e72ceac7a",
+      "bytes": 1163024
+    },
+    {
+      "file": "browse-a395a6a5812e28076d67909a62acb4fd6fea238e.jpg",
+      "sha256": "45af9676b076971696370f462b6141b187743f6f9af67ba9972129adcdde0b63",
+      "bytes": 7635
+    },
+    {
+      "file": "browse-a8864402f9646efcef595fe0ee2677d285589ea3.jpg",
+      "sha256": "8887b6bab309de9dc0ccb971b208772a2f70dd6cd568d42d478c477948aef438",
+      "bytes": 375775
+    },
+    {
+      "file": "browse-bed6b845151af858f85abfcb49c75ac4568e59a7.png",
+      "sha256": "b78677a2684235dc9e7ac7d615e92a79e7b8dd757d6ba7e401ab8adfbcb31185",
+      "bytes": 1074477
+    },
+    {
+      "file": "browse-c9bd4c4af0c22f24a0abc58a8ed672ea849ef9a8.png",
+      "sha256": "ebe00752d73fc6fe0e85e47bba76bd616d3b77c919fcaab089f128d2832c1306",
+      "bytes": 569397
+    },
+    {
+      "file": "browse-d1e83ceab15c246a3935332130a53eb24a546adc.jpg",
+      "sha256": "bb11e8927d9e93faae00762546058cb5fba38160e6cb45572b466d4fc5e1fc82",
+      "bytes": 113429
+    },
+    {
+      "file": "browse-da738b5d70dda9f63bd4ea3b2e48c5a16a65ed97.png",
+      "sha256": "a5ed4d27f7ceca307b4c363abe3593e9679c19789c14344122fb4b76a852ce02",
+      "bytes": 263664
+    },
+    {
+      "file": "browse-fb398d016e30d08fb00c4f5b0105a140173a8da9.png",
+      "sha256": "ee8cc83322ce9851c1a5aad9ef54f6e1681424017a9e69a921ef8e66bfa9a135",
+      "bytes": 699736
+    },
+    {
+      "file": "browse-search-source.svg",
+      "sha256": "38dd280a91cad8139db490c64b9b8e65b05ac13428ce9a4598158f37b862a1a5",
+      "bytes": 88964
+    },
+    {
+      "file": "browse-source.svg",
+      "sha256": "ba598d83555a1cbfcf29239a787fdc0879da5c87efeb0ab723ddcc0eec0a1744",
+      "bytes": 113016
+    },
+    {
+      "file": "login-bolt.svg",
+      "sha256": "b2443314c9c942ac025baf2a2b4118858d837062900c52c3d37b6c4f2c4b08f3",
+      "bytes": 1780
+    },
+    {
+      "file": "login-illustration.png",
+      "sha256": "5a179fedf1a4269245244083d91a7757ec93daf3ffcc632c9beeaba7669a3fc3",
+      "bytes": 1639041
+    },
+    {
+      "file": "login-mark.svg",
+      "sha256": "e9bf626a12204b1691a7d90215d142bbdc235ec314530717ba5fa584c3470210",
+      "bytes": 1804
+    },
+    {
+      "file": "login-panel.svg",
+      "sha256": "343c86fc353d211b7e794252cdb6c94a11dd7a1e03a460ef74cf46fe95bb6430",
+      "bytes": 219
+    },
+    {
+      "file": "signup-bolt.svg",
+      "sha256": "b2443314c9c942ac025baf2a2b4118858d837062900c52c3d37b6c4f2c4b08f3",
+      "bytes": 1780
+    },
+    {
+      "file": "signup-illustration.png",
+      "sha256": "64b8eb78bf7684733f459910c485f2cd60ccbf6cd272b8f5f9c40fbfe4bfbe38",
+      "bytes": 1592988
+    },
+    {
+      "file": "signup-mark.svg",
+      "sha256": "e9bf626a12204b1691a7d90215d142bbdc235ec314530717ba5fa584c3470210",
+      "bytes": 1804
+    },
+    {
+      "file": "signup-panel.svg",
+      "sha256": "b6a17e1a28014806d6a0e4e4b325eb7c76810b58973387d4f44f5476c5daef47",
+      "bytes": 219
+    }
+  ]
+}

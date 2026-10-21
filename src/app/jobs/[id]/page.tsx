@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from "./detail.module.css";
 import { PhotoGallery } from "@/components/PhotoGallery";
 import { nextAction } from "./next-action";
 import { notFound } from "next/navigation";
@@ -59,7 +60,13 @@ export default async function JobPage({
   const isAssigned = user.id === job.tradieId;
   const isOtherTradie = user.role === "TRADIE" && !isAssigned;
   // Other tradies only see jobs that are open for estimates or claiming.
-  if (isOtherTradie && job.status !== "REVIEW" && job.status !== "BOOKABLE") notFound();
+  if (isOtherTradie && job.status !== "REVIEW" && job.status !== "BOOKABLE") {
+    return <section className="mx-auto max-w-xl px-4 py-12">
+      <h1 className="text-2xl font-semibold">This job is no longer available</h1>
+      <p role="status" className="mt-4 text-muted">{job.tradieId ? "This job has been assigned to another electrician. Your account is not assigned to it." : "This job’s stage has changed and it is not currently open for estimates or claims."} Check the job board for current opportunities.</p>
+      <div className="mt-6 flex flex-wrap gap-3"><Link href="/jobs" className="btn-primary">Find available jobs</Link><Link href="/dashboard" className="btn-ghost">Your workspace</Link></div>
+    </section>;
+  }
   if (user.role === "CUSTOMER" && !isOwner) notFound();
 
   const rates = jobRates(job, settings);
@@ -80,28 +87,39 @@ export default async function JobPage({
   const audience = isOwner ? "customer" : "staff";
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 xl:grid-cols-[minmax(0,1fr)_360px]">
-      <div className="min-w-0 space-y-6">
-        <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className="text-sm text-muted hover:underline">← Back</Link>
+    <div className={styles.screen}>
+      <div className={styles.main}>
+        <article className={styles.job}>
+          <div className={styles.backdrop}>
+            <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className={styles.back}><span aria-hidden="true" className={styles.closeGlyph}>{"\u{100184}"}</span><span className="sr-only">Back to jobs</span></Link>
+          </div>
+          {job.photos.length > 0 ? <div className={styles.hero}><PhotoGallery photos={job.photos} label="Job" /></div> : <div className={styles.noPhoto}><p>No job photos supplied</p></div>}
+          <div className={styles.detailPanel}>
+            <h1 className={styles.title}>{job.title}</h1>
+            <p className={styles.posted}>{jobRef(job.jobNumber)} · posted {timeAgo(job.createdAt)}</p>
+            <div className={styles.metadata}>
+              <CategoryChip name={job.category} />
+              <StatusChip status={job.status} audience={audience} />
+            </div>
+            {isOtherTradie && job.status === "REVIEW" && user.licenceVerified && <a href="#job-actions" className={styles.quoteLink}>Provide blind estimate <span aria-hidden="true">↗</span></a>}
+            <h2 className={styles.detailsHeading}>Details</h2>
+            <p className={styles.location}>{canSeeAddress ? `${job.address}, ` : ""}{job.suburb}, {job.region}</p>
+            <p className={styles.description}>{job.description}</p>
+          </div>
+        </article>
+
+        {/* Current workflow sections below adapt original typography; no equivalent admin flow exists in the source. */}
         <section aria-label="Next step" className="card border-l-4 border-l-forest p-5">
           <h2 className="font-semibold">What happens next</h2>
           <p className="mt-2 text-sm">{nextAction(job.status, isAdmin ? "admin" : isOwner ? "customer" : isAssigned ? "assigned" : "tradie")}</p>
           {(isOwner || isAdmin) && <Link href={`/receipts/${job.id}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline">View payment record</Link>}
         </section>
 
-        <article className="card overflow-hidden">
-          <PhotoGallery photos={job.photos} label="Job" />
-          <div className="p-6">
-            <div className="flex flex-wrap items-center gap-2">
-              <CategoryChip name={job.category} />
-              <StatusChip status={job.status} audience={audience} />
-              <span className="ml-auto text-xs text-muted">{jobRef(job.jobNumber)} · posted {timeAgo(job.createdAt)}</span>
-            </div>
-            <h1 className="mt-3 text-2xl font-bold">{job.title}</h1>
-            <p className="mt-2 text-sm text-muted">📍 {canSeeAddress ? `${job.address}, ` : ""}{job.suburb}, {job.region}</p>
-            <p className="mt-5 whitespace-pre-wrap break-words leading-relaxed">{job.description}</p>
-          </div>
-        </article>
+        {inThread && job.cancelReason && <section aria-label="Cancellation record" className="card p-5">
+          <h2 className="font-semibold">Cancellation record</h2>
+          <p className="mt-2 text-sm text-muted">Saved cancellation reason and any recorded investigation outcome. The current job status is shown separately.</p>
+          <p className="mt-3 whitespace-pre-wrap break-words text-sm">{job.cancelReason}</p>
+        </section>}
 
         {/* Customer: the price */}
         {isOwner && job.priceCents !== null && job.status !== "REVIEW" && (
@@ -211,9 +229,9 @@ export default async function JobPage({
                 return (
                   <div key={m.id} className={`flex ${mine ? "justify-end" : ""}`}>
                     <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${mine ? "bg-lime text-forest" : m.sender.role === "ADMIN" ? "bg-forest text-white" : "bg-black/5"}`}>
-                      {!mine && <p className="text-xs font-semibold opacity-70">{who}</p>}
+                      {!mine && <p className="text-xs font-semibold">{who}</p>}
                       <p className="whitespace-pre-wrap break-words">{m.body}</p>
-                      <p className="mt-0.5 text-xs opacity-60">{timeAgo(m.createdAt)}</p>
+                      <p className="mt-0.5 text-xs">{timeAgo(m.createdAt)}</p>
                     </div>
                   </div>
                 );
@@ -224,7 +242,7 @@ export default async function JobPage({
         )}
       </div>
 
-      <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
+      <aside id="job-actions" aria-label="Job actions" className={`${styles.actions} ${isOtherTradie && job.status === "REVIEW" ? styles.estimateActions : ""}`}>
         {/* ---------- Other tradies ---------- */}
         {isOtherTradie && job.status === "REVIEW" && (
           <div className="card p-5">
