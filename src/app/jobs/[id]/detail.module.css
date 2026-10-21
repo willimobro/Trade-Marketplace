@@ -31,7 +31,7 @@
 .noPhoto { min-height: 316px; display: grid; place-items: center; background: var(--trade-paper); color: #52645b; padding: 60px 33px 78px; }
 .detailPanel { position: relative; margin-top: -78px; padding: 28px 33px 30px; border-radius: 30px; background: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 25%); }
 .screen .title { margin: 0; font-size: 28px; line-height: normal; }
-.posted { margin-top: 8px; font-size: 11px; color: #898989; }
+.posted { margin-top: 8px; font-size: 11px; color: #52645b; }
 .metadata { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
 .screen .quoteLink { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 61px; margin: 20px 0; padding: 12px; border-radius: var(--trade-radius-action); background: var(--trade-lime); color: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 10%); font-size: 24px; line-height: normal; text-align: center; }
 .screen .detailsHeading { margin-top: 20px; font-size: 20px; line-height: normal; }

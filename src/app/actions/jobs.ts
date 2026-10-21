@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
@@ -19,7 +18,9 @@ const jobSchema = z.object({
   address: z.string().trim().min(5, "Enter the street address").max(120),
 });
 
-export async function createJob(_prev: FormState, form: FormData): Promise<FormState> {
+export type CreateJobState = { error?: string; jobId?: string } | undefined;
+
+export async function createJob(_prev: CreateJobState, form: FormData): Promise<CreateJobState> {
   const user = await requireUser("/jobs/new");
   if (user.role !== "CUSTOMER") return { error: "Only customer accounts can post jobs." };
 
@@ -49,7 +50,9 @@ export async function createJob(_prev: FormState, form: FormData): Promise<FormS
       photos: { create: urls.map((url) => ({ url })) },
     },
   });
-  redirect(`/jobs/${job.id}`);
+  // Return the persisted identity without coupling mutation completion to Next's
+  // redirect destination rendering. The client can acknowledge/save and navigate.
+  return { jobId: job.id };
 }
 
 /** Before payment the customer can just walk away; after payment TM investigates. */

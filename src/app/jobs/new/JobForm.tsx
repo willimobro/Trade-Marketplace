@@ -8,6 +8,7 @@ import { clearJobDraft, DRAFT_FIELDS, readJobDraft, saveJobDraft } from "./job-d
 import { REGIONS } from "@/lib/constants";
 
 export function JobForm({ defaultRegion, userId }: { defaultRegion: string; userId: string }) {
+  const submissionInFlight = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [draftNotice, setDraftNotice] = useState("");
   const [storageUnavailable, setStorageUnavailable] = useState(false);
@@ -17,6 +18,13 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
     catch { setStorageUnavailable(true); }
   };
   const [state, action, pending] = useActionState(createJob, undefined);
+  useEffect(() => { if (!pending && !state?.jobId) submissionInFlight.current = false; }, [pending, state]);
+  useEffect(() => {
+    if (!state?.jobId) return;
+    // The server has confirmed persistence. Never clear on a login redirect.
+    try { clearJobDraft(userId); } catch { /* Storage failure must not hide a saved job. */ }
+    window.location.assign(`/jobs/${encodeURIComponent(state.jobId)}`);
+  }, [state?.jobId, userId]);
   const [fontsUnavailable, setFontsUnavailable] = useState(false);
   useEffect(() => {
     let active = true;
@@ -56,16 +64,23 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
   const [fileError, setFileError] = useState("");
   useEffect(() => () => previews.forEach(URL.revokeObjectURL), [previews]);
 
+  if (state?.jobId) return <section className="space-y-4" aria-label="Job submitted">
+    <h2 className="text-xl font-bold">Your job has been saved</h2>
+    <p role="status">Opening your job. If this page does not change, use the link below. You do not need to submit it again.</p>
+    <a className={styles.publish} href={`/jobs/${encodeURIComponent(state.jobId)}`}>View saved job</a>
+  </section>;
+
   return (
     <form ref={formRef} onChange={() => persist(!!review)} className={styles.form} aria-busy={pending} onSubmit={(event) => {
       event.preventDefault();
-      if (pending || fileError) return;
+      if (pending || submissionInFlight.current || fileError) return;
       const data = new FormData(event.currentTarget);
       if (!review) {
         persist(true);
         setReview(Object.fromEntries(["title", "description", "region", "suburb", "address"].map((key) => [key, String(data.get(key) ?? "")])));
         return;
       }
+      submissionInFlight.current = true;
       persist(true, true);
       startTransition(() => action(data));
     }}>

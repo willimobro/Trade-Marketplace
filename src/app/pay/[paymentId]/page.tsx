@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { formatNZD, jobRef } from "@/lib/constants";
 import { payTestMode } from "@/app/actions/payments";
+import { canRecordPayment } from "@/lib/payment-eligibility";
 import { SubmitButton } from "@/components/SubmitButton";
 
 export default async function PayPage({ params }: { params: Promise<{ paymentId: string }> }) {
@@ -12,7 +13,7 @@ export default async function PayPage({ params }: { params: Promise<{ paymentId:
   const payment = await db.payment.findUnique({ where: { id: paymentId }, include: { job: true, variation: true } });
   if (!payment || payment.job.customerId !== user.id) notFound();
 
-  const canPay = payment.status === "PENDING" && (payment.kind === "JOB" ? payment.job.status === "PRICED" : payment.variation?.status === "PRICED");
+  const canPay = canRecordPayment(payment);
 
   return (
     <div className="mx-auto max-w-xl px-4 py-12">
