@@ -1,16 +1,17 @@
-// Demo data for local development: one job at every stage. Wipes the database first.
+// Synthetic demo data for local development. Wipes the database first.
 // Every demo account's password is: demo-password
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { priceWork } from "../src/lib/pricing";
+import { demoJobPhotoUrls, type DemoJobAssetId } from "../src/lib/demo-job-assets";
+import { seedAdditionalDemoJobs } from "./demo-jobs";
 
 const db = new PrismaClient();
 const hosted = process.env.TRADE_HOSTED_PREVIEW === "1";
 const DEMO_PASSWORD = hosted ? process.env.PREVIEW_ACCOUNT_PASSWORD : "demo-password";
 if (!DEMO_PASSWORD || (hosted && DEMO_PASSWORD.length < 32)) throw new Error("Hosted preview requires an account password secret");
-// Local source-image wrappers visibly identify themselves as demo illustrations.
-// These are fixture URLs, not uploads or photographs of the fictional jobs.
-const DEMO_PHOTOS = ["/demo/wiring-demo.svg", "/demo/pipework-demo.svg"];
+// Local licensed stock photos illustrate the fictional scope; they are not job evidence.
+const photos = (...ids: DemoJobAssetId[]) => ({ photos: { create: demoJobPhotoUrls(...ids).map((url) => ({ url })) } });
 const daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000);
 
 async function main() {
@@ -43,14 +44,15 @@ async function main() {
     const p = priceWork(hours, materials * 100, s);
     return { ...frozen, hours: p.hours, materialsCents: p.materialsCents, priceCents: p.totalCents };
   };
-  const base = { category: "Electrical", region: "Southland", photos: { create: DEMO_PHOTOS.map((url) => ({ url })) } };
+  const base = { category: "Electrical", region: "Southland" };
 
   // 1. Under review, with two blind estimates
   const review = await db.job.create({
     data: {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, suburb: "Gladstone", address: "12 Example Street", createdAt: daysAgo(0.3),
       title: "Heat pump circuit for new 6kW unit",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Getting a heat pump installed in the lounge. Installer says I need a dedicated circuit from the switchboard - about 8 m run. Switchboard is in the garage.",
+      ...photos("house-exterior", "room-renovation"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Getting a heat pump installed in the lounge. Installer says I need a dedicated circuit from the switchboard - about 8 m run. Switchboard is in the garage.",
     },
   });
   await db.estimate.createMany({
@@ -65,7 +67,8 @@ async function main() {
     data: {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", createdAt: daysAgo(0.1),
       title: "3 downlights in hallway",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Hallway only has one old batten light. Would like 3 LED downlights on the existing switch. Ceiling space accessible from the manhole.",
+      ...photos("ceiling-light", "room-renovation"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Hallway only has one old batten light. Would like 3 LED downlights on the existing switch. Ceiling space accessible from the manhole.",
     },
   });
 
@@ -75,7 +78,8 @@ async function main() {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", status: "PRICED",
       createdAt: daysAgo(2), pricedAt: daysAgo(1.5), ...priced(2, 25),
       title: "Replace 2 broken double power points",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Two cracked double power points in the bedroom need replacing. Both work, just cracked faces.",
+      ...photos("room-renovation", "kitchen-renovation"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Two cracked double power points in the bedroom need replacing. Both work, just cracked faces.",
       pricingNote: "Includes 2 new PDL 600 series doubles, testing and CoC.",
     },
   });
@@ -87,7 +91,8 @@ async function main() {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, suburb: "Glengarry", address: "40 Example Avenue", status: "BOOKABLE",
       createdAt: daysAgo(3), pricedAt: daysAgo(2.5), paidAt: daysAgo(0.5), ...priced(3, 180),
       title: "Smoke alarms - hardwired interconnected x4",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Selling the house and want 4 hardwired interconnected smoke alarms. Single storey, good ceiling access.",
+      ...photos("house-exterior", "ceiling-light"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Selling the house and want 4 hardwired interconnected smoke alarms. Single storey, good ceiling access.",
     },
   });
   await db.payment.create({ data: { jobId: bookable.id, kind: "JOB", amountCents: bookable.priceCents!, status: "PAID", paidAt: daysAgo(0.5) } });
@@ -98,15 +103,16 @@ async function main() {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, tradieId: jack.id, suburb: "Waverley", address: "8 Example Road", status: "ASSIGNED",
       createdAt: daysAgo(6), pricedAt: daysAgo(5), paidAt: daysAgo(4.5), assignedAt: daysAgo(4), ...priced(6, 330),
       title: "Kitchen reno - move plugs, hob isolator, dishwasher plug",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Hob isolator moved to the other side, 2 benchtop doubles relocated, new dishwasher plug under the sink and a rangehood plug. Gib is off.",
+      ...photos("kitchen-renovation", "kitchen-sink"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Hob isolator moved to the other side, 2 benchtop doubles relocated, new dishwasher plug under the sink and a rangehood plug. Gib is off.",
     },
   });
   await db.payment.create({ data: { jobId: kitchen.id, kind: "JOB", amountCents: kitchen.priceCents!, status: "PAID", paidAt: daysAgo(4.5) } });
   await db.variation.create({
     data: {
       jobId: kitchen.id, tradieId: jack.id, hoursRequested: 1.5, createdAt: daysAgo(0.05),
-      photos: { create: DEMO_PHOTOS.map((url) => ({ url, jobId: kitchen.id })) },
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Existing hob cable is 4mm and nicked behind the old isolator - needs a new 6mm run from the board, ~12 m.",
+      photos: { create: demoJobPhotoUrls("kitchen-renovation", "room-renovation").map((url) => ({ url, jobId: kitchen.id })) },
+      description: "DEMO EXTRA WORK — illustrative licensed stock images, not evidence of the cable condition. Existing hob cable is 4mm and nicked behind the old isolator - needs a new 6mm run from the board, ~12 m.",
     },
   });
   await db.message.createMany({
@@ -122,7 +128,8 @@ async function main() {
       ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, tradieId: jack.id, suburb: "Gladstone", address: "12 Example Street", status: "COMPLETED",
       createdAt: daysAgo(20), pricedAt: daysAgo(19), paidAt: daysAgo(18), assignedAt: daysAgo(17), completedAt: daysAgo(15), ...priced(2, 40),
       title: "Outdoor double plug on the deck",
-      description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Want a weatherproof double plug on the deck for a BBQ and heater.",
+      ...photos("deck-patio", "timber-detail"),
+      description: "DEMO JOB — fictional request; photographs are illustrative licensed stock images, not this property or evidence of this work. Want a weatherproof double plug on the deck for a BBQ and heater.",
     },
   });
   await db.payment.create({ data: { jobId: done.id, kind: "JOB", amountCents: done.priceCents!, status: "PAID", paidAt: daysAgo(18) } });
@@ -132,6 +139,8 @@ async function main() {
     data: { jobId: done.id, tradieId: jack.id, hours: 2, rateCents: s.tradieRateCents, grossCents: pay.tradieGrossCents, holidayPayCents: pay.holidayPayCents, createdAt: daysAgo(15) },
   });
   await db.review.create({ data: { jobId: done.id, authorId: mike.id, tradieId: jack.id, rating: 5, comment: "On time, tidy, explained everything.", createdAt: daysAgo(14) } });
+
+  await seedAdditionalDemoJobs(db, s, { sarah, mike, jack, aroha });
 
   console.log(hosted ? "Synthetic preview fixtures initialized." : "Local demo fixtures initialized; see prisma/seed.ts for local-only credentials.");
 }
