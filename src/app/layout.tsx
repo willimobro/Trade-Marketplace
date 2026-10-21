@@ -1,3 +1,4 @@
+import { DesktopNavigation } from "@/components/DesktopNavigation";
 import { ConnectionNotice } from "@/components/ConnectionNotice";
 import type { Metadata } from "next";
 import { RouteFrame } from "@/components/RouteFrame";
@@ -13,6 +14,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const user = await getCurrentUser();
   return <html lang="en-NZ"><body className="flex min-h-screen flex-col font-sans antialiased">
     <ConnectionNotice />
+    <DesktopNavigation role={user?.role ?? null} />
     <RouteFrame reference={children}>
       <SourceAppFrame role={user?.role ?? null}>{children}</SourceAppFrame>
     </RouteFrame>

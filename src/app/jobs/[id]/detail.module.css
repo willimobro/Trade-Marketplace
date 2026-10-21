@@ -75,3 +75,24 @@
 .messageComposer { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: stretch; }
 .messageComposer :global(.btn-primary) { min-height: 48px; font-size: 16px; padding: 10px 14px; }
 @media (max-width: 350px) { .fieldGrid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Approved desktop main/action layout. No changes to the <=1023px source
+   composition or gallery dialog descendants. Long action rails scroll with
+   the document rather than trapping controls in a sticky-height sidebar. */
+@media (min-width: 1024px) {
+  .screen { width: min(1200px, calc(100% - 48px)); display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; padding-top: 24px; padding-bottom: 48px; }
+  .main, .actions { min-width: 0; }
+  .actions { position: static; align-self: start; max-height: none; overflow: visible; }
+  .actions > :global(.card) { padding: 24px; margin-top: 24px; }
+  .actions > :global(.card):first-child { margin-top: 0; }
+  .main > :global(.card), .main > section { padding: 24px; margin-top: 24px; }
+  .hero > section > div > button { height: 400px; }
+  .hero > section > div > button > img { height: 400px; margin-top: 0; }
+  .hero > section > div > button > span:only-child { height: 400px; }
+  .noPhoto { min-height: 400px; }
+  .detailPanel { padding: 28px 32px 32px; }
+  .description { max-width: 68ch; }
+  .messageList { max-height: 480px; }
+  .messageBubble { max-width: 80%; }
+  .variationCard .fieldGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

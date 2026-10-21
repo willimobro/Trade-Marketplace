@@ -49,3 +49,40 @@
 @media(max-width:360px) {.searchForm {left:70px;width:calc(100% - 132px);}.heading h2 {font-size:20px;}.verticalCards {grid-template-columns:repeat(2,minmax(0,1fr));}.verticalCards .jobCard {width:100%;}.caption {font-size:12px;}.heading {padding-inline:15px;}}
 
 .gas {background:rgb(185 60 40 / 20%);}
+
+/* Desktop adaptation. The source mobile layout above remains unchanged. */
+@media (min-width:1024px) {
+  .wrapper {width:min(1200px,100%);min-height:calc(100dvh - 80px);padding-bottom:48px;}
+  .header {height:144px;}
+  .header::after {top:144px;height:120px;}
+  .header h1 {left:32px;top:48px;font-size:32px;line-height:40px;}
+  .menuButton,.post,.bottomNav {display:none;}
+  .searchForm,.searchHeader .searchForm {left:auto;right:32px;top:48px;width:400px;height:48px;}
+  .searchForm button {width:48px;height:46px;}
+  .searchForm input {height:46px;font-size:16px;}
+  .strip {gap:24px;padding-inline:32px;padding-bottom:12px;scroll-padding-left:32px;}
+  .categories {height:226px;}
+  .category {flex-basis:calc((100% - 72px)/4);height:190px;}
+  .categoryTint {left:calc(50% - 46px);top:22px;}
+  .multimeter {left:calc(50% - 54px);top:17px;}
+  .staple {left:calc(50% - 46px);top:6px;}
+  .pipe {left:calc(50% - 61.5px);top:9px;}
+  .categoryLabel {top:144px;font-size:16px;line-height:19px;}
+  .heading {height:56px;padding-inline:32px;align-items:flex-start;}
+  .heading h2,.searchTitle {font-size:28px;line-height:36px;}
+  .heading a {font-size:16px;margin-top:8px;}
+  .column {flex:0 0 calc((100% - 48px)/3);gap:24px;min-width:260px;}
+  .jobCard {width:100%;height:220px;}
+  .twoRows {height:auto;}
+  .caption {left:16px;right:16px;bottom:18px;font-size:16px;line-height:21px;}
+  .example {left:16px;top:14px;font-size:12px;line-height:16px;}
+  .recent {margin-top:32px;}
+  .verticalCards {grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:0 32px 16px;}
+  .verticalCards .jobCard {height:210px;}
+  .searchHeader {height:128px;}
+  .searchHeader .searchForm {left:32px;right:auto;top:40px;width:min(640px,calc(100% - 64px));}
+  .searchTitle {padding:28px 32px 0;}
+  .searchContext {margin:10px 32px 32px;font-size:14px;line-height:20px;}
+  .searchGroup {margin-bottom:40px;}
+  .queryHeading {padding:0 32px 16px;font-size:16px;line-height:24px;}
+}
