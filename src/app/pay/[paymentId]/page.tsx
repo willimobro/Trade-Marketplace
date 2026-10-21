@@ -28,9 +28,6 @@ export default async function PayPage({ params }: { params: Promise<{ paymentId:
 
         {canPay ? (
           <>
-            <div className="mt-6 rounded-xl border-2 border-dashed border-amber-400 bg-amber-50 p-3 text-sm text-amber-900">
-              <strong>Test mode.</strong> No real payment provider is connected yet - this button marks it paid without charging anything.
-            </div>
             <form action={payTestMode.bind(null, payment.id)} className="mt-4">
               <SubmitButton className="btn-primary w-full py-3 text-base" pending="Processing…">Record test payment · {formatNZD(payment.amountCents)}</SubmitButton>
             </form>

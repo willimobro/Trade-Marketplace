@@ -1,4 +1,5 @@
 import "server-only";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { login } from "@/app/actions/auth";
 import type { FormState } from "@/app/actions/types";
@@ -34,5 +35,6 @@ export default async function PreviewPage() {
     <h1 className="text-2xl font-semibold">Choose a preview role</h1>
     <p className="text-sm">Explore the app with sample data. Switching roles changes your current preview session. Payments are simulated and changes reset when the preview restarts.</p>
     <PreviewRoles action={chooseRole} />
+    <div className="border-t border-line pt-6"><h2 className="text-xl font-semibold">Explore every trade</h2><p className="mt-3 text-sm text-muted">Try a complete sample job from first estimate to review.</p><Link href="/preview/journey" className="btn-primary mt-4">Open sample journey</Link></div>
   </section>;
 }
