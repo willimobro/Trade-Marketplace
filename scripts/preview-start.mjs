@@ -4,6 +4,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { createServer } from "node:http";
 import { requirePreviewSecrets, protectPreview } from "./preview-security.mjs";
+import { initializePreviewIdentity } from "./preview-identity.mjs";
 
 requirePreviewSecrets(process.env);
 // Never use an inherited DATABASE_URL, existing database, or checkout uploads.
@@ -22,6 +23,7 @@ function run(args) {
 }
 run(["node_modules/prisma/build/index.js", "migrate", "deploy"]);
 run(["--import", "tsx", "prisma/seed.ts"]);
+const bootAssertion = initializePreviewIdentity();
 
 const port = Number(process.env.PORT || 10000);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error("Invalid PORT");
@@ -29,7 +31,7 @@ const hostname = process.env.PREVIEW_BIND_HOST === "127.0.0.1" ? "127.0.0.1" : "
 const { default: next } = await import("next");
 const app = next({ dev: false, hostname, port });
 await app.prepare();
-const server = createServer(protectPreview(app.getRequestHandler(), process.env.PREVIEW_ACCESS_PASSWORD));
+const server = createServer(protectPreview(app.getRequestHandler(), process.env.PREVIEW_ACCESS_PASSWORD, bootAssertion));
 server.on("upgrade", (_req, socket) => socket.destroy());
 server.listen(port, hostname, () => console.log("Protected disposable preview ready"));
 let stopping = false;

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { authorized, protectPreview, requirePreviewSecrets } from "./preview-security.mjs";
+import { hasPreviewIdentity, initializePreviewIdentity, previewAccount, PREVIEW_ASSERTION_HEADER } from "./preview-identity.mjs";
 
 const password = "test-only-access-value-xxxxxxxxxxxxxxxx";
 const header = "Basic " + Buffer.from("preview:" + password).toString("base64");
@@ -52,4 +53,38 @@ test("framework response cannot restore public caching", async () => {
     assert.equal(res.headers["Cache-Control"], "private, no-store");
     assert.equal(res.headers["cache-control"], undefined);
   }
+});
+
+test("ordinary production has no boot identity; only explicit isolated mode plus boot assertion enables roles", () => {
+  assert.equal(hasPreviewIdentity("1", "spoofed"), false);
+  const token = initializePreviewIdentity();
+  for (const mode of [undefined, "", "0", "production"]) assert.equal(hasPreviewIdentity(mode, token), false);
+  for (const assertion of [undefined, null, "", "spoofed", [token]]) assert.equal(hasPreviewIdentity("1", assertion), false);
+  assert.equal(hasPreviewIdentity("1", token), true);
+  assert.throws(() => initializePreviewIdentity());
+});
+
+test("incoming assertions are stripped; only authenticated requests receive the server assertion", async () => {
+  let reached = 0;
+  const assertion = "server-only-boot-assertion";
+  const gate = protectPreview(async (req, res) => {
+    reached++;
+    assert.equal(req.headers[PREVIEW_ASSERTION_HEADER], assertion);
+    assert.equal(req.rawHeaders.includes("spoofed"), false);
+    res.end("app");
+  }, password, assertion);
+  const anonymous = { url: "/preview", method: "POST", headers: { [PREVIEW_ASSERTION_HEADER]: "spoofed" }, rawHeaders: [PREVIEW_ASSERTION_HEADER, "spoofed"] };
+  const denied = response();
+  await gate(anonymous, denied);
+  assert.equal(denied.status, 401); assert.equal(reached, 0);
+  assert.equal(anonymous.headers[PREVIEW_ASSERTION_HEADER], undefined);
+  await gate({ ...anonymous, headers: { authorization: header, [PREVIEW_ASSERTION_HEADER]: "spoofed" } }, response());
+  assert.equal(reached, 1);
+});
+
+test("role selection accepts only fixed synthetic accounts, never arbitrary identity or redirect", () => {
+  assert.deepEqual(previewAccount("customer"), { email: "customer@demo.test", next: "/dashboard" });
+  assert.deepEqual(previewAccount("tradie"), { email: "sparky@demo.test", next: "/dashboard" });
+  assert.deepEqual(previewAccount("admin"), { email: "admin@demo.test", next: "/admin" });
+  for (const role of [undefined, null, "", "constructor", "__proto__", "other@example.com", {}, "CUSTOMER"]) assert.equal(previewAccount(role), null);
 });

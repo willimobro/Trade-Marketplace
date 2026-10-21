@@ -1,4 +1,5 @@
 import { createHash, timingSafeEqual } from "node:crypto";
+import { PREVIEW_ASSERTION_HEADER } from "./preview-identity.mjs";
 
 export function requirePreviewSecrets(env) {
   const keys = ["PREVIEW_ACCESS_PASSWORD", "PREVIEW_ACCOUNT_PASSWORD", "SESSION_SECRET"];
@@ -19,8 +20,18 @@ export function authorized(header, password) {
 
 // Runs outside Next: even framework assets, uploads, actions and internal headers
 // cannot skip this check. Only a constant health response is public.
-export function protectPreview(handler, password) {
+export function protectPreview(handler, password, bootAssertion) {
   return async (req, res) => {
+    // Never trust an assertion supplied by an HTTP client, even an authenticated one.
+    for (const key of Object.keys(req.headers))
+      if (key.toLowerCase() === PREVIEW_ASSERTION_HEADER) delete req.headers[key];
+    if (req.rawHeaders) {
+      const filtered = [];
+      for (let i = 0; i < req.rawHeaders.length; i += 2)
+        if (String(req.rawHeaders[i]).toLowerCase() !== PREVIEW_ASSERTION_HEADER)
+          filtered.push(req.rawHeaders[i], req.rawHeaders[i + 1]);
+      req.rawHeaders = filtered;
+    }
     const writeHead = res.writeHead.bind(res);
     res.writeHead = (...args) => {
       const index = typeof args[1] === "string" ? 2 : 1;
@@ -53,6 +64,7 @@ export function protectPreview(handler, password) {
     }
     // The gate credential is not an application credential.
     delete req.headers.authorization;
+    if (bootAssertion) req.headers[PREVIEW_ASSERTION_HEADER] = bootAssertion;
     try {
       await handler(req, res);
     } catch {
