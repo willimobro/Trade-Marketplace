@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
+import originalNavigation from "./original-nav-icons.json";
 
-/** Independently drawn web controls, not extracted Apple font glyphs. */
+/** Temporary source-exact navigation outlines; see docs/prototype-icons.md.
+ * Other controls below remain independent drawings pending their own source pass. */
 const paths = {
   back: 'M15 4 7 12l8 8',
   x: 'm5 5 14 14M19 5 5 19',
@@ -18,6 +20,8 @@ const paths = {
 } as const;
 export type SourceIconName = keyof typeof paths;
 export function SourceIcon({ name, size = 24, className, style }: { name: SourceIconName; size?: number; className?: string; style?: CSSProperties }) {
+  const original = Object.hasOwn(originalNavigation, name) ? originalNavigation[name as keyof typeof originalNavigation] : null;
+  if (original) return <svg width={size * original.advance} height={size * original.lineHeight} viewBox={`0 ${-original.baseline} ${original.advance} ${original.lineHeight}`} fill="currentColor" aria-hidden="true" className={className} style={style} data-source-node={original.node}><path transform="scale(1 -1)" d={original.path} /></svg>;
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className} style={style}><path d={paths[name]} /></svg>;
 }
 export function iconMarkup(name: SourceIconName, x: number, y: number, size: number, color: string) {

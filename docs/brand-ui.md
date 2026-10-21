@@ -16,7 +16,7 @@ Use the existing SubmitButton and ConfirmAction for pending/consequential action
 
 ## Icons: unresolved permission
 
-`SourceIcon.tsx` contains independent temporary web drawings, not exact original SF glyphs. The archived original icons are SF Pro text glyphs with cached outlines, not separately licensed vector illustrations. Apple's [font licence §2B](https://developer.apple.com/fonts/) prohibits font embedding and limits website artwork outside permitted uses. SVG conversion does not establish a separate permission. The separate SF Symbols download licence remains unverified. Do not distribute original cached outlines or claim exact icon fidelity until applicable permission or an explicitly approved licensed substitute exists.
+Matthew subsequently authorized source-exact navigation icons temporarily for the prototype. `SourceIcon.tsx` now reads the five archived outlines from `original-nav-icons.json`; other controls remain independent drawings. This does not establish a general web licence. Apple's SF Symbols27 bundled licence has now been inspected read-only and limits relevant uses to specified Apple platforms. See `prototype-icons.md` for exact node/codepoint/style mappings and the prelaunch replacement/permission gate.
 
 ## Contrast limitation
 
