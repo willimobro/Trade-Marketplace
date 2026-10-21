@@ -1,3 +1,4 @@
+import { demoDistanceKm } from "@/lib/demo-distances";
 import { Suspense } from "react";
 import { HomeBrowse } from "@/components/HomeBrowse";
 import { db } from "@/lib/db";
@@ -22,7 +23,7 @@ export default async function Home() {
     getSettings(), getCurrentUser(),
   ]);
   const cards = jobs.map(job => ({
-    id: job.id, title: job.title, cover: job.photos[0]?.url ?? null,
+    id: job.id, distanceKm: demoDistanceKm(job.id), title: job.title, cover: job.photos[0]?.url ?? null,
     payAmount: job.status === "BOOKABLE" && !tradeRequirementsPending(job.category)
       ? formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents)
       : null,

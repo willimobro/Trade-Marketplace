@@ -1,4 +1,5 @@
 "use client";
+import { formatDistanceKm } from "@/lib/distance";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
@@ -14,15 +15,15 @@ function arrowScroll(event: KeyboardEvent<HTMLDivElement>) {
 }
 function HomeJobCard({ job, onOpen }: { job: HomeJob; onOpen: (id: string) => void }) {
   const [failed, setFailed] = useState(false);
-  return <Link href={`/jobs/${job.id}`} onClick={() => onOpen(job.id)} className={styles.jobCard} aria-label={`${job.title}. ${job.payAmount ? `Gross pay ${job.payAmount} before PAYE.` : "Pay pending."} Distance unavailable. Open job details.`}>
+  return <Link href={`/jobs/${job.id}`} onClick={() => onOpen(job.id)} className={styles.jobCard} aria-label={`${job.title}. ${job.payAmount ? `Gross pay ${job.payAmount} before PAYE.` : "Pay pending."} ${formatDistanceKm(job.distanceKm)}. Open job details.`}>
     <div className={styles.photo}>{job.cover && !failed ? (
       // eslint-disable-next-line @next/next/no-img-element
       <img src={job.cover} alt="" onError={() => setFailed(true)} />
     ) : <span className={styles.photoFallback} role="img" aria-label="Photo unavailable"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8" cy="8" r="1.5" /><path d="m3 17 5-5 4 4 3-3 6 6" /></svg></span>}</div>
-    <div className={styles.cardInfo}><strong className={styles.cardTitle} title={job.title}>{job.title}</strong><span className={styles.pay}>{job.payAmount ?? "Pay pending"}</span><span className={styles.distance}>Distance unavailable</span></div>
+    <div className={styles.cardInfo}><strong className={styles.cardTitle} title={job.title}>{job.title}</strong><span className={styles.pay}>{job.payAmount ?? "Pay pending"}</span><span className={styles.distance}>{formatDistanceKm(job.distanceKm)}</span></div>
   </Link>;
 }
-export type HomeJob = { id: string; title: string; cover: string | null; payAmount: string | null };
+export type HomeJob = { id: string; title: string; cover: string | null; payAmount: string | null; distanceKm?: number };
 export function HomeBrowse({ jobs, storageScope }: { jobs: HomeJob[]; storageScope: string }) {
   const [recent, setRecent] = useState<string[]>([]);
   const [searches, setSearches] = useState<string[]>([]);

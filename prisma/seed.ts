@@ -48,7 +48,7 @@ async function main() {
   // 1. Under review, with two blind estimates
   const review = await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: mike.id, suburb: "Gladstone", address: "12 Example Street", createdAt: daysAgo(0.3),
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, suburb: "Gladstone", address: "12 Example Street", createdAt: daysAgo(0.3),
       title: "Heat pump circuit for new 6kW unit",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Getting a heat pump installed in the lounge. Installer says I need a dedicated circuit from the switchboard - about 8 m run. Switchboard is in the garage.",
     },
@@ -63,7 +63,7 @@ async function main() {
   // 2. Under review, no estimates yet
   await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", createdAt: daysAgo(0.1),
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", createdAt: daysAgo(0.1),
       title: "3 downlights in hallway",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Hallway only has one old batten light. Would like 3 LED downlights on the existing switch. Ceiling space accessible from the manhole.",
     },
@@ -72,7 +72,7 @@ async function main() {
   // 3. Priced, waiting for customer payment
   const pricedJob = await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", status: "PRICED",
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, suburb: "Waverley", address: "8 Example Road", status: "PRICED",
       createdAt: daysAgo(2), pricedAt: daysAgo(1.5), ...priced(2, 25),
       title: "Replace 2 broken double power points",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Two cracked double power points in the bedroom need replacing. Both work, just cracked faces.",
@@ -84,7 +84,7 @@ async function main() {
   // 4. Paid, waiting for a sparky
   const bookable = await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: mike.id, suburb: "Glengarry", address: "40 Example Avenue", status: "BOOKABLE",
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, suburb: "Glengarry", address: "40 Example Avenue", status: "BOOKABLE",
       createdAt: daysAgo(3), pricedAt: daysAgo(2.5), paidAt: daysAgo(0.5), ...priced(3, 180),
       title: "Smoke alarms - hardwired interconnected x4",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Selling the house and want 4 hardwired interconnected smoke alarms. Single storey, good ceiling access.",
@@ -95,7 +95,7 @@ async function main() {
   // 5. Assigned to Jack, with a variation waiting for pricing
   const kitchen = await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: sarah.id, tradieId: jack.id, suburb: "Waverley", address: "8 Example Road", status: "ASSIGNED",
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: sarah.id, tradieId: jack.id, suburb: "Waverley", address: "8 Example Road", status: "ASSIGNED",
       createdAt: daysAgo(6), pricedAt: daysAgo(5), paidAt: daysAgo(4.5), assignedAt: daysAgo(4), ...priced(6, 330),
       title: "Kitchen reno - move plugs, hob isolator, dishwasher plug",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Hob isolator moved to the other side, 2 benchtop doubles relocated, new dishwasher plug under the sink and a rangehood plug. Gib is off.",
@@ -119,7 +119,7 @@ async function main() {
   // 6. Completed and paid out, with a review
   const done = await db.job.create({
     data: {
-      ...base, jobNumber: n++, customerId: mike.id, tradieId: jack.id, suburb: "Gladstone", address: "12 Example Street", status: "COMPLETED",
+      ...base, id: `demo-job-${n}`, jobNumber: n++, customerId: mike.id, tradieId: jack.id, suburb: "Gladstone", address: "12 Example Street", status: "COMPLETED",
       createdAt: daysAgo(20), pricedAt: daysAgo(19), paidAt: daysAgo(18), assignedAt: daysAgo(17), completedAt: daysAgo(15), ...priced(2, 40),
       title: "Outdoor double plug on the deck",
       description: "DEMO JOB — attached images are illustrative legacy design samples, not photos of this work. Want a weatherproof double plug on the deck for a BBQ and heater.",

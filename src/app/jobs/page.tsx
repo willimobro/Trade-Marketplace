@@ -1,3 +1,4 @@
+import { demoDistanceKm } from "@/lib/demo-distances";
 import { SourceIcon } from "@/components/SourceIcon";
 import Link from "next/link";
 import styles from "./jobs.module.css";
@@ -53,7 +54,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
       )}
 
       <JobDiscovery initialCategory={CATEGORY_NAMES.includes(sp.category as typeof CATEGORY_NAMES[number]) ? sp.category : ""} initialQuery={typeof sp.q === "string" ? sp.q.slice(0, 200) : ""} defaultRegion={region ?? ""} storageScope={user?.id ?? "guest"} jobs={[...bookable, ...review].map((job) => ({
-        id: job.id, jobNumber: job.jobNumber, title: job.title, description: job.description,
+        id: job.id, distanceKm: demoDistanceKm(job.id), jobNumber: job.jobNumber, title: job.title, description: job.description,
         category: job.category, region: job.region, suburb: job.suburb, status: job.status, cover: job.photos[0]?.url,
         detail: tradeRequirementsPending(job.category) ? "Trade requirements pending. Estimating and claiming unavailable." : job.status === "BOOKABLE" ? "Gross pay before PAYE" : estimated.has(job.id) ? "Your private estimate is submitted" : "Provide a private estimate",
         payAmount: job.status === "BOOKABLE" ? formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents) : undefined,

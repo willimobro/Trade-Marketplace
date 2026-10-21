@@ -1,5 +1,6 @@
 "use client";
 
+import { formatDistanceKm } from "@/lib/distance";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CATEGORY_NAMES, REGIONS } from "@/lib/constants";
@@ -9,11 +10,6 @@ import styles from "@/app/jobs/jobs.module.css";
 export type DiscoveryJob = { id: string; jobNumber: number; title: string; description: string; category: string; region: string; suburb: string; status: string; cover?: string; detail: string; payAmount?: string; hours?: number; distanceKm?: number };
 function statusLabel(job: DiscoveryJob) {
   return tradeRequirementsPending(job.category) ? "Requirements pending" : job.status === "BOOKABLE" ? "Available to claim" : "Needs estimates";
-}
-function distanceLabel(job: DiscoveryJob) {
-  return typeof job.distanceKm === "number" && Number.isFinite(job.distanceKm) && job.distanceKm >= 0
-    ? `${job.distanceKm.toLocaleString("en-NZ", { maximumFractionDigits: 1 })} km`
-    : "Distance unavailable";
 }
 export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery = "", initialCategory = "" }: { jobs: DiscoveryJob[]; defaultRegion: string; storageScope: string; initialQuery?: string; initialCategory?: string }) {
   const [category, setCategory] = useState(initialCategory);
@@ -58,7 +54,7 @@ export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery =
     </section>
     <p role="status" aria-live="polite" className={styles.count}>{visible.length} open job{visible.length === 1 ? "" : "s"} shown{view !== "all" ? ` in ${view === "saved" ? "saved jobs" : "recently opened jobs"}` : ""}.</p>
     <div className={styles.grid}>{visible.map((job) => <article key={job.id} className={styles.card}>
-      <Link href={`/jobs/${job.id}`} onClick={() => store(saved, [job.id, ...recent.filter((id) => id !== job.id)].slice(0, 20))} className={styles.link} aria-label={`${job.title}. ${job.suburb}, ${job.region}. ${statusLabel(job)}. ${job.payAmount && !tradeRequirementsPending(job.category) ? `Gross pay ${job.payAmount} before PAYE` : "Pay pending"}. ${distanceLabel(job)}. See full job details.`}>
+      <Link href={`/jobs/${job.id}`} onClick={() => store(saved, [job.id, ...recent.filter((id) => id !== job.id)].slice(0, 20))} className={styles.link} aria-label={`${job.title}. ${job.suburb}, ${job.region}. ${statusLabel(job)}. ${job.payAmount && !tradeRequirementsPending(job.category) ? `Gross pay ${job.payAmount} before PAYE` : "Pay pending"}. ${formatDistanceKm(job.distanceKm)}. See full job details.`}>
         <div className={styles.photo}>
           {!job.cover || failedPhotos.includes(job.cover) ? <span className={styles.photoFallback} role="img" aria-label={job.cover ? "Photo unavailable" : "No photo supplied"}>
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8" cy="8" r="1.5" /><path d="m3 17 5-5 4 4 3-3 6 6" /></svg>
@@ -70,7 +66,7 @@ export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery =
         <h2 className={styles.title} title={job.title}>{job.title}</h2>
         <div className={styles.paySlot}>
           <strong className={styles.pay}>{job.payAmount && !tradeRequirementsPending(job.category) ? job.payAmount : "Pay pending"}</strong>
-          <span className={styles.distance}>{distanceLabel(job)}</span>
+          <span className={styles.distance}>{formatDistanceKm(job.distanceKm)}</span>
         </div>
       </Link>
       <button type="button" className={styles.saveButton} aria-pressed={saved.includes(job.id)} aria-label={`${saved.includes(job.id) ? "Unsave" : "Save"} ${job.title}`} title={saved.includes(job.id) ? "Unsave job" : "Save job"} onClick={() => store(saved.includes(job.id) ? saved.filter((id) => id !== job.id) : [...saved, job.id].slice(-100), recent)}>

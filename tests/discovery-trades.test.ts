@@ -6,6 +6,7 @@ import { runInNewContext } from "node:vm";
 import { createElement, type ComponentType } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
+import * as distance from "../src/lib/distance";
 import * as readiness from "../src/lib/trade-readiness";
 import * as constants from "../src/lib/constants";
 import type { DiscoveryJob } from "../src/components/discovery/JobDiscovery";
@@ -15,6 +16,7 @@ const source = readFileSync(new URL("../src/components/discovery/JobDiscovery.ts
 const compiled = ts.transpileModule(source, { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
 const exports: { JobDiscovery?: ComponentType<{ jobs: DiscoveryJob[]; defaultRegion: string; storageScope: string }> } = {};
 const mocks: Record<string, unknown> = {
+  "@/lib/distance": distance,
   "next/link": { default: (props: Record<string, unknown>) => createElement("a", props) },
   "@/lib/trade-readiness": readiness,
   "@/lib/constants": constants,
