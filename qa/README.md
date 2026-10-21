@@ -1,15 +1,16 @@
 # QA loop
 
-Four agents, defined in `.claude/agents/`:
+Three people do ONE real job together through the site, then two agents fix what got in their way.
+Definitions in `.claude/agents/` (shared rules: `JOB_PROTOCOL.md`).
 
-| Agent | Does |
-|---|---|
-| `tradie-tester` | uses the site as a sparky (on 127.0.0.1:3123), writes `qa/round-N/tradie.md` |
-| `customer-tester` | uses the site as a homeowner (on localhost:3123), writes `qa/round-N/customer.md` |
-| `ux-designer` | turns complaints into a fix spec, `qa/round-N/ux-spec.md` |
-| `coder` | implements the spec, type-checks, commits, `qa/round-N/coder-notes.md` |
+| Agent | Plays / does | Host |
+|---|---|---|
+| `customer-tester` | Sharon, homeowner — posts the job, pays, approves extras, confirms | localhost:3123 |
+| `tradie-tester` | Jack, sparky — estimates, claims, "goes to site", variation, CoC | 127.0.0.1:3123 |
+| `tm-office` | TM admin — prices job + variations, checks CoC, payouts | willimo:3123 |
+| `ux-designer` | turns their reports into a fix spec, `qa/round-N/ux-spec.md` | |
+| `coder` | builds the spec, type-checks, commits, `qa/round-N/coder-notes.md` | |
 
-Each round: `npm run db:seed` (fresh demo data) → both testers in parallel → designer → coder → next round.
-Stops when both testers return `VERDICT: NO_COMPLAINTS` (or after 6 rounds).
-
-The two testers use different hostnames so their login cookies don't clash in the same Chrome.
+The three players run at the same time and hand over through `qa/round-N/job-log.md` (`HANDOFF -> <role>` lines).
+Each writes a report of the friction working together. Each round: `npm run db:seed` → players → designer → coder.
+Stops when all three return `VERDICT: NO_COMPLAINTS` (or after 6 rounds).
