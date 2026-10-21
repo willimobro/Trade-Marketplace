@@ -62,6 +62,18 @@ function HomeContent() {
       <h1>Trade Marketplace</h1>
       <p id="example-note">Design preview · Listings and distances above are examples. Only electrical work is currently available; other categories are coming later.</p>
       {fontsUnavailable && <p role="status">The web font could not load. Fallback text is displayed.</p>}
+      <details>
+        <summary>How your job gets priced and completed</summary>
+        <ol>
+          <li><strong>Describe the work.</strong> Post your electrical job with photos for free.</li>
+          <li><strong>Get one fixed price.</strong> Electricians provide private estimates of hours and materials, not competing quotes for you to choose between. A Trade Marketplace administrator reviews them and sets the fixed price for you to review.</li>
+          <li><strong>Try the payment step.</strong> This preview records test payments only; no money is charged. Recording a test payment makes the job available for a verified electrician to claim.</li>
+          <li><strong>Coordinate the visit.</strong> Claiming assigns an electrician; it does not schedule an appointment. Use the job conversation to agree on the visit.</li>
+          <li><strong>Review any extra work.</strong> Extra work is described and priced separately for your approval before it proceeds.</li>
+          <li><strong>Review completion.</strong> The electrician uploads a Certificate of Compliance (CoC). Review the work and certificate, then confirm completion. The job page explains its sign-off window and automatic completion conditions.</li>
+        </ol>
+        <p>Automatic pricing is planned; the current flow uses administrator review. <Link href="/jobs/new">Post your job</Link> or <Link href="/for-tradies">see how it works for electricians</Link>.</p>
+      </details>
       <nav aria-label="Current web app"><Link href="/jobs">Find electrical work</Link><Link href="/jobs/new">Post a job</Link><Link href="/login">Log in</Link><Link href={searching ? "/" : "/?view=search"}>{searching ? "Back to Browse" : "View original Search"}</Link></nav>
     </aside>
   </div>;

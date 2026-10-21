@@ -251,7 +251,7 @@ export function MessageForm({ action }: { action: BoundAction }) {
 
 // ---------- admin ----------
 
-function PricePreview({ hours, materials, rates, applyMinimum }: { hours: number; materials: number; rates: Rates; applyMinimum: boolean }) {
+function PricePreview({ hours, materials, rates, applyMinimum, note }: { hours: number; materials: number; rates: Rates; applyMinimum: boolean; note: string }) {
   const p = priceWork(hours, Math.round(materials * 100), rates, { applyMinimum });
   const rows: [string, number, string?][] = [
     [`Tradie ${p.hours} h × ${formatNZD(rates.tradieRateCents)}`, p.tradieGrossCents],
@@ -271,6 +271,13 @@ function PricePreview({ hours, materials, rates, applyMinimum }: { hours: number
       <div className="flex justify-between text-xs text-muted">
         <span>Tradie earns (incl. holiday pay)</span><span className="tabular-nums">{formatNZD(p.tradieTotalCents)}</span>
       </div>
+      <details className="mt-3 border-t border-black/10 pt-3">
+        <summary className="cursor-pointer font-semibold">Customer price preview</summary>
+        <p className="mt-2 text-muted">Unsaved preview — not sent to the customer. Review the job or variation scope above before submitting; this preview does not change that scope.</p>
+        <p className="mt-2">Total including GST: <strong className="tabular-nums">{formatNZD(p.totalCents)}</strong></p>
+        {applyMinimum && <div className="mt-2"><p className="font-medium">Note to customer</p><p className="whitespace-pre-wrap break-words">{note.trim() || "No note added."}</p></div>}
+        <p className="mt-2 text-muted">Based on the hours, materials and existing rates entered above. Review this total and any note before using the submit button below.</p>
+      </details>
     </div>
   );
 }
@@ -282,6 +289,7 @@ export function PriceForm({ action, rates, applyMinimum, initial, submitLabel }:
   const priceId = useId();
   const [hours, setHours] = useState(initial?.hours ?? 0);
   const [materials, setMaterials] = useState(initial?.materials ?? 0);
+  const [note, setNote] = useState("");
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
@@ -291,10 +299,10 @@ export function PriceForm({ action, rates, applyMinimum, initial, submitLabel }:
       {applyMinimum && (
         <div>
           <label className="label" htmlFor={`${priceId}-note`}>Note to customer <span className="font-normal text-muted">(optional)</span></label>
-          <textarea className="input min-h-16" id={`${priceId}-note`} name="note" maxLength={1000} placeholder="What's included, assumptions…" />
+          <textarea className="input min-h-16" id={`${priceId}-note`} name="note" maxLength={1000} value={note} onChange={event => setNote(event.target.value)} placeholder="What's included, assumptions…" />
         </div>
       )}
-      <PricePreview hours={hours} materials={materials} rates={rates} applyMinimum={applyMinimum} />
+      <PricePreview hours={hours} materials={materials} rates={rates} applyMinimum={applyMinimum} note={note} />
       <FormMessage state={state} />
       <SubmitButton className="btn-primary w-full" pending="Saving…">{submitLabel}</SubmitButton>
     </RetainedForm>

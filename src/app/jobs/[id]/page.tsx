@@ -118,6 +118,17 @@ export default async function JobPage({
           <h2 className="font-semibold">What happens next</h2>
           <p className="mt-2 text-sm">{nextAction(job.status, isAdmin ? "admin" : isOwner ? "customer" : isAssigned ? "assigned" : "tradie")}</p>
           {(isOwner || isAdmin) && <Link href={`/receipts/${job.id}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline">View payment record</Link>}
+          {isOwner && (job.status === "REVIEW" || job.status === "BOOKABLE") && (
+            <details className="mt-3 text-sm">
+              <summary className="cursor-pointer py-3 font-semibold">Waiting for an update?</summary>
+              <p className="mt-2 text-muted">{job.status === "REVIEW"
+                ? "Electricians’ private estimates help Trade Marketplace set your fixed price. An estimate is not a customer quote or an appointment. No fixed price is ready to accept at this stage."
+                : "Your job is available for an electrician to claim. A recorded test payment does not assign an electrician or schedule an appointment. Check this job’s status and payment record before attempting another payment."}</p>
+              <p className="mt-3 text-muted">You can add relevant details or ask about the current stage in the job conversation. Messages are saved here; sending one does not change the job’s status.</p>
+              <a href="#messages" className="mt-2 inline-flex min-h-11 items-center font-semibold underline">Open job conversation</a>
+              <p><Link href="/support" className="inline-flex min-h-11 items-center underline">View help and support options</Link></p>
+            </details>
+          )}
         </section>
 
         {inThread && job.cancelReason && <section aria-label="Cancellation record" className="card p-5">

@@ -1,3 +1,4 @@
+import { ConnectionNotice } from "@/components/ConnectionNotice";
 import type { Metadata } from "next";
 import { RouteFrame } from "@/components/RouteFrame";
 import { SourceAppFrame } from "@/components/SourceAppFrame";
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const user = await getCurrentUser();
   return <html lang="en-NZ"><body className="flex min-h-screen flex-col font-sans antialiased">
+    <ConnectionNotice />
     <RouteFrame reference={children}>
       <SourceAppFrame role={user?.role ?? null}>{children}</SourceAppFrame>
     </RouteFrame>

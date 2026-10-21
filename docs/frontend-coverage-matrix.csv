@@ -1,0 +1,40 @@
+ID,Family,Current coverage,Remaining boundary
+G01,Landing and how pricing works,Adapted/partial,Source examples remain illustrative; no configured pilot-availability service.
+G02,Tradie value proposition,Core implemented,Core eligibility and current process present; legal/payroll promises remain outside UI.
+G03,Login and registration,Core implemented,Core auth/signup present; recovery service separate.
+G04,Password recovery,Preview only,Preview only; real recovery email/token/password service missing.
+G05,Profile and account,Core implemented,Core profile/edit/validation/verification state present.
+C01,Jobs dashboard,Core implemented,Core empty/filter/status/history/receipt states present.
+C02,Create job flow,Adapted/partial,Text draft recovery implemented; photos require explicit reattachment after navigation.
+C03,Awaiting fixed price,Adapted/partial,Waiting guidance implemented; overdue/insufficient-information need persisted status or policy.
+C04,Fixed-price review,Adapted/partial,Fixed total/breakdown/scope present; price-change comparison needs quote history.
+C05,Checkout and receipt,Adapted/partial,Test checkout/receipt present; provider pending/cancel/failure integration absent.
+C06,Waiting for worker,Adapted/partial,Waiting/help/cancellation present; no appointment or claim-time guarantee.
+C07,Assigned job workspace,Adapted/partial,Identity/contact/messages present; structured scheduling workflow undecided.
+C08,Variation decision,Adapted/partial,Extra scope/photos/payment/decline review present; expiry policy absent.
+C09,Completion and CoC,Adapted/partial,Document check/retry/completion review present; validity/rejection/hold workflow missing.
+C10,Cancellation and refund,Adapted/partial,Cancellation/investigation/refund record present; provider refund processing absent.
+C11,Review and completed job,Core implemented,Required stars and optional comment present; one saved review/receipt.
+T01,Onboarding verification,Adapted/partial,Pending/verified current boolean present; rejection/expiry/revocation reasons need records.
+T02,Dashboard and active jobs,Core implemented,Core active/empty/history/payroll summaries present.
+T03,Estimate board,Core implemented,Search/region/stage/saved/recent/empty/storage-error present; saved data browser-local.
+T04,Private estimate form,Core implemented,Estimate/create/update/error/closed state present.
+T05,Claimable job board/detail,Core implemented,Scope/pay/materials/privacy/verification restrictions present.
+T06,Claim confirmation/outcome,Core implemented,Review/pending/claim conflict/recovery present.
+T07,Assigned work/materials,Adapted/partial,Address/contact/budget/messages present; structured progress/schedule undecided.
+T08,Request extra work,Core implemented,Required photos/hours/request/priced/approved/declined present.
+T09,Submit CoC,Core implemented,Upload/number/materials/error/unresolved-variation block present; validity not established.
+T10,Earnings and payout detail,Adapted/partial,"Saved hours/rate/gross/holiday breakdown added; not a payslip, net pay or bank confirmation."
+T11,Credits and first pick,Deferred policy,Deferred: credit earning/spending/starter/cap/first-pick rules unresolved.
+A01,Operations overview,Core implemented,Core queues/counts/empty/error present.
+A02,Price review workspace,Adapted/partial,Private estimates/medians/pricing and unsent customer preview present; no quote history.
+A03,Auto-price exception review,Deferred policy,Deferred: automatic price thresholds/outliers/exception rules unresolved.
+A04,Worker verification,Adapted/partial,Manual verify/revoke present; expiry/history/reason records absent.
+A05,Variation pricing,Core implemented,Extra scope/photos/frozen-rate preview/send/reprice present.
+A06,Completion/material review,Adapted/partial,Document availability/overspend/sign-off review present; correction/hold workflow absent.
+A07,Cancellation/dispute case,Adapted/partial,Cancellation reason/thread/outcome present; post-completion dispute workflow undecided.
+A08,Payroll payout review/export,Adapted/partial,Queued/export/reconcile/paid review present; no payroll provider/statements/export history.
+A09,Rates and settings,Adapted/partial,Rate validation/preview/save/pending present; persisted audit history absent.
+X01,Job messaging,Core implemented,Inbox/thread/empty/send/pending/error/permissions present.
+X02,Photo/document viewer,Adapted/partial,Gallery/keyboard/zoom/error and document check/retry present; secure document access is backend.
+X03,Support notifications and service recovery,Adapted/partial,Help/notifications previews and error/404/offline states present; outbound services and maintenance mode absent.

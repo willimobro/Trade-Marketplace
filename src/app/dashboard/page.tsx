@@ -138,7 +138,8 @@ async function TradieDash({ userId }: { userId: string }) {
         {payouts.length ? (
           <div className={styles.payroll}>
             {payouts.map((p) => (
-              <Link key={p.id} href={`/jobs/${p.job.id}`} className="flex flex-wrap items-center gap-3 p-4 hover:bg-black/[0.02]">
+              <article key={p.id} className="p-4">
+              <Link href={`/jobs/${p.job.id}`} className="flex flex-wrap items-center gap-3 hover:bg-black/[0.02]">
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">{p.job.title}</p>
                   <p className="text-xs text-muted">{jobRef(p.job.jobNumber)} · {p.hours} hrs · {timeAgo(p.createdAt)}</p>
@@ -148,6 +149,18 @@ async function TradieDash({ userId }: { userId: string }) {
                   <span className="text-sm text-muted">{p.status === "PAID" ? "Marked paid by administrator" : "Queued for manual payroll"}</span>
                 </div>
               </Link>
+              <details className="mt-3 text-sm">
+                <summary className="min-h-11 cursor-pointer py-3 underline">View saved earnings breakdown</summary>
+                <dl className="space-y-2">
+                  <div className="flex justify-between gap-3"><dt>Saved hours</dt><dd>{p.hours}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Saved hourly rate</dt><dd>{formatNZD(p.rateCents)}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Gross earnings</dt><dd>{formatNZD(p.grossCents)}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Holiday pay</dt><dd>{formatNZD(p.holidayPayCents)}</dd></div>
+                  <div className="flex justify-between gap-3 font-bold"><dt>Total before deductions</dt><dd>{formatNZD(p.grossCents + p.holidayPayCents)}</dd></div>
+                </dl>
+                <p className="mt-3 text-muted">These are saved manual payroll amounts, not a payslip or bank-transfer confirmation. Deductions and net pay are not recorded here.</p>
+              </details>
+              </article>
             ))}
           </div>
         ) : (
