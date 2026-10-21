@@ -1,5 +1,11 @@
 # Route, role and state inventory
 
+## Current additions at f23936b
+
+This inventory retains its earlier inspection history. Later reviewed batches added protected `/preview` role entry and `/preview/journey` (eight-stage, four-trade in-memory simulation), complete recovery/support/notification preview states, desktop layouts, original extracted icons and trade-category action guards. Hosted access protects every route and upload behind the outer password gate; the production upload-authorization concern remains a prelaunch issue. `/demo` is disabled on the hosted preview. Recovery never changes a password; support never sends a request; sample journey progress is not a real job record.
+
+The historical electrical-only selectors, generic icons and desktop-deferred findings below are superseded by their subsequent updates. Unwired service states and unconfirmed trade-specific policy remain separate from frontend completeness.
+
 Reviewed 2026-10-21 by static source inspection. This document is not a runtime test report. The homepage and local demo route were being edited concurrently; their entries describe the inspected snapshot. No application behavior changed for this inventory.
 
 ## Route coverage

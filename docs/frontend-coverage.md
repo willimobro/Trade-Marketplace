@@ -1,5 +1,11 @@
 # Frontend coverage and remaining boundaries
 
+## Current checkpoint: f23936b (supersedes historical visual boundaries)
+
+The coverage tables below began before the desktop and completion batches. The current checkpoint includes responsive desktop navigation/workspaces, exported original-source icon geometry, approved contrast corrections, interactive recovery/support/notifications, and a protected four-trade sample journey. Mobile source geometry remains the reference; desktop layouts are reviewed adaptations. Recovery and support simulate outcomes without sending email or changing credentials. The sample journey does not alter real job eligibility or qualification rules.
+
+Independent QA cleared the scoped synthetic hosted preview, including photo-dialog naming/focus and completion/review focus restoration. That is not exhaustive product completion. Use `frontend-completion-next.md` and the next batch coverage delta for remaining review; do not treat the older generic-icon, preserved-low-contrast or desktop-deferred notes below as current defects.
+
 Original design authority: Figma WurSo76mY67lO23D4Zlu7v. The separate redesign draft is not the approved source. Reference layouts are centered at390px; wider screens preserve the mobile composition. Roboto Flex is the approved web-only font substitution. Generic SVG controls replace font-dependent icons. These are disclosed differences, not exact glyph parity.
 
 | Journey | Available frontend | Boundary |

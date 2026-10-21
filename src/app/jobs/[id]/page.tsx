@@ -127,7 +127,7 @@ export default async function JobPage({
               <summary className="cursor-pointer py-3 font-semibold">Waiting for an update?</summary>
               <p className="mt-2 text-muted">{job.status === "REVIEW"
                 ? "Tradies’ private estimates help Trade Marketplace set your fixed price. An estimate is not a customer quote or an appointment. No fixed price is ready to accept at this stage."
-                : "Your job is available for an tradie to claim. A recorded test payment does not assign an tradie or schedule an appointment. Check this job’s status and payment record before attempting another payment."}</p>
+                : "Your job is available for a tradie to claim. A recorded test payment does not assign a tradie or schedule an appointment. Check this job’s status and payment record before attempting another payment."}</p>
               <p className="mt-3 text-muted">You can add relevant details or ask about the current stage in the job conversation. Messages are saved here; sending one does not change the job’s status.</p>
               <a href="#messages" className="mt-2 inline-flex min-h-11 items-center font-semibold underline">Open job conversation</a>
               <p><Link href="/support" className="inline-flex min-h-11 items-center underline">View help and support options</Link></p>
@@ -145,7 +145,7 @@ export default async function JobPage({
         {isOwner && job.priceCents !== null && job.status !== "REVIEW" && (
           <section className="card p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="text-lg font-bold">Your fixed price</h2>
+              <h2 className="text-lg font-bold">Original job fixed price</h2>
               <p className="text-3xl font-bold text-leaf-dark"><Money cents={job.priceCents} /></p>
             </div>
             {breakdownMatchesSavedPrice && jobPrice ? <div className="mt-3 space-y-1 text-sm">
@@ -187,12 +187,12 @@ export default async function JobPage({
                   <PhotoGallery photos={v.photos} label="Variation" />
                   {isOwner && v.status === "PRICED" && pay && (
                     <div className="mt-4 flex flex-wrap gap-2">
-                      <Link href={`/pay/${pay.id}`} className="btn-primary">Approve &amp; pay {formatNZD(pay.amountCents)}</Link>
+                      <Link href={`/pay/${pay.id}`} className="btn-primary">Review {formatNZD(pay.amountCents)} test payment</Link>
                       <ConfirmAction action={declineVariation.bind(null, v.id)} label="Review decline" description={`Decline this extra work: ${v.description}? The extra work will not be approved. Review the scope before confirming.`} confirmLabel="Decline extra work" destructive />
                     </div>
                   )}
                   {isOwner && v.status === "PRICED" && (
-                    <p className="mt-2 text-xs text-muted">If you decline, the original job is finished as quoted (or made safe) and the extra isn&apos;t done.</p>
+                    <p className="mt-2 text-xs text-muted">Review the scope and test payment before approving extra work. If you decline, the original job is finished as quoted (or made safe) and the extra isn&apos;t done.</p>
                   )}
                   {isAdmin && (v.status === "REQUESTED" || v.status === "PRICED") && (
                     <div className={styles.variationPricing}>

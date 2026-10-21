@@ -182,21 +182,22 @@ export function CancelForm({ action, paid }: { action: BoundAction; paid: boolea
   }, [open]);
   if (!open)
     return (
-      <button ref={cancelTrigger} type="button" onClick={() => setOpen(true)} className="text-sm text-muted underline hover:text-ink">
-        Cancel this job
+      <button ref={cancelTrigger} type="button" onClick={() => setOpen(true)} className="min-h-11 text-left text-sm text-muted underline hover:text-ink">
+        Review cancellation
       </button>
     );
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3 rounded-xl border border-red-200 bg-red-50/50 p-4">
-      <p className="text-sm">
+      <p id="cancel-help" className="text-sm">
         {paid
-          ? "You've already paid, so Trade Marketplace will look into the cancellation before any refund."
-          : "You haven't paid yet, so you can cancel straight away."}
+          ? "A test payment is recorded. Submitting this request sends the cancellation to Trade Marketplace for review. The job is not cancelled and no test refund is recorded until the review is resolved. No real money moves."
+          : "No payment is recorded. Submitting this form cancels the job immediately. You can keep the job by going back before submitting."}
       </p>
       <label className="label" htmlFor="cancel-reason">Reason for cancellation</label>
-      <textarea ref={reasonInput} id="cancel-reason" className="input min-h-16" name="reason" minLength={5} maxLength={1000} placeholder="Why are you cancelling?" required />
+      <textarea ref={reasonInput} id="cancel-reason" className="input min-h-16" name="reason" minLength={5} maxLength={1000} aria-describedby="cancel-help cancel-reason-help" placeholder="Why are you cancelling?" required />
+      <p id="cancel-reason-help" className="text-xs text-muted">5–1,000 characters. Your reason is saved with the job.</p>
       <FormMessage state={state} />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <SubmitButton className="btn bg-red-600 text-white hover:bg-red-700" pending="Sending…">
           {paid ? "Request cancellation" : "Cancel job"}
         </SubmitButton>

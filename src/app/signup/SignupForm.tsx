@@ -16,6 +16,7 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
   const [showPassword, setShowPassword] = useState(false);
   const [fontsUnavailable, setFontsUnavailable] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
+  const errorMessage = useRef<HTMLParagraphElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
   const moveFocus = useRef(false);
   const field = (name: keyof typeof values) => ({ value: values[name], onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setValues(current => ({ ...current, [name]: event.target.value })) });
@@ -24,6 +25,9 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
     moveFocus.current = false;
     if (step === 2) heading.current?.focus(); else nameInput.current?.focus();
   }, [step]);
+  useEffect(() => {
+    if (state?.error) errorMessage.current?.focus();
+  }, [state]);
   useEffect(() => {
     let active = true;
     Promise.all([document.fonts.load('760 36px "Trade Display"'), document.fonts.load('700 14px "Trade UI"'), document.fonts.load('400 16px "Trade UI"')]).then(faces => {
@@ -35,9 +39,11 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
   const fontNotice = "The web font could not load. Fallback text is displayed.";
 
   if (step === 2) return <section className={styles.details}>
-    <button type="button" disabled={pending} onClick={() => { moveFocus.current = true; setStep(1); }}>← Back to your details</button>
-    <p>Step 2 of 2 · Account details</p><h1 ref={heading} tabIndex={-1}>How will you use Trade Marketplace?</h1>
-    <p>Choose your account type and region. Your account is created when you submit below.</p>
+    <button type="button" className={styles.backDetails} disabled={pending} onClick={() => { moveFocus.current = true; setStep(1); }}>← Back to your details</button>
+    <ol className={styles.progress} aria-label="Create account progress"><li><span aria-hidden="true">✓</span> Your details</li><li aria-current="step"><span aria-hidden="true">2</span> Account details</li></ol>
+    <h1 ref={heading} tabIndex={-1}>How will you use Trade Marketplace?</h1>
+    <p className={styles.intro}>Choose your account type and region to finish setting up.</p>
+    <div className={styles.accountSummary}><p>Creating an account for</p><strong>{values.name}</strong><span>{values.email}</span><p>Your account is created when you select Create account below.</p></div>
     {fontsUnavailable && <p className={styles.detailsNotice} role="status">{fontNotice}</p>}
     <form onSubmit={event => {
       event.preventDefault();
@@ -47,13 +53,13 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
       form.set("next", next ?? "");
       startTransition(() => action(form));
     }} aria-busy={pending}>
-      <fieldset disabled={pending}><legend>Account type</legend>{(["CUSTOMER", "TRADIE"] as const).map(option => <label key={option} className={styles.role}><input type="radio" name="role" value={option} checked={role === option} onChange={() => setRole(option)} />{option === "CUSTOMER" ? "I need a job done" : "I’m a tradie"}</label>)}</fieldset>
+      <fieldset disabled={pending}><legend>Account type</legend><div className={styles.roles}>{(["CUSTOMER", "TRADIE"] as const).map(option => <label key={option} className={`${styles.role} ${role === option ? styles.selectedRole : ""}`}><input type="radio" name="role" value={option} checked={role === option} onChange={() => setRole(option)} /><span><strong>{option === "CUSTOMER" ? "I need a job done" : "I’m a tradie"}</strong><span>{option === "CUSTOMER" ? "Post jobs and follow their progress." : "Set up your trade profile."}</span></span></label>)}</div></fieldset>
       <div className={styles.field}><label htmlFor="region">Region (required)</label><select id="region" name="region" required {...field("region")} disabled={pending}><option value="" disabled>Choose your region</option>{REGIONS.map(region => <option key={region}>{region}</option>)}</select></div>
       {role === "TRADIE" && <>
         <div className={styles.field}>
           <label htmlFor="trade">Trade (required)</label>
-          <select id="trade" name="trade" required {...field("trade")} disabled={pending}>{CATEGORY_NAMES.map(trade => <option key={trade} value={trade}>{trade}</option>)}</select>
-          <p>Choose the trade for your account. Signing up does not verify your qualifications or approve you to take jobs.</p>
+          <select id="trade" name="trade" required {...field("trade")} disabled={pending} aria-describedby="trade-help">{CATEGORY_NAMES.map(trade => <option key={trade} value={trade}>{trade}</option>)}</select>
+          <p id="trade-help">Choose the trade for your account. Signing up does not verify your qualifications or approve you to take jobs.</p>
         </div>
         <div className={styles.field}>
           <label htmlFor="registrationNo">Registration number ({values.trade === "Electrical" ? "required" : "optional"})</label>
@@ -61,7 +67,7 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
           <p id="registration-help">{values.trade === "Electrical" ? <>Electrical registration is required. We check your details against the <a href={EWRB_REGISTER_URL} target="_blank" rel="noreferrer">EWRB public register</a> before your profile is verified.</> : "Verification requirements for this trade are pending. You may add a relevant registration number, but this does not verify your account or qualify you to accept jobs."}</p>
         </div>
       </>}
-      {state?.error && <p className={styles.detailsError} role="alert">{state.error} Your entered details are retained; use Back if you need to change your name, email or password.</p>}
+      {state?.error && <p ref={errorMessage} tabIndex={-1} className={styles.detailsError} role="alert">{state.error} Your entered details are retained; use Back if you need to change your name, email or password.</p>}
       <button type="submit" disabled={pending}>{pending ? "Creating account…" : "Create account"}</button>
       <Link href={loginUrl}>Already registered? Log in</Link>
     </form>

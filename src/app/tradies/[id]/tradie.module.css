@@ -1,0 +1,17 @@
+.screen { min-width:0; }
+.name { margin:0; font:760 26px/1.3 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; overflow-wrap:anywhere; }
+.stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:24px; padding:20px 0; border-top:1px solid #cbd5ce; border-bottom:1px solid #cbd5ce; }
+.stats dt { font-size:13px; line-height:1.5; color:#52645b; }
+.stats dd { display:flex; flex-direction:column; gap:2px; margin:6px 0 0; font-size:26px; font-weight:700; }
+.ratingScale { font-size:14px; font-weight:400; color:#52645b; }
+.ratingStars { font-size:14px; line-height:1.5; letter-spacing:1px; }
+.stats .noRating { padding-top:5px; font-size:14px; font-weight:400; color:#52645b; }
+.about { margin-top:24px; overflow-wrap:anywhere; }
+@media (max-width:389px) {
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .stats > div:last-child { grid-column:1/-1; }
+  .stats > div:last-child dd { flex-direction:row; align-items:center; gap:12px; }
+}
+@media (min-width:1024px) {
+  .name { font-size:28px; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
+}
