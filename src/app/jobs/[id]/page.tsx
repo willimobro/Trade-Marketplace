@@ -1,7 +1,10 @@
+import { ClearPostedJobDraft } from "@/app/jobs/new/job-draft";
 import { SourceIcon } from "@/components/SourceIcon";
 import Link from "next/link";
 import styles from "./detail.module.css";
 import { PhotoGallery } from "@/components/PhotoGallery";
+import { DocumentPanel } from "@/components/DocumentPanel";
+import { ConfirmAction } from "@/app/admin/ConfirmAction";
 import { nextAction } from "./next-action";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
@@ -89,6 +92,7 @@ export default async function JobPage({
 
   return (
     <div className={styles.screen}>
+      {isOwner && <ClearPostedJobDraft userId={user.id} fields={{ title: job.title, description: job.description, region: job.region, suburb: job.suburb, address: job.address }} createdAt={job.createdAt.toISOString()} />}
       <div className={styles.main}>
         <article className={styles.job}>
           <div className={styles.backdrop}>
@@ -167,7 +171,7 @@ export default async function JobPage({
                   {isOwner && v.status === "PRICED" && pay && (
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link href={`/pay/${pay.id}`} className="btn-primary">Approve &amp; pay {formatNZD(pay.amountCents)}</Link>
-                      <form action={declineVariation.bind(null, v.id)}><button className="btn-ghost">Decline</button></form>
+                      <ConfirmAction action={declineVariation.bind(null, v.id)} label="Review decline" description={`Decline this extra work: ${v.description}? The extra work will not be approved. Review the scope before confirming.`} confirmLabel="Decline extra work" destructive />
                     </div>
                   )}
                   {isOwner && v.status === "PRICED" && (
@@ -193,7 +197,7 @@ export default async function JobPage({
           <section className="card p-6">
             <h2 className="text-lg font-bold">Certificate of Compliance</h2>
             <p className="mt-1 text-sm">CoC no. <strong>{job.coc.cocNumber}</strong> · uploaded {timeAgo(job.coc.uploadedAt)}</p>
-            <a href={job.coc.fileUrl} target="_blank" rel="noreferrer" className="btn-ghost mt-3">View / download CoC</a>
+            <DocumentPanel url={job.coc.fileUrl} />
             {isAdmin && (
               <p className={`mt-3 text-sm ${job.coc.materialsSpentCents > scopeMaterials ? "font-semibold text-red-700" : "text-muted"}`}>
                 Materials spent {formatNZD(job.coc.materialsSpentCents)} vs budget {formatNZD(scopeMaterials)} (ex GST) - check against Telfer order {jobRef(job.jobNumber)}.
@@ -207,10 +211,7 @@ export default async function JobPage({
               </div>
             )}
             {isOwner && job.status === "SUBMITTED" && (
-              <form action={confirmCompletion.bind(null, job.id)} className="mt-4">
-                <p className="mb-3 text-sm text-muted">Happy the work&apos;s done? Confirming queues the electrician&apos;s pay for payroll.</p>
-                <button className="btn-primary">Confirm job is complete</button>
-              </form>
+              <div className="mt-4"><ConfirmAction action={confirmCompletion.bind(null, job.id)} label="Review completion" description="Confirm that you have reviewed the completed work and CoC. Confirming marks the job complete and queues the electrician’s pay for manual payroll; it does not transfer money." confirmLabel="Confirm job is complete" /></div>
             )}
           </section>
         )}
@@ -402,7 +403,7 @@ export default async function JobPage({
                   Customer hasn&apos;t confirmed yet. Auto-release is {settings.autoReleaseHours} hrs after upload
                   {job.coc ? ` (${timeAgo(job.coc.uploadedAt)})` : ""}. Check the CoC first.
                 </p>
-                <form action={adminSignOff.bind(null, job.id)} className="mt-3"><button className="btn-primary w-full">CoC checked - release payout</button></form>
+                <div className="mt-3"><ConfirmAction action={adminSignOff.bind(null, job.id)} label="Review admin sign-off" description="Confirm you have checked the CoC and material costs. Sign-off marks the job complete and queues a manual payroll record without waiting for customer confirmation. It does not transfer money." confirmLabel="Sign off and queue payroll" /></div>
               </div>
             )}
             {job.tradie && (

@@ -222,8 +222,9 @@ export function ReviewForm({ action, tradieName }: { action: BoundAction; tradie
           ))}
         </div>
       </fieldset>
-      <label className="label" htmlFor="review-comment">Your review</label>
-      <textarea id="review-comment" className="input min-h-20" name="comment" maxLength={1000} placeholder="On time? Tidy? Explained things well?" required />
+      <label className="label" htmlFor="review-comment">Your review <span className="font-normal text-muted">(optional)</span></label>
+      <textarea id="review-comment" className="input min-h-20" name="comment" maxLength={1000} aria-describedby="review-comment-help" placeholder="On time? Tidy? Explained things well?" />
+      <p id="review-comment-help" className="text-sm text-muted">Choose a star rating. You can add a comment of up to 1,000 characters, or leave it blank.</p>
       <FormMessage state={state} />
       <SubmitButton pending="Posting…">Post review</SubmitButton>
     </RetainedForm>

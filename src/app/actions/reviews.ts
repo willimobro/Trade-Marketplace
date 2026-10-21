@@ -8,7 +8,7 @@ import type { FormState } from "./types";
 
 const reviewSchema = z.object({
   rating: z.coerce.number().int().min(1, "Pick a star rating").max(5, "Pick a star rating"),
-  comment: z.string().trim().min(5, "Say a few words about the job").max(1000),
+  comment: z.string().trim().max(1000),
 });
 
 export async function leaveReview(jobId: string, _prev: FormState, form: FormData): Promise<FormState> {
@@ -17,7 +17,7 @@ export async function leaveReview(jobId: string, _prev: FormState, form: FormDat
   if (!job || job.customerId !== user.id || job.status !== "COMPLETED" || !job.tradieId)
     return { error: "You can only review a completed job you posted." };
 
-  const parsed = reviewSchema.safeParse({ rating: form.get("rating"), comment: form.get("comment") });
+  const parsed = reviewSchema.safeParse({ rating: form.get("rating"), comment: form.get("comment") ?? "" });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   try {

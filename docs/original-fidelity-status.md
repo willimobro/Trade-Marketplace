@@ -53,3 +53,15 @@ Roboto Flex is bundled with its OFL license and provenance. No runtime Google Fo
 Lint, TypeScript, all16 tests and the production build passed after integration. Production browser checks repeated authentication, signup focus/retention,16 route/role combinations, required-photo review/edit retention, and four1440px desktop framing checks. Adding real demo photos exposed a24px overflow from a visually hidden caption; corrected and rechecked at390px viewport/390px document width. Gallery images load, zoomed arrow use retains the selected image, and Escape closes with focus returned to the opener. Both bundled font aliases loaded successfully. A clean temporary SQLite database accepted the schema and full updated seed; the existing local database was not reset.
 
 Demo fixture origins and their explicit limitations are in demo-assets.md. Frontend journey coverage and remaining preview/backend boundaries are in frontend-coverage.md. Existing test evidence with the source SF face predates this update and is not a pixel score for the substitute font.
+
+## QA follow-up after b3bf5c3
+
+Independent QA identified five P2 findings. Browse nested SVG sizing now targets only the outer390px canvas; icon colors are explicit source-derived hex values. Login/signup and browse/search now reflow at320px without canvas scaling, while390px geometry remains unchanged. The generic shell navigation no longer overlays form focus. Verified-licence badges use opaque #E8F4E3 with #326C20 text. These badge/shell changes affect adapted controls, not original CTA colors.
+
+Posting stores a versioned, expiring24h text draft in sessionStorage scoped by authenticated user. Drafts include the address; the UI explains local storage and provides Discard. No photos/passwords are persisted. Expired-session tests confirmed reauthentication returns text/review state, asks for photo reattachment, blocks submission without photos, and clears the matching draft after successful posting.
+
+Customer completion, admin sign-off and variation decline now have focused review and pending controls. Document access offers availability checking, failure/retry/help and the original link; availability is not certificate validation and does not pause auto-release. Settings fields disable during saving. Reviews now accept blank comments with required stars, trim text and retain1000-character limits; empty paragraphs are omitted. This is the specifically requested minimal validation adjustment, not a broader backend expansion.
+
+Lint, TypeScript,16 tests and production build pass. Browser checks cover all four former overflow routes at320/390, restored browse icon sizes/colors, session draft recovery/success cleanup, profile focus visibility, document failure/retry and one successful blank-comment review. Source green/white CTA contrast and icon-shape approval remain unresolved visual limitations.
+
+Customer/admin completion confirmation browser checks focus the review explanation and return focus on cancel; each completed local fixture has exactly one payroll record. This does not represent a transfer of money.

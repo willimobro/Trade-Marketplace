@@ -26,14 +26,16 @@ const LIMITS: Record<keyof S, [number, number]> = {
 };
 
 export function SettingsForm({ settings }: { settings: S }) {
-  const [state, action] = useActionState(updateSettings, undefined);
+  const [state, action, pending] = useActionState(updateSettings, undefined);
   const [values, setValues] = useState(() => Object.fromEntries(Object.entries(settings).map(([key, value]) => [key, String(value)])) as Record<keyof S, string>);
   const v = Object.fromEntries(Object.entries(values).map(([key, value]) => [key, Number(value)])) as S;
   const validPreview = FIELDS.every(([key]) => values[key] !== "" && Number.isFinite(v[key]) && v[key] >= LIMITS[key][0] && v[key] <= LIMITS[key][1]) && v.onCostPct >= v.holidayPayPct;
   const h = hourlyView({ ...v, tradieRateCents: Math.round(v.tradieRate * 100) });
 
   return (
-    <form action={action} className="card mt-6 space-y-6 p-4 sm:p-6">
+    <form action={action} aria-busy={pending} className="card mt-6 space-y-6 p-4 sm:p-6">
+      <fieldset disabled={pending} className="space-y-6">
+      <legend className="sr-only">Pricing and release settings</legend>
       {FIELDS.map(([key, label, step, help]) => (
         <div key={key}>
           <label className="label" htmlFor={key}>{label}</label>
@@ -44,6 +46,7 @@ export function SettingsForm({ settings }: { settings: S }) {
           <p id={`${key}-help`} className="mt-2 text-sm text-muted">{help} Allowed range: {LIMITS[key][0]}–{LIMITS[key][1]}.</p>
         </div>
       ))}
+      </fieldset>
       <section aria-label="Hourly pricing preview" className="rounded-xl bg-paper p-4">
         <h2 className="font-bold">Hourly pricing preview</h2><p className="mb-4 mt-1 text-sm text-muted">Illustrative hour of labour. Excludes materials and minimum-job adjustments. Save to apply changes.</p>
         {validPreview ? <div className="grid gap-4 text-sm sm:grid-cols-3">
@@ -54,6 +57,7 @@ export function SettingsForm({ settings }: { settings: S }) {
       </section>
       <FormMessage state={state} />
       <SubmitButton>Save rates</SubmitButton>
+      <p role="status" className="sr-only">{pending ? "Saving settings. Fields are temporarily unavailable." : ""}</p>
     </form>
   );
 }

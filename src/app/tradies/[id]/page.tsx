@@ -54,7 +54,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
                 <span className="ml-auto text-xs text-muted">{timeAgo(r.createdAt)}</span>
               </div>
               <p className="mt-1 text-xs text-muted">{r.job.title}</p>
-              <p className="mt-2 text-sm">{r.comment}</p>
+              {r.comment.trim() && <p className="mt-2 text-sm">{r.comment}</p>}
             </div>
           ))}
         </div>

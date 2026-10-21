@@ -21,6 +21,6 @@ export function SourceIcon({ name, size = 24, className, style }: { name: Source
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className} style={style}><path d={paths[name]} /></svg>;
 }
 export function iconMarkup(name: SourceIconName, x: number, y: number, size: number, color: string) {
-  const safeColor = /^#[0-9a-f]{3,8}$/i.test(color) || /^(white|black|currentColor)$/.test(color) ? color : 'currentColor';
+  const safeColor = /^#[0-9a-f]{3,8}$/i.test(color) || /^(white|black|currentColor)$/.test(color) || /^rgba?\([\d.% ,]+\)$/.test(color) ? color : 'currentColor';
   return `<svg x="${x}" y="${y}" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${safeColor}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${paths[name]}" /></svg>`;
 }

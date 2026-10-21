@@ -22,7 +22,7 @@ export default async function NewJobPage() {
       <p className={styles.intro}>
         Describe your electrical work and add photos. Electricians provide private estimates, then Trade Marketplace reviews them and sets one fixed price for you.
       </p>
-      <JobForm defaultRegion={user.region} />
+      <JobForm key={user.id} userId={user.id} defaultRegion={user.region} />
     </div>
   );
 }

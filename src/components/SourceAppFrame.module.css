@@ -10,7 +10,7 @@
 .content { min-width: 0; flex: 1; outline: none; overflow-wrap: anywhere; }
 .utilities { display: flex; flex-wrap: wrap; gap: 8px 16px; padding: 12px 20px; font-size: 14px; }
 .utilities a, .utilities button { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; }
-.navigation { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); min-height: 64px; background: white; position: sticky; bottom: 0; z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
+.navigation { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); min-height: 64px; background: white; position: relative; padding-bottom: env(safe-area-inset-bottom); }
 .navigation a { min-width: 0; min-height: 64px; text-align: center; color: #898989; display: flex; align-items: flex-start; justify-content: center; padding-top: 14px; }
 .navigation a[aria-current='page'] { color: #0c251d; }
 .glyph { font-size: 26px; line-height: normal; font-weight: 400; }

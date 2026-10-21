@@ -1,7 +1,7 @@
 .wrapper { width:390px; margin:0 auto; color:#0c251d; background:white; }
 .screen { width:390px; position:relative; isolation:isolate; overflow:hidden; background:#fff; }
 .source { position:absolute; inset:0; pointer-events:none; }
-.source svg { display:block; width:390px; max-width:none; }
+.source > svg { display:block; width:390px; max-width:none; }
 .hotspot { position:absolute; display:block; border:0; background:transparent; }
 .hotspot:focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
 .adaptation { padding:24px 16px; border-top:1px solid #afacac; font:400 14px/1.5 'Trade UI',sans-serif; }
@@ -13,3 +13,19 @@
 .searchInput::placeholder { color:white; opacity:1; }
 .searchInput:focus-visible { outline:2px solid white; outline-offset:3px; }
 .searchSubmit { position:absolute; border:0; margin:0; padding:0; background:transparent; cursor:pointer; }
+
+/* At narrow widths the original art is a cropped decorative preview;
+   its live controls become readable normal-flow links and search. */
+@media (max-width:389px) {
+  .wrapper,.screen { width:100%; }
+  .screen { height:auto !important; display:flex; flex-direction:column; }
+  .source { position:relative; inset:auto; height:277px; overflow:hidden; }
+  .screen form { display:flex; gap:8px; padding:16px; background:#0c251d; }
+  .searchInput { position:static; width:auto !important; height:39px; flex:1; min-width:0; padding:8px; border:1px solid white; border-radius:11px; }
+  .searchSubmit { position:static; width:auto !important; height:39px !important; padding:8px 12px; border-radius:11px; background:#6cbd45; color:#0c251d; font:700 14px/19px 'Trade UI',sans-serif; }
+  .searchSubmit::after { content:'Search'; }
+  .hotspot { position:static; width:auto !important; height:auto !important; min-height:44px; margin:4px 16px; padding:12px; border:1px solid #6cbd45; border-radius:11px; font:400 14px/20px 'Trade UI',sans-serif; overflow-wrap:anywhere; }
+  .hotspot::after { content:attr(aria-label); }
+  .hotspot[aria-disabled=true] { border-color:#bbb; color:#52645b; }
+  .adaptation { overflow-wrap:anywhere; }
+}

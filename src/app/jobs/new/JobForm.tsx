@@ -4,9 +4,18 @@ import { startTransition, useActionState, useEffect, useRef, useState } from "re
 import { createJob } from "@/app/actions/jobs";
 import { FormMessage } from "@/components/ui";
 import styles from "./post-job.module.css";
+import { clearJobDraft, DRAFT_FIELDS, readJobDraft, saveJobDraft } from "./job-draft";
 import { REGIONS } from "@/lib/constants";
 
-export function JobForm({ defaultRegion }: { defaultRegion: string }) {
+export function JobForm({ defaultRegion, userId }: { defaultRegion: string; userId: string }) {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [draftNotice, setDraftNotice] = useState("");
+  const [storageUnavailable, setStorageUnavailable] = useState(false);
+  const persist = (reviewed: boolean, submitted = false) => {
+    if (!formRef.current) return;
+    try { saveJobDraft(userId, formRef.current, reviewed, submitted); }
+    catch { setStorageUnavailable(true); }
+  };
   const [state, action, pending] = useActionState(createJob, undefined);
   const [fontsUnavailable, setFontsUnavailable] = useState(false);
   useEffect(() => {
@@ -22,6 +31,18 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
   const [previews, setPreviews] = useState<string[]>([]);
 
   const [review, setReview] = useState<Record<string, string> | null>(null);
+  useEffect(() => {
+    try {
+      const draft = readJobDraft(userId);
+      if (!draft || !formRef.current) return;
+      for (const name of DRAFT_FIELDS) {
+        const input = formRef.current.elements.namedItem(name);
+        if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement) input.value = draft.fields[name];
+      }
+      if (draft.reviewed) setReview(draft.fields);
+      setDraftNotice(`Your text draft was restored for this account. Photos cannot survive sign-in navigation: ${draft.reviewed ? "use Edit details to reattach them" : "reattach them below"} before submitting.`);
+    } catch { setStorageUnavailable(true); }
+  }, [userId]);
   const reviewHeading = useRef<HTMLHeadingElement>(null);
   const titleInput = useRef<HTMLInputElement>(null);
   const returnToDetails = useRef(false);
@@ -36,16 +57,30 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
   useEffect(() => () => previews.forEach(URL.revokeObjectURL), [previews]);
 
   return (
-    <form className={styles.form} aria-busy={pending} onSubmit={(event) => {
+    <form ref={formRef} onChange={() => persist(!!review)} className={styles.form} aria-busy={pending} onSubmit={(event) => {
       event.preventDefault();
       if (pending || fileError) return;
       const data = new FormData(event.currentTarget);
       if (!review) {
+        persist(true);
         setReview(Object.fromEntries(["title", "description", "region", "suburb", "address"].map((key) => [key, String(data.get(key) ?? "")])));
         return;
       }
+      persist(true, true);
       startTransition(() => action(data));
     }}>
+      <p className="text-sm text-muted">Text details, including your address, are saved only in this browser tab for this account for up to 24 hours. Photos are not saved. The draft is cleared after successful posting.</p>
+      {draftNotice && <p role="status" className={styles.fontNotice}>{draftNotice}</p>}
+      {storageUnavailable && <p role="alert" className={styles.fontNotice}>This browser cannot save your draft. Keep a copy of your text before leaving or signing in again.</p>}
+      <button type="button" className={styles.edit} disabled={pending} onClick={() => {
+        try { clearJobDraft(userId); } catch { setStorageUnavailable(true); }
+        formRef.current?.reset();
+        const photos = formRef.current?.elements.namedItem("photos");
+        if (photos instanceof HTMLInputElement) photos.setCustomValidity("");
+        setFileError(""); setPreviews([]); returnToDetails.current = true; setReview(null);
+        setDraftNotice("Draft discarded. Start a new job below.");
+        titleInput.current?.focus();
+      }}>Discard saved draft</button>
       {fontsUnavailable && <p role="status" className={styles.fontNotice}>The web font could not load. Fallback text is displayed.</p>}
       <p className="text-sm font-medium text-muted" role="status">{review ? "Step 2 of 2 · Review your job" : "Step 1 of 2 · Tell us what needs doing"}</p>
       <fieldset disabled={pending} className={review ? "hidden" : "contents"}>
@@ -125,10 +160,10 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
         <p>{review.address}, {review.suburb}, {review.region}</p>
         <p className="text-sm text-muted">{previews.length} photo{previews.length === 1 ? "" : "s"} attached · Electrical</p>
         <div className="rounded-xl bg-paper p-4 text-sm">Electricians provide private estimates. Trade Marketplace reviews these and sets your fixed price. Posting does not book an electrician or take a payment.</div>
-        <button type="button" className={styles.edit} disabled={pending} onClick={() => { returnToDetails.current = true; setReview(null); }}>Edit details</button>
+        <button type="button" className={styles.edit} disabled={pending} onClick={() => { persist(false); returnToDetails.current = true; setReview(null); }}>Edit details</button>
       </section>}
       <FormMessage state={state} />
-      <button type="submit" className={styles.publish} disabled={pending || !!fileError}>{pending ? "Submitting job…" : review ? "Submit job for pricing" : "Review job"}</button>
+      <button type="submit" className={styles.publish} disabled={pending || !!fileError || (!!review && previews.length === 0)}>{pending ? "Submitting job…" : review ? "Submit job for pricing" : "Review job"}</button>
       <p role="status" className="sr-only">{pending ? "Submitting your job. Please wait." : ""}</p>
     </form>
   );

@@ -69,3 +69,24 @@
 .details :focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
 .detailsNotice { background:#fff5d6; padding:12px; font-size:14px; }
 .detailsError { color:#a12424; }
+
+/* Narrow layouts reflow controls without scaling text or native inputs. */
+@media (max-width:389px) {
+  .screen { width:100%; }
+  .title { left:18px; width:calc(100% - 36px); }
+  .mark { left:auto; right:28px; }
+  .illustration { left:calc(50% - 141px); }
+  .rule { left:20px; width:calc(100% - 40px); }
+  .input { width:calc(100% - 115px); }
+  .emailCheck { left:auto; right:24px; }
+  .showPassword { left:auto; right:16px; }
+  .forgot { left:auto; right:20px; }
+  .action { left:20px; width:calc(100% - 40px); overflow:hidden; }
+  .action svg { position:relative; left:50%; transform:translateX(-50%); }
+  .or { left:calc(50% - 83.5px); }
+  .separator { width:calc(50% - 49px); }
+  .separatorLeft { left:20px; }
+  .separatorRight { left:auto; right:20px; }
+  .error,.fontNotice { left:20px; width:calc(100% - 40px); }
+}
+@media (max-width:389px) { .illustration { left:auto; right:0; } .name { width:calc(100% - 95px); } }
