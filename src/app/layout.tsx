@@ -1,36 +1,20 @@
+import { ConnectionNotice } from "@/components/ConnectionNotice";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import { Header } from "@/components/Header";
+import { RouteFrame } from "@/components/RouteFrame";
+import { SourceAppFrame } from "@/components/SourceAppFrame";
+import { getCurrentUser } from "@/lib/session";
 import "./globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
 export const metadata: Metadata = {
-  title: "Trade Marketplace",
-  description: "Get quotes from licensed local tradies - individuals, not just big firms.",
+  title: { default: "Trade Marketplace", template: "%s · Trade Marketplace" },
+  description: "Describe your electrical job, receive a fixed price from Trade Marketplace, and connect with a verified electrician.",
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en-NZ">
-      <body className={`${poppins.variable} font-sans antialiased min-h-screen flex flex-col`}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <footer className="bg-forest text-white/60 text-xs">
-          <div className="mx-auto max-w-6xl px-4 py-6 flex flex-wrap gap-x-6 gap-y-2 justify-between">
-            <span>© {new Date().getFullYear()} Trade Marketplace · Made in Invercargill</span>
-            <span>Tradies are responsible for their own licensing, insurance and certificates of compliance.</span>
-          </div>
-        </footer>
-      </body>
-    </html>
-  );
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const user = await getCurrentUser();
+  return <html lang="en-NZ"><body className="flex min-h-screen flex-col font-sans antialiased">
+    <ConnectionNotice />
+    <RouteFrame reference={children}>
+      <SourceAppFrame role={user?.role ?? null}>{children}</SourceAppFrame>
+    </RouteFrame>
+  </body></html>;
 }

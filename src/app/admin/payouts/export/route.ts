@@ -18,7 +18,7 @@ export async function GET() {
     include: { tradie: { select: { name: true, email: true, registrationNo: true } }, job: { select: { jobNumber: true } } },
   });
   const rows = [
-    ["Name", "Email", "Registration", "Job", "Hours", "Rate", "Gross", "Holiday pay (8%)", "Total gross"],
+    ["Name", "Email", "Registration", "Job", "Hours", "Rate", "Gross", "Holiday pay", "Total gross"],
     ...payouts.map((p) => [
       p.tradie.name, p.tradie.email, p.tradie.registrationNo ?? "", jobRef(p.job.jobNumber), p.hours,
       (p.rateCents / 100).toFixed(2), (p.grossCents / 100).toFixed(2), (p.holidayPayCents / 100).toFixed(2),

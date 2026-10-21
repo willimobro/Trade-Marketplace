@@ -1,48 +1,28 @@
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/session";
 import { logout } from "@/app/actions/auth";
+import type { CurrentUser } from "@/lib/session";
 import { Avatar, Logo } from "./ui";
+import { Navigation } from "./Navigation";
 
-export async function Header() {
-  const user = await getCurrentUser();
-  const nav = "rounded-lg px-2 py-2 hover:bg-white/10 sm:px-3";
+export function Header({ user }: { user: CurrentUser | null }) {
   return (
-    <header className="bg-forest text-white">
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
-        <Logo className="text-base sm:text-lg" />
-        <nav className="ml-auto flex items-center gap-1 text-sm sm:gap-2">
-          {!user && (
-            <>
-              <Link href="/for-tradies" className={nav}>For sparkies</Link>
-              <Link href="/login" className={nav}>Log in</Link>
-              <Link href="/signup" className="btn-lime">Sign up</Link>
-            </>
-          )}
-          {user?.role === "CUSTOMER" && (
-            <>
-              <Link href="/jobs/new" className="btn-lime">Get a price</Link>
-              <Link href="/dashboard" className={nav}>My jobs</Link>
-            </>
-          )}
-          {user?.role === "TRADIE" && (
-            <>
-              <Link href="/jobs" className={nav}>Job board</Link>
-              <Link href="/dashboard" className={nav}>My work</Link>
-            </>
-          )}
-          {user?.role === "ADMIN" && <Link href="/admin" className="btn-lime">Admin</Link>}
-          {user && (
-            <>
-              <Link href="/profile" className="rounded-full hover:ring-2 hover:ring-lime" title="Your profile">
-                <Avatar name={user.name} url={user.avatarUrl} size={34} />
-              </Link>
-              <form action={logout} className="hidden sm:block">
-                <button className="rounded-lg px-3 py-2 text-white/70 hover:bg-white/10 hover:text-white">Log out</button>
-              </form>
-            </>
-          )}
+    <header className={`bg-forest text-white ${user ? "lg:hidden" : ""}`}>
+      <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+        <Logo />
+        <nav aria-label="Account navigation" className="flex flex-wrap items-center gap-2 text-sm">
+          {!user ? <>
+            <Link href="/for-tradies" className="rounded-xl px-3 py-3 hover:bg-white/10">For electricians</Link>
+            <Link href="/login" className="rounded-xl px-3 py-3 hover:bg-white/10">Log in</Link>
+            <Link href="/signup" className="btn-lime">Get started</Link>
+          </> : <>
+            <Link href="/profile" className="flex min-h-12 items-center gap-2 rounded-xl px-2 hover:bg-white/10" aria-label={`Account for ${user.name}`}>
+              <Avatar name={user.name} url={user.avatarUrl} size={32} /><span className="hidden sm:inline">{user.name.split(" ")[0]}</span>
+            </Link>
+            <form action={logout}><button className="min-h-12 rounded-xl px-3 py-3 text-white/85 hover:bg-white/10">Log out</button></form>
+          </>}
         </nav>
       </div>
+      {user && <div className="border-t border-white/10"><Navigation role={user.role} mobile /></div>}
     </header>
   );
 }

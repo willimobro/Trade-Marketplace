@@ -19,7 +19,7 @@ ex GST         = (labour cost + materials at cost) + TM margin (20%)
 customer pays  = ex GST + GST (15%)
 ```
 
-All rates are editable at **Admin → Rates & settings** and are frozen onto each job when it's priced. The logic is
+Rates are editable at **Admin → Rates & settings**. Rate, on-cost, margin and GST snapshots are saved when a job is priced; holiday-pay and minimum-hour settings currently remain live inputs. The logic is
 in `src/lib/pricing.ts`.
 
 ## Job lifecycle
@@ -41,9 +41,10 @@ Before payment the customer can cancel freely.
 ## Run it
 
 ```bash
-npm install
+nvm use                      # Node 22 LTS; see .nvmrc
+npm ci
 cp .env.example .env          # then set SESSION_SECRET to a long random string
-npx prisma migrate dev        # creates prisma/dev.db
+npx prisma migrate deploy     # applies committed migrations to the local database
 npm run db:seed               # demo data with a job at every stage (wipes the db)
 npm run dev                   # http://localhost:3000
 ```
@@ -76,3 +77,9 @@ src/app/jobs/[id]/          one page, different panels for customer / assigned s
 - Uploaded files (incl. CoCs) are served to anyone with the unguessable URL — move to authenticated access before launch.
 - Legal/tax: employment vs contractor status, GST registration, insurance, terms of service — see an accountant first.
 - Hosting needs a persistent disk (SQLite + uploads), e.g. the Ubuntu server — not serverless.
+
+## Frontend design preview
+
+This branch refreshes the responsive customer, electrician and admin journeys. It preserves existing server actions and clearly labels simulated payments. Original brand artwork comes from the recovered Trade Marketplace design archive. See `docs/frontend-handoff.md` for design sources, verification and remaining work.
+
+Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` before review. The seed command loads `.env` and is destructive to the configured database: use only a disposable local demo database.

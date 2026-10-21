@@ -15,15 +15,15 @@ const signupSchema = z
     password: z.string().min(8, "Password needs at least 8 characters"),
     role: z.enum(["CUSTOMER", "TRADIE"], { message: "Pick an account type" }),
     region: z.enum(REGIONS, { message: "Pick your region" }),
-    trade: z.string().optional(),
+    trade: z.string().trim().optional(),
     registrationNo: z.string().trim().optional(),
   })
   .superRefine((v, ctx) => {
     if (v.role !== "TRADIE") return;
     if (!v.trade || !(CATEGORY_NAMES as readonly string[]).includes(v.trade))
       ctx.addIssue({ code: "custom", message: "Pick your trade", path: ["trade"] });
-    if (!v.registrationNo)
-      ctx.addIssue({ code: "custom", message: "Enter your registration number", path: ["registrationNo"] });
+    if (v.trade === "Electrical" && !v.registrationNo)
+      ctx.addIssue({ code: "custom", message: "Enter your Electrical registration number", path: ["registrationNo"] });
   });
 
 function safeNext(next: FormDataEntryValue | null) {
@@ -47,7 +47,8 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
       role: v.role,
       region: v.region,
       trade: v.role === "TRADIE" ? v.trade : null,
-      registrationNo: v.role === "TRADIE" ? v.registrationNo : null,
+      registrationNo: v.role === "TRADIE" ? v.registrationNo || null : null,
+      licenceVerified: false,
     },
   });
   await createSession(user.id);

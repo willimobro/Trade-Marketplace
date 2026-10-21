@@ -1,20 +1,13 @@
-import Link from "next/link";
+import styles from "./admin.module.css";
 import { requireAdmin } from "@/lib/session";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   await requireAdmin();
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
-      <nav className="mb-6 flex flex-wrap gap-2 text-sm">
-        {[
-          ["/admin", "Queues"],
-          ["/admin/tradies", "Tradies"],
-          ["/admin/payouts", "Payouts"],
-          ["/admin/settings", "Rates & settings"],
-        ].map(([href, label]) => (
-          <Link key={href} href={href} className="btn-ghost">{label}</Link>
-        ))}
-      </nav>
+    <div className={styles.workspace}>
+      <div className="mb-6">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted">Trade Marketplace · Operations workspace</p>
+      </div>
       {children}
     </div>
   );

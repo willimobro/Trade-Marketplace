@@ -3,15 +3,10 @@ import { JOB_STATUS, categoryStyle, formatNZD } from "@/lib/constants";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link href="/" className={`flex items-center gap-2 font-bold tracking-tight ${className}`}>
-      <span className="grid h-8 w-8 place-items-center rounded-lg bg-lime text-forest">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
-          <path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2L13.5 2Z" />
-        </svg>
-      </span>
-      <span className="hidden min-[440px]:inline">
-        Trade<span className="text-lime">Marketplace</span>
-      </span>
+    <Link href="/" aria-label="Trade Marketplace home" className={`flex min-h-12 items-center gap-3 rounded-lg ${className}`}>
+      {/* Exact original Figma vector lockup, including the original wordmark. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/wordmark.svg" width={188} height={46} alt="" className="shrink-0" />
     </Link>
   );
 }
@@ -66,9 +61,10 @@ export function Avatar({ name, url, size = 40 }: { name: string; url?: string | 
   );
 }
 
-export function LicenceBadge({ verified }: { verified: boolean }) {
+export function LicenceBadge({ verified, trade = "Electrical" }: { verified: boolean; trade?: string | null }) {
+  if (trade !== "Electrical") return <span className="chip bg-amber-400/20 text-amber-900">Trade verification requirements pending</span>;
   return verified ? (
-    <span className="chip bg-leaf/15 text-leaf-dark" title="Registration checked against the EWRB public register">
+    <span className="chip bg-[#e8f4e3] text-[#326c20]" title="Licence marked verified by Trade Marketplace">
       ✓ Licence verified
     </span>
   ) : (

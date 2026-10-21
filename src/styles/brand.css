@@ -1,0 +1,28 @@
+/* Original Figma WurSo76mY67lO23D4Zlu7v. Context-specific measurements, not a redesign. */
+:root {
+  --trade-forest: #0c251d;
+  --trade-leaf: #6cbd45;
+  --trade-lime: #a6d754;
+  --trade-paper: #f1ece5;
+  --trade-surface: #fff;
+  --trade-source-muted: #898989;
+  --trade-field-border: #52645b; /* Approved contrast adjustment; source #afacac. */
+  --trade-focus: #2163c6;
+  --trade-danger: #a12424;
+  --trade-font-body: 'Trade UI', sans-serif;
+  --trade-font-heading: 'Trade Display', sans-serif;
+  --trade-radius-action: 11px;
+  --trade-radius-category: 11px;
+  --trade-radius-job-tile: 5px;
+  --trade-radius-field: 0px;
+  --trade-shadow-category: 0 4px 4px rgb(0 0 0 / 25%);
+  --trade-shadow-action: 0 4px 4px rgb(0 0 0 / 10%);
+  --trade-shadow-header: 0 4px 4px rgb(0 0 0 / 5%);
+  --trade-content-width: 390px;
+  --trade-nav-height: 64px;
+  --trade-gap-tile: 12px;
+  --trade-inset-browse: 16px;
+  --trade-inset-form: 36px;
+}
+html { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

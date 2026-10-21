@@ -1,0 +1,28 @@
+/* Source 115:109 / measured 109:2: 390px white composition, x36 input
+   width319, x37 labels, 9px label/input gap; dynamic height is intentional. */
+.screen { width: min(390px, 100%); margin: 0 auto; padding: 0 35px 48px 36px; background: #fff; color: #0c251d; font: 400 16px/1.4 'Trade UI', sans-serif; overflow-wrap: anywhere; }
+.screen :is(input, textarea, select, button, p, a, span, div) { font-family: 'Trade UI', sans-serif; }
+.screen .heading, .screen label, .screen h2 { font-family: 'Trade Display', sans-serif; font-weight: 760; font-variation-settings: 'wdth' 151, 'opsz' 28, 'wght' 900; letter-spacing: 0; }
+.screen .heading { margin: 0; font-size: 20px; line-height: normal; }
+.intro { margin: 0 0 28px; font-size: 14px; }
+.form { display: flex; flex-direction: column; gap: 28px; margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.form label { display: block; margin: 0 0 9px 1px; color: #0c251d; font-size: 18px; line-height: normal; }
+.form label span { display: block; margin-top: 5px; font-weight: 400; font-size: 14px; line-height: 1.4; }
+.input { display: block; width: 100%; min-width: 0; min-height: 48px; padding: 10px; border: 0; border-radius: 0; box-shadow: inset 0 0 0 1px #52645b; background: #fff; color: #0c251d; font-size: 16px; line-height: 1.4; }
+textarea.input { min-height: 92px; resize: vertical; }
+.input::placeholder { color: #52645b; opacity: 1; }
+.input[type='file'] { padding: 10px; font-size: 14px; }
+.input::file-selector-button { min-height: 44px; margin: 0 8px 8px 0; padding: 8px; border: 1px solid #52645b; border-radius: 2px; background: white; color: #0c251d; font: inherit; }
+.location { display: grid; gap: 28px; }
+.previews { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.previews img { width: 52px; height: 52px; border-radius: 2px; object-fit: cover; }
+.screen .publish { width: calc(100% + 5px); min-height: 61px; margin-left: -3px; padding: 12px; border: 0; border-radius: 11px; background: #a6d754; color: #0c251d; font-family: 'Trade Display', sans-serif; font-size: 24px; font-weight: 760; font-variation-settings: 'wdth' 151, 'opsz' 28, 'wght' 900; line-height: normal; letter-spacing: 0; box-shadow: 0 4px 4px rgb(0 0 0 / 10%); cursor: pointer; }
+.publish:disabled { background: #d9d9d9; color: #52645b; cursor: not-allowed; }
+.screen .edit { min-height: 44px; padding: 8px 12px; border: 1px solid #52645b; border-radius: 0; background: #fff; color: #0c251d; font-size: 16px; }
+.screen :is(input, textarea, select, button, a):focus-visible { outline: 2px solid #2163c6; outline-offset: 3px; }
+@media (max-width: 350px) { .screen { padding-right: 20px; padding-left: 20px; } }
+
+.header { display: flex; align-items: center; gap: 6px; min-height: 61px; width: calc(100% + 71px); margin: 0 -35px 24px -36px; padding: 0 26px; background: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 5%); }
+.back { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; min-height: 44px; color: #0c251d; font-size: 24px; }
+.fontNotice { margin: 0; padding: 10px; background: #fff5d6; color: #5b4000; font-size: 14px; line-height: 1.4; }
+@media (max-width: 350px) { .header { width: calc(100% + 40px); margin-right: -20px; margin-left: -20px; padding: 0 10px; } }

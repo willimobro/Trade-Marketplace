@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireUser } from "@/lib/session";
+import styles from "./post-job.module.css";
 import { JobForm } from "./JobForm";
 
 export default async function NewJobPage() {
@@ -10,18 +11,18 @@ export default async function NewJobPage() {
         <div className="card p-6">
           <p className="font-semibold">Tradie accounts can&apos;t post jobs</p>
           <p className="mt-1 text-sm text-muted">
-            Need work done yourself? Make a separate customer account. Otherwise, <Link href="/jobs" className="underline">find jobs to quote</Link>.
+            Need work done yourself? Make a separate customer account. Otherwise, <Link href="/jobs" className="underline">find jobs to estimate</Link>.
           </p>
         </div>
       </div>
     );
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold">Get a price</h1>
-      <p className="mt-1 text-sm text-muted">
-        Free, no obligation. Our sparkies look at your photos and we send you one fixed price - usually within a day.
+    <div className={styles.screen}>
+      <header className={styles.header}><Link href="/dashboard" className={styles.back} aria-label="Back to your jobs">←</Link><h1 className={styles.heading}>List a job</h1></header>
+      <p className={styles.intro}>
+        Describe your job and add photos. Tradies provide private estimates, then Trade Marketplace reviews them and sets one fixed price for you.
       </p>
-      <JobForm defaultRegion={user.region} />
+      <JobForm key={user.id} userId={user.id} defaultRegion={user.region} />
     </div>
   );
 }

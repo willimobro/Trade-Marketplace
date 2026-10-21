@@ -1,99 +1,82 @@
+"use client";
+
 import Link from "next/link";
-import { getCurrentUser } from "@/lib/session";
-import { getSettings } from "@/lib/settings";
-import { hourlyView } from "@/lib/pricing";
-import { CATEGORIES, formatNZD } from "@/lib/constants";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useRef, type KeyboardEvent } from "react";
+import { SourceIcon, type SourceIconName } from "@/components/SourceIcon";
+import styles from "./home.module.css";
 
-export const dynamic = "force-dynamic";
-
-export default async function Home() {
-  const [user, settings] = await Promise.all([getCurrentUser(), getSettings()]);
-  const h = hourlyView(settings);
-
-  return (
-    <>
-      <section className="bg-forest text-white">
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-12 sm:pt-20">
-          <p className="chip bg-lime/15 text-lime">Fixed prices · Licensed sparkies · CoC every time</p>
-          <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-5xl">
-            One fair price. <span className="text-lime">No haggling.</span> A licensed sparky at your door.
-          </h1>
-          <p className="mt-4 max-w-xl text-white/70">
-            Post your job with a few photos. We price it properly, you pay once, and a verified local electrician does the
-            work and hands you a Certificate of Compliance.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {user?.role === "TRADIE" ? (
-              <Link href="/jobs" className="btn-lime px-6 py-3 text-base">See jobs near you</Link>
-            ) : (
-              <Link href={user ? "/jobs/new" : "/signup?role=CUSTOMER"} className="btn-lime px-6 py-3 text-base">
-                Get a price - it&apos;s free
-              </Link>
-            )}
-            {!user && (
-              <Link href="/for-tradies" className="btn border border-white/25 px-6 py-3 text-base text-white hover:bg-white/10">
-                Sparkies: earn {formatNZD(h.tradiePerHourCents)}/hr →
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto -mt-8 max-w-6xl px-4">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {CATEGORIES.map((c) => (
-            <div key={c.name} className="card p-4">
-              <span className={`grid h-10 w-10 place-items-center rounded-xl text-xl ${c.color}`} aria-hidden>{c.icon}</span>
-              <p className="mt-3 font-semibold">{c.name}</p>
-              <p className="text-xs text-muted">{c.name === "Electrical" ? "Live now" : "Coming soon"}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <h2 className="text-xl font-bold">How it works</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            ["1", "Post your job", "Describe it and add photos. Free, no obligation."],
-            ["2", "We price it", "Local sparkies estimate it and we set one fixed price. No bidding wars, no lowballing."],
-            ["3", "Pay to book", "Pay up front and your job goes to a verified local electrician."],
-            ["4", "Job done + CoC", "You get your Certificate of Compliance. Anything extra is quoted with photos before it's done."],
-          ].map(([n, t, d]) => (
-            <div key={n} className="flex gap-4">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-leaf font-bold text-white">{n}</span>
-              <div>
-                <p className="font-semibold">{t}</p>
-                <p className="text-sm text-muted">{d}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 pb-16">
-        <div className="card grid gap-6 p-6 sm:grid-cols-2 sm:p-8">
-          <div>
-            <h2 className="text-xl font-bold">Why a fixed price?</h2>
-            <p className="mt-2 text-sm text-muted">
-              When tradies bid against each other, the cheapest corner-cutter wins. When customers name the price,
-              good sparkies walk away. We set a fair price that pays the electrician properly and is still less than a
-              typical call-out company.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="rounded-xl bg-paper p-4">
-              <p className="text-xs text-muted">You pay (incl GST)</p>
-              <p className="mt-1 text-2xl font-bold">{formatNZD(h.customerPerHourCents)}<span className="text-sm font-medium">/hr</span></p>
-            </div>
-            <div className="rounded-xl bg-leaf/10 p-4">
-              <p className="text-xs text-muted">Your sparky earns</p>
-              <p className="mt-1 text-2xl font-bold text-leaf-dark">{formatNZD(h.tradiePerHourCents)}<span className="text-sm font-medium">/hr</span></p>
-            </div>
-            <p className="col-span-2 text-xs text-muted">Minimum {settings.minHours} hrs per job. Materials at cost.</p>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+// Original browse frames31:15/31:95:159×162 cards,11px radius,12px gaps.
+// The source example photography is retained; these are not live job listings.
+const examples = [
+  { title: "Sink install", category: "Plumbing", image: "bed6b845151af858f85abfcb49c75ac4568e59a7.png" },
+  { title: "Furniture relocation", category: "Labour", image: "07073effd959dfe2bad64f56c4e79fee8a892e33.jpg" },
+  { title: "Socket installation", category: "Electrical", image: "d1e83ceab15c246a3935332130a53eb24a546adc.jpg" },
+];
+function arrowScroll(event: KeyboardEvent<HTMLDivElement>) {
+  if (event.target !== event.currentTarget || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+  event.preventDefault();
+  const element = event.currentTarget;
+  if (event.key === "Home" || event.key === "End") element.scrollTo({ left: event.key === "Home" ? 0 : element.scrollWidth });
+  else element.scrollBy({ left: event.key === "ArrowRight" ? 171 : -171 });
 }
+function ExampleCard({ index, money = false }: { index: number; money?: boolean }) {
+  const example = examples[index % examples.length];
+  return <Link href="/jobs" className={styles.jobCard} aria-label={`${example.title}, design example. Browse currently available jobs.`}>
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img src={`/original/browse-${money ? "9a4c6fb946a4a0e617181226bbb34099c8b040c9.png" : example.image}`} alt="" />
+    <span className={styles.example}>Example</span>
+    <span className={styles.caption}><span>{example.category}</span><strong>{example.title}</strong></span>
+  </Link>;
+}
+function JobStrip({ label, twoRows = false }: { label: string; twoRows?: boolean }) {
+  return <div className={`${styles.strip} ${twoRows ? styles.twoRows : ""}`} tabIndex={0} role="region" aria-label={`${label}. Scroll horizontally; use left and right arrow keys.`} onKeyDown={arrowScroll}>
+    {examples.map((example, index) => <div key={example.title} className={styles.column}><ExampleCard index={index} />{twoRows && <ExampleCard index={index} money={index === 1} />}</div>)}
+  </div>;
+}
+function HomeContent() {
+  const searching = useSearchParams().get("view") === "search";
+  const menu = useRef<HTMLDialogElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const navigation: [string, string, SourceIconName][] = [["/", "Home", "home"], ["/?view=search", "Browse", "magnifier"], ["/dashboard", "My jobs", "jobs"], ["/messages", "Messages", "bubble"], ["/profile", "Account", "person"]];
+  return <div className={styles.wrapper}>
+    <header className={`${styles.header} ${searching ? styles.searchHeader : ""}`}>
+      <button ref={menuButton} type="button" className={styles.menuButton} aria-label="Open navigation menu" aria-haspopup="dialog" onClick={() => menu.current?.showModal()}><SourceIcon name="menu" size={26} /></button>
+      <form className={styles.searchForm} action="/jobs" method="get" role="search" aria-label="Search jobs">
+        <button type="submit" aria-label="Submit search"><SourceIcon name="magnifier" size={16} /></button>
+        <input type="search" name="q" aria-label="Search currently available jobs" placeholder={searching ? "Search for any job" : "Search"} />
+      </form>
+      <Link href="/jobs/new" className={styles.post} aria-label="Post a job"><SourceIcon name="plus-square" size={26} /></Link>
+      {!searching && <h1>Browse</h1>}
+    </header>
+    <div className={styles.content}>
+      {searching ? <>
+        <h1 className={styles.searchTitle}>Recently Searched</h1>
+        <p className={styles.searchContext}>Example searches across the trades.</p>
+        {["Plug socket install", "Labour jobs"].map((term) => <section key={term} className={styles.searchGroup} aria-label={`Example search: ${term}`}><div className={styles.queryHeading}><span>“{term}”</span><Link href={term === "Labour jobs" ? "/jobs" : "/jobs?q=socket"}>Search again</Link></div><JobStrip label={`Example results for ${term}`} /></section>)}
+        <section className={styles.searchGroup}><div className={styles.heading}><h2>Electrical</h2><Link href="/jobs?category=Electrical">See all</Link></div><JobStrip label="Electrical examples" /></section>
+      </> : <>
+        <div className={`${styles.strip} ${styles.categories}`} tabIndex={0} role="region" aria-label="Trade categories. Scroll horizontally; use left and right arrow keys." onKeyDown={arrowScroll}>
+          <Link href="/jobs?category=Electrical" className={styles.category}><span className={`${styles.categoryTint} ${styles.electrical}`} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.multimeter} src="/original/browse-fb398d016e30d08fb00c4f5b0105a140173a8da9.png" alt="" /><span className={styles.categoryLabel}><strong>Electrical</strong><span>and related</span></span></Link>
+          <Link href="/jobs?category=Construction" className={styles.category}><span className={`${styles.categoryTint} ${styles.construction}`} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.staple} src="/original/browse-c9bd4c4af0c22f24a0abc58a8ed672ea849ef9a8.png" alt="" /><span className={styles.categoryLabel}><strong>Construction</strong><span>and related</span></span></Link>
+          <Link href="/jobs?category=Plumbing" className={styles.category}><span className={`${styles.categoryTint} ${styles.plumbing}`} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className={styles.pipe} src="/original/browse-2a782790be5cf1dfe155a220bd9c8853f067a73f.png" alt="" /><span className={styles.categoryLabel}><strong>Plumbing</strong><span>and related</span></span></Link>
+          <Link href="/jobs?category=Gas%20Fitting" className={styles.category}><span className={`${styles.categoryTint} ${styles.gas}`} /><span className={styles.categoryLabel}><strong>Gas Fitting</strong><span>and related</span></span></Link>
+        </div>
+        <section aria-label="Suggested jobs"><div className={styles.heading}><h2>Suggested Jobs</h2><Link href="/jobs">See all</Link></div><JobStrip label="Suggested job examples" twoRows /></section>
+        <section className={styles.recent} aria-label="Recently viewed examples"><div className={styles.heading}><h2>Recently Viewed</h2><Link href="/jobs">See all</Link></div><div className={styles.verticalCards}>{[0,1,2,0,1,2].map((index, order) => <ExampleCard key={order} index={index} />)}</div></section>
+      </>}
+    </div>
+    <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? href === "/?view=search" : href === "/") ? "page" : undefined}><SourceIcon name={icon} size={26} navigation /><span className="sr-only">{label}</span></Link>)}</nav>
+    <dialog ref={menu} className={styles.menu} aria-labelledby="home-menu-title" onClose={() => requestAnimationFrame(() => menuButton.current?.focus())}>
+      <div className={styles.menuHeading}><h2 id="home-menu-title">Trade Marketplace</h2><button type="button" aria-label="Close menu" onClick={() => menu.current?.close()}><SourceIcon name="x" /></button></div>
+      <nav aria-label="Menu">{[["/jobs", "Find work"], ["/jobs/new", "Post a job"], ["/for-tradies", "For tradies"], ["/login", "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={href} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>
+    </dialog>
+  </div>;
+}
+export default function Home() { return <Suspense fallback={<p>Loading browse…</p>}><HomeContent /></Suspense>; }
