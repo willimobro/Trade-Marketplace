@@ -55,6 +55,9 @@ export function JourneySimulator() {
   const [resetOpen, setResetOpen] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const photoTrigger = useRef<HTMLButtonElement | null>(null);
+  const completionHeading = useRef<HTMLHeadingElement>(null);
+  const reviewHeading = useRef<HTMLHeadingElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inFlight = useRef(false);
   const job = journeys[trade];
@@ -69,12 +72,31 @@ export function JourneySimulator() {
   const progress = job.reached === 8 ? "Reviewed" : job.reached >= 7 ? "Complete" : job.completionSent ? "Awaiting sign-off" : job.reached >= 5 ? "Tradie assigned" : job.reached >= 4 ? "Available to claim" : job.reached >= 3 ? "Fixed price ready" : job.reached >= 1 ? "Under review" : "Draft job";
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
-  const previousStep = useRef({ stage: job.stage, trade });
+  const previousStep = useRef({ stage: job.stage, trade, completionSent: job.completionSent, reached: job.reached });
   useEffect(() => {
-    if (previousStep.current.stage !== job.stage || previousStep.current.trade !== trade) heading.current?.focus();
-    previousStep.current = { stage: job.stage, trade };
-  }, [job.stage, trade]);
-  useEffect(() => { if (photo && dialog.current && !dialog.current.open) dialog.current.showModal(); }, [photo]);
+    const previous = previousStep.current;
+    if (previous.stage !== job.stage || previous.trade !== trade) heading.current?.focus();
+    else if (previous.completionSent !== job.completionSent) {
+      (job.completionSent ? completionHeading.current : heading.current)?.focus();
+    } else if (previous.reached !== job.reached) {
+      (job.stage === 7 && job.reached === 8 ? reviewHeading.current : heading.current)?.focus();
+    }
+    previousStep.current = { stage: job.stage, trade, completionSent: job.completionSent, reached: job.reached };
+  }, [job.stage, trade, job.completionSent, job.reached]);
+  useEffect(() => {
+    if (photo) {
+      if (dialog.current && !dialog.current.open) dialog.current.showModal();
+    } else if (photoTrigger.current) {
+      const trigger = photoTrigger.current;
+      photoTrigger.current = null;
+      if (trigger.isConnected) trigger.focus();
+      else heading.current?.focus();
+    }
+  }, [photo]);
+  function closePhoto() {
+    dialog.current?.close();
+    setPhoto(null);
+  }
 
   function update(change: Partial<Journey> | ((previous: Journey) => Journey)) {
     setJourneys(previous => ({ ...previous, [trade]: typeof change === "function" ? change(previous[trade]) : { ...previous[trade], ...change } }));
@@ -117,7 +139,7 @@ export function JourneySimulator() {
     return <div className={styles.handoff}><span className={styles.avatar}>{expectedRole === "Customer" ? "CM" : expectedRole === "Admin" ? "TM" : sample.initials}</span><div><strong>{expectedRole}&apos;s next step</strong><p>{job.stage === 6 && job.completionSent ? "Review the finished work and sample evidence." : `Continue as ${expectedRole.toLowerCase()} to ${["describe the job", "send a private estimate", "review and set the fixed price", "record a test payment", "review and claim the job", "manage work and updates", "submit completion evidence", "leave a review"][job.stage]}.`}</p><button type="button" className={styles.textButton} onClick={() => changeRole(expectedRole)}>View as {expectedRole.toLowerCase()} <span aria-hidden="true">→</span></button></div></div>;
   }
   function photoGallery(ids: string[] = job.photos) {
-    return <div className={styles.photos}>{ids.map(id => <button type="button" className={styles.photo} key={id} onClick={() => setPhoto(id)}><SamplePhoto trade={trade} detail={id === "detail"} finished={id === "finished"} /><span>{PHOTO_NAMES[id]} <span aria-hidden="true">↗</span></span></button>)}</div>;
+    return <div className={styles.photos}>{ids.map(id => <button type="button" className={styles.photo} key={id} onClick={event => { photoTrigger.current = event.currentTarget; setPhoto(id); }}><SamplePhoto trade={trade} detail={id === "detail"} finished={id === "finished"} /><span>{PHOTO_NAMES[id]} <span aria-hidden="true">↗</span></span></button>)}</div>;
   }
   function scopeSummary() {
     return <div className={styles.scopeSummary}><p>{job.description}</p><dl className={styles.details}><div><dt>Location</dt><dd>{job.suburb}, {job.region}</dd></div><div><dt>Preferred timing</dt><dd>{job.timing}</dd></div></dl>{photoGallery()}</div>;
@@ -217,14 +239,14 @@ export function JourneySimulator() {
             if (!job.completionPhoto) next.completionPhoto = "Attach the finished-work sample photo.";
             if (trade === "Electrical" && !job.completionDocument) next.completionDocument = "Attach the clearly marked sample certificate.";
             if (validate(next)) run("Sending sample completion", previous => ({ ...previous, completionSent: true, role: "Customer" }), "Completion shared. Review the sample evidence as customer.");
-          }, <><Field id="completionNote" label="Work completed" error={errors.completionNote}><textarea {...attributes("completionNote")} rows={5} maxLength={2000} value={job.completionNote} onChange={event => update({ completionNote: event.target.value })} /></Field><label className={styles.check}><input id="journey-completionPhoto" type="checkbox" checked={job.completionPhoto} onChange={event => update({ completionPhoto: event.target.checked })} /><span>Attach finished-work sample illustration</span></label>{errors.completionPhoto && <p className={styles.error}>{errors.completionPhoto}</p>}{job.completionPhoto && photoGallery(["finished"])}{trade === "Electrical" && <><label className={styles.check}><input id="journey-completionDocument" type="checkbox" checked={job.completionDocument} onChange={event => update({ completionDocument: event.target.checked })} /><span>Attach example certificate · SAMPLE / NOT VALID</span></label>{errors.completionDocument && <p className={styles.error}>{errors.completionDocument}</p>}</>}{action("Send completion for review")}</>) : <div className={styles.formFields}><h3>Completion summary</h3><p>{job.completionNote}</p>{photoGallery(["finished"])}{trade === "Electrical" && <details className={styles.document}><summary>View example electrical certificate</summary><p className={styles.documentStamp}>SAMPLE / NOT VALID</p><h3>Certificate of Compliance example</h3><p>Reference: SAMPLE-TM-{2101 + TRADES.indexOf(trade)}</p><p>This fixture demonstrates a document review. It contains no inspection, signature or certification and must not be used as evidence of electrical compliance.</p></details>}{job.reached >= 7 ? <button type="button" className={styles.primary} onClick={() => update({ stage: 7, role: "Customer" })}>Continue to review →</button> : form(() => {
+          }, <><Field id="completionNote" label="Work completed" error={errors.completionNote}><textarea {...attributes("completionNote")} rows={5} maxLength={2000} value={job.completionNote} onChange={event => update({ completionNote: event.target.value })} /></Field><label className={styles.check}><input id="journey-completionPhoto" type="checkbox" checked={job.completionPhoto} onChange={event => update({ completionPhoto: event.target.checked })} /><span>Attach finished-work sample illustration</span></label>{errors.completionPhoto && <p className={styles.error}>{errors.completionPhoto}</p>}{job.completionPhoto && photoGallery(["finished"])}{trade === "Electrical" && <><label className={styles.check}><input id="journey-completionDocument" type="checkbox" checked={job.completionDocument} onChange={event => update({ completionDocument: event.target.checked })} /><span>Attach example certificate · SAMPLE / NOT VALID</span></label>{errors.completionDocument && <p className={styles.error}>{errors.completionDocument}</p>}</>}{action("Send completion for review")}</>) : <div className={styles.formFields}><h3 ref={completionHeading} tabIndex={-1}>Completion summary</h3><p>{job.completionNote}</p>{photoGallery(["finished"])}{trade === "Electrical" && <details className={styles.document}><summary>View example electrical certificate</summary><p className={styles.documentStamp}>SAMPLE / NOT VALID</p><h3>Certificate of Compliance example</h3><p>Reference: SAMPLE-TM-{2101 + TRADES.indexOf(trade)}</p><p>This fixture demonstrates a document review. It contains no inspection, signature or certification and must not be used as evidence of electrical compliance.</p></details>}{job.reached >= 7 ? <button type="button" className={styles.primary} onClick={() => update({ stage: 7, role: "Customer" })}>Continue to review →</button> : form(() => {
             if (validate(job.completionReviewed ? {} : { completionReviewed: "Review the sample work summary and evidence before confirming." })) run("Confirming sample completion", previous => ({ ...previous, reached: 7, stage: 7, role: "Customer" }), "Sample job complete. Leave a review to finish the journey.");
           }, <><label className={styles.check}><input id="journey-completionReviewed" type="checkbox" checked={job.completionReviewed} onChange={event => update({ completionReviewed: event.target.checked })} /><span>I’ve reviewed the sample completion summary and evidence.</span></label>{errors.completionReviewed && <p className={styles.error}>{errors.completionReviewed}</p>}{action(job.role === "Admin" ? "Sign off sample job" : "Confirm sample job is complete")}<button type="button" className={styles.textButton} disabled={!!pending} onClick={() => { update({ completionSent: false, completionReviewed: false, role: "Tradie" }); setErrors({}); }}>Edit completion as tradie</button><p className={styles.hint}>This marks the example job complete. No payroll or money transfer takes place.</p></>)}</div>}
         </>}
 
         {job.stage === 7 && <>
           <div className={styles.completionHero}><span className={styles.roundCheck}>✓</span><h3>A job well done.</h3><p>{job.title}</p><span className={styles.tag}>Sample job complete</span></div>
-          {!roleMatches ? handoff() : job.reached === 8 ? <div className={styles.formFields}><div className={styles.reviewCard}><p aria-label={`${job.rating} out of 5 stars`} className={styles.savedStars}>{"★".repeat(job.rating)}{"☆".repeat(5 - job.rating)}</p><h3>Thanks for your review</h3><p>{job.review || "You left a star rating without a comment."}</p><p className={styles.hint}>Saved to this sample journey only.</p></div><button type="button" className={styles.secondary} onClick={() => update({ reached: 7 })}>Edit my sample review</button><div className={styles.callout}><strong>Try the journey in another trade</strong><p>Your progress stays here while you switch between trades at the top.</p></div></div> : form(() => {
+          {!roleMatches ? handoff() : job.reached === 8 ? <div className={styles.formFields}><div className={styles.reviewCard}><p aria-label={`${job.rating} out of 5 stars`} className={styles.savedStars}>{"★".repeat(job.rating)}{"☆".repeat(5 - job.rating)}</p><h3 ref={reviewHeading} tabIndex={-1}>Thanks for your review</h3><p>{job.review || "You left a star rating without a comment."}</p><p className={styles.hint}>Saved to this sample journey only.</p></div><button type="button" className={styles.secondary} onClick={() => update({ reached: 7 })}>Edit my sample review</button><div className={styles.callout}><strong>Try the journey in another trade</strong><p>Your progress stays here while you switch between trades at the top.</p></div></div> : form(() => {
             if (validate(job.rating ? {} : { rating: "Choose a rating from 1 to 5 stars." })) run("Saving sample review", previous => ({ ...previous, reached: 8 }), "Review saved. You’ve completed this sample journey.");
           }, <><fieldset className={styles.ratingField}><legend>How did {sample.tradie.split(" ")[0]} do?</legend><div className={styles.rating}>{[1, 2, 3, 4, 5].map(rating => <label key={rating} className={job.rating === rating ? styles.ratingSelected : ""}><input id={rating === 1 ? "journey-rating" : undefined} type="radio" name="rating" value={rating} checked={job.rating === rating} onChange={() => update({ rating })} /><span aria-hidden="true">★</span><span>{rating}</span><span className={styles.srOnly}>out of 5 stars</span></label>)}</div>{errors.rating && <p className={styles.error}>{errors.rating}</p>}</fieldset><Field id="review" label="Your review (optional)" hint="A few words about the work, communication or tidiness."><textarea id="journey-review" rows={4} maxLength={1000} value={job.review} onChange={event => update({ review: event.target.value })} /></Field>{action("Save sample review")}</>)}
         </>}
@@ -234,6 +256,6 @@ export function JourneySimulator() {
 
       <aside className={styles.summaryPanel} aria-label="Sample job summary"><div className={styles.summaryTop}><span className={styles.tradeBadge}><TradeMark trade={trade} size={32} /></span><p className={styles.kicker}>{trade}</p><span className={styles.tag}>{progress}</span></div><h2>{job.title || "Your sample job"}</h2><p className={styles.hint}>TM-{2101 + TRADES.indexOf(trade)} · {job.suburb}, {job.region}</p><dl className={styles.details}><div><dt>Customer</dt><dd>Casey Martin <span>· sample</span></dd></div><div><dt>Timing</dt><dd>{job.appointmentSaved ? job.appointment : job.timing}</dd></div>{job.reached >= 5 && <><div><dt>Assigned tradie</dt><dd>{sample.tradie} <span>· sample</span></dd></div><div><dt>Sample address</dt><dd>{job.address}, {job.suburb}</dd></div></>}{job.reached >= 3 && <div><dt>{extraApproved ? "Total with approved extra work" : "Fixed price incl. GST"}</dt><dd className={styles.summaryTotal}>{formatNZD(total)}</dd></div>}</dl><div className={styles.nextHint}><p className={styles.kicker}>How it works</p><p>Customer describes. Tradie estimates. Admin sets the price. Everyone follows the same job through to completion.</p></div><p className={styles.hint}>Each trade is a separate sample. No profile, qualification or compliance checks are performed here.</p></aside>
     </div>
-    {photo && <dialog ref={dialog} className={styles.photoDialog} onCancel={() => setPhoto(null)} onClose={() => setPhoto(null)}><div className={styles.dialogHeading}><h2>{PHOTO_NAMES[photo]}</h2><button type="button" className={styles.secondary} onClick={() => { dialog.current?.close(); setPhoto(null); }} autoFocus>Close <span aria-hidden="true">×</span></button></div><SamplePhoto trade={trade} detail={photo === "detail"} finished={photo === "finished"} /><p>Sample illustration for this {trade.toLowerCase()} journey. This is not a photo or evidence of actual work.</p></dialog>}
+    {photo && <dialog ref={dialog} className={styles.photoDialog} aria-labelledby="journey-photo-title" aria-describedby="journey-photo-description" onCancel={event => { event.preventDefault(); closePhoto(); }} onClose={() => setPhoto(null)}><div className={styles.dialogHeading}><h2 id="journey-photo-title">{PHOTO_NAMES[photo]}</h2><button type="button" className={styles.secondary} onClick={closePhoto} autoFocus>Close <span aria-hidden="true">×</span></button></div><SamplePhoto trade={trade} detail={photo === "detail"} finished={photo === "finished"} /><p id="journey-photo-description">Sample illustration for this {trade.toLowerCase()} journey. This is not a photo or evidence of actual work.</p></dialog>}
   </section>;
 }

@@ -30,3 +30,9 @@ Local verification: 53 application tests, 8 preview-security tests, lint, TypeSc
 Protection check: anonymous `/preview/journey` returns 401 through the custom hosted gate. Ordinary `next start`, even with hosted mode and a forged assertion header, renders the Next not-found boundary without the journey form. Next streams that boundary with HTTP 200 after rendering starts; content access is still withheld. No credentials were rotated and no Render service was changed.
 
 Remaining independent review: keyboard/gallery focus across all journey states; every earlier-step edit/reset and pricing combination; signed-in navigation context; full wider-screen review of receipts/profile/onboarding/admin; representative mobile and desktop visual review by Matthew. The implementation is ready for this next QA pass, not certified as a complete product.
+
+## Independent QA follow-up: keyboard fixes
+
+Independent QA cleared a505872 for the scoped hosted prototype and identified two keyboard defects in a5acf6b. The photo dialog now has a heading-based accessible name and description, remembers its triggering button, and restores focus after both Escape and Close. Completion submission focuses its newly rendered summary; final review submission focuses the saved-review heading. Returning to an editable state focuses the stage heading. No business state, access gate or secret configuration changed.
+
+Affected browser verification passed on 390px Electrical and 1440px Plumbing journeys: keyboard photo opening, named dialog, Escape, Close, restored opener, completion summary focus, final-review focus, full workflow and per-trade progress. Results: task/evidence/ui-completion/focus-fix-results.json. All 53 application tests, 8 preview-security tests, lint, TypeScript and protected production build pass. This corrected batch is consolidated into the hosted-preview branch for focused final independent verification before deployment.
