@@ -11,7 +11,7 @@
   --color-mint: #b7f0e4;
   --color-lime: #a6d754;
   --color-leaf: #6cbd45;
-  --color-leaf-dark: #326c20;
+  --color-leaf-dark: var(--trade-link);
   --color-paper: #f1ece5;
   --color-ink: #172b24;
   --color-muted: #52645b;
@@ -24,7 +24,7 @@
 }
 
 :root { color-scheme: light; }
-body { background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.5; }
+body { background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.5; font-weight: 400; font-variation-settings: "wdth" 100, "opsz" 14; letter-spacing: 0; }
 button, input, select, textarea { font: inherit; }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:not(:disabled), select { cursor: pointer; }
@@ -39,28 +39,40 @@ main { min-width: 0; }
 }
 
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
+  @apply inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-60;
+  min-height: var(--trade-height-action);
+  border-radius: var(--trade-radius-action);
+  line-height: 1.2;
 }
 @utility btn-primary {
-  @apply btn bg-lime text-forest hover:bg-[#b8e475] shadow-sm;
+  @apply btn text-forest;
+  background: var(--trade-action);
+  box-shadow: var(--trade-shadow-action);
+  &:hover:not(:disabled) { filter: brightness(1.04); }
 }
 @utility btn-lime {
-  @apply btn bg-lime text-forest hover:bg-[#b8e475];
+  @apply btn text-forest;
+  background: var(--trade-signature);
+  &:hover:not(:disabled) { filter: brightness(1.04); }
 }
 @utility btn-ghost {
-  @apply btn border border-border bg-white text-ink hover:bg-paper;
+  @apply btn border-2 bg-white text-forest hover:bg-paper;
+  border-color: var(--trade-action);
 }
 @utility card {
-  @apply rounded-2xl border border-border/70 bg-white shadow-[0_4px_20px_rgba(12,37,29,0.04)];
+  @apply border border-border/70 bg-white;
+  border-radius: var(--trade-radius-category);
+  box-shadow: var(--trade-shadow-category);
 }
 @utility label { @apply mb-2 block text-sm font-semibold text-ink; }
 @utility input {
-  @apply min-h-12 w-full rounded-xl border border-muted bg-white px-4 py-3 text-base text-ink transition placeholder:text-muted focus:border-focus focus:outline-2 focus:outline-offset-2 focus:outline-focus;
+  @apply min-h-12 w-full rounded-none border border-muted bg-white px-4 py-3 text-base text-ink transition placeholder:text-muted focus:border-focus focus:outline-2 focus:outline-offset-2 focus:outline-focus;
 }
-@utility chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-5; }
-@utility page-title { @apply text-[32px] font-semibold leading-tight tracking-tight lg:text-[40px]; }
+@utility chip { @apply inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium leading-5; border-radius: var(--trade-radius-pill); }
+@utility page-title { font-family: var(--trade-font-heading); font-size: var(--trade-size-display); font-weight: 900; font-variation-settings: "wdth" 151, "opsz" 28, "wght" 900; line-height: 1.2; letter-spacing: 0; }
 @utility eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-muted; }
-@utility section-title { @apply text-xl font-semibold tracking-tight; }
+@utility section-title { font-family: var(--trade-font-heading); font-size: var(--trade-size-section); font-weight: 900; font-variation-settings: "wdth" 151, "opsz" 28, "wght" 900; line-height: 1.2; letter-spacing: 0; }
+@utility btn-hero { @apply btn-primary; min-height: var(--trade-height-hero); font-family: var(--trade-font-heading); font-size: var(--trade-size-display-sm); font-variation-settings: "wdth" 151, "opsz" 28, "wght" 900; }
 
 .skip-link { position: fixed; left: 16px; top: -100px; z-index: 100; padding: 12px 20px; border-radius: 12px; background: white; color: var(--color-forest); }
 .skip-link:focus { top: 16px; }

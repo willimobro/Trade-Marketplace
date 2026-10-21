@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const user = await getCurrentUser();
   const hostedPreview = await canUseHostedPreview();
-  return <html lang="en-NZ"><body className="flex min-h-screen flex-col font-sans antialiased">
+  return <html lang="en-NZ" data-mode={user?.role === "TRADIE" ? "trade" : "customer"}><body className="flex min-h-screen flex-col font-sans antialiased">
     <a href="#main-content" className="skip-link">Skip to main content</a>
     <ConnectionNotice />
     {hostedPreview && <aside className="bg-white px-4 py-2 text-right text-sm"><Link href="/preview" className="font-semibold underline">Switch preview role</Link></aside>}

@@ -1,5 +1,7 @@
 # Trade Marketplace UI pack
 
+The separate brand-guideline alignment checkpoint updates shared primitives against the reviewed 32-page PDF. See [alignment audit](brand-guidelines-alignment.md) for exact corrections, deferred orange mode and required visual review.
+
 Authority: Matthew's approved original [Figma](https://www.figma.com/design/WurSo76mY67lO23D4Zlu7v/Trade-Marketplace-1). The later proposed redesign is not visual authority. Shared measured tokens live in `src/styles/brand.css`, imported by `src/app/globals.css`. Existing component modules retain screen-specific geometry; do not impose one universal spacing/radius on every original screen.
 
 ## Typography and assets

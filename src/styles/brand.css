@@ -1,11 +1,29 @@
-/* Original Figma WurSo76mY67lO23D4Zlu7v. Context-specific measurements, not a redesign. */
+/* Original Figma WurSo76mY67lO23D4Zlu7v and reviewed 32-page brand guidelines. */
 :root {
   --trade-forest: #0c251d;
   --trade-leaf: #6cbd45;
   --trade-lime: #a6d754;
   --trade-paper: #f1ece5;
   --trade-surface: #fff;
-  --trade-source-muted: #898989;
+  --trade-source-muted: #52645b;
+  --trade-mint: #b7f0e4;
+  --trade-action: var(--trade-leaf);
+  --trade-signature: var(--trade-lime);
+  --trade-link: #326c20;
+  /* Both data-mode values inherit customer green until trade orange is approved. */
+  --trade-height-action: 55px;
+  --trade-height-hero: 61px;
+  --trade-radius-pill: 30px;
+  --trade-size-display-xl: 64px;
+  --trade-size-display: 36px;
+  --trade-size-display-sm: 24px;
+  --trade-size-price: 28px;
+  --trade-size-name: 20px;
+  --trade-size-section: 18px;
+  --trade-size-overlay: 15px;
+  --trade-size-body: 16px;
+  --trade-size-small: 14px;
+  --trade-size-caption: 11px;
   --trade-field-border: #52645b; /* Approved contrast adjustment; source #afacac. */
   --trade-focus: #2163c6;
   --trade-danger: #a12424;

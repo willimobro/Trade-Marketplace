@@ -61,7 +61,7 @@
 .progress li[aria-current] { color:#0c251d; font-weight:700; }
 .progress li > span { display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:#f1ece5; font-weight:700; }
 .progress li[aria-current] > span { background:#6cbd45; }
-.accountSummary { display:grid; gap:4px; margin-top:24px; padding:16px; border-radius:12px; background:#f1ece5; overflow-wrap:anywhere; }
+.accountSummary { display:grid; gap:4px; margin-top:24px; padding:16px; border-radius:var(--trade-radius-action); background:#f1ece5; overflow-wrap:anywhere; }
 .accountSummary p,.accountSummary > span { font-size:14px; color:#52645b; }
 .accountSummary p:last-child { margin-top:8px; }
 .details label,.details legend { font-weight:700; }
@@ -75,9 +75,9 @@
 .role > span { display:grid; gap:4px; }
 .role > span > span { font-size:14px; font-weight:400; color:#52645b; }
 .field { display:grid; gap:8px; }
-.field input,.field select { width:100%; min-width:0; min-height:48px; padding:12px; border:1px solid #52645b; border-radius:11px; background:#fff; }
+.field input,.field select { width:100%; min-width:0; min-height:48px; padding:12px; border:1px solid var(--trade-field-border); border-radius:var(--trade-radius-field); background:#fff; }
 .field p { color:#52645b; font-size:14px; }
-.details button { min-height:48px; border-radius:11px; padding:12px 16px; font-weight:700; }
+.details button { min-height:var(--trade-height-action); border-radius:11px; padding:12px 16px; font-weight:700; }
 .details button[type=submit] { background:#6cbd45; color:#0c251d; }
 .details button:disabled { opacity:.6; }
 .details a { text-decoration:underline; }
@@ -85,7 +85,7 @@
 .detailsNotice { background:#fff5d6; padding:12px; font-size:14px; }
 .detailsError { border-radius:11px; background:#fff0ef; padding:12px; color:#a12424; }
 @media (min-width:640px) {
-  .details { min-height:0; margin:32px auto; padding:32px; border:1px solid #cbd5ce; border-radius:16px; }
+  .details { min-height:0; margin:32px auto; padding:32px; border:1px solid #cbd5ce; border-radius:var(--trade-radius-category); box-shadow:var(--trade-shadow-category); }
   .roles { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .role { align-items:flex-start; }
 }

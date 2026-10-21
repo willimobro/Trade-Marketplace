@@ -3,7 +3,7 @@
 .screen h1 { overflow-wrap:anywhere; }
 .photoRow { display:flex; align-items:flex-start; gap:16px; }
 .photoPreview { flex-shrink:0; width:64px; height:64px; border-radius:50%; object-fit:cover; }
-.photoSelection { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px; padding:12px; border-radius:12px; background:#f1ece5; }
+.photoSelection { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:16px; padding:12px; border-radius:var(--trade-radius-action); background:#f1ece5; }
 .formSection { border-top:1px solid #cbd5ce; padding-top:24px; }
 @media (max-width:389px) {
   .photoRow { flex-direction:column; }
