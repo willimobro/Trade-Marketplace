@@ -21,3 +21,15 @@ Contrast from WCAG relative luminance: Forest on Hi-Vis 6.51:1; Forest on Amber 
 Evidence: task/evidence/orange-mode. Independent theme review should include route switching, all tradie categories, mobile pinned navigation, shared auth/admin exceptions, selected/hover/focus/disabled states, and ordinary customer regression. No account qualification, pricing, payment, database schema or authentication behavior changed.
 
 Final checks: 56 application tests, 8 preview-security tests, full lint and protected production build including TypeScript pass. Final production-build browser check confirms selected saved-job hover rgb(241,180,114), retaining Amber hue rather than reverting to Cream. Local disposable server stopped after verification. No unreviewed changes deployed.
+
+## Detail-action QA correction
+
+The focused review found three raw Leaf/Lime overrides in `jobs/[id]/detail.module.css`. They now use semantic action/signature tokens, including matching hover states. This preserves the existing customer Leaf/Lime distinction while giving tradies Hi-Vis estimate submission and Amber signature-style shortcut/message/completion controls. Disabled detail controls retain the existing neutral disabled treatment.
+
+Targeted browser computed-style regression at both 390 and 1440 pixels:
+- Tradie estimate shortcut: rgb(236,161,84); estimate submission: rgb(255,130,0).
+- Tradie message Send and completion: rgb(236,161,84).
+- Customer message Send: rgb(166,215,84), unchanged green.
+- All measured labels: Forest rgb(12,37,29).
+
+Evidence: `task/evidence/orange-detail-fix/computed-styles.json`. Completion was revealed by declining an open variation only in a fresh disposable SQLite fixture; no shared or hosted data changed. CSS audit found remaining raw greens only in intentional shared customer surfaces, default palette declarations and customer posting. JSX audit also found the deliberate green verified-status badge, which is a status indicator rather than a mode action, and preserved auth/sample artwork. Local QA server stopped after checks.
