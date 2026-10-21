@@ -166,12 +166,12 @@ export default async function JobPage({
 
         {/* Variations */}
         {job.variations.length > 0 && (isOwner || isAdmin || isAssigned) && (
-          <section className="space-y-3">
+          <section className={styles.variations}>
             <h2 className="text-lg font-bold">Variations</h2>
             {job.variations.map((v) => {
               const pay = v.payments[0];
               return (
-                <div key={v.id} className="card p-5">
+                <div key={v.id} className={`card ${styles.variationCard}`}>
                   <div className="flex flex-wrap items-center gap-2">
                     <StatusChip status={v.status} />
                     <span className="text-xs text-muted">{timeAgo(v.createdAt)} · {v.hoursRequested} extra hrs requested</span>
@@ -189,7 +189,7 @@ export default async function JobPage({
                     <p className="mt-2 text-xs text-muted">If you decline, the original job is finished as quoted (or made safe) and the extra isn&apos;t done.</p>
                   )}
                   {isAdmin && (v.status === "REQUESTED" || v.status === "PRICED") && (
-                    <div className="mt-4 border-t border-black/5 pt-4">
+                    <div className={styles.variationPricing}>
                       <PriceForm
                         action={priceVariation.bind(null, v.id)} rates={rates} applyMinimum={false}
                         initial={{ hours: v.hours ?? v.hoursRequested, materials: (v.materialsCents ?? 0) / 100 }}
@@ -234,14 +234,14 @@ export default async function JobPage({
             <p className="text-xs text-muted">
               {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, electrician and Trade Marketplace"}
             </p>
-            <div className="my-4 max-h-80 space-y-2 overflow-y-auto">
+            <div className={styles.messageList}>
               {job.messages.length === 0 && <p className="text-sm text-muted">No messages yet.</p>}
               {job.messages.map((m) => {
                 const mine = m.senderId === user.id;
                 const who = m.sender.role === "ADMIN" ? "Trade Marketplace" : m.sender.name.split(" ")[0];
                 return (
                   <div key={m.id} className={`flex ${mine ? "justify-end" : ""}`}>
-                    <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${mine ? "bg-lime text-forest" : m.sender.role === "ADMIN" ? "bg-forest text-white" : "bg-black/5"}`}>
+                    <div className={`${styles.messageBubble} text-sm ${mine ? "bg-lime text-forest" : m.sender.role === "ADMIN" ? "bg-forest text-white" : "bg-black/5"}`}>
                       {!mine && <p className="text-xs font-semibold">{who}</p>}
                       <p className="whitespace-pre-wrap break-words">{m.body}</p>
                       <p className="mt-0.5 text-xs">{timeAgo(m.createdAt)}</p>
@@ -389,7 +389,7 @@ export default async function JobPage({
                     Median: {median(job.estimates.map((e) => e.hours))} h · {formatNZD(median(job.estimates.map((e) => e.materialsCents)))}
                   </p>
                 )}
-                <div className="mt-4 border-t border-black/5 pt-4">
+                <div className={styles.variationPricing}>
                   <h3 className="mb-3 font-semibold">{job.status === "PRICED" ? "Re-price" : "Set the price"}</h3>
                   <PriceForm
                     action={priceJob.bind(null, job.id)} rates={settings} applyMinimum

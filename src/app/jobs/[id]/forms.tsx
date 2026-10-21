@@ -3,6 +3,7 @@
 import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef, useState, type ReactNode, type Ref } from "react";
 
 import Link from "next/link";
+import styles from "./detail.module.css";
 import { FormMessage } from "@/components/ui";
 import { formatNZD } from "@/lib/constants";
 import { priceWork, type Rates } from "@/lib/pricing";
@@ -17,7 +18,7 @@ function RetainedForm({ action, pending, children, className, ref }: {
   action: (data: FormData) => void; pending: boolean; children: ReactNode;
   className?: string; ref?: Ref<HTMLFormElement>;
 }) {
-  return <form ref={ref} className={className} aria-busy={pending} onSubmit={(event) => {
+  return <form ref={ref} className={`${styles.formStack} ${className ?? ""}`} aria-busy={pending} onSubmit={(event) => {
     event.preventDefault();
     if (pending) return;
     const data = new FormData(event.currentTarget);
@@ -76,7 +77,7 @@ export function EstimateForm({ action, existing }: { action: BoundAction; existi
   const [state, formAction, pending] = useActionState(action, undefined);
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className={styles.fieldGrid}>
         <HoursInput id="est-hours" label="Hours on site" defaultValue={existing?.hours} />
         <DollarInput id="est-mat" name="materials" label="Materials (cost, ex GST)" defaultValue={existing?.materials} />
       </div>
@@ -147,7 +148,7 @@ export function CocForm({ action }: { action: BoundAction }) {
   const [state, formAction, pending] = useActionState(action, undefined);
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className={styles.fieldGrid}>
         <div>
           <label className="label" htmlFor="coc-no">CoC number</label>
           <input className="input" id="coc-no" name="cocNumber" minLength={3} maxLength={40} required />
@@ -239,7 +240,7 @@ export function MessageForm({ action }: { action: BoundAction }) {
   useEffect(() => { if (state?.ok) ref.current?.reset(); }, [state]);
   return (
     <RetainedForm ref={ref} pending={pending} action={formAction} className="space-y-2">
-      <div className="flex gap-2">
+      <div className={styles.messageComposer}>
         <input className="input" name="body" maxLength={2000} placeholder="Write a message…" aria-label="Message" autoComplete="off" required />
         <SubmitButton className="btn-primary shrink-0" pending="…">Send</SubmitButton>
       </div>
@@ -261,17 +262,17 @@ function PricePreview({ hours, materials, rates, applyMinimum, note }: { hours: 
     [`GST ${rates.gstPct}%`, p.gstCents],
   ];
   return (
-    <div className="rounded-xl bg-paper p-3 text-sm">
+    <div className={`${styles.pricePreview} bg-paper text-sm`}>
       {rows.map(([l, c, cls]) => (
-        <div key={l} className={`flex justify-between ${cls ?? ""}`}><span>{l}</span><span className="tabular-nums">{formatNZD(c)}</span></div>
+        <div key={l} className={`${styles.priceRow} ${cls ?? ""}`}><span>{l}</span><span className="tabular-nums">{formatNZD(c)}</span></div>
       ))}
-      <div className="mt-2 flex justify-between border-t border-black/10 pt-2 font-bold">
+      <div className={`${styles.priceRow} mt-4 font-bold`}>
         <span>Customer pays</span><span className="tabular-nums">{formatNZD(p.totalCents)}</span>
       </div>
-      <div className="flex justify-between text-xs text-muted">
+      <div className={`${styles.priceRow} text-sm text-muted`}>
         <span>Tradie earns (incl. holiday pay)</span><span className="tabular-nums">{formatNZD(p.tradieTotalCents)}</span>
       </div>
-      <details className="mt-3 border-t border-black/10 pt-3">
+      <details className="mt-4">
         <summary className="cursor-pointer font-semibold">Customer price preview</summary>
         <p className="mt-2 text-muted">Unsaved preview — not sent to the customer. Review the job or variation scope above before submitting; this preview does not change that scope.</p>
         <p className="mt-2">Total including GST: <strong className="tabular-nums">{formatNZD(p.totalCents)}</strong></p>
@@ -292,7 +293,7 @@ export function PriceForm({ action, rates, applyMinimum, initial, submitLabel }:
   const [note, setNote] = useState("");
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className={styles.fieldGrid}>
         <HoursInput id={`${priceId}-hours`} defaultValue={initial?.hours || undefined} onChange={setHours} />
         <DollarInput id={`${priceId}-mat`} name="materials" label="Materials (ex GST)" defaultValue={initial?.materials} onChange={setMaterials} />
       </div>

@@ -1,0 +1,35 @@
+/* Admin is a current-business adaptation; no original admin screen exists.
+   Shared Trade UI/Display families respect the authorized web-font mapping. */
+.workspace { width:100%; min-width:0; margin:0 auto; padding:24px 16px; color:var(--trade-forest); font:400 16px/24px 'Trade UI',sans-serif; container:admin / inline-size; }
+.workspace *, .nav * { min-width:0; }
+.workspace :is(h1,h2,h3,p,a,button,summary,dt,dd,label,span) { overflow-wrap:anywhere; }
+.workspace h1 { font:900 32px/40px 'Trade Display',sans-serif; }
+.workspace h2,.workspace h3 { font-family:'Trade UI',sans-serif; line-height:1.4; }
+.workspace :is(input,select,textarea,button) { font-family:'Trade UI',sans-serif; max-width:100%; }
+.workspace :is(button,:global(.btn-primary),:global(.btn-ghost)) { white-space:normal; height:auto; text-align:center; line-height:20px; border-radius:var(--trade-radius-action); }
+.workspace :is(:global(.card),aside,details,form) { border-radius:var(--trade-radius-action); }
+.workspace :global(.chip) { white-space:normal; }
+.workspace fieldset { min-inline-size:0; }
+.workspace :global(.input) { width:100%; min-width:0; border-radius:var(--trade-radius-action); }
+.workspace summary { line-height:22px; }
+.workspace :focus-visible,.nav :focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
+.metricGrid,.queueGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px; }
+.queue { padding:16px; }
+.queueHeading { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; margin-bottom:16px; font-weight:700; }
+.queueRow { display:grid; gap:8px; padding:16px 0; border-radius:var(--trade-radius-action); font-size:14px; line-height:20px; }
+.queueRow:hover { background:var(--trade-paper); }
+.queueTitle { display:block; font-weight:700; overflow-wrap:anywhere; }
+.queueMeta { font-size:14px; color:#52645b; }
+.nav { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100%; font-family:'Trade UI',sans-serif; }
+.nav a { min-height:48px; border-radius:var(--trade-radius-action); padding:12px 8px; white-space:normal; text-align:center; line-height:20px; }
+.record { padding:16px; }
+.person { flex:1 1 100%; min-width:0; overflow-wrap:anywhere; }
+.breakText { overflow-wrap:anywhere; }
+.amounts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding:12px; border-radius:var(--trade-radius-action); background:var(--trade-paper); }
+.amounts dd { font-variant-numeric:tabular-nums; }
+.preview { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr)); gap:16px; }
+.review { width:100%; padding:16px; border:1px solid rgb(0 0 0 / 15%); border-radius:var(--trade-radius-action); background:var(--trade-paper); }
+.reviewButtons { display:grid; gap:8px; }
+.reviewButtons button { width:100%; }
+.exportButton { width:100%; white-space:normal; }
+@container admin (max-width:320px) { .amounts { grid-template-columns:minmax(0,1fr); } }

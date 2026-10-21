@@ -1,3 +1,4 @@
+import styles from "./admin.module.css";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { releaseOverdue } from "@/lib/jobs";
@@ -29,18 +30,18 @@ export default async function AdminPage() {
 
   type Row = { id: string; jobNumber: number; title: string; suburb: string; region: string; status: string; createdAt: Date; priceCents: number | null; _count: { estimates: number } };
   const Queue = ({ title, jobs, urgent, note }: { title: string; jobs: Row[]; urgent?: boolean; note?: (j: Row) => string }) => (
-    <section className="card overflow-hidden p-4 sm:p-6">
-      <h2 className="mb-4 flex items-center gap-2 font-bold">
+    <section className={`card ${styles.queue}`}>
+      <h2 className={styles.queueHeading}>
         {title}
         <span className={`chip ${jobs.length && urgent ? "bg-amber-100 text-amber-900" : "bg-black/10"}`}>{jobs.length}</span>
       </h2>
       {jobs.length ? (
         <div className="divide-y divide-black/10">
           {jobs.map((j) => (
-            <Link key={j.id} href={`/jobs/${j.id}`} className="flex min-h-16 flex-wrap items-center gap-3 rounded-xl py-4 text-sm hover:bg-paper">
+            <Link key={j.id} href={`/jobs/${j.id}`} className={styles.queueRow}>
               <span className="font-mono text-xs text-muted">{jobRef(j.jobNumber)}</span>
-              <span className="min-w-0 flex-1 font-semibold">{j.title}</span>
-              <span className="text-xs text-muted">{note ? note(j) : `${j.suburb} · ${timeAgo(j.createdAt)}`}</span>
+              <span className={styles.queueTitle}>{j.title}</span>
+              <span className={styles.queueMeta}>{note ? note(j) : `${j.suburb} · ${timeAgo(j.createdAt)}`}</span>
             </Link>
           ))}
         </div>
@@ -58,26 +59,26 @@ export default async function AdminPage() {
       </div>
 
       <p className="max-w-2xl text-muted">Review the scope and blind estimates, then set the customer’s fixed price. Each queue shows who needs to act next.</p>
-      <section aria-label="Next operational actions" className="grid gap-4 sm:grid-cols-3">
+      <section aria-label="Next operational actions" className={styles.metricGrid}>
         <a href="#admin-review" className="card block p-5 hover:bg-paper"><span className="text-3xl font-bold">{adminActions}</span><h2 className="mt-2 font-semibold">Job reviews</h2><p className="mt-2 text-sm text-muted">Set a fixed price, review extra work or investigate a cancellation.</p></a>
         <Link href="/admin/tradies" className="card block p-5 hover:bg-paper"><span className="text-3xl font-bold">{pendingTradies}</span><h2 className="mt-2 font-semibold">Licence checks</h2><p className="mt-2 text-sm text-muted">Review registration before updating verified status.</p></Link>
         <Link href="/admin/payouts" className="card block p-5 hover:bg-paper"><span className="text-3xl font-bold">{pendingPayouts._count}</span><h2 className="mt-2 font-semibold">Payroll records</h2><p className="mt-2 text-sm text-muted">Export and reconcile pending records outside the app.</p></Link>
       </section>
       <div id="admin-review" className="scroll-mt-24"><h2 className="text-xl font-bold">Needs an admin decision</h2><p className="mt-2 text-sm text-muted">Open a job to review its evidence and available actions. Counts are current at page load; these are not overdue or SLA alerts.</p></div>
-      <div className="grid items-start gap-6 lg:grid-cols-2">
+      <div className={styles.queueGrid}>
         <Queue title="Admin · Set fixed price" urgent jobs={toPrice} note={(j) => `${j._count.estimates} estimate${j._count.estimates === 1 ? "" : "s"} · ${timeAgo(j.createdAt)}`} />
-        <section className="card overflow-hidden p-4 sm:p-6">
-          <h2 className="mb-4 flex items-center gap-2 font-bold">
+        <section className={`card ${styles.queue}`}>
+          <h2 className={styles.queueHeading}>
             Admin · Price extra work
             <span className={`chip ${variations.length ? "bg-amber-100 text-amber-900" : "bg-black/10"}`}>{variations.length}</span>
           </h2>
           {variations.length ? (
             <div className="divide-y divide-black/10">
               {variations.map((v) => (
-                <Link key={v.id} href={`/jobs/${v.job.id}`} className="block rounded-xl py-4 text-sm hover:bg-paper">
-                  <div className="flex flex-wrap gap-3">
+                <Link key={v.id} href={`/jobs/${v.job.id}`} className={styles.queueRow}>
+                  <div className="grid gap-2">
                     <span className="font-mono text-xs text-muted">{jobRef(v.job.jobNumber)}</span>
-                    <span className="min-w-0 flex-1 font-semibold">{v.job.title}</span>
+                    <span className={styles.queueTitle}>{v.job.title}</span>
                     <span className="text-xs font-semibold text-red-700">{timeAgo(v.createdAt)} - sparky waiting</span>
                   </div>
                   <p className="mt-2 text-sm text-muted">{v.description}</p>
@@ -91,7 +92,7 @@ export default async function AdminPage() {
         <Queue title="Admin · Review cancellations" urgent jobs={cancels} />
       </div>
       <div><h2 className="text-xl font-bold">Waiting on customers & electricians</h2><p className="mt-2 text-sm text-muted">Monitor these stages. The next action belongs to the person named in each queue.</p></div>
-      <div className="grid items-start gap-6 lg:grid-cols-2">
+      <div className={styles.queueGrid}>
         <Queue title="Customer · Confirm completed work" jobs={signOff} />
         <Queue title="Customer · Review price & test payment" jobs={awaitingPay} note={(j) => formatNZD(j.priceCents ?? 0)} />
         <Queue title="Electrician · Claim available work" urgent jobs={bookable} note={(j) => `test payment recorded · ${j.region}`} />

@@ -1,5 +1,8 @@
 "use client";
 
+import styles from "./admin.module.css";
+
+
 import { useEffect, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -17,7 +20,7 @@ export function ConfirmAction({ action, label, description, confirmLabel, destru
   useEffect(() => { if (review) explanation.current?.focus(); }, [review]);
   if (!review) return <button ref={trigger} type="button" className="btn-ghost" onClick={() => setReview(true)}>{label}</button>;
   return (
-    <form action={async (form) => { await action(form); setReview(false); requestAnimationFrame(() => trigger.current?.focus()); }} className="w-full rounded-xl border border-black/15 bg-paper p-4">
+    <form action={async (form) => { await action(form); setReview(false); requestAnimationFrame(() => trigger.current?.focus()); }} className={styles.review}>
       <p ref={explanation} tabIndex={-1} className="mb-3 max-w-lg text-sm leading-6 text-ink">{description}</p>
       <ReviewControls confirmLabel={confirmLabel} destructive={destructive} onDismiss={() => { setReview(false); requestAnimationFrame(() => trigger.current?.focus()); }} />
     </form>
@@ -28,7 +31,7 @@ function ReviewControls({ confirmLabel, destructive, onDismiss }: { confirmLabel
   const { pending } = useFormStatus();
   return (
     <div>
-      <div className="flex flex-wrap gap-2">
+      <div className={styles.reviewButtons}>
         <SubmitButton className={destructive ? "btn-ghost text-red-800" : "btn-primary"} pending="Updating record…">{confirmLabel}</SubmitButton>
         <button type="button" className="btn-ghost" disabled={pending} aria-disabled={pending} onClick={onDismiss}>Keep unchanged</button>
       </div>

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { REGIONS } from "@/lib/constants";
 import styles from "@/app/jobs/jobs.module.css";
 
-export type DiscoveryJob = { id: string; jobNumber: number; title: string; description: string; region: string; suburb: string; status: string; cover?: string; detail: string };
+export type DiscoveryJob = { id: string; jobNumber: number; title: string; description: string; region: string; suburb: string; status: string; cover?: string; detail: string; payAmount?: string; hours?: number };
 export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery = "" }: { jobs: DiscoveryJob[]; defaultRegion: string; storageScope: string; initialQuery?: string }) {
   const [query, setQuery] = useState(initialQuery);
   const [region, setRegion] = useState(defaultRegion);
@@ -45,15 +45,19 @@ export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery =
     </section>
     <p role="status" aria-live="polite" className={styles.count}>{visible.length} open job{visible.length === 1 ? "" : "s"} shown{view !== "all" ? ` in ${view === "saved" ? "saved jobs" : "recently opened jobs"}` : ""}.</p>
     <div className={styles.grid}>{visible.map((job) => <article key={job.id} className={styles.card}>
-      <Link href={`/jobs/${job.id}`} onClick={() => store(saved, [job.id, ...recent.filter((id) => id !== job.id)].slice(0, 20))} className={styles.link}>
-        {job.cover && <div className={styles.photo}>
-          {failedPhotos.includes(job.cover) ? <span className="grid h-full place-items-center p-3 text-center text-sm">Photo unavailable</span> : <>
+      <Link href={`/jobs/${job.id}`} onClick={() => store(saved, [job.id, ...recent.filter((id) => id !== job.id)].slice(0, 20))} className={styles.link} aria-label={`${job.title}. ${job.suburb}, ${job.region}. ${job.status === "BOOKABLE" ? "Available to claim" : "Needs estimates"}${job.payAmount ? `. Gross pay ${job.payAmount}` : ""}. See full job details.`}>
+        <div className={styles.photo}>
+          {!job.cover || failedPhotos.includes(job.cover) ? <span className={styles.photoFallback}>{job.cover ? "Photo unavailable" : "No photo supplied"}</span> : <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={job.cover} alt="" onError={() => setFailedPhotos(current => current.includes(job.cover!) ? current : [...current, job.cover!])} />
           </>}
-        </div>}
+        </div>
         <div className={styles.meta}><span className={styles.number}>TM-{job.jobNumber}</span><span className={`${styles.status} ${job.status === "BOOKABLE" ? styles.claim : styles.estimate}`}>{job.status === "BOOKABLE" ? "Available to claim" : "Needs estimates"}</span></div>
-        <h2 className={styles.title}>{job.title}</h2><p className={styles.description}>{job.description}</p><p className={styles.location}>{job.suburb}, {job.region}</p><p className={styles.pay}>{job.detail}</p><span className={styles.view}>View job</span>
+        <h2 className={styles.title} title={job.title}>{job.title}</h2>
+        <p className={styles.location} title={`${job.suburb}, ${job.region}`}>{job.suburb}, {job.region}</p>
+        <p className={styles.description}>{job.description}</p>
+        <div className={styles.paySlot}>{job.payAmount ? <><span className={styles.payLabel}>Gross pay</span><strong className={styles.pay}>{job.payAmount}</strong><span className={styles.payNote}>{job.hours} hrs · before PAYE</span></> : <p className={styles.estimateNote}>{job.detail}</p>}</div>
+        <span className={styles.view}>See more <span aria-hidden="true">→</span></span>
       </Link>
       <div className={styles.saveRow}><button type="button" className={styles.button} aria-pressed={saved.includes(job.id)} aria-label={`${saved.includes(job.id) ? "Unsave" : "Save"} ${job.title}`} onClick={() => store(saved.includes(job.id) ? saved.filter((id) => id !== job.id) : [...saved, job.id].slice(-100), recent)}>{saved.includes(job.id) ? "Saved on this browser ✓" : "Save job"}</button></div>
     </article>)}</div>

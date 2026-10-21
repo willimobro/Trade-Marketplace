@@ -55,7 +55,9 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
       <JobDiscovery initialQuery={typeof sp.q === "string" ? sp.q.slice(0, 200) : ""} defaultRegion={region ?? ""} storageScope={user?.id ?? "guest"} jobs={[...bookable, ...review].map((job) => ({
         id: job.id, jobNumber: job.jobNumber, title: job.title, description: job.description,
         region: job.region, suburb: job.suburb, status: job.status, cover: job.photos[0]?.url,
-        detail: job.status === "BOOKABLE" ? `Gross pay ${formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents)} · ${job.hours ?? 0} hrs` : estimated.has(job.id) ? "Your private estimate is submitted" : "Provide a private estimate",
+        detail: job.status === "BOOKABLE" ? "Gross pay before PAYE" : estimated.has(job.id) ? "Your private estimate is submitted" : "Provide a private estimate",
+        payAmount: job.status === "BOOKABLE" ? formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents) : undefined,
+        hours: job.hours ?? 0,
       }))} />
     </div>
   );

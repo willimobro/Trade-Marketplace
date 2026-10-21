@@ -1,3 +1,4 @@
+import styles from "../admin.module.css";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { setLicence } from "@/app/actions/admin";
@@ -29,12 +30,12 @@ export default async function AdminTradiesPage() {
       </aside>
       <div className="mt-6 grid gap-4">
         {tradies.map((t) => (
-          <div key={t.id} className="card flex flex-wrap items-center gap-4 p-4 text-sm sm:p-6">
-            <div className="min-w-[min(100%,240px)] flex-1 break-words">
+          <div key={t.id} className={`card flex flex-wrap items-start gap-4 text-sm ${styles.record}`}>
+            <div className={styles.person}>
               <Link href={`/tradies/${t.id}`} className="font-semibold hover:underline">{t.name}</Link>
               <p className="text-xs text-muted">{t.email} · {t.phone ?? "no phone"} · {t.region} · joined {timeAgo(t.createdAt)} · {t._count.jobsAssigned} jobs</p>
             </div>
-            <p className="text-muted">Registration <span className="font-mono text-ink">{t.registrationNo || "Not supplied"}</span></p>
+            <p className="text-muted">Registration <span className={`font-mono text-ink ${styles.breakText}`}>{t.registrationNo || "Not supplied"}</span></p>
             <LicenceBadge verified={t.licenceVerified} />
             <details className="w-full rounded-xl border border-black/10 p-3">
               <summary className="cursor-pointer py-2 font-medium">Review checklist & record coverage</summary>

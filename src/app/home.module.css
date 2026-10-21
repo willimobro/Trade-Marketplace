@@ -1,40 +1,49 @@
-.wrapper { width:390px; margin:0 auto; color:#0c251d; background:white; }
-.screen { width:390px; position:relative; isolation:isolate; overflow:hidden; background:#fff; }
-.source { position:absolute; inset:0; pointer-events:none; }
-.source > svg { display:block; width:390px; max-width:none; }
-.hotspot { position:absolute; display:block; border:0; background:transparent; }
-.hotspot:focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
-.adaptation { padding:24px 16px; border-top:1px solid #afacac; font:400 14px/1.5 'Trade UI',sans-serif; }
-.adaptation h1 { margin:0 0 12px; font:700 18px/1.3 'Trade UI',sans-serif; }
-.adaptation p { margin:12px 0; }
-.adaptation nav { display:flex; flex-wrap:wrap; gap:8px 16px; }
-.adaptation a { padding:12px 0; text-decoration:underline; }
-.searchInput { position:absolute; height:17px; margin:0; padding:0; border:0; border-radius:0; background:transparent; color:white; font:400 14px/17px 'Trade UI',sans-serif; appearance:none; }
-.searchInput::placeholder { color:white; opacity:1; }
-.searchInput:focus-visible { outline:2px solid white; outline-offset:3px; }
-.searchSubmit { position:absolute; border:0; margin:0; padding:0; background:transparent; cursor:pointer; }
-
-/* At narrow widths the original art is a cropped decorative preview;
-   its live controls become readable normal-flow links and search. */
-@media (max-width:389px) {
-  .wrapper,.screen { width:100%; }
-  .screen { height:auto !important; display:flex; flex-direction:column; }
-  .source { position:relative; inset:auto; height:277px; overflow:hidden; }
-  .screen form { display:flex; gap:8px; padding:16px; background:#0c251d; }
-  .searchInput { position:static; width:auto !important; height:39px; flex:1; min-width:0; padding:8px; border:1px solid white; border-radius:11px; }
-  .searchSubmit { position:static; width:auto !important; height:39px !important; padding:8px 12px; border-radius:11px; background:#6cbd45; color:#0c251d; font:700 14px/19px 'Trade UI',sans-serif; }
-  .searchSubmit::after { content:'Search'; }
-  .hotspot { position:static; width:auto !important; height:auto !important; min-height:44px; margin:4px 16px; padding:12px; border:1px solid #6cbd45; border-radius:11px; font:400 14px/20px 'Trade UI',sans-serif; overflow-wrap:anywhere; }
-  .hotspot::after { content:attr(aria-label); }
-  .hotspot[aria-disabled=true] { border-color:#bbb; color:#52645b; }
-  .adaptation { overflow-wrap:anywhere; }
-}
-
-.sourceNav { position:absolute; left:0; top:780px; width:390px; height:64px; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); z-index:2; }
-.sourceNav a { display:block; min-width:0; height:64px; }
-.sourceNav a:focus-visible { outline:2px solid #2163c6; outline-offset:-3px; }
-@media (max-width:389px) {
-  .sourceNav { position:static; width:100%; height:auto; background:#fff; border-top:1px solid #898989; }
-  .sourceNav a { height:auto; min-height:64px; display:flex; align-items:center; justify-content:center; font:400 12px/18px 'Trade UI',sans-serif; }
-  .sourceNav a::after { content:attr(aria-label); }
-}
+/* Original31:15:390px canvas, header277; category top153/card159×162;
+   Suggested heading332/cards370 &544; Recently Viewed heading724.
+   Native overflow, pinned navigation and 320px reflow are interaction adaptations. */
+.wrapper { width:min(390px,100%); margin:0 auto; color:var(--trade-forest); background:white; min-height:100dvh; padding-bottom:calc(80px + env(safe-area-inset-bottom)); font:400 14px/19px 'Trade UI',sans-serif; }
+.header { position:relative; height:153px; background:var(--trade-forest); color:white; }
+.header::after { content:''; position:absolute; top:153px; height:124px; left:0; right:0; background:var(--trade-forest); }
+.header h1 { position:absolute; left:16px; top:114px; margin:0; font:900 24px/29px 'Trade Display',sans-serif; font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.menuButton,.post { position:absolute; display:grid; place-items:center; border:0; background:transparent; color:white; width:44px; height:44px; top:28px; }
+.menuButton { left:16px; } .post {right:15px;}
+.searchForm { position:absolute; left:101px; top:30px; width:195px; height:39px; display:flex; align-items:center; border:1px solid #ffffff4d; border-radius:var(--trade-radius-action); }
+.searchForm button { display:grid; place-items:center; width:40px; height:37px; flex:none; padding:0; border:0; color:white; background:none; }
+.searchForm input { min-width:0; width:100%; height:37px; padding:0 8px 0 0; margin:0; border:0; background:transparent; color:white; font:400 14px/19px 'Trade UI',sans-serif; }
+.searchForm input::placeholder { color:white; opacity:1; }
+.content {position:relative;}
+.strip { display:flex; gap:12px; overflow-x:auto; overflow-y:hidden; padding:0 15px 6px; scrollbar-width:none; scroll-snap-type:x proximity; scroll-padding-left:15px; overscroll-behavior-x:contain; }
+.strip::-webkit-scrollbar {display:none;}
+.column {display:flex;flex:0 0 159px;flex-direction:column;gap:12px;scroll-snap-align:start;}
+.categories {height:179px;align-items:flex-start;}
+.category {position:relative;display:block;flex:0 0 159px;height:162px;border-radius:var(--trade-radius-action);background:white;box-shadow:0 4px 4px #00000040;scroll-snap-align:start;color:var(--trade-forest);text-decoration:none;}
+.categoryTint {position:absolute;width:92px;height:92px;left:38px;top:16px;border-radius:var(--trade-radius-action);}
+.electrical {background:rgb(0 94% 100% / 30%);} .construction {background:rgb(87.0833% 78.375% 0% / 30%);} .plumbing {background:rgb(62.9167% 22.65% 0% / 30%);}
+.category img {position:absolute;max-width:none;object-fit:contain;}
+.multimeter {left:24px;top:11px;width:108px;height:108px;} .staple {left:28px;top:0;width:92px;height:123px;} .pipe {left:18px;top:3px;width:123px;height:123px;}
+.categoryLabel {position:absolute;left:16px;right:16px;top:124px;text-align:center;font-size:14px;line-height:16px;}
+.categoryLabel strong,.categoryLabel span {display:block;} .categoryLabel span {color:#898989;}
+.heading {height:38px;display:flex;align-items:flex-start;justify-content:space-between;padding:0 16px;gap:6px;}
+.heading h2,.searchTitle {margin:0;font:900 24px/29px 'Trade Display',sans-serif;font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900;white-space:nowrap;}
+.heading a {margin-top:6px;flex:none;font-size:14px;color:#52645b;text-decoration:none;min-height:32px;}
+.jobCard {position:relative;display:block;width:159px;height:162px;flex:none;overflow:hidden;border-radius:var(--trade-radius-action);box-shadow:0 4px 4px #00000040;color:white;scroll-snap-align:start;}
+.jobCard img {display:block;width:100%;height:100%;object-fit:cover;}
+.jobCard::after {content:'';position:absolute;inset:0;background:linear-gradient(transparent,#00000080);}
+.caption {position:absolute;z-index:1;left:8px;right:8px;bottom:13px;font:900 14px/17px 'Trade Display',sans-serif;font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900;}
+.caption span,.caption strong {display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.example {position:absolute;z-index:1;left:8px;top:8px;padding:2px 5px;border-radius:4px;background:#0c251dcc;font:400 10px/14px 'Trade UI',sans-serif;}
+.twoRows {height:348px;}
+.recent {margin-top:6px;}
+.verticalCards {display:grid;grid-template-columns:repeat(2,159px);gap:12px;padding:0 15px 12px;}
+.bottomNav {position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(390px,100%);min-height:64px;padding-bottom:env(safe-area-inset-bottom);display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:white;border-top:1px solid #0000004d;box-shadow:0 4px 4px #00000040;}
+.bottomNav a {display:flex;min-height:64px;min-width:0;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:14px;gap:3px;color:#898989;font:400 10px/12px 'Trade UI',sans-serif;text-decoration:none;}
+.bottomNav a[aria-current=page] {color:var(--trade-forest);font-weight:700;}
+.searchHeader {height:64px;} .searchHeader::after {display:none;} .searchHeader .searchForm {left:64px;top:10px;width:calc(100% - 128px);} .searchHeader .menuButton,.searchHeader .post {top:8px;}
+.searchTitle {padding:7px 16px 0;white-space:normal;}
+.searchContext {margin:6px 16px 12px;font-size:12px;color:#52645b;}
+.searchGroup {margin-bottom:28px;}
+.queryHeading {display:flex;justify-content:space-between;gap:8px;padding:0 16px 10px;}.queryHeading a {color:#52645b;text-decoration:underline;}
+.menu {margin:auto;width:min(350px,calc(100vw - 32px));padding:20px;border:1px solid var(--trade-field-border);border-radius:var(--trade-radius-action);background:white;color:var(--trade-forest);}
+.menu::backdrop {background:#0008;}.menuHeading {display:flex;align-items:center;justify-content:space-between;gap:12px;}.menuHeading h2 {font-size:18px;margin:0;}.menuHeading button {display:grid;place-items:center;width:44px;height:44px;background:none;border:0;}.menu nav {display:flex;flex-direction:column;}.menu nav a {padding:14px 0;border-bottom:1px solid #eee;}
+.wrapper :focus-visible {outline:2px solid #2163c6;outline-offset:-2px;}
+@media(max-width:360px) {.searchForm {left:70px;width:calc(100% - 132px);}.heading h2 {font-size:20px;}.verticalCards {grid-template-columns:repeat(2,minmax(0,1fr));}.verticalCards .jobCard {width:100%;}.caption {font-size:12px;}.heading {padding-inline:15px;}}

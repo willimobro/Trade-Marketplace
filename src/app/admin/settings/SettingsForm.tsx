@@ -1,5 +1,8 @@
 "use client";
 
+import styles from "../admin.module.css";
+
+
 import { useActionState, useState } from "react";
 import { updateSettings } from "@/app/actions/admin";
 import { SubmitButton } from "@/components/SubmitButton";
@@ -33,7 +36,7 @@ export function SettingsForm({ settings }: { settings: S }) {
   const h = hourlyView({ ...v, tradieRateCents: Math.round(v.tradieRate * 100) });
 
   return (
-    <form action={action} aria-busy={pending} className="card mt-6 space-y-6 p-4 sm:p-6">
+    <form action={action} aria-busy={pending} className={`card mt-6 space-y-6 ${styles.record}`}>
       <fieldset disabled={pending} className="space-y-6">
       <legend className="sr-only">Pricing and release settings</legend>
       {FIELDS.map(([key, label, step, help]) => (
@@ -49,14 +52,14 @@ export function SettingsForm({ settings }: { settings: S }) {
       </fieldset>
       <section aria-label="Hourly pricing preview" className="rounded-xl bg-paper p-4">
         <h2 className="font-bold">Hourly pricing preview</h2><p className="mb-4 mt-1 text-sm text-muted">Illustrative hour of labour. Excludes materials and minimum-job adjustments. Save to apply changes.</p>
-        {validPreview ? <div className="grid gap-4 text-sm sm:grid-cols-3">
+        {validPreview ? <div className={styles.preview}>
         <div><p className="text-xs text-muted">Gross + holiday pay</p><p className="font-bold text-leaf-dark">{formatNZD(h.tradiePerHourCents)}/hr</p></div>
         <div><p className="text-xs text-muted">Platform markup</p><p className="font-bold">{formatNZD(h.tmPerHourCents)}/hr</p></div>
         <div><p className="text-xs text-muted">Customer hourly price</p><p className="font-bold">{formatNZD(h.customerPerHourCents)}/hr</p></div>
       </div> : <p className="text-sm text-muted">Enter valid rates to see the preview. On-costs must include the holiday-pay percentage.</p>}
       </section>
       <FormMessage state={state} />
-      <SubmitButton>Save rates</SubmitButton>
+      <SubmitButton pending="Saving rates…">Save rates</SubmitButton>
       <p role="status" className="sr-only">{pending ? "Saving settings. Fields are temporarily unavailable." : ""}</p>
     </form>
   );

@@ -1,3 +1,4 @@
+import styles from "../admin.module.css";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { markPayoutPaid } from "@/app/actions/admin";
@@ -29,16 +30,16 @@ export default async function AdminPayoutsPage() {
       <h2 className="text-xl font-bold">Record detail & reconciliation</h2>
       <div className="grid gap-4">
         {payouts.map((p) => (
-          <article key={p.id} className="card space-y-4 p-4 sm:p-6">
+          <article key={p.id} className={`card space-y-4 ${styles.record}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0 break-words">
+              <div className={styles.person}>
                 <h2 className="font-bold">{p.tradie.name}</h2>
                 <p className="text-sm text-muted">{p.tradie.email}</p>
                 <Link href={`/jobs/${p.job.id}`} className="mt-2 inline-block py-2 font-medium underline underline-offset-4">{jobRef(p.job.jobNumber)} · {p.job.title}</Link>
               </div>
               <StatusChip status={p.status} />
             </div>
-            <dl className="grid grid-cols-2 gap-4 rounded-xl bg-paper p-4 text-sm sm:grid-cols-4">
+            <dl className={styles.amounts}>
               <div><dt className="text-muted">Hours</dt><dd className="mt-1 font-semibold tabular-nums">{p.hours}</dd></div>
               <div><dt className="text-muted">Gross pay</dt><dd className="mt-1 font-semibold tabular-nums">{formatNZD(p.grossCents)}</dd></div>
               <div><dt className="text-muted">Holiday pay</dt><dd className="mt-1 font-semibold tabular-nums">{formatNZD(p.holidayPayCents)}</dd></div>

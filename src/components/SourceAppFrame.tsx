@@ -32,7 +32,6 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
   return <div className={styles.frame}>
     <a href="#main-content" className="skip-link">Skip to main content</a>
     <header className={styles.header}><Link href={role === "ADMIN" ? "/admin" : role ? "/dashboard" : "/"} aria-label="Back to workspace" className={styles.back}>←</Link><p className={styles.title}>{title}</p></header>
-    <p className={styles.disclosure}>Development preview · Payments are simulated. No money is charged.</p>
     {fontsUnavailable && <p role="status" className={styles.notice}>The web font could not load. Fallback text is displayed.</p>}
     <main id="main-content" tabIndex={-1} className={styles.content}>{children}</main>
     <nav aria-label="Workspace utilities" className={styles.utilities}>

@@ -1,5 +1,8 @@
 "use client";
 
+import styles from "../admin.module.css";
+
+
 import { useRef, useState } from "react";
 
 export function PayrollExport({ count, total }: { count: number; total: string }) {
@@ -38,7 +41,7 @@ export function PayrollExport({ count, total }: { count: number; total: string }
   }
 
   return (
-    <section className="card space-y-4 p-4 sm:p-6" aria-labelledby="export-heading">
+    <section className={`card space-y-4 ${styles.record}`} aria-labelledby="export-heading">
       <div>
         <h2 id="export-heading" className="text-lg font-bold">Review pending export</h2>
         <p className="mt-2 text-sm text-muted">This page shows {count} pending record{count === 1 ? "" : "s"}, totalling {total} before deductions. The CSV includes the latest pending records at download time, which may differ if another admin updates a record.</p>
@@ -52,7 +55,7 @@ export function PayrollExport({ count, total }: { count: number; total: string }
           <li>Reconcile payment outside this app, then review each record before marking it paid.</li>
         </ol>
       </details>
-      <button type="button" onClick={download} disabled={pending || count === 0} aria-busy={pending} className="btn-primary">{pending ? "Preparing CSV…" : "Download pending records (CSV)"}</button>
+      <button type="button" onClick={download} disabled={pending || count === 0} aria-busy={pending} className={`btn-primary ${styles.exportButton}`}>{pending ? "Preparing CSV…" : "Download pending records (CSV)"}</button>
       {count === 0 && <p className="text-sm text-muted">There are no pending records to export. Paid records remain below for review.</p>}
       {error && <p role="alert" className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-900">{error}</p>}
       <p role="status" className="text-sm text-muted">{message}</p>
