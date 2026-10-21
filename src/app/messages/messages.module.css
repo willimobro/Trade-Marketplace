@@ -1,16 +1,28 @@
-/* Keep messages as existing job-thread links, not a separate chat client. */
+.screen { font-family: var(--trade-font-body); overflow-wrap: anywhere; }
+.list { display: grid; gap: 12px; margin: 28px 0 0; padding: 0; list-style: none; }
+.conversation { position: relative; min-width: 0; border: 1px solid var(--color-border); border-radius: var(--trade-radius-category); background: var(--trade-surface); box-shadow: var(--trade-shadow-category); transition: border-color 150ms; }
+.conversation:hover { border-color: var(--trade-forest); }
+.open { display: flex; align-items: center; gap: 14px; min-width: 0; min-height: 112px; padding: 18px; border-radius: inherit; color: inherit; text-decoration: none; }
+.photo { display: grid; place-items: center; flex: 0 0 60px; width: 60px; height: 60px; overflow: hidden; border-radius: 50%; background: var(--trade-paper); color: var(--trade-source-muted); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.content { display: block; flex: 1; min-width: 0; }
+.title { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-family: var(--trade-font-heading); font-size: var(--trade-size-section); font-weight: 600; font-variation-settings: 'wdth' 151, 'opsz' 28; line-height: 1.3; }
+.preview { display: block; overflow: hidden; margin-top: 5px; color: var(--trade-source-muted); font-size: 14px; font-weight: 400; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.reference { display: block; margin-top: 5px; color: var(--trade-source-muted); font-size: 11px; line-height: 1.4; }
+.read .title { color: var(--trade-source-muted); }
+.unread .title { color: var(--trade-forest); font-weight: 900; }
+.indicator { display: flex; flex: 0 0 16px; flex-direction: column; align-items: center; gap: 6px; align-self: center; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--trade-forest); }
+.chevron { color: var(--trade-source-muted); font-size: 25px; font-weight: 400; line-height: 1; }
+.markRead { display: block; min-height: 44px; margin: -8px 14px 8px auto; padding: 8px 4px; border: 0; border-radius: var(--trade-radius-action); background: transparent; color: var(--trade-forest); font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.localNote { margin: 16px 0 0; color: var(--trade-source-muted); font-size: 12px; line-height: 1.5; }
+.screen :is(a, button):focus-visible { outline: 2px solid var(--trade-focus); outline-offset: 4px; }
+@media (max-width: 380px) { .open { gap: 10px; padding: 14px; } .photo { flex-basis: 50px; width: 50px; height: 50px; } .title { font-size: var(--trade-size-body); } }
 @media (min-width: 1024px) {
   .screen { width: min(960px, calc(100% - 64px)); padding: 40px 32px 64px; margin: 0 auto; }
-  .list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
-  .list > * { margin-top: 0; }
-  .conversation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(160px, 220px); column-gap: 24px; min-width: 0; padding: 24px; overflow-wrap: anywhere; }
-  .conversation > div:first-child { grid-column: 2; grid-row: 1 / 4; flex-direction: column; align-items: flex-end; justify-content: flex-start; }
-  .conversation > h2, .conversation > p, .conversation > span { grid-column: 1; }
-  .conversation > h2 { grid-row: 1; margin-top: 0; }
-  .conversation > p { grid-row: 2; }
-  .conversation > span { grid-row: 3; }
-  .conversation h2 { font-size: 20px; line-height: 1.4; }
-  .conversation p { max-width: 75ch; font-size: 16px; line-height: 1.5; }
-  .conversation:focus-visible { outline: 2px solid var(--trade-focus); outline-offset: 4px; }
+  .list { gap: 14px; }
+  .open { gap: 18px; min-height: 116px; padding: 20px 24px; }
+  .photo { flex-basis: 64px; width: 64px; height: 64px; }
+  .title { font-size: var(--trade-size-name); }
   .screen :is(a, button, [tabindex]) { scroll-margin-top: 112px; }
 }

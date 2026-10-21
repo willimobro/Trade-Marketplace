@@ -20,7 +20,7 @@ export default async function NewJobPage() {
     <div className={styles.screen}>
       <header className={styles.header}><Link href="/dashboard" className={styles.back} aria-label="Back to your jobs">←</Link><h1 className={styles.heading}>List a job</h1></header>
       <p className={styles.intro}>
-        Describe your job and add photos. Tradies provide private estimates, then Trade Marketplace reviews them and sets one fixed price for you.
+        Add your job details and photos to get a fixed price.
       </p>
       <JobForm key={user.id} userId={user.id} defaultRegion={user.region} />
     </div>

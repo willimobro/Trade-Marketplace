@@ -48,7 +48,7 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
         if (input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement || input instanceof HTMLSelectElement) input.value = draft.fields[name];
       }
       if (draft.reviewed) setReview(draft.fields);
-      setDraftNotice(`Your text draft was restored for this account. Photos cannot survive sign-in navigation: ${draft.reviewed ? "use Edit details to reattach them" : "reattach them below"} before submitting.`);
+      setDraftNotice(`Draft restored. ${draft.reviewed ? "Use Edit details to reattach your photos." : "Reattach your photos below."}`);
     } catch { setStorageUnavailable(true); }
   }, [userId]);
   const reviewHeading = useRef<HTMLHeadingElement>(null);
@@ -84,20 +84,10 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
       persist(true, true);
       startTransition(() => action(data));
     }}>
-      <p className="text-sm text-muted">Text details, including your address, are saved only in this browser tab for this account for up to 24 hours. Photos are not saved. The draft is cleared after successful posting.</p>
+      <p className={styles.step} role="status">{review ? "Step 2 of 2 · Review your job" : "Step 1 of 2 · Tell us what needs doing"}</p>
       {draftNotice && <p role="status" className={styles.fontNotice}>{draftNotice}</p>}
       {storageUnavailable && <p role="alert" className={styles.fontNotice}>This browser cannot save your draft. Keep a copy of your text before leaving or signing in again.</p>}
-      <button type="button" className={styles.edit} disabled={pending} onClick={() => {
-        try { clearJobDraft(userId); } catch { setStorageUnavailable(true); }
-        formRef.current?.reset();
-        const photos = formRef.current?.elements.namedItem("photos");
-        if (photos instanceof HTMLInputElement) photos.setCustomValidity("");
-        setFileError(""); setPreviews([]); returnToDetails.current = true; setReview(null);
-        setDraftNotice("Draft discarded. Start a new job below.");
-        titleInput.current?.focus();
-      }}>Discard saved draft</button>
       {fontsUnavailable && <p role="status" className={styles.fontNotice}>The web font could not load. Fallback text is displayed.</p>}
-      <p className="text-sm font-medium text-muted" role="status">{review ? "Step 2 of 2 · Review your job" : "Step 1 of 2 · Tell us what needs doing"}</p>
       <fieldset disabled={pending} className={review ? "hidden" : "contents"}>
       <div>
         <label className="label" htmlFor="title">Job title</label>
@@ -109,7 +99,6 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
         <select className={styles.input} id="category" name="category" defaultValue="Electrical" required>
           {CATEGORY_NAMES.map(category => <option key={category} value={category}>{category}</option>)}
         </select>
-        <p className="mt-1 text-xs text-muted">Choose the trade needed for this job. Plumbing, Gas Fitting and Construction verification and completion requirements are still being configured; those jobs can be posted for review but cannot yet be estimated, claimed or completed here.</p>
       </div>
 
       <div>
@@ -141,11 +130,11 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
       <div>
         <label className="label" htmlFor="address">Street address</label>
         <input className={styles.input} id="address" name="address" minLength={5} maxLength={120} autoComplete="street-address" placeholder="e.g. 3 Maltby Street" required />
-        <p className="mt-1 text-xs text-muted">Visible to you, Trade Marketplace administrators and the assigned tradie. Other tradies see only your suburb and region.</p>
+        <p className={styles.helper}>Shared with Trade Marketplace and your assigned tradie.</p>
       </div>
 
       <div>
-        <label className="label" htmlFor="photos">Photos <span className="font-normal text-muted">(at least 1, up to 6 - switchboard, the area, anything relevant)</span></label>
+        <label className="label" htmlFor="photos">Photos</label>
         <input
           className={styles.input}
           id="photos"
@@ -161,7 +150,7 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
             setPreviews(files.slice(0, 6).map((f) => URL.createObjectURL(f)));
           }}
         />
-        <p id="photo-rules" className="mt-2 text-sm text-muted">JPG, PNG or WebP, up to 5 MiB per photo.</p>
+        <p id="photo-rules" className={styles.helper}>1–6 photos · JPG, PNG or WebP · Max 5 MiB each.</p>
         <p id="photo-error" role="alert" className="text-sm text-red-700">{fileError}</p>
         {previews.length > 0 && (
           <div className={styles.previews}>
@@ -179,12 +168,28 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
         <p className="whitespace-pre-wrap break-words">{review.description}</p>
         <p>{review.address}, {review.suburb}, {review.region}</p>
         <p className="text-sm text-muted">{previews.length} photo{previews.length === 1 ? "" : "s"} attached · {review.category}</p>
-        <div className="rounded-xl bg-paper p-4 text-sm">{review.category !== "Electrical" && <p className="mb-2 font-semibold">{review.category} requirements are pending. This job can be saved for review; estimating, claiming and completion are not yet available for this trade.</p>}Tradies provide private estimates. Trade Marketplace reviews these and sets your fixed price. Posting does not book a tradie or take a payment.</div>
+        {review.category !== "Electrical" && <p className={styles.helper}>{review.category} pricing is pending. Your job will be saved for review.</p>}
+        <p className={styles.helper}>No booking or payment is made when you post.</p>
         <button type="button" className={styles.edit} disabled={pending} onClick={() => { persist(false); returnToDetails.current = true; setReview(null); }}>Edit details</button>
       </section>}
       <FormMessage state={state} />
       <button type="submit" className={styles.publish} disabled={pending || !!fileError || (!!review && previews.length === 0)}>{pending ? "Submitting job…" : review ? "Submit job for pricing" : "Review job"}</button>
       <p role="status" className="sr-only">{pending ? "Submitting your job. Please wait." : ""}</p>
+      <details className={styles.policyDetails}>
+        <summary>Draft &amp; pricing details</summary>
+        <p>Text details, including your address, are saved in this browser tab for this account for up to 24 hours. Photos are not saved. The draft clears after successful posting.</p>
+        <p>Tradies provide private estimates. Trade Marketplace reviews them and sets your fixed price. Posting does not book a tradie or take a payment.</p>
+        <p>Plumbing, Gas Fitting and Construction requirements are being configured. These jobs can be posted for review, but cannot yet be estimated, claimed or completed here.</p>
+        <button type="button" className={styles.discard} disabled={pending} onClick={() => {
+          try { clearJobDraft(userId); } catch { setStorageUnavailable(true); }
+          formRef.current?.reset();
+          const photos = formRef.current?.elements.namedItem("photos");
+          if (photos instanceof HTMLInputElement) photos.setCustomValidity("");
+          setFileError(""); setPreviews([]); returnToDetails.current = true; setReview(null);
+          setDraftNotice("Draft discarded. Start a new job above.");
+          titleInput.current?.focus();
+        }}>Discard saved draft</button>
+      </details>
     </form>
   );
 }

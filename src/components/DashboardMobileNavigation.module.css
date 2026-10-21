@@ -1,0 +1,5 @@
+.navigation { position:fixed; z-index:30; bottom:0; left:0; right:0; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); min-height:64px; padding-bottom:env(safe-area-inset-bottom); background:white; border-top:1px solid rgb(0 0 0 / 30%); box-shadow:var(--trade-shadow-header); }
+.navigation a { display:flex; align-items:flex-start; justify-content:center; padding-top:14px; min-height:64px; color:#898989; }
+.navigation a[aria-current='page'] { color:var(--trade-forest); }
+.navigation a:focus-visible { outline:3px solid var(--trade-focus); outline-offset:-3px; }
+@media(min-width:1024px) { .navigation { display:none; } }

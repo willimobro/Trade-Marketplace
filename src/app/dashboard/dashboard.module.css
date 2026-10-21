@@ -88,3 +88,38 @@
 
 .primary:hover { background:var(--trade-action-hover); }
 .secondary:hover { background:var(--trade-paper); }
+
+/* Customer jobs keep the photo, stage and next action together in one card. */
+.customerPage { background:var(--trade-paper); }
+.customerHeader { display:flex; flex-wrap:wrap; align-items:center; gap:12px; min-height:0; padding:0 20px 24px; }
+.customerHeader .nav { flex-basis:100%; margin:0 -8px; }
+.customerHeader > div { flex:1 1 130px; min-width:0; }
+.customerHeader .heading { margin-bottom:0; }
+.customerHeader .actions { flex:0 0 auto; min-height:44px; gap:10px; margin-top:0; padding:12px; }
+.customerSection { margin:24px 16px 0; }
+.customerFilter { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px 12px; align-items:end; margin-bottom:20px; }
+.customerFilter > div { min-width:0; }
+.customerFilter label { margin-bottom:6px; font-size:13px; }
+.customerFilter select { min-height:44px; }
+.customerFilter .secondary { min-height:44px; padding:10px 14px; }
+.jobCount { grid-column:1/-1; color:#52645b; font:400 13px/18px 'Trade UI',sans-serif; }
+.customerJobs { display:grid; gap:24px; }
+@media(min-width:1024px) {
+  .customerHeader { padding:24px 32px; }
+  .customerHeader > div:not(.actions) { flex:1 1 320px; }
+  .customerSection { margin:24px 0 0; }
+  .customerFilter { grid-template-columns:minmax(200px,280px) auto 1fr; align-items:end; gap:16px; }
+  .customerFilter > div { min-width:0; }
+  .customerFilter .jobCount { grid-column:auto; justify-self:end; padding-bottom:12px; }
+  .customerJobs { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+}
+
+.existingWorkspace { margin-top:32px; border-top:1px solid #cbd5ce; padding-top:16px; }
+.existingWorkspace > summary { min-height:48px; cursor:pointer; color:var(--trade-link); font-weight:700; padding:12px 0; }
+.existingWorkspace[open] > summary { margin-bottom:16px; }
+
+@media(max-width:1023px) { .page { padding-bottom:calc(96px + env(safe-area-inset-bottom)); } .page :is(a,button,input,textarea,select) { scroll-margin-bottom:calc(96px + env(safe-area-inset-bottom)); } }
+
+.quoteHeader { min-height:0; padding-bottom:24px; }
+.quoteHeader .heading { margin-bottom:8px; }
+.quoteHeader .nav { margin-bottom:8px; }

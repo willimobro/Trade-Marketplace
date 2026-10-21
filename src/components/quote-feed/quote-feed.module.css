@@ -1,0 +1,248 @@
+.workspace { --quote-ink:var(--trade-forest,#0c251d); --quote-muted:#52645b; color:var(--quote-ink); font:400 14px/1.45 var(--trade-font-body,'Trade UI',sans-serif); padding:0 0 28px; min-width:0; }
+.workspace button,.workspace input,.workspace textarea,.workspace select { font-family:inherit; }
+.workspace button { cursor:pointer; }
+.workspace button:disabled { cursor:not-allowed; opacity:.5; }
+.workspace button,.workspace select { min-height:44px; }
+.workspace button:focus-visible,.workspace input:focus-visible,.workspace select:focus-visible,.workspace textarea:focus-visible { outline:3px solid var(--trade-focus,#2163c6); outline-offset:4px; }
+.demoLine { display:flex; align-items:center; gap:7px; color:var(--quote-muted); font-size:10px; font-weight:700; letter-spacing:.08em; margin:0 0 11px; }
+.demoLine > span:last-child { margin-left:auto; font-size:11px; letter-spacing:0; font-weight:400; }
+.demoDot { width:6px; height:6px; border-radius:50%; background:var(--trade-action); }
+.pointsPanel { display:flex; align-items:center; gap:24px; flex-wrap:wrap; padding:26px 28px; background:var(--quote-ink); border-radius:11px; color:white; }
+.pointsBalance { display:flex; align-items:center; gap:16px; flex:0 0 auto; }
+.bigCoin { color:var(--trade-action); width:58px; height:58px; border:1px solid #ffffff26; background:#ffffff08; border-radius:50%; display:grid; place-items:center; }
+.pointsLabel { font-size:12px; color:#c8d4cc; }
+.pointsBalance p { display:flex; align-items:baseline; gap:8px; margin:0; }
+.pointsBalance strong { font-family:var(--trade-font-heading); font-weight:900; font-size:42px; line-height:1.14; font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.pointsBalance p > span { font-size:14px; }
+.pointsMessage { flex:1; min-width:170px; padding-left:24px; border-left:1px solid #ffffff26; }
+.pointsMessage strong { font-weight:700; font-size:14px; }
+.pointsMessage p { margin:5px 0 0; color:#c8d4cc; font-size:12px; }
+.primary,.secondary { display:inline-flex; align-items:center; justify-content:center; gap:16px; min-height:55px!important; padding:14px 20px; border:0; border-radius:var(--trade-radius-action,11px); font-size:14px; font-weight:700; line-height:19px; text-align:center; text-decoration:none; }
+.primary { background:var(--trade-action); color:var(--quote-ink); box-shadow:var(--trade-shadow-action); }
+.primary:hover:not(:disabled) { background:var(--trade-action-hover); }
+.secondary { background:white; border:1px solid #cbd5ce; color:var(--quote-ink); }
+.secondary:hover:not(:disabled) { background:var(--trade-paper); }
+.pointsPanel > .primary { background:#ffffff0d; color:white; border:1px solid #ffffff36; box-shadow:none; }
+.pointsPanel > .primary:hover { background:#ffffff1a; }
+.pointsPanel > .primary svg { color:var(--trade-action); }
+.workspaceNav { display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid #d5dcd6; margin:24px 0 32px; }
+.tabs { display:flex; flex-wrap:wrap; align-items:center; column-gap:24px; }
+.tabs > button { display:flex; align-items:center; gap:7px; padding:14px 0 16px; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; background:transparent; color:var(--quote-muted); font-size:13px; white-space:nowrap; font-weight:500; }
+.tabs > .activeTab { color:var(--quote-ink); border-bottom-color:var(--trade-action); font-weight:700; }
+.tabs > button > span { display:inline-grid; place-items:center; min-width:19px; height:19px; border-radius:6px; background:#e8ece7; font-size:10px; line-height:1; padding:3px 5px; }
+.tabs > .activeTab > span { background:#ff82001f; color:var(--trade-link); }
+.tradeFilter { display:flex; align-items:center; gap:9px; color:var(--quote-muted); font-size:12px; }
+.tradeFilter select { background:transparent; border:0; font-size:12px; color:var(--quote-ink); max-width:160px; padding-right:4px; }
+.sectionHeading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0 0 23px; }
+.eyebrow { margin:0 0 9px; font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--quote-muted); }
+.sectionHeading h2,.dialog h2 { font:900 28px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:0; letter-spacing:-.5px; outline:0; }
+.sectionHeading > div > p:last-child { margin:9px 0 0; color:var(--quote-muted); font-size:13px; }
+.feedCount { font:900 24px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; white-space:nowrap; }
+.feedCount > span { font-size:14px; font-weight:500; color:#839086; }
+.feedCard { display:grid; grid-template-columns:1fr 1fr; border-radius:11px; background:white; box-shadow:var(--trade-shadow-category,0 4px 4px rgb(0 0 0 / 25%)); overflow:hidden; }
+.feedVisual { position:relative; min-width:0; align-self:center; touch-action:pan-y; user-select:none; }
+.photo { aspect-ratio:1; position:relative; overflow:hidden; background:#e2e6df; }
+.photoImage { object-fit:cover; }
+.feedVisual > .photo { width:100%; height:auto; aspect-ratio:1; }
+.feedVisual:after { position:absolute; inset:0; content:''; background:linear-gradient(180deg,#0002 0%,transparent 35%,#06190fc9 100%); pointer-events:none; }
+.photoTrade,.earnBadge,.readyBadge { position:absolute; z-index:1; top:18px; border-radius:30px; min-height:30px; display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; padding:7px 12px; }
+.photoTrade { left:18px; color:var(--quote-ink); background:#fffffff2; }
+.earnBadge { right:18px; color:#fff; background:#15392de8; }
+.earnBadge svg { color:var(--trade-action); }
+.photoCaption { position:absolute; z-index:1; bottom:28px; left:28px; right:28px; color:white; }
+.photoCaption > span { display:flex; align-items:center; gap:5px; font-size:11px; color:#e6eee7; margin-bottom:11px; }
+.photoCaption h3 { font:900 28px/1.18 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:0; max-width:400px; letter-spacing:-.3px; }
+.feedDetails { display:flex; flex-direction:column; padding:27px 28px; min-width:0; }
+.jobTopline { display:flex; align-items:center; gap:6px; font-size:10px; font-weight:600; color:var(--quote-muted); }
+.openDot { width:6px; height:6px; background:#6cbd45; border-radius:50%; }
+.jobTopline > span:last-child { margin-left:auto; font-weight:400; color:#839086; }
+.feedDetails > h3 { margin:22px 0 11px; font:900 20px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.description { margin:0; color:var(--quote-muted); font-size:13px; line-height:1.7; max-width:50ch; }
+.detailTags { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+.detailTags > span { border:1px solid #e0e5de; border-radius:5px; color:var(--quote-muted); padding:5px 8px; font-size:10px; }
+.timing { display:flex; align-items:center; gap:7px; font-size:11px; font-weight:500; margin:17px 0 20px; }
+.rewardNote { margin-top:auto; display:flex; align-items:center; gap:11px; padding:15px 0; border-top:1px solid #e8ece7; }
+.rewardNote > span { color:var(--trade-link); }
+.rewardNote strong { font-size:11px; }
+.rewardNote p { font-size:10px; color:var(--quote-muted); margin:3px 0 0; }
+.feedActions { display:flex; gap:12px; align-items:center; margin-top:auto; padding-top:10px; }
+.feedActions > .primary { flex:1; }
+.skip { border:1px solid #d6ded5; border-radius:11px; min-height:55px!important; padding:12px 18px; background:transparent; font-size:13px; font-weight:700; }
+.skip:hover { background:var(--trade-paper); }
+.feedFooter { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:13px; color:var(--quote-muted); font-size:11px; }
+.feedFooter > button { display:flex; align-items:center; gap:9px; color:var(--quote-ink); border:0; background:transparent; padding:8px 1px 8px 14px; font-size:12px; font-weight:700; }
+.notice { display:flex; flex-wrap:wrap; align-items:center; gap:9px; border:1px solid #c5dac1; background:#edf5e9; padding:12px 16px; border-radius:8px; color:#234e1b; margin:0 0 22px; font-size:12px; }
+.notice > button { display:inline-flex; align-items:center; gap:8px; min-height:30px; margin:-4px 0 -4px auto; background:transparent; border:0; font-size:12px; font-weight:700; text-decoration:underline; }
+.storageError { display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between; padding:16px; background:#fff0eb; border:1px solid #dfb3a3; margin-bottom:24px; border-radius:8px; font-size:12px; }
+.storageError p { margin:4px 0 0; }
+.errorActions { display:flex; flex-wrap:wrap; gap:8px; }
+.errorActions button { padding:5px 12px; background:white; border:1px solid #bd9687; border-radius:6px; font-size:12px; font-weight:600; }
+.loading { padding:70px 24px; text-align:center; color:var(--quote-muted); }
+.empty { padding:55px 24px; border:1px solid #d6ded5; border-radius:11px; background:white; text-align:center; grid-column:1 / -1; }
+.emptyIcon { display:grid; place-items:center; margin:0 auto 19px; background:#ff820016; color:var(--trade-link); width:62px; height:62px; border-radius:50%; }
+.empty h3 { font:900 24px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:0 0 12px; }
+.empty p { color:var(--quote-muted); max-width:47ch; margin:0 auto 22px; font-size:13px; }
+.empty > div { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+.jobGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; }
+.smallCard { min-width:0; background:white; border-radius:11px; box-shadow:var(--trade-shadow-category); overflow:hidden; }
+.smallVisual { position:relative; }
+.smallVisual > .photo { aspect-ratio:1.2; }
+.smallVisual .photoTrade { top:14px; left:14px; }
+.readyBadge { top:14px; right:14px; color:white; background:var(--quote-ink); font-size:10px; padding:7px 9px; }
+.smallBody { padding:20px; }
+.location { display:flex; align-items:center; gap:4px; color:var(--quote-muted); font-size:11px; margin:0 0 10px; }
+.smallBody h3 { font:900 20px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:0 0 11px; }
+.smallDescription { font-size:12px; line-height:1.6; color:var(--quote-muted); margin:0; }
+.cardPrice { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:20px 0; margin:18px 0 0; border-top:1px solid #e0e5de; }
+.cardPrice > div > span { display:block; font-size:10px; color:var(--quote-muted); margin-bottom:5px; }
+.cardPrice strong { font:900 28px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.claimCost { display:inline-flex; align-items:center; gap:5px; font-size:11px; color:var(--trade-link); font-weight:600; }
+.smallBody > .primary { width:100%; }
+.savedList { display:grid; gap:17px; }
+.savedCard { display:grid; grid-template-columns:145px minmax(0,1fr); gap:22px; padding:17px; background:white; border-radius:11px; box-shadow:var(--trade-shadow-category); }
+.savedCard > .photo { border-radius:6px; width:100%; align-self:center; }
+.savedBody { min-width:0; padding:3px 4px 3px 0; }
+.savedMeta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:space-between; }
+.savedMeta > span:first-child { font-size:10px; color:var(--quote-muted); }
+.quotedBadge { display:inline-flex; align-items:center; gap:5px; color:var(--quote-ink); background:linear-gradient(110deg,#e4f2cb,#ffd2a2); font-size:10px; line-height:1; font-weight:700; padding:6px 7px 6px 8px; border-radius:30px; box-shadow:inset 0 0 0 1px #0c251d0c; }
+.badgeCoin { display:grid; place-items:center; background:#fff9; border-radius:50%; width:20px; height:20px; color:#9e4a00; }
+.quotedGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; }
+.quotedCard { overflow:hidden; min-width:0; background:white; border-radius:11px; box-shadow:var(--trade-shadow-category); }
+.quotedVisual { position:relative; }
+.quotedVisual > .quotedBadge { position:absolute; top:17px; right:17px; padding:8px 10px 8px 12px; font-size:14px; gap:6px; }
+.quotedVisual .badgeCoin { width:25px; height:25px; }
+.quotedBody { padding:23px; }
+.quotedBody h3 { font:900 20px/1.25 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:10px 0 21px; }
+.quotedBottom { display:flex; align-items:center; justify-content:space-between; gap:16px; border-top:1px solid #e0e5de; padding-top:19px; }
+.quotedBottom > div > span { display:block; color:var(--quote-muted); font-size:14px; margin-bottom:5px; }
+.quotedBottom strong { font:900 28px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.quotedBottom > button { min-height:48px!important; padding:10px 14px; font-size:14px; }
+.claimedBadge { display:inline-flex; align-items:center; gap:4px; padding:6px 8px; background:#e9f2e4; color:#326c20; border-radius:30px; font-size:10px; font-weight:600; }
+.savedBody h3 { margin:12px 0 9px; font:900 20px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.savedBody > p { color:var(--quote-muted); font-size:12px; margin:0; overflow-wrap:anywhere; }
+.savedBottom { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; }
+.savedBottom > span:first-child { color:var(--quote-muted); font-size:11px; }
+.savedBottom strong { color:var(--quote-ink); margin-left:5px; font-size:16px; }
+.savedBottom button { display:inline-flex; align-items:center; gap:3px; border:0; background:transparent; padding:0 0 0 10px; font-size:12px; font-weight:600; }
+.savedBottom .completeButton { background:var(--trade-action); color:var(--quote-ink); padding:9px 13px; gap:7px; border-radius:8px; font-size:11px; font-weight:700; }
+.disclaimer { text-align:center; color:var(--quote-muted); font-size:10px; margin:33px 0 0; }
+.dialog { position:fixed; inset:0; margin:auto; border:0; border-radius:14px; background:white; color:var(--quote-ink); padding:0; width:min(560px,calc(100% - 32px)); max-height:calc(100dvh - 48px); box-shadow:0 24px 100px #0005; font:400 14px/1.5 var(--trade-font-body,'Trade UI',sans-serif); }
+.dialog::backdrop { background:#061a13aa; backdrop-filter:blur(4px); }
+.dialogInner { padding:36px; position:relative; }
+.dialog .eyebrow { padding-right:28px; }
+.dialog h2 { font-size:28px; padding-right:16px; }
+.close { position:absolute; top:14px; right:14px; display:grid; place-items:center; width:40px; height:40px; min-height:40px!important; background:transparent; border:0; color:var(--quote-ink); border-radius:50%; }
+.close:hover { background:var(--trade-paper); }
+.dialogJob { display:flex; align-items:center; gap:13px; padding:17px 0; margin:15px 0 14px; border-top:1px solid #e2e7df; border-bottom:1px solid #e2e7df; }
+.dialogJob > .photo { width:66px; flex:0 0 66px; border-radius:6px; }
+.dialogJob > div > span { font-size:10px; color:var(--quote-muted); }
+.dialogJob h3 { font-weight:700; font-size:14px; line-height:1.35; margin:5px 0 0; }
+.fieldLabel { display:block; font-size:12px; font-weight:700; margin:18px 0 8px; }
+.fieldLabel > span { font-size:10px; font-weight:400; color:var(--quote-muted); margin-left:5px; }
+.amountField { display:flex; align-items:center; border:1px solid #a5b1a5; border-radius:7px; overflow:hidden; }
+.amountField:focus-within { outline:2px solid var(--trade-focus); outline-offset:2px; }
+.amountField > span { padding-left:15px; font-size:20px; color:var(--quote-muted); }
+.amountField input { min-height:58px; min-width:0; width:100%; border:0; padding:10px; font-size:24px; font-weight:600; background:transparent; outline:0!important; color:var(--quote-ink); }
+.dialog textarea { width:100%; border:1px solid #a5b1a5; border-radius:7px; padding:12px; resize:vertical; font-size:13px; min-height:110px; color:var(--quote-ink); }
+.dialog textarea::placeholder { color:#718070; }
+.fieldHelp { color:var(--quote-muted); font-size:10px; margin:5px 0 0; }
+.formReward { display:flex; align-items:center; gap:8px; padding:13px; border-radius:7px; background:#ff82000d; margin-top:19px; font-size:11px; color:var(--trade-link); }
+.formError { color:var(--trade-danger); font-size:12px; margin:12px 0; }
+.formError:empty { display:none; }
+.dialog form > .primary,.dialogInner > .primary { width:100%; margin-top:19px; }
+.modalFine { color:var(--quote-muted); text-align:center; font-size:10px; margin:13px 0 0; }
+.claimDescription { font-size:12px; color:var(--quote-muted); line-height:1.7; margin:0 0 20px; }
+.claimSummary { padding:4px 17px; background:#f3f4ef; border-radius:8px; }
+.claimSummary > div { display:flex; align-items:center; justify-content:space-between; padding:13px 0; font-size:12px; gap:12px; }
+.claimSummary > div + div { border-top:1px solid #dde2d7; }
+.claimSummary dt { color:var(--quote-muted); }
+.claimSummary dd { font-weight:700; }
+.claimSummary > div:last-child { font-weight:700; }
+.claimHint { font-size:12px; color:var(--quote-muted); line-height:1.6; }
+.success { text-align:center; padding-top:18px; }
+.successIcon { display:grid; place-items:center; width:78px; height:78px; background:#e3efdb; border-radius:50%; color:#326c20; margin:0 auto 24px; }
+.success .eyebrow,.success h2 { padding:0; }
+.success > p:not(.eyebrow):not(.claimHint):not(.modalFine) { font-size:13px; color:var(--quote-muted); margin-top:12px; }
+.successBalance { display:flex; align-items:center; justify-content:center; gap:7px; padding:20px 0; margin:20px 0 10px; border-top:1px solid #e2e7df; border-bottom:1px solid #e2e7df; font-size:12px; color:var(--quote-muted); }
+.successBalance svg { color:var(--trade-link); }
+.successBalance strong { font:900 28px/1.2 var(--trade-font-heading); color:var(--quote-ink); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.success .primary { width:100%; margin:8px 0; }
+.textButton { display:block; padding:6px 12px; font-size:12px; font-weight:600; text-decoration:underline; border:0; background:transparent; margin:0 auto; }
+@media(min-width:1250px) { .feedCard { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .feedDetails { padding:32px; } .description { font-size:14px; } .jobTopline { font-size:11px; } .detailTags > span { font-size:11px; } .feedDetails > h3 { margin-top:28px; } .timing { margin-bottom:28px; } .photoCaption h3 { font-size:32px; } }
+@media(max-width:800px) { .pointsPanel { gap:18px; padding:22px; } .pointsMessage { padding-left:18px; } .pointsMessage strong { font-size:12px; } .pointsPanel > .primary { min-height:48px!important; font-size:12px; } .workspaceNav { flex-wrap:wrap; gap:0; } .tradeFilter { margin-left:auto; padding:3px 0; } .tabs { width:100%; justify-content:space-between; gap:12px; } .tabs > button { font-size:12px; } .feedCard { grid-template-columns:1fr; max-width:600px; margin:0 auto; } .feedVisual > .photo { height:auto; } .feedDetails { padding:24px; } .feedDetails > h3 { margin-top:21px; } .rewardNote { padding-top:17px; margin-top:0; } .feedFooter { max-width:600px; margin:13px auto 0; } .photoCaption h3 { font-size:32px; } .jobGrid { gap:18px; } .smallBody { padding:18px; } .smallDescription { display:none; } .smallBody h3 { font-size:18px; } .cardPrice { flex-wrap:wrap; padding:16px 0; } .cardPrice strong { font-size:24px; } .smallVisual .photoTrade { left:10px; top:10px; font-size:9px; padding:6px 8px; } .readyBadge { right:10px; top:auto; bottom:10px; font-size:9px; } }
+@media(max-width:520px) { .workspace { padding-bottom:10px; } .demoLine { font-size:9px; } .demoLine > span:last-child { font-size:10px; } .pointsPanel { padding:22px 19px; gap:16px 14px; } .pointsBalance { gap:11px; } .bigCoin { width:46px; height:46px; } .pointsBalance strong { font-size:36px; } .pointsBalance p > span { font-size:12px; } .pointsLabel { font-size:10px; } .pointsMessage { display:none; } .pointsPanel > .primary { margin-left:auto; padding:10px 12px; min-height:48px!important; gap:8px; font-size:11px; } .pointsPanel > .primary svg { width:16px; } .workspaceNav { margin:17px 0 24px; } .tabs { gap:6px; } .tabs > button { font-size:10px; gap:4px; padding-bottom:13px; } .tabs > button > span { font-size:9px; min-width:16px; height:16px; padding:2px 4px; } .tradeFilter { font-size:10px; } .tradeFilter select { font-size:11px; min-height:38px; } .sectionHeading { gap:16px; margin-bottom:19px; } .sectionHeading h2 { font-size:24px; letter-spacing:-.3px; } .eyebrow { font-size:8px; letter-spacing:.09em; } .sectionHeading > div > p:last-child { font-size:11px; line-height:1.55; } .feedCount { font-size:22px; } .feedCount > span { font-size:12px; } .photoCaption { left:21px; right:21px; bottom:23px; } .photoCaption h3 { font-size:27px; } .photoCaption > span { font-size:10px; } .photoTrade,.earnBadge { top:14px; min-height:27px; font-size:10px; padding:6px 10px; } .photoTrade { left:14px; } .earnBadge { right:14px; } .feedDetails { padding:21px; } .feedDetails > h3 { font-size:18px; margin-top:18px; } .description { font-size:12px; } .rewardNote { padding:14px 0; } .rewardNote p { font-size:9px; } .feedActions .primary { font-size:13px; } .feedFooter { font-size:10px; } .jobGrid { grid-template-columns:1fr; } .smallVisual > .photo { aspect-ratio:1; } .smallBody h3 { font-size:20px; } .smallDescription { display:block; } .smallVisual .photoTrade { font-size:11px; left:15px; top:15px; padding:7px 11px; } .readyBadge { font-size:10px; right:15px; bottom:15px; } .savedCard { grid-template-columns:74px minmax(0,1fr); gap:13px; padding:13px; } .savedCard > .photo { align-self:start; margin-top:2px; } .savedBody { padding:0; } .savedMeta > span:first-child { font-size:9px; } .savedMeta { gap:5px; } .quotedBadge { font-size:9px; padding:4px 5px 4px 6px; } .badgeCoin { width:16px; height:16px; } .badgeCoin svg { width:13px; } .savedBody h3 { font-size:16px; margin:9px 0 8px; } .savedBody > p { font-size:11px; } .savedBottom { align-items:flex-start; flex-wrap:wrap; gap:5px; margin-top:10px; } .savedBottom strong { font-size:14px; margin-left:3px; } .savedBottom > span:first-child { font-size:10px; } .savedBottom button { min-height:30px; font-size:11px; margin-left:auto; } .claimedBadge { font-size:9px; } .claimCost { font-size:10px; } .dialog { width:calc(100% - 24px); max-height:calc(100dvh - 24px); } .dialogInner { padding:30px 23px 23px; } .dialog h2 { font-size:24px; } .dialog .eyebrow { font-size:8px; } .dialogJob h3 { font-size:13px; } .fieldLabel > span { display:block; margin:3px 0 0; } .empty { padding:35px 20px; } .empty h3 { font-size:21px; } .empty p { font-size:12px; } .notice { font-size:11px; padding:11px 12px; } .notice > button { font-size:11px; } .disclaimer { font-size:9px; margin:25px 0 0; } }
+
+/* Mobile reading sizes follow the brand's 16 / 14 / 11 hierarchy. */
+@media(max-width:520px) {
+  .workspace { padding:0 16px 10px; font-size:16px; }
+  .demoLine { font-size:11px; letter-spacing:.04em; }
+  .demoLine > span:last-child { font-size:11px; }
+  .pointsPanel { padding:18px 16px; gap:12px; }
+  .pointsBalance { gap:8px; }
+  .bigCoin { width:36px; height:36px; }
+  .bigCoin svg { width:24px; height:24px; }
+  .pointsLabel,.pointsBalance p > span { font-size:14px; }
+  .pointsBalance strong { font-size:36px; }
+  .pointsPanel > .primary { font-size:14px; padding:10px 12px; gap:8px; }
+  .workspaceNav { margin:14px 0 19px; }
+  .tabs { justify-content:flex-start; gap:0 18px; }
+  .tabs > button { font-size:14px; padding:11px 0; }
+  .tabs > button > span { font-size:11px; min-width:18px; height:18px; }
+  .tradeFilter { font-size:14px; }
+  .tradeFilter select { font-size:14px; }
+  .sectionHeading { margin-bottom:16px; }
+  .sectionHeading .eyebrow,.sectionHeading > div > p:last-child { display:none; }
+  .sectionHeading h2 { font-size:24px; }
+  .feedCount { font-size:22px; }
+  .feedCount > span { font-size:14px; }
+  .photoTrade,.earnBadge { font-size:14px; }
+  .photoCaption > span { font-size:14px; }
+  .photoCaption h3 { font-size:27px; }
+  .feedDetails { padding:22px; }
+  .jobTopline { font-size:11px; }
+  .feedDetails > h3 { font-size:20px; margin-top:20px; }
+  .description { font-size:16px; line-height:1.6; }
+  .detailTags { gap:8px; margin-top:19px; }
+  .detailTags > span { font-size:14px; padding:6px 9px; }
+  .timing { font-size:14px; margin:19px 0 16px; }
+  .feedActions .primary,.skip { font-size:14px; }
+  .feedFooter { font-size:11px; }
+  .feedFooter > button { font-size:14px; }
+  .notice { font-size:14px; padding:13px; }
+  .notice > button { font-size:14px; }
+  .storageError,.errorActions button { font-size:14px; }
+  .location { font-size:14px; }
+  .smallDescription { font-size:16px; line-height:1.6; }
+  .smallVisual .photoTrade,.readyBadge { font-size:14px; }
+  .cardPrice > div > span,.claimCost { font-size:14px; }
+  .cardPrice strong { font-size:28px; }
+  .quotedGrid { grid-template-columns:1fr; gap:24px; }
+  .quotedVisual > .quotedBadge { font-size:14px; top:16px; right:16px; }
+  .quotedVisual .badgeCoin { width:25px; height:25px; }
+  .quotedVisual .badgeCoin svg { width:17px; height:17px; }
+  .quotedBody { padding:22px; }
+  .quotedBody h3 { font-size:20px; }
+  .quotedBottom > div > span,.quotedBottom > button { font-size:14px; }
+  .quotedBottom strong { font-size:28px; }
+  .savedMeta > span:first-child { font-size:11px; }
+  .savedBody h3 { font-size:20px; }
+  .savedBody > p { font-size:16px; line-height:1.55; }
+  .savedBottom > span:first-child,.savedBottom button,.claimedBadge { font-size:14px; }
+  .savedBottom strong { font-size:20px; }
+  .savedBottom .completeButton { font-size:14px; }
+  .empty h3 { font-size:24px; }
+  .empty p { font-size:16px; }
+  .disclaimer { font-size:11px; }
+  .dialog .eyebrow { font-size:11px; }
+  .dialogJob > div > span { font-size:11px; }
+  .dialogJob h3 { font-size:16px; }
+  .fieldLabel { font-size:14px; }
+  .fieldLabel > span,.fieldHelp { font-size:11px; }
+  .dialog textarea { font-size:16px; }
+  .formReward,.formError { font-size:14px; }
+  .claimDescription,.claimHint { font-size:16px; }
+  .claimSummary > div { font-size:14px; }
+  .success > p:not(.eyebrow):not(.claimHint):not(.modalFine) { font-size:16px; }
+  .successBalance,.textButton { font-size:14px; }
+  .modalFine { font-size:11px; }
+}

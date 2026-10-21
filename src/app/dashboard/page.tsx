@@ -1,3 +1,9 @@
+import { DashboardMobileNavigation } from "@/components/DashboardMobileNavigation";
+import { headers } from "next/headers";
+import { canUseHostedPreview } from "@/lib/hosted-preview";
+import { allowsLocalDemo } from "@/app/demo/gate";
+import { allowsQuoteDemo } from "@/lib/quote-demo-access";
+import { TradieQuoteWorkspace } from "@/components/quote-feed/TradieQuoteWorkspace";
 import Link from "next/link";
 import styles from "./dashboard.module.css";
 import { nextAction } from "@/app/jobs/[id]/next-action";
@@ -8,6 +14,8 @@ import { releaseOverdue } from "@/lib/jobs";
 import { formatNZD, jobRef, timeAgo } from "@/lib/constants";
 import { JobCard } from "@/components/JobCard";
 import { EmptyState, LicenceBadge } from "@/components/ui";
+import { SourceIcon } from "@/components/SourceIcon";
+import { CustomerJobCard } from "./CustomerJobCard";
 
 export const dynamic = "force-dynamic";
 
@@ -16,25 +24,31 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const user = await requireUser("/dashboard");
   if (user.role === "ADMIN") redirect("/admin");
   await releaseOverdue();
+  const demoRuntime = await canUseHostedPreview() || allowsLocalDemo(process.env.TRADE_LOCAL_DEMO, (await headers()).get("host"));
+  const quoteDemo = allowsQuoteDemo(demoRuntime, user);
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
+    <div className={`${styles.page} ${user.role === "CUSTOMER" ? styles.customerPage : ""}`}>
+      <header className={`${styles.header} ${user.role === "CUSTOMER" ? styles.customerHeader : quoteDemo ? styles.quoteHeader : ""}`}>
         <nav aria-label="Dashboard navigation" className={styles.nav}><Link href="/">Home</Link>{user.role === "TRADIE" && <Link href="/jobs">Browse</Link>}<Link href="/profile">Account</Link></nav>
         <div>
-          <p className={styles.eyebrow}>{user.role === "CUSTOMER" ? "Customer workspace" : "Tradie workspace"}</p>
+          {user.role === "TRADIE" && !quoteDemo && <p className={styles.eyebrow}>Tradie workspace</p>}
           <h1 className={styles.heading}>{user.role === "CUSTOMER" ? "Your jobs" : `Kia ora, ${user.name.split(" ")[0]}`}</h1>
-          <p className={styles.subtitle}>{user.role === "TRADIE" ? `${user.trade} · ${user.region}` : user.region}</p>
+          {user.role === "TRADIE" && <p className={styles.subtitle}>{user.trade} · {user.region}</p>}
         </div>
         {user.role === "CUSTOMER" ? (
-          <Link href="/jobs/new" className={`${styles.primary} ${styles.actions}`}>+ Post a job</Link>
-        ) : (
+          <Link href="/jobs/new" className={`${styles.primary} ${styles.actions}`}><SourceIcon name="plus-square" size={20} /> Post a job</Link>
+        ) : !quoteDemo ? (
           <div className={styles.actions}>
             <LicenceBadge verified={user.licenceVerified} trade={user.trade} />
             <Link href="/jobs" className={styles.primary}>Job board</Link>
           </div>
-        )}
+        ) : null}
       </header>
-      {user.role === "CUSTOMER" ? <CustomerDash userId={user.id} filter={status} /> : <TradieDash userId={user.id} />}
+      {user.role === "CUSTOMER" ? <CustomerDash userId={user.id} filter={status} /> : quoteDemo ? <>
+        <TradieQuoteWorkspace key={user.id} userId={user.id} trade={user.trade} />
+        <details className={styles.existingWorkspace}><summary>Existing job activity</summary><TradieDash userId={user.id} /></details>
+      </> : <TradieDash userId={user.id} /> }
+      <DashboardMobileNavigation customer={user.role === "CUSTOMER"} />
     </div>
   );
 }
@@ -43,7 +57,10 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
   const jobs = await db.job.findMany({
     where: { customerId: userId },
     orderBy: { createdAt: "desc" },
-    include: { photos: { take: 1, where: { variationId: null } } },
+    include: {
+      photos: { take: 1, where: { variationId: null } },
+      payments: { where: { kind: "JOB", status: "PENDING" }, select: { id: true, amountCents: true }, orderBy: { createdAt: "desc" } },
+    },
   });
   const filters = [
     ["all", "All jobs"], ["action", "Needs your action"], ["active", "In progress"],
@@ -53,37 +70,20 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
   const visible = jobs.filter((job) => selected === "all" ||
     (selected === "action" ? ["PRICED", "SUBMITTED"].includes(job.status) :
       selected === "active" ? !["COMPLETED", "CANCELLED"].includes(job.status) : job.status === selected));
-  const attention = jobs.find((job) => ["PRICED", "SUBMITTED"].includes(job.status));
   return (
-    <section className={styles.section}>
-      <div className={styles.attention}>
-        <div className="max-w-xl">
-          <p >{attention ? "Your next action" : "A clear path from job to sign-off"}</p>
-          <h2 >{attention ? attention.title : "What needs doing?"}</h2>
-          <p >{attention ? nextAction(attention.status, "customer", attention.category) : "Post your job with photos. Private tradie estimates help Trade Marketplace set your fixed price."}</p>
-        </div>
-        <Link href={attention ? `/jobs/${attention.id}` : "/jobs/new"} className={styles.primary}>{attention ? "Review job" : "Post a job"}</Link>
-      </div>
-      <h2 className={styles.jobsTitle}>Your jobs</h2>
-      <p className={styles.copy}>Follow each job from private estimates to your fixed price, assignment and sign-off. Open a job to see your next step.</p>
-      <form className={styles.filter}>
+    <section className={`${styles.section} ${styles.customerSection}`} aria-label="Your jobs">
+      <form className={`${styles.filter} ${styles.customerFilter}`}>
         <div><label htmlFor="job-status-filter" className="label">Show jobs</label>
           <select id="job-status-filter" name="status" className="input" defaultValue={selected}>
             {filters.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
           </select>
         </div>
         <button className={styles.secondary}>Apply filter</button>
-        <p className="py-3 text-sm text-muted">{visible.length} of {jobs.length} jobs</p>
+        <p className={styles.jobCount}>{visible.length} of {jobs.length} jobs</p>
       </form>
       {visible.length ? (
-        <div className={styles.jobList}>
-          {visible.map((job) => (
-            <div key={job.id} className={styles.jobItem}>
-              <JobCard job={job} audience="customer" aside={job.priceCents != null && <span className={styles.price}>{formatNZD(job.priceCents)}</span>} />
-              <p className={styles.next}>{nextAction(job.status, "customer", job.category)}</p>
-              <Link href={`/receipts/${job.id}`} className={styles.receipt}>Payment record</Link>
-            </div>
-          ))}
+        <div className={styles.customerJobs}>
+          {visible.map((job) => <CustomerJobCard key={job.id} job={job} pendingPaymentId={job.payments.find((payment) => payment.amountCents === job.priceCents)?.id} />)}
         </div>
       ) : jobs.length ? <EmptyState title="No jobs match this filter"><Link href="/dashboard" className="underline">Show all jobs</Link> to see your other job stages.</EmptyState> : (
         <EmptyState title="No jobs yet">
