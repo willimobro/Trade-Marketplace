@@ -29,3 +29,12 @@
   .hotspot[aria-disabled=true] { border-color:#bbb; color:#52645b; }
   .adaptation { overflow-wrap:anywhere; }
 }
+
+.sourceNav { position:absolute; left:0; top:780px; width:390px; height:64px; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); z-index:2; }
+.sourceNav a { display:block; min-width:0; height:64px; }
+.sourceNav a:focus-visible { outline:2px solid #2163c6; outline-offset:-3px; }
+@media (max-width:389px) {
+  .sourceNav { position:static; width:100%; height:auto; background:#fff; border-top:1px solid #898989; }
+  .sourceNav a { height:auto; min-height:64px; display:flex; align-items:center; justify-content:center; font:400 12px/18px 'Trade UI',sans-serif; }
+  .sourceNav a::after { content:attr(aria-label); }
+}

@@ -65,3 +65,9 @@ Customer completion, admin sign-off and variation decline now have focused revie
 Lint, TypeScript,16 tests and production build pass. Browser checks cover all four former overflow routes at320/390, restored browse icon sizes/colors, session draft recovery/success cleanup, profile focus visibility, document failure/retry and one successful blank-comment review. Source green/white CTA contrast and icon-shape approval remain unresolved visual limitations.
 
 Customer/admin completion confirmation browser checks focus the review explanation and return focus on cancel; each completed local fixture has exactly one payroll record. This does not represent a transfer of money.
+
+## Browse composition correction after scoped QA sign-off
+
+The saved live source31:15 capture (`original-browse-properties.jpg`) shows a64px navigation band at y780 in the390x844 frame, whereas the archived decoded31:144 transform is stale at y2217. The web rendition now positions the band at780 and paints it after the scrolling artwork; its five semantic links target Home, Search, Jobs, Messages and Account. Source header nodes31:38 and38:254 identify menu-left at22/32 and plus-right at331/35; corrected their substituted glyph names and linked the actions to app navigation and job posting. The icon shapes remain disclosed portable substitutions, not exact SF glyphs.
+
+Production screenshot reviewed at390x844 against the saved original composition. Browser geometry confirms navigation x0/y780/w390/h64 with all five links visible. Browse/search overflow checks pass at320/390/768/1440. Search navigation and unauthenticated Post job return destination passed. Lint, TypeScript, production build and16 tests pass. Independent QA previously granted scoped functional sign-off for59bd0d6 andba8fb43, including the follow-up guidance/price/earnings/offline states; this correction addresses the remaining concrete header/nav composition defect, not blanket exact visual approval.
