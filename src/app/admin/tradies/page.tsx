@@ -31,12 +31,12 @@ export default async function AdminTradiesPage() {
       </aside>
       <div className="mt-6 grid gap-4">
         {tradies.map((t) => (
-          <div key={t.id} className={`card flex flex-wrap items-start gap-4 text-sm ${styles.record}`}>
+          <div key={t.id} className={`card flex flex-wrap items-start gap-4 text-sm ${styles.record} ${styles.verificationRecord}`}>
             <div className={styles.person}>
               <Link href={`/tradies/${t.id}`} className="font-semibold hover:underline">{t.name}</Link>
               <p className="text-xs text-muted">{t.email} · {t.phone ?? "no phone"} · {t.region} · joined {timeAgo(t.createdAt)} · {t._count.jobsAssigned} jobs</p>
             </div>
-            <p className="text-muted">Trade: {t.trade || "Not supplied"} · Registration <span className={`font-mono text-ink ${styles.breakText}`}>{t.registrationNo || "Not supplied"}</span></p>
+            <p className={`text-muted ${styles.registration}`}>Trade: {t.trade || "Not supplied"} · Registration <span className={`font-mono text-ink ${styles.breakText}`}>{t.registrationNo || "Not supplied"}</span></p>
             {tradeRequirementsPending(t.trade) ? <p className="w-full rounded-xl bg-amber-50 p-3 text-amber-950">Verification and completion requirements are pending for this trade. Estimating, claiming and electrical CoC completion are unavailable. {t.licenceVerified && "An existing verified flag does not establish eligibility and can be removed below."}</p> : <LicenceBadge verified={t.licenceVerified} />}
             {!tradeRequirementsPending(t.trade) && <details className="w-full rounded-xl border border-black/10 p-3">
               <summary className="cursor-pointer py-2 font-medium">Review checklist & record coverage</summary>

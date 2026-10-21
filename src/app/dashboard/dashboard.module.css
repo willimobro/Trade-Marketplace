@@ -46,3 +46,42 @@
 .page :focus-visible { outline:2px solid #2163c6; outline-offset:3px; }
 .page :global(.card) h3 { font-family:'Trade UI',sans-serif; }
 @media(max-width:350px) { .section { margin-left:20px; margin-right:20px; } .header { padding-left:20px; padding-right:20px; } }
+
+/* Desktop adaptation: retain mobile references below 1024px and keep the
+   existing job → guidance → receipt reading order within each grid item. */
+@media(min-width:1024px) {
+  .page { width:min(100%,1264px); padding:24px 32px 48px; }
+  .header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:24px 32px; min-height:0; padding:32px; }
+  .nav { display:none; }
+  .header > div:not(.actions) { flex:1 1 440px; min-width:0; }
+  .heading { max-width:800px; }
+  .actions { flex:0 1 auto; margin-top:0; max-width:100%; }
+  .header .actions { justify-content:flex-end; }
+  .section { margin:32px 0 0; }
+  .jobsTitle { margin:32px 0 14px; }
+  .copy { max-width:800px; }
+  .attention { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:24px; }
+  .attention > div { min-width:0; }
+  .attention a { margin-top:0; flex:0 0 auto; }
+  .filter { gap:16px; }
+  .filter > div { min-width:240px; }
+  .filter select { min-height:48px; }
+  .jobList { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:28px 24px; }
+  .jobList > * { min-width:0; }
+  .jobList :global(.card) { padding:16px; }
+  .jobItem { display:flex; flex-direction:column; align-items:stretch; }
+  .next { max-width:65ch; }
+  .receipt { align-self:flex-start; min-height:44px; }
+  .stats { grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; margin:32px 0; }
+  .stat { display:flex; flex-direction:column; gap:12px; padding:20px; }
+  .stat p:last-child { margin-top:auto; font-variant-numeric:tabular-nums; }
+  .payroll > article { padding:20px 24px; }
+  .payroll > article + article { border-top:1px solid #ddd; }
+  .payroll a { display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,240px); gap:24px; padding:12px 0 20px; }
+  .payroll a > div { min-width:0; }
+  .payroll a :global(.truncate) { white-space:normal; overflow-wrap:anywhere; }
+  .payroll a > div:last-child { font-variant-numeric:tabular-nums; }
+  .payroll details { max-width:800px; }
+  .payroll dd { text-align:right; font-variant-numeric:tabular-nums; }
+  .payroll dt { min-width:0; }
+}

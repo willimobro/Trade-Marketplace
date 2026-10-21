@@ -11,3 +11,22 @@ Some copied QA database photo URLs have no corresponding upload in the isolated 
 Review evidence: task/evidence/desktop-review. Stable approved mobile demo stays on port 3010; separate desktop review on port 3011. Both use absolute isolated database paths. No production deployment or shared-branch merge.
 
 Additional browser checks: gallery opens, Right Arrow advances to photo 2, Escape closes and returns focus to its opener. Focused payment navigation remains below the sticky desktop header. The original light wordmark uses an unchanged vector on a forest backing for contrast.
+
+## Second desktop checkpoint (pending independent visual QA)
+
+Explicit desktop navigation now continues through dashboard, posting, messages,
+account and admin. Residual desktop workspaces use a bounded 1200px shell and
+hide duplicate mobile navigation; support/auth/payment routes remain bounded.
+A single global skip link targets a focusable main, and detail/action anchors
+clear the sticky header. Admin subnavigation is mounted at desktop only.
+
+Dashboard has compact forest header, two job columns and four statistics;
+admin retains full-width decision records and bounded settings. Posting/account
+are bounded at760px, messages at960px. These are desktop adaptations at1024px+,
+not claimed original Figma desktop measurements. Mobile style declarations are
+preserved. Pending trade discovery cards no longer promise estimate/claim actions.
+
+41 tests, lint, TypeScript and production build are the code-check baseline.
+Independent browser/resize/mobile-comparison QA is still required for this batch;
+do not infer visual signoff from compilation. Hosted preview remains separately
+pinned to33eaba3 and does not contain this pending desktop expansion.

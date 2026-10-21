@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { logout } from "@/app/actions/auth";
 import { SourceIcon, type SourceIconName } from "./SourceIcon";
+import { hasDesktopWorkspace } from "@/lib/desktop-routes";
 import styles from "./SourceAppFrame.module.css";
 
 /** Generic adaptation for routes with no original screen, not an original admin design.
@@ -29,8 +30,7 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
     { href: "/messages", label: "Messages", icon: "bubble" },
     { href: role ? "/profile" : "/login", label: "Account", icon: "person" },
   ];
-  return <div className={styles.frame}>
-    <a href="#main-content" className="skip-link">Skip to main content</a>
+  return <div className={`${styles.frame} ${hasDesktopWorkspace(path) ? styles.desktopWorkspace : ""}`}>
     <header className={styles.header}><Link href={role === "ADMIN" ? "/admin" : role ? "/dashboard" : "/"} aria-label="Back to workspace" className={styles.back}>←</Link><p className={styles.title}>{title}</p></header>
     {fontsUnavailable && <p role="status" className={styles.notice}>The web font could not load. Fallback text is displayed.</p>}
     <main id="main-content" tabIndex={-1} className={styles.content}>{children}</main>

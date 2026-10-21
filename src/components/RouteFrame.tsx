@@ -6,5 +6,5 @@ import type { ReactNode } from "react";
 export function RouteFrame({ children, reference }: { children: ReactNode; reference: ReactNode }) {
   const pathname = usePathname();
   const sourceRoute = ["/", "/login", "/signup", "/jobs/new", "/jobs", "/dashboard"].includes(pathname) || /^\/jobs\/[^/]+$/.test(pathname);
-  return sourceRoute ? <main id="main-content">{reference}</main> : children;
+  return sourceRoute ? <main id="main-content" tabIndex={-1}>{reference}</main> : children;
 }

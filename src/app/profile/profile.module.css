@@ -1,0 +1,8 @@
+/* Bounded account editor; retain the existing form, validation and file input. */
+@media (min-width: 1024px) {
+  .screen { width: min(760px, calc(100% - 64px)); margin: 0 auto; padding: 40px 32px 64px; }
+  .screen h1 { font-family: 'Trade Display', sans-serif; font-size: 28px; line-height: 1.3; font-variation-settings: 'wdth' 151, 'opsz' 28, 'wght' 900; }
+  .screen > form:global(.card) { padding: 32px; }
+  .screen :is(input, textarea, select) { min-width: 0; }
+  .screen :is(input, textarea, select, button, a, [tabindex]) { scroll-margin-top: 112px; }
+}

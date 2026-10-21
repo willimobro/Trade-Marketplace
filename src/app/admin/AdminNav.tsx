@@ -6,7 +6,7 @@ import styles from "./admin.module.css";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [["/admin", "Operations"], ["/admin/tradies", "Electricians"], ["/admin/payouts", "Payroll"], ["/admin/settings", "Rates & settings"]] as const;
+const links = [["/admin", "Operations"], ["/admin/tradies", "Trade verification"], ["/admin/payouts", "Payroll"], ["/admin/settings", "Rates & settings"]] as const;
 
 export function AdminNav() {
   const pathname = usePathname();

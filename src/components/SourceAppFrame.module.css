@@ -21,3 +21,10 @@
 .frame { padding-bottom: calc(80px + env(safe-area-inset-bottom)); }
 .navigation { position: fixed; z-index: 30; bottom: 0; left: 50%; transform: translateX(-50%); width: min(390px, 100%); border-top: 1px solid rgb(0 0 0 / 30%); box-shadow: var(--trade-shadow-header); }
 .frame :is(input, textarea, select, button, a) { scroll-margin-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+@media(min-width:1024px) {
+  .desktopWorkspace { width:min(1200px,100%); min-height:calc(100dvh - 88px); padding-bottom:24px; }
+  .desktopWorkspace > .header, .desktopWorkspace > .navigation { display:none; }
+  .desktopWorkspace > .utilities { padding:16px 32px; border-top:1px solid #cbd5ce; }
+  .desktopWorkspace .content { scroll-margin-top:112px; }
+}

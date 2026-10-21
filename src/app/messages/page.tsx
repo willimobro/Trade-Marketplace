@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from "./messages.module.css";
 import { requireUser } from "@/lib/session";
 import { db } from "@/lib/db";
 import { jobRef } from "@/lib/constants";
@@ -13,11 +14,11 @@ export default async function MessagesPage() {
     orderBy: { createdAt: "desc" },
   });
   jobs.sort((a, b) => (b.messages[0]?.createdAt ?? b.createdAt).getTime() - (a.messages[0]?.createdAt ?? a.createdAt).getTime());
-  return <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+  return <div className={`${styles.screen} mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8`}>
     <p className="eyebrow">Keep the job moving</p><h1 className="page-title mt-2">Messages</h1>
     <p className="mt-3 max-w-2xl text-muted">Each conversation stays with its job. Only the customer, the assigned tradie and Trade Marketplace can take part.</p>
-    <div className="mt-8 space-y-3">
-      {jobs.map(job => <Link key={job.id} href={`/jobs/${job.id}#messages`} className="card block p-5 transition hover:border-forest/40 sm:p-6">
+    <div className={`${styles.list} mt-8 space-y-3`}>
+      {jobs.map(job => <Link key={job.id} href={`/jobs/${job.id}#messages`} className={`${styles.conversation} card block p-5 transition hover:border-forest/40 sm:p-6`}>
         <div className="flex flex-wrap items-center justify-between gap-2"><span className="text-xs font-medium text-muted">{jobRef(job.jobNumber)}</span><StatusChip status={job.status} audience={user.role === "CUSTOMER" ? "customer" : "staff"} /></div>
         <h2 className="mt-3 font-semibold">{job.title}</h2>
         <p className="mt-2 line-clamp-2 text-sm text-muted">{job.messages[0] ? <><span className="font-medium text-ink">{job.messages[0].sender.name}: </span>{job.messages[0].body}</> : "No messages yet. Open the job to start a conversation."}</p>

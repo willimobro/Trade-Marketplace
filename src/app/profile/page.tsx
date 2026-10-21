@@ -1,4 +1,5 @@
 import Link from "next/link";
+import styles from "./profile.module.css";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { logout } from "@/app/actions/auth";
@@ -11,7 +12,7 @@ export default async function ProfilePage() {
     select: { name: true, email: true, role: true, trade: true, region: true, phone: true, bio: true, registrationNo: true, avatarUrl: true, licenceVerified: true },
   });
   return (
-    <div className="mx-auto max-w-[760px] px-4 py-8 sm:px-6 sm:py-12">
+    <div className={`${styles.screen} mx-auto max-w-[760px] px-4 py-8 sm:px-6 sm:py-12`}>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="text-3xl font-bold">Your account</h1>
         {user.role === "TRADIE" && (

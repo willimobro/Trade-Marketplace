@@ -1,0 +1,16 @@
+/* Keep messages as existing job-thread links, not a separate chat client. */
+@media (min-width: 1024px) {
+  .screen { width: min(960px, calc(100% - 64px)); padding: 40px 32px 64px; margin: 0 auto; }
+  .list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .list > * { margin-top: 0; }
+  .conversation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(160px, 220px); column-gap: 24px; min-width: 0; padding: 24px; overflow-wrap: anywhere; }
+  .conversation > div:first-child { grid-column: 2; grid-row: 1 / 4; flex-direction: column; align-items: flex-end; justify-content: flex-start; }
+  .conversation > h2, .conversation > p, .conversation > span { grid-column: 1; }
+  .conversation > h2 { grid-row: 1; margin-top: 0; }
+  .conversation > p { grid-row: 2; }
+  .conversation > span { grid-row: 3; }
+  .conversation h2 { font-size: 20px; line-height: 1.4; }
+  .conversation p { max-width: 75ch; font-size: 16px; line-height: 1.5; }
+  .conversation:focus-visible { outline: 2px solid var(--trade-focus); outline-offset: 4px; }
+  .screen :is(a, button, [tabindex]) { scroll-margin-top: 112px; }
+}

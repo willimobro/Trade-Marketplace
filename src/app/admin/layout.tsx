@@ -1,4 +1,5 @@
 import styles from "./admin.module.css";
+import { AdminNav } from "./AdminNav";
 import { requireAdmin } from "@/lib/session";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="mb-6">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted">Trade Marketplace · Operations workspace</p>
       </div>
+      <div className={styles.desktopNavigation}><AdminNav /></div>
       {children}
     </div>
   );

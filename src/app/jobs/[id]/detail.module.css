@@ -82,7 +82,8 @@
 @media (min-width: 1024px) {
   .screen { width: min(1200px, calc(100% - 48px)); display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; padding-top: 24px; padding-bottom: 48px; }
   .main, .actions { min-width: 0; }
-  .actions { position: static; align-self: start; max-height: none; overflow: visible; }
+  .actions { position: static; align-self: start; max-height: none; overflow: visible; scroll-margin-top: 112px; }
+  .screen :global(#messages) { scroll-margin-top: 112px; }
   .actions > :global(.card) { padding: 24px; margin-top: 24px; }
   .actions > :global(.card):first-child { margin-top: 0; }
   .main > :global(.card), .main > section { padding: 24px; margin-top: 24px; }
