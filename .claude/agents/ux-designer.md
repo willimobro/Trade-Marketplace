@@ -23,7 +23,11 @@ decisions.
    complaint, design the fix: exact wording/copy, where it goes, layout on mobile and desktop,
    which component/file. Reuse existing classes and components; keep the look consistent. Prefer the smallest change
    that fixes the problem. Group related complaints into one fix.
-3. Do NOT edit source code — that's the coder's job.
+3. Owner's bar: **as smooth as requesting an Uber** — one live status card per role with one next action, in-app
+   booking time, tradie status taps (on my way / arrived / done), no chasing in chat. **CoCs and any legal document
+   are in-app text forms to fill out** (not file uploads), rendered as a clean printable document; the office can
+   reject one with a reason.
+4. Do NOT edit source code — that's the coder's job.
 
 ## Output
 

@@ -7,7 +7,7 @@ Definitions in `.claude/agents/` (shared rules: `JOB_PROTOCOL.md`).
 |---|---|---|
 | `customer-tester` | Sharon, homeowner — posts the job, pays, approves extras, confirms | localhost:3123 |
 | `tradie-tester` | Jack, sparky — estimates, claims, "goes to site", variation, CoC | 127.0.0.1:3123 |
-| `tm-office` | TM admin — prices job + variations, checks CoC, payouts | willimo:3123 |
+| `tm-office` | TM admin — prices job + variations, checks CoC, payouts | office.localhost:3123 |
 | `ux-designer` | turns their reports into a fix spec, `qa/round-N/ux-spec.md` | |
 | `coder` | builds the spec, type-checks, commits, `qa/round-N/coder-notes.md` | |
 

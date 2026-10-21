@@ -7,10 +7,17 @@ and on their own hostname (cookies are per host, so logins don't clash):
 |---|---|---|
 | customer (Sharon) | http://localhost:3123 | `customer@demo.test` |
 | tradie (Jack) | http://127.0.0.1:3123 | `sparky@demo.test` |
-| TM office | http://willimo:3123 | `admin@demo.test` |
+| TM office | http://office.localhost:3123 | `admin@demo.test` |
 
 Passwords are in `prisma/seed.ts`. Load the Claude in Chrome tools in ONE ToolSearch call, create your OWN new tab,
-never touch other tabs, never trigger alert/confirm dialogs, never visit any other site. Never edit source code.
+never close, navigate or touch any tab you did not create (other agents are using them), never trigger alert/confirm dialogs, never visit any other site. Never edit source code.
+
+## The bar: as smooth as requesting an Uber
+
+Judge everything against Uber: one clear live status, one obvious next step, minimal typing, never having to chase
+someone in chat for a basic fact (who's coming, when, are they on the way, is it done, what do I owe, when am I paid).
+Anything that falls short of that is worth reporting. CoCs and other legal documents are meant to be in-app forms
+you fill out, not file uploads — report it if that's not how it works or if the form is painful.
 
 ## Act like it's real
 
