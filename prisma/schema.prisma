@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// role: "CUSTOMER" | "TRADIE"
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String
+  name            String
+  role            String
+  region          String
+  phone           String?
+  avatarUrl       String?
+  // tradie-only
+  trade           String?
+  registrationNo  String?
+  licenceVerified Boolean  @default(false)
+  bio             String?
+  createdAt       DateTime @default(now())
+
+  jobs            Job[]
+  quotes          Quote[]
+  messages        Message[]
+  reviewsGiven    Review[] @relation("ReviewAuthor")
+  reviewsReceived Review[] @relation("ReviewTradie")
+}
+
+// status: "OPEN" | "ASSIGNED" | "COMPLETED" | "CLOSED"
+model Job {
+  id          String   @id @default(cuid())
+  customerId  String
+  customer    User     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  title       String
+  category    String
+  description String
+  region      String
+  suburb      String
+  budget      String?
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+
+  photos  Photo[]
+  quotes  Quote[]
+  reviews Review[]
+
+  @@index([status, category, region])
+}
+
+model Photo {
+  id    String @id @default(cuid())
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  url   String
+}
+
+// status: "PENDING" | "ACCEPTED" | "DECLINED"
+model Quote {
+  id         String   @id @default(cuid())
+  jobId      String
+  job        Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tradieId   String
+  tradie     User     @relation(fields: [tradieId], references: [id], onDelete: Cascade)
+  priceCents Int
+  message    String
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+
+  messages Message[]
+
+  @@unique([jobId, tradieId])
+}
+
+// Each quote is a private thread between the job's customer and the quoting tradie.
+model Message {
+  id        String   @id @default(cuid())
+  quoteId   String
+  quote     Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation("ReviewAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  tradieId  String
+  tradie    User     @relation("ReviewTradie", fields: [tradieId], references: [id], onDelete: Cascade)
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+
+  @@unique([jobId, authorId])
+}

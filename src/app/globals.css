@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Brand colours carried over from the 2022 iOS app's asset catalogue. */
+@theme {
+  --color-forest: #0c251d; /* Homebackgroundgreen */
+  --color-forest-2: #143a2d;
+  --color-lime: #a6d754; /* logogreen */
+  --color-leaf: #6cbd45; /* UploadAJobGreen */
+  --color-leaf-dark: #4f9a2f;
+  --color-paper: #f5f5f5; /* white2 */
+  --color-ink: #13201b;
+  --color-muted: #5b6b64;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed;
+}
+@utility btn-primary {
+  @apply btn bg-leaf text-white hover:bg-leaf-dark shadow-sm;
+}
+@utility btn-lime {
+  @apply btn bg-lime text-forest hover:brightness-95;
+}
+@utility btn-ghost {
+  @apply btn border border-black/10 bg-white text-ink hover:bg-black/5;
+}
+@utility card {
+  @apply rounded-2xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.06)] ring-1 ring-black/5;
+}
+@utility label {
+  @apply mb-1 block text-sm font-medium text-ink;
+}
+@utility input {
+  @apply w-full rounded-xl border border-black/15 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-leaf focus:ring-2 focus:ring-leaf/30;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+}

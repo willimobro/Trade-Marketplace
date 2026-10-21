@@ -1,0 +1,100 @@
+import Link from "next/link";
+import { categoryStyle } from "@/lib/constants";
+
+export function Logo({ className = "" }: { className?: string }) {
+  return (
+    <Link href="/" className={`flex items-center gap-2 font-bold tracking-tight ${className}`}>
+      <span className="grid h-8 w-8 place-items-center rounded-lg bg-lime text-forest">
+        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+          <path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2L13.5 2Z" />
+        </svg>
+      </span>
+      <span className="hidden min-[440px]:inline">
+        Trade<span className="text-lime">Marketplace</span>
+      </span>
+    </Link>
+  );
+}
+
+export function CategoryChip({ name }: { name: string }) {
+  const c = categoryStyle(name);
+  return (
+    <span className={`chip ${c.color}`}>
+      <span aria-hidden>{c.icon}</span>
+      {name}
+    </span>
+  );
+}
+
+const STATUS_STYLE: Record<string, string> = {
+  OPEN: "bg-leaf/15 text-leaf-dark",
+  ASSIGNED: "bg-sky-500/15 text-sky-800",
+  COMPLETED: "bg-black/10 text-ink",
+  CLOSED: "bg-black/5 text-muted",
+  PENDING: "bg-amber-400/20 text-amber-900",
+  ACCEPTED: "bg-leaf/15 text-leaf-dark",
+  DECLINED: "bg-black/5 text-muted",
+};
+
+export function StatusChip({ status }: { status: string }) {
+  const label = status.charAt(0) + status.slice(1).toLowerCase();
+  return <span className={`chip ${STATUS_STYLE[status] ?? ""}`}>{label}</span>;
+}
+
+export function Avatar({ name, url, size = 40 }: { name: string; url?: string | null; size?: number }) {
+  const initials = name
+    .split(/\s+/)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  if (url)
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={url} alt={name} width={size} height={size} className="rounded-full object-cover shrink-0" style={{ width: size, height: size }} />;
+  return (
+    <span
+      className="grid place-items-center rounded-full bg-forest-2 text-lime font-semibold shrink-0"
+      style={{ width: size, height: size, fontSize: size * 0.38 }}
+      aria-hidden
+    >
+      {initials}
+    </span>
+  );
+}
+
+export function LicenceBadge({ verified }: { verified: boolean }) {
+  return verified ? (
+    <span className="chip bg-leaf/15 text-leaf-dark" title="Registration checked against the EWRB public register">
+      ✓ Licence verified
+    </span>
+  ) : (
+    <span className="chip bg-amber-400/20 text-amber-900" title="Registration number not yet checked">
+      Licence pending check
+    </span>
+  );
+}
+
+export function Stars({ rating, className = "" }: { rating: number; className?: string }) {
+  const full = Math.round(rating);
+  return (
+    <span className={`text-amber-500 ${className}`} aria-label={`${rating.toFixed(1)} out of 5 stars`}>
+      {"★".repeat(full)}
+      <span className="text-black/15">{"★".repeat(5 - full)}</span>
+    </span>
+  );
+}
+
+export function FormMessage({ state }: { state: { error?: string; ok?: string } | undefined }) {
+  if (state?.error) return <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">{state.error}</p>;
+  if (state?.ok) return <p className="rounded-lg bg-leaf/10 px-3 py-2 text-sm text-leaf-dark" role="status">{state.ok}</p>;
+  return null;
+}
+
+export function EmptyState({ title, children }: { title: string; children?: React.ReactNode }) {
+  return (
+    <div className="card p-8 text-center">
+      <p className="font-semibold">{title}</p>
+      {children && <div className="mt-2 text-sm text-muted">{children}</div>}
+    </div>
+  );
+}
