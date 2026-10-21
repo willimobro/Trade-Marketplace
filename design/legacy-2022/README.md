@@ -2,6 +2,7 @@
 
 Original design exports recovered from the project's Downloads folder and three Desktop copies on 21 October 2026. The source files on the Mac were left unchanged.
 
+- [Online Figma source: Trade Marketplace 1](https://www.figma.com/design/WurSo76mY67lO23D4Zlu7v/Trade-Marketplace-1?node-id=0-1) — supplied by Matthew and view access confirmed on 21 October 2026; editable `.fig` backup still pending. The canvas contains more screens and annotations than the recovered PDF.
 - [Original 15-page UI PDF](Trade%20Marketplace%201.pdf)
 - [Screen contact sheet](ui-contact-sheet.png) — generated preview, not an original design file
 - [Artwork and image exports](assets/)
