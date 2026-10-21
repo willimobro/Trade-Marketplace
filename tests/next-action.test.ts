@@ -38,3 +38,15 @@ describe("job guidance respects the next actor and financial state", () => {
     assert.match(nextAction("CANCELLED", "admin"), /any recorded refund/i);
   });
 });
+
+
+it("pending trades never promise estimates, claims or completion in customer status guidance", () => {
+  for (const category of ["Plumbing", "Gas Fitting", "Construction"]) {
+    for (const status of ["REVIEW", "PRICED", "BOOKABLE", "ASSIGNED", "SUBMITTED"]) {
+      const message = nextAction(status, "customer", category);
+      assert.match(message, /requirements are pending/);
+      assert.doesNotMatch(message, /provide private estimates|can claim|please confirm/i);
+    }
+    assert.match(nextAction("CANCELLED", "customer", category), /cancelled/i);
+  }
+});

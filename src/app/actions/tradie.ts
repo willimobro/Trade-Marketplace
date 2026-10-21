@@ -87,6 +87,8 @@ export async function requestVariation(jobId: string, _prev: FormState, form: Fo
   if (error) return { error };
   const job = await db.job.findUnique({ where: { id: jobId } });
   if (!job || job.tradieId !== user.id || job.status !== "ASSIGNED") return { error: "You can't add a variation to this job." };
+  const blocker = getTradeActionBlocker(user, job.category);
+  if (blocker) return { error: blocker };
 
   const parsed = variationSchema.safeParse({ description: form.get("description"), hours: form.get("hours") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };

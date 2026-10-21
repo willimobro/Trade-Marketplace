@@ -341,16 +341,7 @@ export default async function JobPage({
           <div className="card space-y-3 p-5">
             <h2 className="font-bold">Status</h2>
             <p className="text-sm">
-              {{
-                REVIEW: "Next: tradies provide private estimates, then Trade Marketplace reviews them and sets your fixed price.",
-                PRICED: "Your fixed price is ready. Next: review the price and test payment. No tradie is assigned yet.",
-                BOOKABLE: "Test payment recorded. Next: a verified tradie can claim your job. No appointment is scheduled yet.",
-                ASSIGNED: "An tradie has claimed your job. Use messages to agree access and timing; no appointment is scheduled by the app.",
-                SUBMITTED: "The work's done and the CoC is uploaded. Please confirm.",
-                COMPLETED: "All done. Thanks for using Trade Marketplace!",
-                CANCEL_REVIEW: "We're looking into your cancellation and will be in touch.",
-                CANCELLED: "This job was cancelled.",
-              }[job.status]}
+              {nextAction(job.status, "customer", job.category)}
             </p>
             {job.tradie && (
               <div className="flex items-center gap-3 border-t border-black/5 pt-3">

@@ -16,6 +16,7 @@ function load<T>(file: string, mocks: Record<string, unknown>): T {
 }
 type Outcome = { error?: string; ok?: string };
 type TradieActions = {
+  requestVariation: (id: string, previous: undefined, form: FormData) => Promise<Outcome>;
   submitEstimate: (id: string, previous: undefined, form: FormData) => Promise<Outcome>;
   claimJob: (id: string) => Promise<Outcome>;
   submitCoc: (id: string, previous: undefined, form: FormData) => Promise<Outcome>;
@@ -118,4 +119,32 @@ test("completion and overdue release exclude unconfigured trades before payroll 
   await actions.releaseOverdue();
   assert.equal(overdueQuery?.where.category, "Electrical");
   assert.equal(overdueQuery?.where.status, "SUBMITTED");
+});
+
+
+test("variation rejects legacy cross-trade assignments before uploads or writes, retaining valid electrical requests", async () => {
+  for (const category of ["Plumbing", "Gas Fitting", "Construction", "Electrical"]) {
+    let uploads = 0;
+    let writes = 0;
+    const actions = load<TradieActions>("app/actions/tradie.ts", {
+      "next/cache": { revalidatePath() {} },
+      "@/lib/session": { requireUser: async () => ({ id: "worker", role: "TRADIE", trade: "Electrical", licenceVerified: true }) },
+      "@/lib/trade-readiness": readiness,
+      "@/lib/uploads": { saveUploads: async () => { uploads++; return ["/fixture.png"]; } },
+      "@/lib/db": { db: {
+        job: { findUnique: async () => ({ category, status: "ASSIGNED", tradieId: "worker" }) },
+        variation: { create: async () => { writes++; } },
+      } },
+    });
+    const form = new FormData();
+    form.set("description", "Additional work with a valid description");
+    form.set("hours", "2");
+    const outcome = await actions.requestVariation("legacy-job", undefined, form);
+    if (category === "Electrical") {
+      assert.ok(outcome.ok); assert.equal(uploads, 1); assert.equal(writes, 1);
+    } else {
+      assert.match(outcome.error ?? "", /must match/);
+      assert.equal(uploads, 0); assert.equal(writes, 0);
+    }
+  }
 });
