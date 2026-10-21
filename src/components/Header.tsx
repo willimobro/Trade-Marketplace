@@ -6,7 +6,7 @@ import { Navigation } from "./Navigation";
 
 export function Header({ user }: { user: CurrentUser | null }) {
   return (
-    <header className="bg-forest text-white">
+    <header className={`bg-forest text-white ${user ? "lg:hidden" : ""}`}>
       <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
         <Logo />
         <nav aria-label="Account navigation" className="flex flex-wrap items-center gap-2 text-sm">

@@ -2,6 +2,7 @@
 
 import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef, useState, type ReactNode, type Ref } from "react";
 
+import Link from "next/link";
 import { FormMessage } from "@/components/ui";
 import { formatNZD } from "@/lib/constants";
 import { priceWork, type Rates } from "@/lib/pricing";
@@ -92,10 +93,30 @@ export function EstimateForm({ action, existing }: { action: BoundAction; existi
 
 export function ClaimForm({ action, earn }: { action: (prev: FormState) => Promise<FormState>; earn: string }) {
   const [state, formAction, pending] = useActionState(action, undefined);
+  const [reviewing, setReviewing] = useState(false);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const claimTrigger = useRef<HTMLButtonElement>(null);
+  const restoreClaimFocus = useRef(false);
+  useEffect(() => {
+    if (reviewing) heading.current?.focus();
+    else if (restoreClaimFocus.current) {
+      claimTrigger.current?.focus();
+      restoreClaimFocus.current = false;
+    }
+  }, [reviewing]);
+  if (!reviewing) return <button ref={claimTrigger} type="button" className="btn-primary w-full" onClick={() => setReviewing(true)}>Review claim · {earn} gross pay</button>;
   return (
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
+      <h3 ref={heading} tabIndex={-1} className="font-semibold">Before you claim</h3>
+      <p className="text-sm">Gross pay: <strong>{earn}</strong>, including holiday pay and before payroll deductions. Review the scope and materials budget above. Claiming assigns this job to you; it does not set an appointment.</p>
+      <p className="text-sm text-muted">Another electrician may claim it first. A successful claim will reveal the customer’s contact details so you can agree timing.</p>
+      <label className="flex min-h-12 items-start gap-3 text-sm"><input className="mt-1" type="checkbox" required name="reviewedScope" />I have reviewed the scope and gross pay and want to claim this job.</label>
       <FormMessage state={state} />
-      <SubmitButton className="btn-primary w-full py-3 text-base" pending="Claiming…">Claim job · {earn} gross pay</SubmitButton>
+      {state?.error && <p className="text-sm">The claim was not confirmed. <Link className="underline" href="/jobs">Return to available jobs</Link> to check current availability.</p>}
+      <div className="flex flex-wrap gap-2">
+        <SubmitButton className="btn-primary" pending="Claiming…">Confirm claim</SubmitButton>
+        <button type="button" className="btn-ghost" disabled={pending} onClick={() => { restoreClaimFocus.current = true; setReviewing(false); }}>Back to details</button>
+      </div>
     </RetainedForm>
   );
 }
@@ -212,6 +233,7 @@ export function MessageForm({ action }: { action: BoundAction }) {
         <SubmitButton className="btn-primary shrink-0" pending="…">Send</SubmitButton>
       </div>
       {state?.error && <FormMessage state={state} />}
+      <p role="status" aria-live="polite" className="text-sm text-leaf-dark">{pending ? "Sending message…" : state?.ok ? "Message sent to this job’s conversation." : ""}</p>
     </RetainedForm>
   );
 }

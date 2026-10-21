@@ -1,3 +1,5 @@
+> VISUAL DIRECTION REJECTED: the user requires exact fidelity to the original WurSo76mY67lO23D4Zlu7v. The Poppins/spacing/layout substitutions described below are preserved historical work, not approved design. Do not integrate this styling. Functional additions remain reviewable separately. Exact original measurements, font constraints and rendered comparisons must be resolved before visual corrections propagate.
+
 # Responsive frontend handoff
 
 ## Scope and sources
@@ -33,8 +35,19 @@ Browser observations: original landing artwork renders, failed login shows an er
 
 ## Deferred work / existing limitations
 
-No automatic pricing, credits, scheduling, saved jobs/search, password recovery, real payments, real refunds or payroll integration was added. These need separate product decisions and backend work. Preserve future screens as explicitly labelled prototypes when designed, not fake successes.
+No automatic pricing, credits, scheduling, functional password recovery, real payments, real refunds or payroll integration was added. Browser-local saved/search UI and labelled recovery prototypes were added in the second batch. These need separate product decisions and backend work. Preserve future screens as explicitly labelled prototypes when designed, not fake successes.
 
 Existing backend limitations include public-by-URL uploads, holiday/minimum settings not fully snapshotted, page-load-triggered overdue completion, and transaction/race concerns around payout completion and payment/pricing changes. npm ci reports 10 existing vulnerabilities (9 high, 1 moderate); dependency overhaul is outside this frontend change. This is a development preview, not launch readiness.
 
 Integration owner: this feature branch. Public/account, job journeys and admin writers used bounded file scopes; QA owns tests only. Shared web-app/main and original design were not edited.
+
+
+## Second frontend batch (separate checkpoint)
+
+Based on b883a1b, developed in Trade-Marketplace-frontend-next to preserve independent QA's frozen worktree. Adds owner/admin-only consolidated saved payment records, customer status filters and next-action hero, tradie history, review-before-claim, job/payment recovery boundaries, successful message announcement, search/region/stage/saved/recent discovery, and keyboard photo dialog with zoom and unavailable-image fallback. Saved/recent lists retain IDs in browser-local storage, not a synced backend collection.
+
+Recovery, support and notification pages are explicitly labelled frontend previews, use example content and do not send email, change passwords, submit support tickets or claim real notifications. Admin export has actual download/error handling, reconciliation guidance and pending-state protection. Existing schema and server actions remain unchanged; the CSV holiday-pay column label now avoids a hard-coded percentage.
+
+Figma reference sC8nFNkf2Glt2rcjeuSkID dashboard 4:6 was read with high-fidelity code context and screenshot. The exact original vector lockup (188x46) is downloaded locally as public/brand/wordmark.svg and reused without reconstruction. Desktop shell and dashboard hierarchy follow the reference; current electrical-only server data replaces illustrative multi-trade examples. Mint #B7F0E4 added. Required input borders use #52645B per final design correction; #CBD5CE remains decorative. This is an intentional correction not yet applied to Figma because its connector hit the Starter limit.
+
+Figma contains 42 editable screens and 16 recovery frames according to the design worker. Populated photo galleries and exhaustive filtering interactions are specified but not drawn; this batch supplies working frontend behavior. Exact visual parity and all prototype link coverage are not claimed. No browser interaction or screenshot validation was performed during this batch because independent QA owns the browser. Integration into the first feature branch waits for that QA checkpoint.

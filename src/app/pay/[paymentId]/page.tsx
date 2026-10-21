@@ -37,6 +37,7 @@ export default async function PayPage({ params }: { params: Promise<{ paymentId:
         ) : (
           <p className="mt-6 text-sm text-leaf-dark">{payment.status === "REFUNDED" ? "Demo refund recorded · no money moved." : payment.status === "PENDING" ? "This payment is no longer available for the job’s current stage. Return to the job for the latest status." : `This payment is ${payment.status.toLowerCase()}.`}</p>
         )}
+        <Link href={`/receipts/${payment.jobId}`} className="btn-ghost mt-4 w-full">View consolidated payment record</Link>
         <Link href={`/jobs/${payment.jobId}`} className="mt-4 block text-center text-sm text-muted hover:underline">Back to job</Link>
       </div>
     </div>

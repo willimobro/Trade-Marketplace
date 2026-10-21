@@ -4,6 +4,7 @@
 @theme {
   --color-forest: #0c251d;
   --color-forest-2: #143a2d;
+  --color-mint: #b7f0e4;
   --color-lime: #a6d754;
   --color-leaf: #6cbd45;
   --color-leaf-dark: #326c20;
@@ -50,7 +51,7 @@ main { min-width: 0; }
 }
 @utility label { @apply mb-2 block text-sm font-semibold text-ink; }
 @utility input {
-  @apply min-h-12 w-full rounded-xl border border-border bg-white px-4 py-3 text-base text-ink transition placeholder:text-muted focus:border-focus focus:outline-2 focus:outline-offset-2 focus:outline-focus;
+  @apply min-h-12 w-full rounded-xl border border-muted bg-white px-4 py-3 text-base text-ink transition placeholder:text-muted focus:border-focus focus:outline-2 focus:outline-offset-2 focus:outline-focus;
 }
 @utility chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-5; }
 @utility page-title { @apply text-[32px] font-semibold leading-tight tracking-tight lg:text-[40px]; }

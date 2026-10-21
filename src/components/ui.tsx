@@ -4,10 +4,9 @@ import { JOB_STATUS, categoryStyle, formatNZD } from "@/lib/constants";
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <Link href="/" aria-label="Trade Marketplace home" className={`flex min-h-12 items-center gap-3 rounded-lg ${className}`}>
-      {/* Original recovered vector mark, kept unchanged. */}
+      {/* Exact original Figma vector lockup, including the original wordmark. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/logo.svg" width={26} height={43} alt="" className="h-10 w-6 shrink-0" />
-      <span className="text-sm font-semibold uppercase leading-tight tracking-[0.08em] sm:text-base">Trade<br />Marketplace</span>
+      <img src="/brand/wordmark.svg" width={188} height={46} alt="" className="shrink-0" />
     </Link>
   );
 }

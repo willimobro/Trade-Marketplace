@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { markPayoutPaid } from "@/app/actions/admin";
 import { formatNZD, jobRef, timeAgo } from "@/lib/constants";
 import { ConfirmAction } from "../ConfirmAction";
+import { PayrollExport } from "./PayrollExport";
 import { StatusChip } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
@@ -22,9 +23,10 @@ export default async function AdminPayoutsPage() {
           <h1 className="text-3xl font-bold sm:text-4xl">Payroll records</h1>
           <p className="mt-3 text-muted">{pending.length} pending · {formatNZD(total)} gross including holiday pay</p>
         </div>
-        <a href="/admin/payouts/export" className="btn-primary">Export pending records (CSV)</a>
       </div>
       <p className="max-w-2xl text-sm text-muted">Review the exported records in your payroll process. Exporting does not run payroll, calculate take-home pay or transfer money. Marking paid only updates this demo’s record.</p>
+      <PayrollExport count={pending.length} total={formatNZD(total)} />
+      <h2 className="text-xl font-bold">Record detail & reconciliation</h2>
       <div className="grid gap-4">
         {payouts.map((p) => (
           <article key={p.id} className="card space-y-4 p-4 sm:p-6">
@@ -43,7 +45,7 @@ export default async function AdminPayoutsPage() {
               <div><dt className="text-muted">Total before deductions</dt><dd className="mt-1 font-semibold tabular-nums">{formatNZD(p.grossCents + p.holidayPayCents)}</dd></div>
             </dl>
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <p className="text-sm text-muted">Created {timeAgo(p.createdAt)}</p>
+              <p className="text-sm text-muted">Created {timeAgo(p.createdAt)}{p.paidAt ? ` · Manually marked paid ${timeAgo(p.paidAt)}` : ""}</p>
               {p.status === "PENDING" && <ConfirmAction action={markPayoutPaid.bind(null, p.id)} label="Review paid status" description={`Record ${formatNZD(p.grossCents + p.holidayPayCents)} gross for ${p.tradie.name} as paid? Confirm it has been reconciled outside this app. This does not transfer money.`} confirmLabel="Mark record paid" />}
             </div>
           </article>

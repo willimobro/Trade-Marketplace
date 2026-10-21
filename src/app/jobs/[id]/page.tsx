@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { PhotoGallery } from "@/components/PhotoGallery";
+import { nextAction } from "./next-action";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
@@ -12,7 +14,7 @@ import { declineVariation } from "@/app/actions/payments";
 import { adminSignOff, priceJob, priceVariation, resolveCancellation } from "@/app/actions/admin";
 import { sendMessage } from "@/app/actions/messages";
 import { leaveReview } from "@/app/actions/reviews";
-import { Avatar, CategoryChip, FormMessage, LicenceBadge, Money, StatusChip, Stars } from "@/components/ui";
+import { Avatar, CategoryChip, LicenceBadge, Money, StatusChip, Stars } from "@/components/ui";
 import {
   CancelForm, ClaimForm, CocForm, EstimateForm, MessageForm, PriceForm, ResolveCancelForm, ReviewForm, VariationForm,
 } from "./forms";
@@ -21,13 +23,10 @@ export const dynamic = "force-dynamic";
 
 export default async function JobPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ paid?: string }>;
 }) {
   const { id } = await params;
-  const { paid } = await searchParams;
   const user = await requireUser(`/jobs/${id}`);
   await releaseOverdue();
   const [settings, job] = await Promise.all([
@@ -84,7 +83,11 @@ export default async function JobPage({
     <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 xl:grid-cols-[minmax(0,1fr)_360px]">
       <div className="min-w-0 space-y-6">
         <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className="text-sm text-muted hover:underline">← Back</Link>
-        {paid && <FormMessage state={{ ok: "Test payment recorded. No money was charged." }} />}
+        <section aria-label="Next step" className="card border-l-4 border-l-forest p-5">
+          <h2 className="font-semibold">What happens next</h2>
+          <p className="mt-2 text-sm">{nextAction(job.status, isAdmin ? "admin" : isOwner ? "customer" : isAssigned ? "assigned" : "tradie")}</p>
+          {(isOwner || isAdmin) && <Link href={`/receipts/${job.id}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline">View payment record</Link>}
+        </section>
 
         <article className="card overflow-hidden">
           <PhotoGallery photos={job.photos} label="Job" />
@@ -245,9 +248,9 @@ export default async function JobPage({
               {earn.hours} hrs × {formatNZD(rates.tradieRateCents)} + {settings.holidayPayPct}% holiday pay
             </p>
             <ul className="my-4 space-y-1 text-sm">
-              <li>✓ Customer has paid</li>
+              <li>✓ Customer test payment recorded</li>
               <li>✓ Materials budget {formatNZD(scopeMaterials)} ex GST on our Telfer account</li>
-              <li>✓ Extra work priced &amp; paid before you do it</li>
+              <li>✓ Extra work needs a price and customer approval before you do it</li>
             </ul>
             {user.licenceVerified ? (
               <ClaimForm action={claimJob.bind(null, job.id)} earn={formatNZD(earn.tradieTotalCents)} />
@@ -272,7 +275,7 @@ export default async function JobPage({
               </dl>
               {job.payout && (
                 <p className="mt-4 rounded-lg bg-leaf/10 p-3 text-sm text-leaf-dark">
-                  {job.payout.status === "PAID" ? "✓ Paid" : "Payout queued for the next pay run"} - {formatNZD(job.payout.grossCents + job.payout.holidayPayCents)}
+                  {job.payout.status === "PAID" ? "Marked paid by an administrator" : "Queued for manual payroll"} - {formatNZD(job.payout.grossCents + job.payout.holidayPayCents)}
                 </p>
               )}
             </div>
@@ -285,7 +288,7 @@ export default async function JobPage({
                 </div>
                 <div className="card p-5">
                   <h2 className="font-bold">Finished?</h2>
-                  <p className="mb-4 text-xs text-muted">Upload the CoC to get paid. The customer gets a copy.</p>
+                  <p className="mb-4 text-xs text-muted">Upload the CoC for sign-off. After sign-off, pay is queued for manual payroll. The customer can view the CoC.</p>
                   {openVariation ? (
                     <p className="text-sm text-muted">Waiting on the open variation first.</p>
                   ) : (
@@ -407,23 +410,4 @@ function median(xs: number[]) {
   const s = [...xs].sort((a, b) => a - b);
   const m = Math.floor(s.length / 2);
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
-}
-
-function PhotoGallery({ photos, label }: { photos: { id: string; url: string }[]; label: string }) {
-  if (!photos.length) return null;
-  return <section aria-label={`${label} photos`} className="p-4">
-    <h3 className="mb-3 text-sm font-semibold">{label} photos · {photos.length}</h3>
-    <div className="grid gap-3 sm:grid-cols-2">
-      {photos.map((photo, index) => <details key={photo.id} className="min-w-0 rounded-xl border border-black/10 p-2 open:col-span-full">
-        <summary className="cursor-pointer rounded-lg p-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2">
-          Photo {index + 1} · expand or collapse
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo.url} alt={`${label} photo ${index + 1} thumbnail`} className="mt-2 aspect-video w-full rounded-lg object-cover" />
-        </summary>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={photo.url} alt={`${label} photo ${index + 1} full view`} className="mt-3 max-h-[70vh] w-full object-contain" />
-        <a href={photo.url} target="_blank" rel="noreferrer" className="btn-ghost mt-3">Open original photo {index + 1} (new tab)</a>
-      </details>)}
-    </div>
-  </section>;
 }
