@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { SourceIcon } from "@/components/SourceIcon";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { signup } from "@/app/actions/auth";
 import { EWRB_REGISTER_URL, REGIONS } from "@/lib/constants";
@@ -25,13 +26,13 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
   }, [step]);
   useEffect(() => {
     let active = true;
-    Promise.all([document.fonts.load('760 36px "Original SF Expanded"'), document.fonts.load('700 14px "Original SF Bold"'), document.fonts.load('400 16px "Original SF Regular"')]).then(faces => {
+    Promise.all([document.fonts.load('760 36px "Trade Display"'), document.fonts.load('700 14px "Trade UI"'), document.fonts.load('400 16px "Trade UI"')]).then(faces => {
       if (active && faces.some(loaded => loaded.length === 0 || loaded.some(face => face.status !== "loaded"))) setFontsUnavailable(true);
     }).catch(() => { if (active) setFontsUnavailable(true); });
     return () => { active = false; };
   }, []);
   const loginUrl = `/login${next ? `?next=${encodeURIComponent(next)}` : ""}`;
-  const fontNotice = "Original SF Pro fonts unavailable on this device. Fallback text is not an exact match.";
+  const fontNotice = "The web font could not load. Fallback text is displayed.";
 
   if (step === 2) return <section className={styles.details}>
     <button type="button" disabled={pending} onClick={() => { moveFocus.current = true; setStep(1); }}>← Back to your details</button>
@@ -60,12 +61,12 @@ export function SignupForm({ initialRole, next }: { initialRole: "CUSTOMER" | "T
     <Image src="/original/signup-bolt.svg" alt="" width={419} height={694} className={`${styles.art} ${styles.bolt}`} unoptimized />
     <Image src="/original/signup-illustration.png" alt="" width={224} height={213} className={`${styles.art} ${styles.illustration}`} priority unoptimized />
     <Image src="/original/signup-mark.svg" alt="" width={26} height={43} className={`${styles.art} ${styles.mark}`} unoptimized />
-    <Link href={loginUrl} aria-label="Back to login" className={styles.back}><svg width="39" height="39" aria-hidden="true"><text x="10.0546875" y="24.7421875">{"\u{100bf6}"}</text></svg></Link>
+    <Link href={loginUrl} aria-label="Back to login" className={styles.back}><SourceIcon name="back" size={39} style={{ padding: 6.5, color: "white" }} /></Link>
     <h1 className={styles.title} aria-label="Create Account"><svg width="302" height="155" aria-hidden="true"><text x="0 32.9765625 48.69140625 74.390625 99.5625 116.75390625" y="34.296875">Create</text><text x="0 31.921875 57.3046875 82.6875 109.125 135.17578125 161.296875" y="77.296875">Account</text></svg></h1>
     <form className={styles.form} onSubmit={event => { event.preventDefault(); moveFocus.current = true; setStep(2); }} aria-label="Create account, step 1 of 2">
-      <label className={styles.srOnly} htmlFor="name">Full name</label><svg className={`${styles.icon} ${styles.nameIcon}`} aria-hidden="true"><text x="0" y="15.1875">{"\u{100269}"}</text></svg><input ref={nameInput} className={`${styles.input} ${styles.name}`} id="name" name="name" autoComplete="name" placeholder="Name" minLength={2} maxLength={60} required {...field("name")} /><span className={`${styles.rule} ${styles.nameRule}`} aria-hidden="true" />
-      <label className={styles.srOnly} htmlFor="email">Email</label><svg className={`${styles.icon} ${styles.mail}`} aria-hidden="true"><text x="0" y="15.1875">{"\u{100355}"}</text></svg><input className={`${styles.input} ${styles.email}`} id="email" name="email" type="email" autoComplete="email" placeholder="Email" required {...field("email")} /><svg className={`${styles.icon} ${styles.emailCheck}`} aria-hidden="true"><text x="0" y="15.1875">{"\u{100185}"}</text></svg><span className={`${styles.rule} ${styles.emailRule}`} aria-hidden="true" />
-      <label className={styles.srOnly} htmlFor="password">Password, at least 8 characters</label><svg className={`${styles.icon} ${styles.lock}`} aria-hidden="true"><text x="0" y="15.1875">{"\u{1003a0}"}</text></svg><input className={`${styles.input} ${styles.password}`} id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="Password" minLength={8} required {...field("password")} /><button type="button" className={styles.showPassword} aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} onClick={() => setShowPassword(value => !value)}><svg width="25" height="19" aria-hidden="true"><text x="0" y="15.1875">{"\u{1002ef}"}</text></svg></button><span className={`${styles.rule} ${styles.passwordRule}`} aria-hidden="true" />
+      <label className={styles.srOnly} htmlFor="name">Full name</label><SourceIcon name="person" size={19} className={`${styles.icon} ${styles.nameIcon}`} style={{ color: "#898989", fill: "none" }} /><input ref={nameInput} className={`${styles.input} ${styles.name}`} id="name" name="name" autoComplete="name" placeholder="Name" minLength={2} maxLength={60} required {...field("name")} /><span className={`${styles.rule} ${styles.nameRule}`} aria-hidden="true" />
+      <label className={styles.srOnly} htmlFor="email">Email</label><SourceIcon name="envelope" size={19} className={`${styles.icon} ${styles.mail}`} style={{ color: "#898989", fill: "none" }} /><input className={`${styles.input} ${styles.email}`} id="email" name="email" type="email" autoComplete="email" placeholder="Email" required {...field("email")} /><SourceIcon name="check" size={19} className={`${styles.icon} ${styles.emailCheck}`} style={{ color: "#6cbd45", fill: "none" }} /><span className={`${styles.rule} ${styles.emailRule}`} aria-hidden="true" />
+      <label className={styles.srOnly} htmlFor="password">Password, at least 8 characters</label><SourceIcon name="lock" size={19} className={`${styles.icon} ${styles.lock}`} style={{ color: "#898989", fill: "none" }} /><input className={`${styles.input} ${styles.password}`} id="password" name="password" type={showPassword ? "text" : "password"} autoComplete="new-password" placeholder="Password" minLength={8} required {...field("password")} /><button type="button" className={styles.showPassword} aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} onClick={() => setShowPassword(value => !value)}><SourceIcon name="eye-slash" size={19} style={{ width: 25, height: 19, color: "#6cbd45" }} /></button><span className={`${styles.rule} ${styles.passwordRule}`} aria-hidden="true" />
       <Link href="/recovery" className={styles.forgot} aria-label="Forgot password? Recovery preview"><svg width="167" height="27" aria-hidden="true"><text x="40.97265625" y="17.4765625">Forgot password?</text></svg></Link>
       <button type="submit" className={`${styles.action} ${styles.primary}`} aria-label="Create Account: continue to account details"><svg aria-hidden="true"><text x="160.5" y="31.4765625" textAnchor="middle">Create Account</text></svg></button>
       <span className={`${styles.separator} ${styles.separatorLeft}`} aria-hidden="true" /><span className={`${styles.separator} ${styles.separatorRight}`} aria-hidden="true" /><svg className={styles.or} aria-hidden="true"><text x="76.1103515625" y="13.4765625">or</text></svg>

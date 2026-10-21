@@ -1,0 +1,43 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 810 >>
+stream
+0.92 g BT /F1 76 Tf 50 440 Td (DEMO ONLY) Tj ET
+0.05 0.15 0.11 rg
+BT /F1 22 Tf 45 740 Td (DEMO DOCUMENT ó NOT A CERTIFICATE) Tj ET
+BT /F1 17 Tf 45 700 Td (Trade Marketplace development fixture) Tj ET
+BT /F1 13 Tf 45 650 Td (This file tests the document viewing and download flow only.) Tj ET
+BT /F1 13 Tf 45 620 Td (It is not a Certificate of Compliance or an electrical safety record.) Tj ET
+BT /F1 13 Tf 45 590 Td (It does not certify work, an installation, a person or a licence.) Tj ET
+BT /F1 13 Tf 45 560 Td (No inspection, approval, signature or compliance claim is supplied.) Tj ET
+BT /F1 18 Tf 45 290 Td (NOT VALID FOR LEGAL OR OPERATIONAL USE) Tj ET
+BT /F1 13 Tf 45 250 Td (All linked job details are fictional demonstration data.) Tj ET
+BT /F1 12 Tf 45 210 Td (Fixture ID: TM-DEMO-DOCUMENT-V1) Tj ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000000344 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1204
+%%EOF

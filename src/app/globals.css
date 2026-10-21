@@ -1,12 +1,9 @@
 @import "tailwindcss";
 
-/* Source font names are local-only: no Apple font binaries are distributed.
-   Remaining layout components are being reconciled with original Figma. */
-@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Regular'); font-weight: 400; }
-@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Medium'); font-weight: 500; }
-@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Semibold'); font-weight: 600; }
-@font-face { font-family: 'Trade Source SF'; src: local('SFPro-Bold'); font-weight: 700; }
-
+/* Approved webfont substitution. Original assets and measured geometry remain.
+   Google Fonts Roboto Flex, SIL OFL1.1; see public/fonts/roboto-flex/OFL.txt. */
+@font-face { font-family:'Trade UI'; src:url('/fonts/roboto-flex/RobotoFlex.ttf') format('truetype'); font-weight:100 1000; font-stretch:25% 151%; font-style:normal; font-display:swap; }
+@font-face { font-family:'Trade Display'; src:url('/fonts/roboto-flex/RobotoFlex.ttf') format('truetype'); font-weight:100 1000; font-stretch:25% 151%; font-style:normal; font-display:swap; }
 @theme {
   --color-forest: #0c251d;
   --color-forest-2: #143a2d;
@@ -22,7 +19,7 @@
   --color-warning: #805400;
   --color-focus: #2163c6;
   --container-6xl: 75rem;
-  --font-sans: 'Trade Source SF', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Trade UI', ui-sans-serif, system-ui, sans-serif;
 }
 
 :root { color-scheme: light; }

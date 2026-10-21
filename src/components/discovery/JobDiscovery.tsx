@@ -14,6 +14,7 @@ export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery =
   const [saved, setSaved] = useState<string[]>([]);
   const [recent, setRecent] = useState<string[]>([]);
   const [storageError, setStorageError] = useState(false);
+  const [failedPhotos, setFailedPhotos] = useState<string[]>([]);
   const key = `tm-discovery-${storageScope}`;
   useEffect(() => {
     try {
@@ -46,8 +47,10 @@ export function JobDiscovery({ jobs, defaultRegion, storageScope, initialQuery =
     <div className={styles.grid}>{visible.map((job) => <article key={job.id} className={styles.card}>
       <Link href={`/jobs/${job.id}`} onClick={() => store(saved, [job.id, ...recent.filter((id) => id !== job.id)].slice(0, 20))} className={styles.link}>
         {job.cover && <div className={styles.photo}>
+          {failedPhotos.includes(job.cover) ? <span className="grid h-full place-items-center p-3 text-center text-sm">Photo unavailable</span> : <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={job.cover} alt=""  />
+          <img src={job.cover} alt="" onError={() => setFailedPhotos(current => current.includes(job.cover!) ? current : [...current, job.cover!])} />
+          </>}
         </div>}
         <div className={styles.meta}><span className={styles.number}>TM-{job.jobNumber}</span><span className={`${styles.status} ${job.status === "BOOKABLE" ? styles.claim : styles.estimate}`}>{job.status === "BOOKABLE" ? "Available to claim" : "Needs estimates"}</span></div>
         <h2 className={styles.title}>{job.title}</h2><p className={styles.description}>{job.description}</p><p className={styles.location}>{job.suburb}, {job.region}</p><p className={styles.pay}>{job.detail}</p><span className={styles.view}>View job</span>

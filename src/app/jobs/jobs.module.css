@@ -1,21 +1,18 @@
-@font-face { font-family:'Jobs SF Regular'; src:local('SFPro-Regular'); font-weight:400; }
-@font-face { font-family:'Jobs SF Bold'; src:local('SFPro-Bold'); font-weight:700; }
-@font-face { font-family:'Jobs SF Expanded'; src:local('SFPro-ExpandedBold'); font-weight:760; }
 /* Source31:310/31:197:187-square photo tiles,6px gap,5px corners.
    Live statuses/pay and persistent filters extend the source's photo-only grid.
    Search retains355×39/radius11 from31:324. Region/stage, collections,
    history and full current-data text are additions, not exact-source states.
    Source photo tiles have no shadows; do not copy the floating filter shadow
    onto cards. */
-.board { width:100%; color:#0c251d; font:400 14px/1.4 'Jobs SF Regular',sans-serif; }
+.board { width:100%; color:#0c251d; font:400 14px/1.4 'Trade UI',sans-serif; }
 .filters { margin:20px 0 0; padding:16px 11px; background:#fff; border-radius:11px; }
 .fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
 .fields > div:first-child { grid-column:1/-1; }
-.label { display:block; margin-bottom:6px; font:700 14px/19px 'Jobs SF Bold',sans-serif; }
-.control { width:100%; min-width:0; min-height:48px; border:1px solid #898989; border-radius:11px; padding:10px 12px; background:#fff; color:#0c251d; font:400 14px/19px 'Jobs SF Regular',sans-serif; }
+.label { display:block; margin-bottom:6px; font:700 14px/19px 'Trade UI',sans-serif; }
+.control { width:100%; min-width:0; min-height:48px; border:1px solid #898989; border-radius:11px; padding:10px 12px; background:#fff; color:#0c251d; font:400 14px/19px 'Trade UI',sans-serif; }
 .control[type=search] { width:355px; max-width:100%; height:39px; min-height:39px; padding:9px 12px; background:#f1ece5; border-color:transparent; }
 .collections { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
-.selected,.button { display:inline-flex; justify-content:center; align-items:center; min-height:44px; padding:10px 12px; border:1px solid #6cbd45; border-radius:11px; font:700 14px/19px 'Jobs SF Bold',sans-serif; cursor:pointer; }
+.selected,.button { display:inline-flex; justify-content:center; align-items:center; min-height:44px; padding:10px 12px; border:1px solid #6cbd45; border-radius:11px; font:700 14px/19px 'Trade UI',sans-serif; cursor:pointer; }
 .selected { background:#0c251d; color:#fff; border-color:#0c251d; }
 .button { background:white; color:#0c251d; }
 .button:hover { background:#f1ece5; }
@@ -31,28 +28,28 @@
 .photo img { display:block; width:100%; height:100%; object-fit:cover; }
 .meta { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:10px 9px 0; }
 .number { color:#52645b; font-size:12px; }
-.status { display:inline-block; padding:4px 6px; border-radius:5px; font:700 12px/16px 'Jobs SF Bold',sans-serif; }
+.status { display:inline-block; padding:4px 6px; border-radius:5px; font:700 12px/16px 'Trade UI',sans-serif; }
 .claim { background:#a6d754; color:#0c251d; }
 .estimate { background:#f1ece5; color:#0c251d; }
-.title { margin:8px 9px 0; overflow-wrap:anywhere; font:760 14px/19px 'Jobs SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; }
+.title { margin:8px 9px 0; overflow-wrap:anywhere; font:760 14px/19px 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
 .description { margin:6px 9px 0; color:#52645b; font-size:14px; line-height:19px; overflow-wrap:anywhere; }
 .location { margin:10px 9px 0; font-size:14px; line-height:19px; overflow-wrap:anywhere; }
-.pay { margin:8px 9px 0; font:700 14px/19px 'Jobs SF Bold',sans-serif; overflow-wrap:anywhere; }
-.view { display:inline-flex; min-height:44px; align-items:center; margin:6px 9px 0; text-decoration:underline; font:700 14px/19px 'Jobs SF Bold',sans-serif; }
+.pay { margin:8px 9px 0; font:700 14px/19px 'Trade UI',sans-serif; overflow-wrap:anywhere; }
+.view { display:inline-flex; min-height:44px; align-items:center; margin:6px 9px 0; text-decoration:underline; font:700 14px/19px 'Trade UI',sans-serif; }
 .saveRow { border-top:1px solid #e2e5df; padding:5px; }
 .saveRow button { width:100%; font-size:13px; white-space:normal; }
 .empty { padding:28px 16px; background:white; border-radius:11px; text-align:center; }
-.empty h2 { font:760 20px/26px 'Jobs SF Expanded',sans-serif; }
+.empty h2 { font:760 20px/26px 'Trade Display',sans-serif; }
 .empty p { margin:12px 0 20px; color:#52645b; }
 .board :focus-visible { outline:2px solid #2163c6; outline-offset:2px; }
 
 @media (max-width:340px) { .grid { grid-template-columns:minmax(0,1fr); } .fields { grid-template-columns:minmax(0,1fr); } }
 
 /* Original All Jobs31:310 header64px; current guidance blocks extend reference. */
-.screen { width:min(390px,100%); margin:0 auto; min-height:100vh; background:#fff; color:#0c251d; font:400 16px/1.4 'Jobs SF Regular',sans-serif; }
+.screen { width:min(390px,100%); margin:0 auto; min-height:100vh; background:#fff; color:#0c251d; font:400 16px/1.4 'Trade UI',sans-serif; }
 .header { position:relative; height:64px; background:#0c251d; color:#fff; }
-.header h1 { position:absolute; left:52px; top:22px; margin:0; font:760 24px/normal 'Jobs SF Expanded',sans-serif; font-variation-settings:'wdth' 132,'opsz' 28,'wght' 760; }
-.back,.post { position:absolute; top:20px; font:400 26px/31px 'Jobs SF Regular',sans-serif; color:#fff; }
+.header h1 { position:absolute; left:52px; top:22px; margin:0; font:760 24px/normal 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
+.back,.post { position:absolute; top:20px; font:400 26px/31px 'Trade UI',sans-serif; color:#fff; }
 .back {left:21px;} .post {left:332px;}
 .notice {display:flex;flex-wrap:wrap;gap:10px;padding:16px;font-size:14px;border-bottom:1px solid #afacac;}
 .intro {padding:16px;margin:0;font-size:14px;}

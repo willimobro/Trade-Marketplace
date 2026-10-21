@@ -1,6 +1,3 @@
-@font-face { font-family: 'Detail SF Regular'; src: local('SFPro-Regular'); font-weight: 400; }
-@font-face { font-family: 'Detail SF Expanded Regular'; src: local('SFPro-ExpandedRegular'); font-weight: 400; }
-@font-face { font-family: 'Detail SF Expanded'; src: local('SFPro-ExpandedBold'); font-weight: 760; }
 /* Original 34:2 / detail-family: 390px photo, panel y238 radius30,
    title x33/y266 Expanded28, body Regular16. Natural height deliberately
    replaces clipped source text boxes. PDF12 confirms this open-photo state;
@@ -11,16 +8,16 @@
    are functional adaptations; they are not original screen measurements.
    Source bookmark/count/customer ratings are not fabricated from absent data.
    No desktop detail original exists: retain 390px composition on wide screens. */
-.screen { width: min(390px, 100%); margin: 0 auto; background: white; color: #0c251d; padding-bottom: 36px; font: 400 16px/1.4 'Detail SF Regular', -apple-system, BlinkMacSystemFont, sans-serif; overflow-wrap: anywhere; }
-.screen :is(button, input, select, textarea, p, span, a, label, div) { font-family: 'Detail SF Regular', -apple-system, BlinkMacSystemFont, sans-serif; }
-.screen :is(h1, h2, h3), .screen :global(.label), .screen :global(.btn-primary), .screen .quoteLink { font-family: 'Detail SF Expanded', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 760; font-variation-settings: 'wdth' 132, 'opsz' 28, 'wght' 760; letter-spacing: 0; }
+.screen { width: min(390px, 100%); margin: 0 auto; background: white; color: #0c251d; padding-bottom: 36px; font: 400 16px/1.4 'Trade UI', -apple-system, BlinkMacSystemFont, sans-serif; overflow-wrap: anywhere; }
+.screen :is(button, input, select, textarea, p, span, a, label, div) { font-family: 'Trade UI', -apple-system, BlinkMacSystemFont, sans-serif; }
+.screen :is(h1, h2, h3), .screen :global(.label), .screen :global(.btn-primary), .screen .quoteLink { font-family: 'Trade Display', -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 760; font-variation-settings: 'wdth' 151, 'opsz' 28, 'wght' 900; letter-spacing: 0; }
 .main, .actions { min-width: 0; }
 .job { position: relative; }
 .backdrop { position: absolute; top: 36px; left: 33px; z-index: 2; }
 /* 34:48: white close glyph, Expanded Regular24, x33/y36; no circle,
    fill, shadow or pill behind it. The 171x19 source text box is not icon ink. */
 .back { display: inline-flex; align-items: flex-start; justify-content: flex-start; width: 24px; height: 24px; border: 0; border-radius: 0; color: #fff; background: transparent; line-height: 1; }
-.screen .closeGlyph { font-family: 'Detail SF Expanded Regular', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 24px; font-weight: 400; line-height: 1; }
+.screen .closeGlyph { font-family: 'Trade Display', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 24px; font-weight: 400; line-height: 1; }
 /* Preserve PhotoGallery's keyboard, modal and failure behavior; scope only
    its direct thumbnail strip. Dialog pictures/controls remain unconstrained. */
 .hero > section { position: relative; padding: 0; }
@@ -28,7 +25,7 @@
 .hero > section > div { display: flex; gap: 0; overflow-x: auto; scroll-snap-type: x mandatory; }
 .hero > section > div > button { flex: 0 0 100%; height: 316px; border: 0; border-radius: 5px; overflow: hidden; scroll-snap-align: start; background: #f1ece5; }
 .hero > section > div > button > img { width: 100%; height: 390px; max-width: none; margin-top: -74px; object-fit: cover; }
-.hero > section > div > button > span:last-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.hero > section > div > button > span:last-child { position: absolute; left:0; top:0; padding:0; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 /* A failed-image fallback is the only span, and must remain visible. */
 .hero > section > div > button > span:only-child { position: static; display: grid; width: 100%; height: 238px; clip-path: none; padding: 80px 33px 24px; }
 .noPhoto { min-height: 316px; display: grid; place-items: center; background: #f1ece5; color: #52645b; padding: 60px 33px 78px; }

@@ -12,7 +12,7 @@ Live text remains accessible DOM/SVG text, not outlined font binaries or a scree
 
 ## Limits and publication gate
 
-No SF Pro font binaries are bundled. These pages use locally installed source faces. Devices without them show a fallback warning; universal pixel equivalence is not established. Font distribution rights need resolution before a cross-platform exact-font release.
+No SF Pro binaries are bundled. The user authorized a close free Google Fonts alternative for the web app. Roboto Flex is self-hosted with its OFL license; display text uses weight 900, width 151 and optical size 28, with normal-width body text. At 36px, the measured Welcome width is 194.656px against the source 194.484px. This is a deliberate authorized font substitution, not exact SF glyph equivalence. Font-dependent private-use icons are replaced with independently authored portable SVG controls at the existing source positions; these are compatibility adaptations, not extracted Apple glyph assets.
 
 Original references cover mobile layouts. Centered source-width rendering on larger displays is deliberate; it is not an original desktop design. New business fields and current backend flows require clearly identified adaptations. The draft desktop sidebar and Poppins have been removed. Residual account/admin/support routes use a source-derived mobile shell; their content layouts are adaptations and are not original-reference matches.
 
@@ -32,9 +32,9 @@ The `.fig` and PDF differ in at least one browse example photo: `.fig` node31:81
 
 The public browse reference now includes native search feeding `/jobs?q=…`, alongside clearly marked source examples. The live jobs grid uses the source 187px photo tiles and 6px gaps; current status/pay/filter controls extend the historical design. Job details and post-job flows use source-derived mobile geometry while retaining modern business fields. These adapted screens are not pixel-identical historical screens.
 
-The dashboard now uses measured original quote-card typography, widths, photo sizes and shadows, with expanding heights for current stages. No original admin/payroll/settings screen exists in the source. Alternative webfont research is pending user visual approval; no substitute has been applied.
+The dashboard now uses measured original quote-card typography, widths, photo sizes and shadows, with expanding heights for current stages. No original admin/payroll/settings screen exists in the source. The approved Roboto Flex substitution preserves source font sizes and layout positions.
 
-## Integrated verification
+## Integrated verification before the Roboto Flex update
 
 - Lint, TypeScript, production build and all 16 regression tests pass.
 - Browser sweep: 16 route/role combinations at 390px; all rendered without server errors or horizontal overflow. Customer access to another customer's job remained blocked.
@@ -45,3 +45,11 @@ The dashboard now uses measured original quote-card typography, widths, photo si
 ## Concurrent remote work
 
 Remote `web-app` advanced to59c5964 with three QA documentation commits; no competing application code changed. The new round-1 reports identify an existing certificate validation/rejection/replacement and payout-hold gap. The CoC upload must not be mistaken for a validated legal certificate. That backend/workflow change is not implemented or hidden by this visual revision. The newer QA protocol also requests future in-app certificate forms; this remains a separate unfinished requirement.
+
+## Approved webfont and demo-fixture update
+
+Roboto Flex is bundled with its OFL license and provenance. No runtime Google Fonts request or installed SF font is required. The login screenshot was reviewed at390×844 after substitution. Native SVG controls preserve source locations while replacing nonportable private-use font symbols.
+
+Lint, TypeScript, all16 tests and the production build passed after integration. Production browser checks repeated authentication, signup focus/retention,16 route/role combinations, required-photo review/edit retention, and four1440px desktop framing checks. Adding real demo photos exposed a24px overflow from a visually hidden caption; corrected and rechecked at390px viewport/390px document width. Gallery images load, zoomed arrow use retains the selected image, and Escape closes with focus returned to the opener. Both bundled font aliases loaded successfully. A clean temporary SQLite database accepted the schema and full updated seed; the existing local database was not reset.
+
+Demo fixture origins and their explicit limitations are in demo-assets.md. Frontend journey coverage and remaining preview/backend boundaries are in frontend-coverage.md. Existing test evidence with the source SF face predates this update and is not a pixel score for the substitute font.

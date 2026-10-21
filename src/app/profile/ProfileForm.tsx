@@ -19,7 +19,7 @@ type ProfileUser = {
 export function ProfileForm({ user }: { user: ProfileUser }) {
   const [state, action, isPending] = useActionState(updateProfile, undefined);
   const [values, setValues] = useState({ name: user.name, region: user.region, phone: user.phone ?? "", registrationNo: user.registrationNo ?? "", bio: user.bio ?? "" });
-  const field = (name: keyof typeof values) => ({ value: values[name], onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setValues((current) => ({ ...current, [name]: event.target.value })) });
+  const field = (name: keyof typeof values) => ({ disabled: isPending, value: values[name], onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setValues((current) => ({ ...current, [name]: event.target.value })) });
   const isTradie = user.role === "TRADIE";
   return (
     <form onSubmit={(event) => {

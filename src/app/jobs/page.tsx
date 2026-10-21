@@ -1,3 +1,4 @@
+import { SourceIcon } from "@/components/SourceIcon";
 import Link from "next/link";
 import styles from "./jobs.module.css";
 import { redirect } from "next/navigation";
@@ -32,9 +33,9 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   return (
     <div className={styles.screen}>
       <header className={styles.header}>
-        <Link href="/" className={styles.back} aria-label="Back to browse">{"\u{100bf6}"}</Link>
+        <Link href="/" className={styles.back} aria-label="Back to browse"><SourceIcon name="back" size={26} /></Link>
         <h1>All Jobs</h1>
-        {!user && <Link href="/jobs/new" className={styles.post} aria-label="Post a job">{"\u{10044e}"}</Link>}
+        {!user && <Link href="/jobs/new" className={styles.post} aria-label="Post a job"><SourceIcon name="plus-square" size={26} /></Link>}
       </header>
 
       {!user && (

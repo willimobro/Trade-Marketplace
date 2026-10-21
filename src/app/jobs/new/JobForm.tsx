@@ -12,8 +12,8 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
   useEffect(() => {
     let active = true;
     Promise.all([
-      document.fonts.load('760 18px "Post SF Expanded"'),
-      document.fonts.load('400 16px "Post SF Regular"'),
+      document.fonts.load('760 18px "Trade Display"'),
+      document.fonts.load('400 16px "Trade UI"'),
     ]).then((faces) => {
       if (active && faces.some((loaded) => loaded.length === 0 || loaded.some((face) => face.status !== "loaded"))) setFontsUnavailable(true);
     }).catch(() => { if (active) setFontsUnavailable(true); });
@@ -46,7 +46,7 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
       }
       startTransition(() => action(data));
     }}>
-      {fontsUnavailable && <p role="status" className={styles.fontNotice}>Original SF Pro fonts are unavailable on this device. The fallback text is not an exact design match.</p>}
+      {fontsUnavailable && <p role="status" className={styles.fontNotice}>The web font could not load. Fallback text is displayed.</p>}
       <p className="text-sm font-medium text-muted" role="status">{review ? "Step 2 of 2 · Review your job" : "Step 1 of 2 · Tell us what needs doing"}</p>
       <fieldset disabled={pending} className={review ? "hidden" : "contents"}>
       <div>

@@ -1,3 +1,4 @@
+import { SourceIcon } from "@/components/SourceIcon";
 import Link from "next/link";
 import styles from "./detail.module.css";
 import { PhotoGallery } from "@/components/PhotoGallery";
@@ -91,7 +92,7 @@ export default async function JobPage({
       <div className={styles.main}>
         <article className={styles.job}>
           <div className={styles.backdrop}>
-            <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className={styles.back}><span aria-hidden="true" className={styles.closeGlyph}>{"\u{100184}"}</span><span className="sr-only">Back to jobs</span></Link>
+            <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className={styles.back}><span aria-hidden="true" className={styles.closeGlyph}><SourceIcon name="x" size={26} /></span><span className="sr-only">Back to jobs</span></Link>
           </div>
           {job.photos.length > 0 ? <div className={styles.hero}><PhotoGallery photos={job.photos} label="Job" /></div> : <div className={styles.noPhoto}><p>No job photos supplied</p></div>}
           <div className={styles.detailPanel}>
