@@ -3,7 +3,12 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 
-export const UPLOAD_DIR = path.join(process.cwd(), "uploads");
+export const UPLOAD_DIR = process.env.TRADE_HOSTED_PREVIEW === "1"
+  ? (() => {
+      if (!process.env.TRADE_PREVIEW_UPLOAD_DIR) throw new Error("Missing isolated preview upload directory");
+      return process.env.TRADE_PREVIEW_UPLOAD_DIR;
+    })()
+  : path.join(process.cwd(), "uploads");
 const MAX_BYTES = 5 * 1024 * 1024;
 
 // Identify by magic bytes, never trust the browser's MIME type.

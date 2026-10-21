@@ -5,20 +5,23 @@ import bcrypt from "bcryptjs";
 import { priceWork } from "../src/lib/pricing";
 
 const db = new PrismaClient();
-const DEMO_PASSWORD = "demo-password";
+const hosted = process.env.TRADE_HOSTED_PREVIEW === "1";
+const DEMO_PASSWORD = hosted ? process.env.PREVIEW_ACCOUNT_PASSWORD : "demo-password";
+if (!DEMO_PASSWORD || (hosted && DEMO_PASSWORD.length < 32)) throw new Error("Hosted preview requires an account password secret");
 // Local source-image wrappers visibly identify themselves as demo illustrations.
 // These are fixture URLs, not uploads or photographs of the fictional jobs.
 const DEMO_PHOTOS = ["/demo/wiring-demo.svg", "/demo/pipework-demo.svg"];
 const daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000);
 
 async function main() {
+  if (hosted && await db.user.count() !== 0) throw new Error("Hosted seed refuses a nonempty database");
   await db.$transaction([
     db.review.deleteMany(), db.message.deleteMany(), db.payout.deleteMany(), db.coc.deleteMany(),
     db.payment.deleteMany(), db.photo.deleteMany(), db.variation.deleteMany(), db.estimate.deleteMany(),
     db.job.deleteMany(), db.user.deleteMany(), db.settings.deleteMany(),
   ]);
   const s = await db.settings.create({ data: { id: 1 } });
-  const passwordHash = await bcrypt.hash(DEMO_PASSWORD, 10);
+  const passwordHash = await bcrypt.hash(DEMO_PASSWORD!, 10);
   const user = (email: string, data: Record<string, unknown>) =>
     db.user.create({ data: { email, passwordHash, region: "Southland", ...data } as never });
 
@@ -130,7 +133,7 @@ async function main() {
   });
   await db.review.create({ data: { jobId: done.id, authorId: mike.id, tradieId: jack.id, rating: 5, comment: "On time, tidy, explained everything.", createdAt: daysAgo(14) } });
 
-  console.log(`Seeded. Password for every demo account is in prisma/seed.ts. Accounts: admin@, customer@, customer2@, sparky@, sparky2@, sparky3@ (all @demo.test).`);
+  console.log(hosted ? "Synthetic preview fixtures initialized." : "Local demo fixtures initialized; see prisma/seed.ts for local-only credentials.");
 }
 
 main()

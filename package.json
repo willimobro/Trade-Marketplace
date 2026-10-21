@@ -12,7 +12,10 @@
     "verify-licence": "tsx scripts/verify-licence.ts",
     "make-admin": "tsx scripts/make-admin.ts",
     "test": "node --import tsx --test tests/*.test.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "preview:build": "node scripts/preview-build.mjs",
+    "preview:start": "node scripts/preview-start.mjs",
+    "preview:test": "node --test scripts/preview-security.test.mjs"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
