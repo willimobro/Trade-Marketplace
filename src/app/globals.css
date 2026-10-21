@@ -25,7 +25,8 @@
 
 :root { color-scheme: light; }
 body { background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.5; font-weight: 400; font-variation-settings: "wdth" 100, "opsz" 14; letter-spacing: 0; }
-button, input, select, textarea { font: inherit; }
+/* Keep control defaults below component utilities in the cascade. */
+@layer base { button, input, select, textarea { font: inherit; } }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:not(:disabled), select { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; }

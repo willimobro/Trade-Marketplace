@@ -35,3 +35,11 @@ Forest shell/navigation, Cream canvas, Mint, White, Leaf and Lime already match 
 No browser actions or runtime fixture changes during QA ownership. Code checks cannot certify the changed shadows, wrapping, hover states, content clearance or responsive appearance. Independent visual review at 320/390/768/1024/1440 is required before integration or deployment, especially checkout action wrapping, signup details, form rows, card density and keyboard focus above pinned navigation.
 
 Local checks: full lint, protected production build (including TypeScript) and whitespace checks passed. No runtime visual signoff is claimed; QA owns the browser. The original account checkpoint remains af77e7e and the hosted preview remains f23936b.
+
+## Independent QA fixes consolidated after 4ba85a2
+
+- Receipt recovery now performs a real document reload. Resetting only the React error boundary reused the failed server payload without requesting data. Reload is a GET of the same record; it does not replay checkout or alter saved payments.
+- The control `font: inherit` reset now lives in Tailwind's base layer. Shared utilities can supply 14px/700/1.2 typography, while intentionally larger checkout text retains its explicit 16px/24px style.
+- Targeted browser reproduction used a fresh disposable SQLite database: original receipt loaded, Payment table temporarily renamed, error boundary observed, table restored, then Enter on Reload payment record recovered the saved $1,014.30 receipt. Test server logs show a fresh GET. No shared data was used.
+- Actual computed error-button and equivalent link typography: 14px, 700, 16.8px. Profile Save also matches; explicit larger checkout button remains 16px, 700, 24px. Evidence is in `task/evidence/receipt-brand-regression`.
+- Added reusable regression harness `qa/regressions/receipt-retry-and-button-styles.mjs`, guarded to a loopback host and explicitly authorized disposable DB path. It checks a fresh navigation response, restored receipt, unchanged payment records and rendered button/link styles. The reproduction was exercised through the supported browser tool in this pass; the standalone harness remains available for independent QA execution.
