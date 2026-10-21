@@ -10,9 +10,14 @@ import { tradeRequirementsPending } from "@/lib/trade-readiness";
 
 export const dynamic = "force-dynamic";
 export default async function Home() {
-  const [jobs, settings, user] = await Promise.all([
+  const user = await getCurrentUser();
+  const [jobs, settings] = await Promise.all([
     db.job.findMany({
-      where: { status: { in: ["BOOKABLE", "REVIEW"] } },
+      where: {
+        status: { in: ["BOOKABLE", "REVIEW"] },
+        // Match detail-page ownership without widening access to private jobs.
+        ...(user?.role === "CUSTOMER" ? { customerId: user.id } : {}),
+      },
       orderBy: { createdAt: "desc" },
       select: {
         id: true, title: true, category: true, status: true, hours: true,
@@ -20,7 +25,7 @@ export default async function Home() {
         photos: { where: { variationId: null }, take: 1, select: { url: true } },
       },
     }),
-    getSettings(), getCurrentUser(),
+    getSettings(),
   ]);
   const cards = jobs.map(job => ({
     id: job.id, distanceKm: demoDistanceKm(job.id), title: job.title, cover: job.photos[0]?.url ?? null,
