@@ -71,7 +71,7 @@ function HomeContent() {
         <section className={styles.recent} aria-label="Recently viewed examples"><div className={styles.heading}><h2>Recently Viewed</h2><Link href="/jobs">See all</Link></div><div className={styles.verticalCards}>{[0,1,2,0,1,2].map((index, order) => <ExampleCard key={order} index={index} />)}</div></section>
       </>}
     </div>
-    <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? href === "/?view=search" : href === "/") ? "page" : undefined}><SourceIcon name={icon} size={26} /><span className="sr-only">{label}</span></Link>)}</nav>
+    <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? href === "/?view=search" : href === "/") ? "page" : undefined}><SourceIcon name={icon} size={26} navigation /><span className="sr-only">{label}</span></Link>)}</nav>
     <dialog ref={menu} className={styles.menu} aria-labelledby="home-menu-title" onClose={() => requestAnimationFrame(() => menuButton.current?.focus())}>
       <div className={styles.menuHeading}><h2 id="home-menu-title">Trade Marketplace</h2><button type="button" aria-label="Close menu" onClick={() => menu.current?.close()}><SourceIcon name="x" /></button></div>
       <nav aria-label="Menu">{[["/jobs", "Find work"], ["/jobs/new", "Post a job"], ["/for-tradies", "For electricians"], ["/login", "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={href} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>

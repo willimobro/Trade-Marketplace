@@ -42,7 +42,7 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
     </nav>
     <nav aria-label="Main navigation" className={styles.navigation}>
       {items.map((item) => <Link key={item.label} href={item.href} aria-label={item.label} aria-current={path === item.href || (item.href !== "/" && path.startsWith(`${item.href}/`)) ? "page" : undefined} title={item.label}>
-        <SourceIcon name={item.icon as SourceIconName} size={26} className={styles.glyph} />
+        <SourceIcon name={item.icon as SourceIconName} size={26} navigation className={styles.glyph} />
       </Link>)}
     </nav>
   </div>;

@@ -19,8 +19,8 @@ const paths = {
   menu: 'M3 5h18M3 12h18M3 19h18',
 } as const;
 export type SourceIconName = keyof typeof paths;
-export function SourceIcon({ name, size = 24, className, style }: { name: SourceIconName; size?: number; className?: string; style?: CSSProperties }) {
-  const original = Object.hasOwn(originalNavigation, name) ? originalNavigation[name as keyof typeof originalNavigation] : null;
+export function SourceIcon({ name, size = 24, className, style, navigation = false }: { name: SourceIconName; size?: number; className?: string; style?: CSSProperties; navigation?: boolean }) {
+  const original = navigation && Object.hasOwn(originalNavigation, name) ? originalNavigation[name as keyof typeof originalNavigation] : null;
   if (original) return <svg width={size * original.advance} height={size * original.lineHeight} viewBox={`0 ${-original.baseline} ${original.advance} ${original.lineHeight}`} fill="currentColor" aria-hidden="true" className={className} style={style} data-source-node={original.node}><path transform="scale(1 -1)" d={original.path} /></svg>;
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className} style={style}><path d={paths[name]} /></svg>;
 }
