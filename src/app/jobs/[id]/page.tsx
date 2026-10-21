@@ -69,8 +69,11 @@ export default async function JobPage({
   const scopeMaterials = (job.materialsCents ?? 0) + approved.reduce((s, v) => s + (v.materialsCents ?? 0), 0);
   const earn = priceWork(scopeHours, 0, rates, { applyMinimum: false });
   const jobPrice = job.hours != null ? priceWork(job.hours, job.materialsCents ?? 0, rates) : null;
+  const breakdownMatchesSavedPrice = jobPrice !== null && job.priceCents !== null && jobPrice.totalCents === job.priceCents;
   const pendingJobPayment = job.payments.find((p) => p.status === "PENDING");
-  const isPaid = job.payments.some((p) => p.status === "PAID" || p.status === "REFUNDED");
+  const isPaid = job.payments.some((p) => p.status === "PAID");
+  const isRefunded = job.payments.some((p) => p.status === "REFUNDED");
+  const autoReleaseAt = job.coc ? new Date(job.coc.uploadedAt.getTime() + settings.autoReleaseHours * 3_600_000) : null;
   const canSeeAddress = isOwner || isAdmin || isAssigned;
   const inThread = isOwner || isAdmin || isAssigned;
   const myEstimate = job.estimates.find((e) => e.tradieId === user.id);
@@ -78,22 +81,13 @@ export default async function JobPage({
   const audience = isOwner ? "customer" : "staff";
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 lg:grid-cols-[1fr_380px]">
+    <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 xl:grid-cols-[minmax(0,1fr)_360px]">
       <div className="min-w-0 space-y-6">
         <Link href={isAdmin ? "/admin" : user.role === "TRADIE" ? "/jobs" : "/dashboard"} className="text-sm text-muted hover:underline">← Back</Link>
-        {paid && <FormMessage state={{ ok: "Payment received - thanks!" }} />}
+        {paid && <FormMessage state={{ ok: "Test payment recorded. No money was charged." }} />}
 
         <article className="card overflow-hidden">
-          {job.photos.length > 0 && (
-            <div className={`grid gap-1 bg-forest ${job.photos.length > 1 ? "grid-cols-2 sm:grid-cols-3" : ""}`}>
-              {job.photos.map((p, i) => (
-                <a key={p.id} href={p.url} target="_blank" rel="noreferrer" className={i === 0 && job.photos.length > 2 ? "col-span-2 row-span-2" : ""}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.url} alt={`Job photo ${i + 1}`} className="h-full max-h-96 w-full object-cover" />
-                </a>
-              ))}
-            </div>
-          )}
+          <PhotoGallery photos={job.photos} label="Job" />
           <div className="p-6">
             <div className="flex flex-wrap items-center gap-2">
               <CategoryChip name={job.category} />
@@ -102,29 +96,31 @@ export default async function JobPage({
             </div>
             <h1 className="mt-3 text-2xl font-bold">{job.title}</h1>
             <p className="mt-2 text-sm text-muted">📍 {canSeeAddress ? `${job.address}, ` : ""}{job.suburb}, {job.region}</p>
-            <p className="mt-5 whitespace-pre-wrap leading-relaxed">{job.description}</p>
+            <p className="mt-5 whitespace-pre-wrap break-words leading-relaxed">{job.description}</p>
           </div>
         </article>
 
         {/* Customer: the price */}
-        {isOwner && jobPrice && job.status !== "REVIEW" && (
+        {isOwner && job.priceCents !== null && job.status !== "REVIEW" && (
           <section className="card p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="text-lg font-bold">Your fixed price</h2>
-              <p className="text-3xl font-bold text-leaf-dark"><Money cents={job.priceCents ?? jobPrice.totalCents} /></p>
+              <p className="text-3xl font-bold text-leaf-dark"><Money cents={job.priceCents} /></p>
             </div>
-            <div className="mt-3 space-y-1 text-sm">
+            {breakdownMatchesSavedPrice && jobPrice ? <div className="mt-3 space-y-1 text-sm">
               <div className="flex justify-between"><span>Labour ({jobPrice.hours} hrs, licensed electrician)</span><Money cents={jobPrice.exGstCents - materialsShown(jobPrice.materialsCents, rates.marginPct)} /></div>
               <div className="flex justify-between"><span>Materials</span><Money cents={materialsShown(jobPrice.materialsCents, rates.marginPct)} /></div>
               <div className="flex justify-between text-muted"><span>GST</span><Money cents={jobPrice.gstCents} /></div>
             </div>
+            : <p className="mt-3 text-sm text-muted">The saved fixed price above is authoritative. An accurate itemised breakdown is unavailable because the current pricing calculation differs from the saved quote. Ask Trade Marketplace for clarification before proceeding.</p>}
             {job.pricingNote && <p className="mt-3 rounded-lg bg-paper p-3 text-sm">{job.pricingNote}</p>}
             {job.status === "PRICED" && pendingJobPayment && (
               <Link href={`/pay/${pendingJobPayment.id}`} className="btn-primary mt-5 w-full py-3 text-base">
-                Pay {formatNZD(pendingJobPayment.amountCents)} &amp; book
+                Review {formatNZD(pendingJobPayment.amountCents)} test payment
               </Link>
             )}
-            {isPaid && <p className="mt-4 text-sm text-leaf-dark">✓ Paid {job.paidAt ? timeAgo(job.paidAt) : ""}</p>}
+            {isPaid && <p className="mt-4 text-sm text-leaf-dark">Demo payment recorded {job.paidAt ? timeAgo(job.paidAt) : ""} · no money moved</p>}
+            {isRefunded && <p className="mt-4 text-sm text-muted">Demo refund recorded · no money moved.</p>}
             <p className="mt-3 text-xs text-muted">
               Includes your Certificate of Compliance. If the electrician finds extra work, you&apos;ll get photos and a price to approve before anything extra is done.
             </p>
@@ -144,15 +140,8 @@ export default async function JobPage({
                     <span className="text-xs text-muted">{timeAgo(v.createdAt)} · {v.hoursRequested} extra hrs requested</span>
                     {v.priceCents != null && <span className="ml-auto font-bold"><Money cents={v.priceCents} /></span>}
                   </div>
-                  <p className="mt-2 whitespace-pre-wrap text-sm">{v.description}</p>
-                  <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
-                    {v.photos.map((p) => (
-                      <a key={p.id} href={p.url} target="_blank" rel="noreferrer">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={p.url} alt="Variation photo" className="aspect-square w-full rounded-lg object-cover" />
-                      </a>
-                    ))}
-                  </div>
+                  <p className="mt-2 whitespace-pre-wrap break-words text-sm">{v.description}</p>
+                  <PhotoGallery photos={v.photos} label="Variation" />
                   {isOwner && v.status === "PRICED" && pay && (
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link href={`/pay/${pay.id}`} className="btn-primary">Approve &amp; pay {formatNZD(pay.amountCents)}</Link>
@@ -188,9 +177,16 @@ export default async function JobPage({
                 Materials spent {formatNZD(job.coc.materialsSpentCents)} vs budget {formatNZD(scopeMaterials)} (ex GST) - check against Telfer order {jobRef(job.jobNumber)}.
               </p>
             )}
+            {job.status === "SUBMITTED" && autoReleaseAt && (
+              <div className="mt-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
+                <p className="font-semibold">Sign-off window: {settings.autoReleaseHours} hours after CoC upload</p>
+                <p className="mt-2">Threshold: <time dateTime={autoReleaseAt.toISOString()}>{autoReleaseAt.toLocaleString("en-NZ", { timeZone: "Pacific/Auckland", dateStyle: "medium", timeStyle: "short" })}</time> (New Zealand time). After this threshold, the next dashboard or job-page load automatically marks the job complete and queues the electrician’s pay for payroll. It does not transfer money immediately.</p>
+                <p className="mt-2">Sending a message does not pause this automatic sign-off.</p>
+              </div>
+            )}
             {isOwner && job.status === "SUBMITTED" && (
               <form action={confirmCompletion.bind(null, job.id)} className="mt-4">
-                <p className="mb-3 text-sm text-muted">Happy the work&apos;s done? Confirming releases the electrician&apos;s pay.</p>
+                <p className="mb-3 text-sm text-muted">Happy the work&apos;s done? Confirming queues the electrician&apos;s pay for payroll.</p>
                 <button className="btn-primary">Confirm job is complete</button>
               </form>
             )}
@@ -199,7 +195,7 @@ export default async function JobPage({
 
         {/* Messages */}
         {inThread && (
-          <section className="card p-6">
+          <section id="messages" className="card p-6">
             <h2 className="text-lg font-bold">Messages</h2>
             <p className="text-xs text-muted">
               {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, electrician and Trade Marketplace"}
@@ -211,10 +207,10 @@ export default async function JobPage({
                 const who = m.sender.role === "ADMIN" ? "Trade Marketplace" : m.sender.name.split(" ")[0];
                 return (
                   <div key={m.id} className={`flex ${mine ? "justify-end" : ""}`}>
-                    <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${mine ? "bg-leaf text-white" : m.sender.role === "ADMIN" ? "bg-forest text-white" : "bg-black/5"}`}>
-                      {!mine && <p className="text-[10px] font-semibold opacity-70">{who}</p>}
-                      <p className="whitespace-pre-wrap">{m.body}</p>
-                      <p className="mt-0.5 text-[10px] opacity-60">{timeAgo(m.createdAt)}</p>
+                    <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${mine ? "bg-lime text-forest" : m.sender.role === "ADMIN" ? "bg-forest text-white" : "bg-black/5"}`}>
+                      {!mine && <p className="text-xs font-semibold opacity-70">{who}</p>}
+                      <p className="whitespace-pre-wrap break-words">{m.body}</p>
+                      <p className="mt-0.5 text-xs opacity-60">{timeAgo(m.createdAt)}</p>
                     </div>
                   </div>
                 );
@@ -225,7 +221,7 @@ export default async function JobPage({
         )}
       </div>
 
-      <aside className="space-y-4 lg:sticky lg:top-6 lg:self-start">
+      <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
         {/* ---------- Other tradies ---------- */}
         {isOtherTradie && job.status === "REVIEW" && (
           <div className="card p-5">
@@ -307,10 +303,10 @@ export default async function JobPage({
             <h2 className="font-bold">Status</h2>
             <p className="text-sm">
               {{
-                REVIEW: "Local electricians are looking at your photos. We'll send you a fixed price shortly.",
-                PRICED: "Your price is ready. Pay to book an electrician.",
-                BOOKABLE: "Paid - we're matching you with a verified local electrician.",
-                ASSIGNED: "Your electrician is booked and will be in touch.",
+                REVIEW: "Next: electricians provide private estimates, then Trade Marketplace reviews them and sets your fixed price.",
+                PRICED: "Your fixed price is ready. Next: review the price and test payment. No electrician is assigned yet.",
+                BOOKABLE: "Test payment recorded. Next: a verified electrician can claim your job. No appointment is scheduled yet.",
+                ASSIGNED: "An electrician has claimed your job. Use messages to agree access and timing; no appointment is scheduled by the app.",
                 SUBMITTED: "The work's done and the CoC is uploaded. Please confirm.",
                 COMPLETED: "All done. Thanks for using Trade Marketplace!",
                 CANCEL_REVIEW: "We're looking into your cancellation and will be in touch.",
@@ -372,7 +368,7 @@ export default async function JobPage({
             {job.status === "CANCEL_REVIEW" && (
               <div className="card p-5">
                 <h2 className="font-bold text-red-700">Cancellation investigation</h2>
-                <p className="mt-2 whitespace-pre-wrap rounded-lg bg-paper p-3 text-sm">{job.cancelReason}</p>
+                <p className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-paper p-3 text-sm">{job.cancelReason}</p>
                 <p className="my-3 text-xs text-muted">{job.tradie ? `Assigned to ${job.tradie.name}. ` : "No tradie assigned yet. "}Check messages and talk to both sides before deciding.</p>
                 <ResolveCancelForm action={resolveCancellation.bind(null, job.id)} />
               </div>
@@ -411,4 +407,23 @@ function median(xs: number[]) {
   const s = [...xs].sort((a, b) => a - b);
   const m = Math.floor(s.length / 2);
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+function PhotoGallery({ photos, label }: { photos: { id: string; url: string }[]; label: string }) {
+  if (!photos.length) return null;
+  return <section aria-label={`${label} photos`} className="p-4">
+    <h3 className="mb-3 text-sm font-semibold">{label} photos · {photos.length}</h3>
+    <div className="grid gap-3 sm:grid-cols-2">
+      {photos.map((photo, index) => <details key={photo.id} className="min-w-0 rounded-xl border border-black/10 p-2 open:col-span-full">
+        <summary className="cursor-pointer rounded-lg p-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2">
+          Photo {index + 1} · expand or collapse
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={photo.url} alt={`${label} photo ${index + 1} thumbnail`} className="mt-2 aspect-video w-full rounded-lg object-cover" />
+        </summary>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={photo.url} alt={`${label} photo ${index + 1} full view`} className="mt-3 max-h-[70vh] w-full object-contain" />
+        <a href={photo.url} target="_blank" rel="noreferrer" className="btn-ghost mt-3">Open original photo {index + 1} (new tab)</a>
+      </details>)}
+    </div>
+  </section>;
 }

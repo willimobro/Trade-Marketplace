@@ -1,44 +1,61 @@
 @import "tailwindcss";
 
-/* Brand colours carried over from the 2022 iOS app's asset catalogue. */
+/* Recovered Trade Marketplace brand; neutral values follow the shared redesign contract. */
 @theme {
-  --color-forest: #0c251d; /* Homebackgroundgreen */
+  --color-forest: #0c251d;
   --color-forest-2: #143a2d;
-  --color-lime: #a6d754; /* logogreen */
-  --color-leaf: #6cbd45; /* UploadAJobGreen */
-  --color-leaf-dark: #4f9a2f;
-  --color-paper: #f5f5f5; /* white2 */
-  --color-ink: #13201b;
-  --color-muted: #5b6b64;
+  --color-lime: #a6d754;
+  --color-leaf: #6cbd45;
+  --color-leaf-dark: #326c20;
+  --color-paper: #f1ece5;
+  --color-ink: #172b24;
+  --color-muted: #52645b;
+  --color-border: #cbd5ce;
+  --color-danger: #a12424;
+  --color-warning: #805400;
+  --color-focus: #2163c6;
+  --container-6xl: 75rem;
   --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
-body {
-  background: var(--color-paper);
-  color: var(--color-ink);
+:root { color-scheme: light; }
+body { background: var(--color-paper); color: var(--color-ink); font-size: 16px; line-height: 1.5; }
+button, input, select, textarea { font: inherit; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), select { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 4px; }
+::selection { background: var(--color-lime); color: var(--color-forest); }
+html { scroll-padding-top: 24px; }
+h1, h2, h3 { text-wrap: balance; }
+p { overflow-wrap: anywhere; }
+main { min-width: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60;
 }
 @utility btn-primary {
-  @apply btn bg-leaf text-white hover:bg-leaf-dark shadow-sm;
+  @apply btn bg-lime text-forest hover:bg-[#b8e475] shadow-sm;
 }
 @utility btn-lime {
-  @apply btn bg-lime text-forest hover:brightness-95;
+  @apply btn bg-lime text-forest hover:bg-[#b8e475];
 }
 @utility btn-ghost {
-  @apply btn border border-black/10 bg-white text-ink hover:bg-black/5;
+  @apply btn border border-border bg-white text-ink hover:bg-paper;
 }
 @utility card {
-  @apply rounded-2xl bg-white shadow-[0_4px_14px_rgba(0,0,0,0.06)] ring-1 ring-black/5;
+  @apply rounded-2xl border border-border/70 bg-white shadow-[0_4px_20px_rgba(12,37,29,0.04)];
 }
-@utility label {
-  @apply mb-1 block text-sm font-medium text-ink;
-}
+@utility label { @apply mb-2 block text-sm font-semibold text-ink; }
 @utility input {
-  @apply w-full rounded-xl border border-black/15 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-leaf focus:ring-2 focus:ring-leaf/30;
+  @apply min-h-12 w-full rounded-xl border border-border bg-white px-4 py-3 text-base text-ink transition placeholder:text-muted focus:border-focus focus:outline-2 focus:outline-offset-2 focus:outline-focus;
 }
-@utility chip {
-  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
-}
+@utility chip { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium leading-5; }
+@utility page-title { @apply text-[32px] font-semibold leading-tight tracking-tight lg:text-[40px]; }
+@utility eyebrow { @apply text-xs font-semibold uppercase tracking-[0.16em] text-muted; }
+@utility section-title { @apply text-xl font-semibold tracking-tight; }
+
+.skip-link { position: fixed; left: 16px; top: -100px; z-index: 100; padding: 12px 20px; border-radius: 12px; background: white; color: var(--color-forest); }
+.skip-link:focus { top: 16px; }

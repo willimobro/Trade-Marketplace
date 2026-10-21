@@ -10,7 +10,7 @@ export default async function NewJobPage() {
         <div className="card p-6">
           <p className="font-semibold">Tradie accounts can&apos;t post jobs</p>
           <p className="mt-1 text-sm text-muted">
-            Need work done yourself? Make a separate customer account. Otherwise, <Link href="/jobs" className="underline">find jobs to quote</Link>.
+            Need work done yourself? Make a separate customer account. Otherwise, <Link href="/jobs" className="underline">find jobs to estimate</Link>.
           </p>
         </div>
       </div>
@@ -19,7 +19,7 @@ export default async function NewJobPage() {
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="text-2xl font-bold">Get a price</h1>
       <p className="mt-1 text-sm text-muted">
-        Free, no obligation. Our sparkies look at your photos and we send you one fixed price - usually within a day.
+        Describe your electrical work and add photos. Electricians provide private estimates, then Trade Marketplace reviews them and sets one fixed price for you.
       </p>
       <JobForm defaultRegion={user.region} />
     </div>

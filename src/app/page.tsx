@@ -1,99 +1,52 @@
+import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/session";
-import { getSettings } from "@/lib/settings";
-import { hourlyView } from "@/lib/pricing";
-import { CATEGORIES, formatNZD } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [user, settings] = await Promise.all([getCurrentUser(), getSettings()]);
-  const h = hourlyView(settings);
-
+  const user = await getCurrentUser();
+  const destination = user?.role === "ADMIN" ? "/admin" : user?.role === "TRADIE" ? "/jobs" : user ? "/jobs/new" : "/signup?role=CUSTOMER";
+  const label = user?.role === "ADMIN" ? "Open operations" : user?.role === "TRADIE" ? "Explore the job board" : "Get a fixed price";
   return (
     <>
-      <section className="bg-forest text-white">
-        <div className="mx-auto max-w-6xl px-4 pb-16 pt-12 sm:pt-20">
-          <p className="chip bg-lime/15 text-lime">Fixed prices · Licensed sparkies · CoC every time</p>
-          <h1 className="mt-4 max-w-2xl text-4xl font-bold leading-tight sm:text-5xl">
-            One fair price. <span className="text-lime">No haggling.</span> A licensed sparky at your door.
-          </h1>
-          <p className="mt-4 max-w-xl text-white/70">
-            Post your job with a few photos. We price it properly, you pay once, and a verified local electrician does the
-            work and hands you a Certificate of Compliance.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {user?.role === "TRADIE" ? (
-              <Link href="/jobs" className="btn-lime px-6 py-3 text-base">See jobs near you</Link>
-            ) : (
-              <Link href={user ? "/jobs/new" : "/signup?role=CUSTOMER"} className="btn-lime px-6 py-3 text-base">
-                Get a price - it&apos;s free
-              </Link>
-            )}
-            {!user && (
-              <Link href="/for-tradies" className="btn border border-white/25 px-6 py-3 text-base text-white hover:bg-white/10">
-                Sparkies: earn {formatNZD(h.tradiePerHourCents)}/hr →
-              </Link>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto -mt-8 max-w-6xl px-4">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {CATEGORIES.map((c) => (
-            <div key={c.name} className="card p-4">
-              <span className={`grid h-10 w-10 place-items-center rounded-xl text-xl ${c.color}`} aria-hidden>{c.icon}</span>
-              <p className="mt-3 font-semibold">{c.name}</p>
-              <p className="text-xs text-muted">{c.name === "Electrical" ? "Live now" : "Coming soon"}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <h2 className="text-xl font-bold">How it works</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            ["1", "Post your job", "Describe it and add photos. Free, no obligation."],
-            ["2", "We price it", "Local sparkies estimate it and we set one fixed price. No bidding wars, no lowballing."],
-            ["3", "Pay to book", "Pay up front and your job goes to a verified local electrician."],
-            ["4", "Job done + CoC", "You get your Certificate of Compliance. Anything extra is quoted with photos before it's done."],
-          ].map(([n, t, d]) => (
-            <div key={n} className="flex gap-4">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-leaf font-bold text-white">{n}</span>
-              <div>
-                <p className="font-semibold">{t}</p>
-                <p className="text-sm text-muted">{d}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 pb-16">
-        <div className="card grid gap-6 p-6 sm:grid-cols-2 sm:p-8">
+      <section className="overflow-hidden bg-forest text-white">
+        <div className="mx-auto grid max-w-[1200px] items-center gap-8 px-4 py-12 md:grid-cols-2 md:px-6 md:py-20 lg:px-8">
           <div>
-            <h2 className="text-xl font-bold">Why a fixed price?</h2>
-            <p className="mt-2 text-sm text-muted">
-              When tradies bid against each other, the cheapest corner-cutter wins. When customers name the price,
-              good sparkies walk away. We set a fair price that pays the electrician properly and is still less than a
-              typical call-out company.
-            </p>
+            <p className="text-sm font-semibold uppercase tracking-widest text-lime">Trade Marketplace · Electrical first</p>
+            <h1 className="mt-5 text-[32px] font-bold leading-[40px] sm:text-[40px] sm:leading-[48px]">Small jobs.<br />A clear price.<br /><span className="text-lime">A better way to get it done.</span></h1>
+            <p className="mt-6 max-w-lg text-base leading-7 text-white/80">Tell us what needs doing. Electricians send private estimates, then Trade Marketplace sets one fixed price for you to review.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href={destination} className="btn-lime px-6">{label} <span aria-hidden>→</span></Link>
+              <Link href="/for-tradies" className="btn border border-white/40 text-white hover:bg-white/10">I&apos;m an electrician</Link>
+            </div>
+            <p className="mt-4 text-sm text-white/70">Requesting a price is free. You decide whether to go ahead.</p>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="rounded-xl bg-paper p-4">
-              <p className="text-xs text-muted">You pay (incl GST)</p>
-              <p className="mt-1 text-2xl font-bold">{formatNZD(h.customerPerHourCents)}<span className="text-sm font-medium">/hr</span></p>
+          <div className="relative rounded-[32px] bg-white/5 p-4 sm:p-8">
+            <Image src="/brand/green-van.png" alt="Trade Marketplace's green van and electrician mascot" width={720} height={540} priority className="h-auto w-full object-contain" />
+            <div className="relative mx-auto max-w-sm rounded-2xl bg-lime p-5 text-forest">
+              <p className="font-semibold">Your job. One agreed scope.</p>
+              <p className="mt-1 text-sm leading-6">Extra work is priced separately and needs your approval before it goes ahead.</p>
             </div>
-            <div className="rounded-xl bg-leaf/10 p-4">
-              <p className="text-xs text-muted">Your sparky earns</p>
-              <p className="mt-1 text-2xl font-bold text-leaf-dark">{formatNZD(h.tradiePerHourCents)}<span className="text-sm font-medium">/hr</span></p>
-            </div>
-            <p className="col-span-2 text-xs text-muted">Minimum {settings.minHours} hrs per job. Materials at cost.</p>
           </div>
         </div>
       </section>
+      <section className="mx-auto max-w-[1200px] px-4 py-12 md:px-6 lg:px-8">
+        <div className="max-w-2xl"><p className="text-sm font-semibold uppercase tracking-widest text-muted">From request to done</p><h2 className="mt-3 text-2xl font-bold sm:text-3xl">Know what happens next.</h2></div>
+        <ol className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            ["Describe the job", "Add photos and tell us about the space, access and work you need."],
+            ["Review your fixed price", "Electricians estimate privately. TM reviews the scope and sends you one price."],
+            ["Make it available to claim", "After payment, a verified electrician can claim the job. You can then coordinate the visit."],
+            ["Review the completed work", "Your electrician uploads the Certificate of Compliance. Review the work and confirm completion."],
+          ].map(([title, detail], i) => <li key={title} className="card p-6"><span className="grid h-10 w-10 place-items-center rounded-full bg-lime font-bold text-forest">{i + 1}</span><h3 className="mt-5 font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-muted">{detail}</p></li>)}
+        </ol>
+      </section>
+      <section className="mx-auto grid max-w-[1200px] gap-6 px-4 pb-16 md:grid-cols-2 md:px-6 lg:px-8">
+        <div className="card p-6 sm:p-8"><h2 className="text-2xl font-bold">A price you can review.</h2><p className="mt-4 leading-7 text-muted">See the scope and total before accepting. You won&apos;t need to choose between competing bids. If the work changes, you&apos;ll receive a separate variation to approve or decline.</p><Link href={destination} className="mt-6 inline-flex min-h-12 items-center font-semibold text-forest underline underline-offset-4">{label} →</Link></div>
+        <div className="rounded-2xl bg-forest p-6 text-white sm:p-8"><p className="text-sm font-semibold text-lime">For electricians</p><h2 className="mt-2 text-2xl font-bold">Help price jobs.<br />Choose the work you take.</h2><p className="mt-4 leading-7 text-white/80">Submit blind estimates and browse paid jobs with the scope, materials budget and gross earnings shown before you claim.</p><Link href="/for-tradies" className="btn-lime mt-6">How it works for sparkies →</Link></div>
+      </section>
+      <div className="border-t border-black/10 bg-white px-4 py-5 text-center text-sm text-muted">Development preview: payments are simulated. This site is not accepting real payments.</div>
     </>
   );
 }

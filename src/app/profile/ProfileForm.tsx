@@ -1,8 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { startTransition, useActionState, useState } from "react";
 import { updateProfile } from "@/app/actions/profile";
-import { SubmitButton } from "@/components/SubmitButton";
 import { Avatar, FormMessage, LicenceBadge } from "@/components/ui";
 import { REGIONS } from "@/lib/constants";
 
@@ -18,31 +17,41 @@ type ProfileUser = {
 };
 
 export function ProfileForm({ user }: { user: ProfileUser }) {
-  const [state, action] = useActionState(updateProfile, undefined);
+  const [state, action, isPending] = useActionState(updateProfile, undefined);
+  const [values, setValues] = useState({ name: user.name, region: user.region, phone: user.phone ?? "", registrationNo: user.registrationNo ?? "", bio: user.bio ?? "" });
+  const field = (name: keyof typeof values) => ({ value: values[name], onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setValues((current) => ({ ...current, [name]: event.target.value })) });
   const isTradie = user.role === "TRADIE";
   return (
-    <form action={action} className="card mt-6 space-y-4 p-6">
+    <form onSubmit={(event) => {
+      event.preventDefault();
+      if (isPending) return;
+      const form = new FormData(event.currentTarget);
+      // Dispatch explicitly so React does not reset the native file input after
+      // a server validation error. The selected photo stays ready to retry.
+      startTransition(() => action(form));
+    }} aria-busy={isPending} className="card mt-6 space-y-6 p-5 sm:p-8">
       <div className="flex items-center gap-4">
         <Avatar name={user.name} url={user.avatarUrl} size={64} />
         <div className="min-w-0 flex-1">
           <label className="label" htmlFor="avatar">Profile photo</label>
-          <input className="input text-xs" id="avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp" />
+          <input className="input text-sm" id="avatar" name="avatar" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="avatar-help" disabled={isPending} />
+          <p id="avatar-help" className="mt-2 text-sm text-muted">JPG, PNG or WebP, up to 5 MB. Your selected photo stays here if saving fails.</p>
         </div>
       </div>
       <div>
         <label className="label" htmlFor="name">Full name</label>
-        <input className="input" id="name" name="name" defaultValue={user.name} required />
+        <input className="input" id="name" name="name" {...field("name")} autoComplete="name" minLength={2} required />
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="label" htmlFor="region">Region</label>
-          <select className="input" id="region" name="region" defaultValue={user.region}>
+          <select className="input" id="region" name="region" {...field("region")} required>
             {REGIONS.map((r) => <option key={r}>{r}</option>)}
           </select>
         </div>
         <div>
           <label className="label" htmlFor="phone">Phone</label>
-          <input className="input" id="phone" name="phone" type="tel" defaultValue={user.phone ?? ""} placeholder="Shown once a quote is accepted" />
+          <input className="input" id="phone" name="phone" type="tel" {...field("phone")} autoComplete="tel" />
         </div>
       </div>
       {isTradie && (
@@ -52,8 +61,8 @@ export function ProfileForm({ user }: { user: ProfileUser }) {
               <label className="label mb-0" htmlFor="registrationNo">Registration number</label>
               <LicenceBadge verified={user.licenceVerified} />
             </div>
-            <input className="input" id="registrationNo" name="registrationNo" defaultValue={user.registrationNo ?? ""} />
-            <p className="mt-1 text-xs text-muted">Changing this resets your verified badge until it&apos;s checked again.</p>
+            <input className="input" id="registrationNo" name="registrationNo" {...field("registrationNo")} />
+            <p className="mt-1 text-sm text-muted">Changing this resets your verified badge until it&apos;s checked again.</p>
           </div>
           <div>
             <label className="label" htmlFor="bio">About you</label>
@@ -62,14 +71,14 @@ export function ProfileForm({ user }: { user: ProfileUser }) {
               id="bio"
               name="bio"
               maxLength={1000}
-              defaultValue={user.bio ?? ""}
+              {...field("bio")}
               placeholder="Years in the trade, what work you like, when you're available (evenings/weekends?)…"
             />
           </div>
         </>
       )}
       <FormMessage state={state} />
-      <SubmitButton>Save profile</SubmitButton>
+      <button type="submit" className="btn-primary w-full sm:w-auto" disabled={isPending}>{isPending ? "Saving profile…" : "Save profile"}</button>
     </form>
   );
 }

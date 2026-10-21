@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
 import { timeAgo } from "@/lib/constants";
@@ -25,7 +26,8 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <div className="card p-6">
+      <Link href="/dashboard" className="mb-5 inline-flex min-h-12 items-center text-sm text-muted hover:underline">← Back to your workspace</Link>
+      <div className="card p-6 sm:p-8">
         <div className="flex flex-wrap items-center gap-4">
           <Avatar name={tradie.name} url={tradie.avatarUrl} size={80} />
           <div>
@@ -38,7 +40,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
             </div>
           </div>
         </div>
-        {tradie.bio && <p className="mt-5 whitespace-pre-wrap leading-relaxed">{tradie.bio}</p>}
+        {tradie.bio && <p className="mt-5 whitespace-pre-wrap break-words leading-relaxed">{tradie.bio}</p>}
       </div>
 
       <h2 className="mb-3 mt-8 text-lg font-bold">Reviews</h2>
@@ -57,7 +59,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
           ))}
         </div>
       ) : (
-        <EmptyState title="No reviews yet" />
+        <EmptyState title="No reviews yet">Customer reviews appear after completed jobs. This profile has no reviews to show yet.</EmptyState>
       )}
     </div>
   );

@@ -21,7 +21,7 @@ export default async function DashboardPage() {
           <p className="text-sm text-muted">{user.role === "TRADIE" ? `${user.trade} · ${user.region}` : user.region}</p>
         </div>
         {user.role === "CUSTOMER" ? (
-          <Link href="/jobs/new" className="btn-primary">+ Get a price</Link>
+          <Link href="/jobs/new" className="btn-primary">+ Post a job</Link>
         ) : (
           <div className="flex items-center gap-3">
             <LicenceBadge verified={user.licenceVerified} />
@@ -43,6 +43,7 @@ async function CustomerDash({ userId }: { userId: string }) {
   return (
     <section className="mt-8">
       <h2 className="mb-3 text-lg font-bold">Your jobs</h2>
+      <p className="mb-5 text-sm text-muted">Follow each job from private estimates to your fixed price, assignment and sign-off. Open a job to see your next step.</p>
       {jobs.length ? (
         <div className="grid gap-3 md:grid-cols-2">
           {jobs.map((job) => (
@@ -116,7 +117,7 @@ async function TradieDash({ userId }: { userId: string }) {
             ))}
           </div>
         ) : (
-          <EmptyState title="No pay yet">Finish a job and upload the CoC - it shows here.</EmptyState>
+          <EmptyState title="No pay yet">After you upload the CoC and the job is signed off, queued pay appears here.</EmptyState>
         )}
         <p className="mt-2 text-xs text-muted">Amounts are gross incl. holiday pay. PAYE is deducted through payroll.</p>
       </section>

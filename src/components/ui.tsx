@@ -3,15 +3,11 @@ import { JOB_STATUS, categoryStyle, formatNZD } from "@/lib/constants";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <Link href="/" className={`flex items-center gap-2 font-bold tracking-tight ${className}`}>
-      <span className="grid h-8 w-8 place-items-center rounded-lg bg-lime text-forest">
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
-          <path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2L13.5 2Z" />
-        </svg>
-      </span>
-      <span className="hidden min-[440px]:inline">
-        Trade<span className="text-lime">Marketplace</span>
-      </span>
+    <Link href="/" aria-label="Trade Marketplace home" className={`flex min-h-12 items-center gap-3 rounded-lg ${className}`}>
+      {/* Original recovered vector mark, kept unchanged. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/brand/logo.svg" width={26} height={43} alt="" className="h-10 w-6 shrink-0" />
+      <span className="text-sm font-semibold uppercase leading-tight tracking-[0.08em] sm:text-base">Trade<br />Marketplace</span>
     </Link>
   );
 }
@@ -68,7 +64,7 @@ export function Avatar({ name, url, size = 40 }: { name: string; url?: string | 
 
 export function LicenceBadge({ verified }: { verified: boolean }) {
   return verified ? (
-    <span className="chip bg-leaf/15 text-leaf-dark" title="Registration checked against the EWRB public register">
+    <span className="chip bg-leaf/15 text-leaf-dark" title="Licence marked verified by Trade Marketplace">
       ✓ Licence verified
     </span>
   ) : (

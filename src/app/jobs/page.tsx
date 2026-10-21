@@ -17,7 +17,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
   if (user?.role === "ADMIN") redirect("/admin");
 
   const sp = await searchParams;
-  const region = (REGIONS as readonly string[]).includes(sp.region ?? "") ? sp.region : user?.region;
+  const region = sp.region === "" ? undefined : (REGIONS as readonly string[]).includes(sp.region ?? "") ? sp.region : user?.region;
   const include = { photos: { take: 1 } } as const;
 
   const [settings, bookable, review, myEstimates] = await Promise.all([
@@ -32,7 +32,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
     <div className="mx-auto max-w-6xl px-4 py-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Job board</h1>
+          <h1 className="text-3xl font-bold">Find your next job</h1>
           <p className="text-sm text-muted">{region ?? "All of NZ"}</p>
         </div>
         <form className="flex gap-2">
@@ -40,7 +40,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
             <option value="">All of NZ</option>
             {REGIONS.map((r) => <option key={r}>{r}</option>)}
           </select>
-          <button className="btn-ghost">Go</button>
+          <button className="btn-ghost">Apply</button>
         </form>
       </div>
 
@@ -57,8 +57,12 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         </div>
       )}
 
-      <section className="mt-8">
-        <h2 className="text-lg font-bold">Ready to book <span className="text-sm font-normal text-muted">· paid, first in gets it</span></h2>
+      <nav aria-label="Job board sections" className="mt-6 flex flex-wrap gap-3">
+        <a href="#available-jobs" className="btn-ghost">Available to claim ({bookable.length})</a>
+        <a href="#estimate-jobs" className="btn-ghost">Needs estimates ({review.length})</a>
+      </nav>
+      <section id="available-jobs" className="mt-8 scroll-mt-24">
+        <h2 className="text-lg font-bold">Available to claim <span className="text-sm font-normal text-muted">· customer payment recorded</span></h2>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {bookable.map((job) => {
             const p = priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false });
@@ -67,7 +71,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
                 key={job.id}
                 job={job}
                 audience="none"
-                aside={<span className="chip bg-leaf text-white">You earn {formatNZD(p.tradieTotalCents)} · {p.hours} hrs</span>}
+                aside={<span className="chip bg-lime text-forest">Gross pay {formatNZD(p.tradieTotalCents)} · {p.hours} hrs</span>}
               />
             );
           })}
@@ -75,8 +79,9 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         {!bookable.length && <EmptyState title="No paid jobs waiting right now">New ones show up here as soon as the customer pays.</EmptyState>}
       </section>
 
-      <section className="mt-10">
-        <h2 className="text-lg font-bold">Help price these <span className="text-sm font-normal text-muted">· blind estimates</span></h2>
+      <section id="estimate-jobs" className="mt-10 scroll-mt-24">
+        <h2 className="text-lg font-bold">Provide a private estimate <span className="text-sm font-normal text-muted">· blind estimates</span></h2>
+        <p className="mt-2 text-sm text-muted">Estimate the hours and materials. Only Trade Marketplace sees your estimate; an administrator sets the customer’s fixed price. Estimating does not reserve the job.</p>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {review.map((job) => (
             <JobCard
