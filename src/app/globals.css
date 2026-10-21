@@ -49,12 +49,12 @@ main { min-width: 0; }
   @apply btn text-forest;
   background: var(--trade-action);
   box-shadow: var(--trade-shadow-action);
-  &:hover:not(:disabled) { filter: brightness(1.04); }
+  &:hover:not(:disabled) { background: var(--trade-action-hover); }
 }
 @utility btn-lime {
   @apply btn text-forest;
   background: var(--trade-signature);
-  &:hover:not(:disabled) { filter: brightness(1.04); }
+  &:hover:not(:disabled) { background: var(--trade-signature-hover); }
 }
 @utility btn-ghost {
   @apply btn border-2 bg-white text-forest hover:bg-paper;

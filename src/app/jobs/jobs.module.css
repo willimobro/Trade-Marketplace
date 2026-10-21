@@ -12,7 +12,7 @@
 .control { width:100%; min-width:0; min-height:48px; border:1px solid #898989; border-radius:var(--trade-radius-action); padding:10px 12px; background:#fff; color:var(--trade-forest); font:400 14px/19px 'Trade UI',sans-serif; }
 .control[type=search] { width:355px; max-width:100%; height:39px; min-height:39px; padding:9px 12px; background:var(--trade-paper); border-color:transparent; }
 .collections { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
-.selected,.button { display:inline-flex; justify-content:center; align-items:center; min-height:44px; padding:10px 12px; border:1px solid var(--trade-leaf); border-radius:var(--trade-radius-action); font:700 14px/19px 'Trade UI',sans-serif; cursor:pointer; }
+.selected,.button { display:inline-flex; justify-content:center; align-items:center; min-height:44px; padding:10px 12px; border:1px solid var(--trade-action); border-radius:var(--trade-radius-action); font:700 14px/19px 'Trade UI',sans-serif; cursor:pointer; }
 .selected { background:var(--trade-forest); color:#fff; border-color:var(--trade-forest); }
 .button { background:white; color:var(--trade-forest); }
 .button:hover { background:var(--trade-paper); }
@@ -28,12 +28,13 @@
 .photo img { display:block; width:100%; height:100%; object-fit:cover; }
 .title { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; min-height:38px; overflow:hidden; margin:12px 9px 0; overflow-wrap:anywhere; font:760 14px/19px 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
 .paySlot { margin:10px 9px 4px; display:flex; flex-direction:column; gap:4px; }
-.pay { display:block; color:#326c20; font:800 20px/27px 'Trade UI',sans-serif; overflow-wrap:anywhere; }
+.pay { display:block; color:var(--trade-link); font:800 20px/27px 'Trade UI',sans-serif; overflow-wrap:anywhere; }
 .distance { color:#52645b; font:400 12px/18px 'Trade UI',sans-serif; }
 .photoFallback { display:grid; place-items:center; height:100%; color:#52645b; }
 .saveButton { position:absolute; top:8px; right:8px; width:44px; height:44px; display:grid; place-items:center; padding:0; border:1px solid var(--trade-field-border); border-radius:var(--trade-radius-action); background:white; color:var(--trade-forest); cursor:pointer; }
-.saveButton[aria-pressed=true] { background:var(--trade-lime); }
+.saveButton[aria-pressed=true] { background:var(--trade-signature); }
 .saveButton:hover { background:var(--trade-paper); }
+.saveButton[aria-pressed=true]:hover { background:var(--trade-signature-hover); }
 .card .saveButton:focus-visible { outline-offset:-4px; }
 .card .link:focus-visible { outline-offset:-3px; }
 .empty { padding:28px 16px; background:white; border-radius:var(--trade-radius-action); text-align:center; }

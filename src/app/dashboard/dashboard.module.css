@@ -11,8 +11,8 @@
 .subtitle { font:400 14px/19px 'Trade UI',sans-serif; }
 .actions { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:20px; }
 .primary,.secondary { display:inline-flex; min-height:55px; align-items:center; justify-content:center; border-radius:11px; padding:12px 16px; font:700 14px/19px 'Trade UI',sans-serif; text-align:center; }
-.primary { background:#6cbd45; color:#0c251d; }
-.secondary { background:#fff; color:#0c251d; border:2px solid #6cbd45; }
+.primary { background:var(--trade-action); color:#0c251d; }
+.secondary { background:#fff; color:#0c251d; border:2px solid var(--trade-action); }
 .section { margin:32px 34px 0; }
 .sectionTitle { margin:0 0 14px; font:760 24px/29px 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
 .jobsTitle { margin:28px -5px 14px; font:760 36px/43px 'Trade Display',sans-serif; font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; }
@@ -85,3 +85,6 @@
   .payroll dd { text-align:right; font-variant-numeric:tabular-nums; }
   .payroll dt { min-width:0; }
 }
+
+.primary:hover { background:var(--trade-action-hover); }
+.secondary:hover { background:var(--trade-paper); }

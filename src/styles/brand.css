@@ -10,7 +10,8 @@
   --trade-action: var(--trade-leaf);
   --trade-signature: var(--trade-lime);
   --trade-link: #326c20;
-  /* Both data-mode values inherit customer green until trade orange is approved. */
+  --trade-action-hover: #78c653;
+  --trade-signature-hover: #b4df6c;
   --trade-height-action: 55px;
   --trade-height-hero: 61px;
   --trade-radius-pill: 30px;
@@ -44,3 +45,25 @@
 }
 html { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Matthew approved trade orange; raw source Leaf/Lime tokens remain unchanged. */
+[data-mode="customer"] {
+  --trade-action: #6cbd45;
+  --trade-signature: #a6d754;
+  --trade-link: #326c20;
+  --trade-action-hover: #78c653;
+  --trade-signature-hover: #b4df6c;
+}
+[data-mode="trade"] {
+  --trade-action: #ff8200;
+  --trade-signature: #eca154;
+  --trade-link: #9e4a00;
+  --trade-action-hover: #ff9324;
+  --trade-signature-hover: #f1b472;
+}
+/* Existing utility names are compatibility aliases, resolved at the mode root. */
+[data-mode] {
+  --color-leaf: var(--trade-action);
+  --color-lime: var(--trade-signature);
+  --color-leaf-dark: var(--trade-link);
+}
