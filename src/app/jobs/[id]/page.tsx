@@ -1,3 +1,4 @@
+import { ConversationSection } from "./ConversationSection";
 import { getTradeActionBlocker, tradeRequirementsPending } from "@/lib/trade-readiness";
 import { ClearPostedJobDraft } from "@/app/jobs/new/job-draft";
 import { SourceIcon } from "@/components/SourceIcon";
@@ -234,8 +235,8 @@ export default async function JobPage({
 
         {/* Messages */}
         {inThread && (
-          <section id="messages" className="card p-6">
-            <h2 className="text-lg font-bold">Messages</h2>
+          <ConversationSection>
+            <h2 id="conversation-heading" className="text-lg font-bold">Messages</h2>
             <p className="text-xs text-muted">
               {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, tradie and Trade Marketplace"}
             </p>
@@ -256,7 +257,7 @@ export default async function JobPage({
               })}
             </div>
             {job.status !== "CANCELLED" && <MessageForm action={sendMessage.bind(null, job.id)} />}
-          </section>
+          </ConversationSection>
         )}
       </div>
 

@@ -30,3 +30,15 @@ preserved. Pending trade discovery cards no longer promise estimate/claim action
 Independent browser/resize/mobile-comparison QA is still required for this batch;
 do not infer visual signoff from compilation. Hosted preview remains separately
 pinned to33eaba3 and does not contain this pending desktop expansion.
+
+### Conversation arrival correction
+
+ConversationSection resolves #messages after streamed content mounts, focuses a
+labelled programmatically focusable region, and scrolls it into view. It handles
+hash changes and font settling without modifying history. At390/1024/1440,
+headless browser checks passed keyboard link activation, direct URL, reload,
+Back/Forward, in-page hash changes and gallery focus return. The heading remains
+visible below the sticky header (near-bottom sections stop at document extent).
+Evidence: task/evidence/conversation-fix/results.json and three screenshots.
+41 tests, lint, TypeScript and isolated production build passed. Independent
+confirmation remains required before integration into the hosted branch.
