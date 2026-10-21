@@ -126,5 +126,14 @@
       "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/quotepdf.imageset/Rectangle 64.png",
       "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/quotepdf.imageset/Rectangle 64.png"
     ]
+  },
+  {
+    "file": "Trade Marketplace 1.fig",
+    "sha256": "d94d9a8189941ade8852ae17e4deadc1edd6d85a115699606a9fac26d2fb794f",
+    "bytes": 17228220,
+    "sources": [
+      "Downloads/Trade Marketplace 1.fig"
+    ],
+    "figma_url": "https://www.figma.com/design/WurSo76mY67lO23D4Zlu7v/Trade-Marketplace-1?node-id=0-1"
   }
 ]
