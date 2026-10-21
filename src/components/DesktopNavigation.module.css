@@ -1,13 +1,13 @@
 .header { display:none; }
 @media(min-width:1024px) {
-  .header { display:block; position:sticky; top:0; z-index:50; background:#fff; color:var(--trade-forest); box-shadow:var(--trade-shadow-header); }
+  .header { display:block; position:sticky; top:0; z-index:50; background:var(--trade-forest); color:#fff; box-shadow:var(--trade-shadow-header); }
   .inner { max-width:1280px; min-height:88px; margin:auto; padding:12px 32px; display:flex; align-items:center; gap:24px; }
   .links { display:flex; flex:1; justify-content:flex-end; align-items:center; gap:4px; }
   .links a { display:flex; align-items:center; gap:8px; min-height:48px; padding:10px 12px; border-radius:var(--trade-radius-action); font:700 14px/20px 'Trade UI',sans-serif; white-space:nowrap; }
-  .links a:hover { background:var(--trade-paper); }
-  .links a[aria-current] { background:var(--trade-paper); box-shadow:inset 0 -3px var(--trade-leaf); }
+  .links a:hover { background:var(--trade-leaf); color:var(--trade-forest); }
+  .links a[aria-current] { background:var(--trade-leaf); color:var(--trade-forest); box-shadow:inset 0 -3px var(--trade-leaf); }
   .post { display:flex; align-items:center; justify-content:center; min-height:48px; padding:12px 20px; border-radius:var(--trade-radius-action); background:var(--trade-leaf); color:var(--trade-forest); font-weight:700; white-space:nowrap; box-shadow:var(--trade-shadow-action); }
-  .header a:focus-visible { outline:2px solid var(--trade-focus); outline-offset:3px; }
+  .header a:focus-visible { outline:2px solid var(--trade-lime); outline-offset:3px; }
 }
 @media(min-width:1024px) and (max-width:1150px) { .inner { gap:12px; padding-inline:24px; } .links a { gap:6px; padding-inline:8px; } }
 @media(min-width:1024px) {

@@ -52,7 +52,6 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         </div>
       )}
 
-      <p className={styles.intro}>Private estimates help Trade Marketplace set the fixed price. Estimating does not reserve work. Claiming requires a recorded customer test payment, a matching trade and configured verification requirements.</p>
       <JobDiscovery initialCategory={CATEGORY_NAMES.includes(sp.category as typeof CATEGORY_NAMES[number]) ? sp.category : ""} initialQuery={typeof sp.q === "string" ? sp.q.slice(0, 200) : ""} defaultRegion={region ?? ""} storageScope={user?.id ?? "guest"} jobs={[...bookable, ...review].map((job) => ({
         id: job.id, jobNumber: job.jobNumber, title: job.title, description: job.description,
         category: job.category, region: job.region, suburb: job.suburb, status: job.status, cover: job.photos[0]?.url,
@@ -60,6 +59,7 @@ export default async function JobsPage({ searchParams }: { searchParams: Promise
         payAmount: job.status === "BOOKABLE" ? formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents) : undefined,
         hours: job.hours ?? 0,
       }))} />
+      <details className={styles.pricingHelp}><summary>How job pricing works</summary><p>Private estimates help Trade Marketplace set the fixed price. Estimating does not reserve work. Claiming requires a recorded customer test payment, a matching trade and configured verification requirements.</p></details>
     </div>
   );
 }
