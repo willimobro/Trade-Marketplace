@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { createJob } from "@/app/actions/jobs";
 import { SubmitButton } from "@/components/SubmitButton";
 import { FormMessage } from "@/components/ui";
-import { CATEGORY_NAMES, REGIONS } from "@/lib/constants";
+import { REGIONS } from "@/lib/constants";
 
 export function JobForm({ defaultRegion }: { defaultRegion: string }) {
   const [state, action] = useActionState(createJob, undefined);
@@ -19,18 +19,8 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
         <input className="input" id="title" name="title" maxLength={80} placeholder="e.g. Move 2 kitchen plugs and add a dishwasher plug" required />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="label" htmlFor="category">Trade</label>
-          <select className="input" id="category" name="category" defaultValue="Electrical" required>
-            {CATEGORY_NAMES.map((c) => <option key={c}>{c}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="label" htmlFor="budget">Budget <span className="font-normal text-muted">(optional)</span></label>
-          <input className="input" id="budget" name="budget" maxLength={40} placeholder="e.g. $500-800" />
-        </div>
-      </div>
+      {/* Electrical only for now - other trades are "coming soon". */}
+      <input type="hidden" name="category" value="Electrical" />
 
       <div>
         <label className="label" htmlFor="description">Describe the job</label>
@@ -58,7 +48,13 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
       </div>
 
       <div>
-        <label className="label" htmlFor="photos">Photos <span className="font-normal text-muted">(up to 6, 5 MB each)</span></label>
+        <label className="label" htmlFor="address">Street address</label>
+        <input className="input" id="address" name="address" maxLength={120} autoComplete="street-address" placeholder="e.g. 3 Maltby Street" required />
+        <p className="mt-1 text-xs text-muted">Only shown to the electrician who takes the job.</p>
+      </div>
+
+      <div>
+        <label className="label" htmlFor="photos">Photos <span className="font-normal text-muted">(at least 1, up to 6 - switchboard, the area, anything relevant)</span></label>
         <input
           className="input file:mr-3 file:rounded-lg file:border-0 file:bg-leaf/15 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-leaf-dark"
           id="photos"
@@ -79,7 +75,7 @@ export function JobForm({ defaultRegion }: { defaultRegion: string }) {
       </div>
 
       <FormMessage state={state} />
-      <SubmitButton className="btn-primary w-full sm:w-auto" pending="Posting…">Post job</SubmitButton>
+      <SubmitButton className="btn-primary w-full sm:w-auto" pending="Sending…">Get my price</SubmitButton>
     </form>
   );
 }

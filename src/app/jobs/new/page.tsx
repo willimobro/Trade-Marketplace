@@ -17,8 +17,10 @@ export default async function NewJobPage() {
     );
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-bold">Post a job</h1>
-      <p className="mt-1 text-sm text-muted">Free to post. The more detail and photos, the better the quotes.</p>
+      <h1 className="text-2xl font-bold">Get a price</h1>
+      <p className="mt-1 text-sm text-muted">
+        Free, no obligation. Our sparkies look at your photos and we send you one fixed price - usually within a day.
+      </p>
       <JobForm defaultRegion={user.region} />
     </div>
   );

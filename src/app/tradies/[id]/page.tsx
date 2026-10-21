@@ -15,7 +15,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
         orderBy: { createdAt: "desc" },
         include: { author: { select: { name: true } }, job: { select: { title: true } } },
       },
-      _count: { select: { quotes: { where: { status: "ACCEPTED" } } } },
+      _count: { select: { jobsAssigned: { where: { status: "COMPLETED" } } } },
     },
   });
   if (!tradie || tradie.role !== "TRADIE") notFound();
@@ -34,7 +34,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
               <LicenceBadge verified={tradie.licenceVerified} />
               {avg !== null && <span><Stars rating={avg} /> {avg.toFixed(1)} ({reviews.length})</span>}
-              <span className="text-muted">{tradie._count.quotes} job{tradie._count.quotes === 1 ? "" : "s"} won</span>
+              <span className="text-muted">{tradie._count.jobsAssigned} job{tradie._count.jobsAssigned === 1 ? "" : "s"} completed</span>
             </div>
           </div>
         </div>

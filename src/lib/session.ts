@@ -57,3 +57,9 @@ export async function requireUser(next?: string) {
   if (!user) redirect(next ? `/login?next=${encodeURIComponent(next)}` : "/login");
   return user;
 }
+
+export async function requireAdmin() {
+  const user = await requireUser("/admin");
+  if (user.role !== "ADMIN") redirect("/dashboard");
+  return user;
+}

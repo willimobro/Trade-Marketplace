@@ -7,7 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// role: "CUSTOMER" | "TRADIE"
+// Trade Marketplace is a managed service: TM sets the price, the customer pays TM up front,
+// a verified tradie does the job on TM's Telfer account and is paid per job through payroll.
+
+// role: "CUSTOMER" | "TRADIE" | "ADMIN"
 model User {
   id              String   @id @default(cuid())
   email           String   @unique
@@ -24,63 +27,161 @@ model User {
   bio             String?
   createdAt       DateTime @default(now())
 
-  jobs            Job[]
-  quotes          Quote[]
+  jobsPosted      Job[]       @relation("JobCustomer")
+  jobsAssigned    Job[]       @relation("JobTradie")
+  estimates       Estimate[]
+  variations      Variation[]
   messages        Message[]
-  reviewsGiven    Review[] @relation("ReviewAuthor")
-  reviewsReceived Review[] @relation("ReviewTradie")
+  payouts         Payout[]
+  reviewsGiven    Review[]    @relation("ReviewAuthor")
+  reviewsReceived Review[]    @relation("ReviewTradie")
 }
 
-// status: "OPEN" | "ASSIGNED" | "COMPLETED" | "CLOSED"
+// status:
+//   REVIEW      posted, tradies send blind estimates, TM prices it
+//   PRICED      TM price sent to customer, waiting for payment
+//   BOOKABLE    customer paid, waiting for a tradie to claim it
+//   ASSIGNED    tradie claimed it, work underway
+//   SUBMITTED   tradie uploaded the CoC, waiting for customer/TM sign-off
+//   COMPLETED   signed off, payout queued
+//   CANCEL_REVIEW  customer asked to cancel after paying - TM investigating
+//   CANCELLED
 model Job {
   id          String   @id @default(cuid())
+  jobNumber   Int      @unique // Telfer order no is "TM-<jobNumber>"
   customerId  String
-  customer    User     @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customer    User     @relation("JobCustomer", fields: [customerId], references: [id], onDelete: Cascade)
+  tradieId    String?
+  tradie      User?    @relation("JobTradie", fields: [tradieId], references: [id])
   title       String
   category    String
   description String
   region      String
   suburb      String
-  budget      String?
-  status      String   @default("OPEN")
-  createdAt   DateTime @default(now())
+  address     String // only shown to the assigned tradie
+  status      String   @default("REVIEW")
 
-  photos  Photo[]
-  quotes  Quote[]
-  reviews Review[]
+  // Set by TM when pricing. Money in cents, rates copied from Settings at pricing time
+  // so later settings changes never alter an agreed price or payout.
+  hours               Float?
+  materialsCents      Int? // budget at cost, ex GST
+  tradieRateCents     Int?
+  onCostPct           Float?
+  marginPct           Float?
+  gstPct              Float?
+  priceCents          Int? // what the customer pays, incl GST
+  pricingNote         String?
 
-  @@index([status, category, region])
+  cancelReason String?
+  createdAt    DateTime  @default(now())
+  pricedAt     DateTime?
+  paidAt       DateTime?
+  assignedAt   DateTime?
+  completedAt  DateTime?
+
+  photos     Photo[]
+  estimates  Estimate[]
+  variations Variation[]
+  payments   Payment[]
+  messages   Message[]
+  coc        Coc?
+  payout     Payout?
+  review     Review?
+
+  @@index([status, region])
 }
 
 model Photo {
-  id    String @id @default(cuid())
-  jobId String
-  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  url   String
+  id          String     @id @default(cuid())
+  jobId       String
+  job         Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  variationId String?
+  variation   Variation? @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  url         String
 }
 
-// status: "PENDING" | "ACCEPTED" | "DECLINED"
-model Quote {
-  id         String   @id @default(cuid())
-  jobId      String
-  job        Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  tradieId   String
-  tradie     User     @relation(fields: [tradieId], references: [id], onDelete: Cascade)
-  priceCents Int
-  message    String
-  status     String   @default("PENDING")
-  createdAt  DateTime @default(now())
-
-  messages Message[]
+// Blind: a tradie only ever sees their own estimate.
+model Estimate {
+  id             String   @id @default(cuid())
+  jobId          String
+  job            Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tradieId       String
+  tradie         User     @relation(fields: [tradieId], references: [id], onDelete: Cascade)
+  hours          Float
+  materialsCents Int
+  note           String
+  createdAt      DateTime @default(now())
 
   @@unique([jobId, tradieId])
 }
 
-// Each quote is a private thread between the job's customer and the quoting tradie.
+// status: REQUESTED (tradie) -> PRICED (TM) -> APPROVED (customer paid) | DECLINED
+model Variation {
+  id             String    @id @default(cuid())
+  jobId          String
+  job            Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tradieId       String
+  tradie         User      @relation(fields: [tradieId], references: [id])
+  description    String
+  hoursRequested Float
+  hours          Float? // as priced by TM
+  materialsCents Int?
+  priceCents     Int?
+  status         String    @default("REQUESTED")
+  createdAt      DateTime  @default(now())
+  resolvedAt     DateTime?
+
+  photos   Photo[]
+  payments Payment[]
+}
+
+// kind: JOB | VARIATION. status: PENDING | PAID | REFUNDED
+// provider "test" until a real payment provider is wired in.
+model Payment {
+  id          String     @id @default(cuid())
+  jobId       String
+  job         Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  variationId String?
+  variation   Variation? @relation(fields: [variationId], references: [id], onDelete: Cascade)
+  kind        String
+  amountCents Int
+  status      String     @default("PENDING")
+  provider    String     @default("test")
+  createdAt   DateTime   @default(now())
+  paidAt      DateTime?
+}
+
+model Coc {
+  id          String   @id @default(cuid())
+  jobId       String   @unique
+  job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  cocNumber   String
+  fileUrl     String
+  materialsSpentCents Int // actual Telfer spend ex GST, checked against the slip
+  uploadedAt  DateTime @default(now())
+}
+
+// status: PENDING (queued for next pay run) | PAID
+model Payout {
+  id              String    @id @default(cuid())
+  jobId           String    @unique
+  job             Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tradieId        String
+  tradie          User      @relation(fields: [tradieId], references: [id])
+  hours           Float
+  rateCents       Int
+  grossCents      Int // hours x rate, before PAYE
+  holidayPayCents Int // 8% pay-as-you-go for casuals
+  status          String    @default("PENDING")
+  createdAt       DateTime  @default(now())
+  paidAt          DateTime?
+}
+
+// One thread per job: customer, assigned tradie and TM staff.
 model Message {
   id        String   @id @default(cuid())
-  quoteId   String
-  quote     Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   senderId  String
   sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
   body      String
@@ -89,7 +190,7 @@ model Message {
 
 model Review {
   id        String   @id @default(cuid())
-  jobId     String
+  jobId     String   @unique
   job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   authorId  String
   author    User     @relation("ReviewAuthor", fields: [authorId], references: [id], onDelete: Cascade)
@@ -98,6 +199,16 @@ model Review {
   rating    Int
   comment   String
   createdAt DateTime @default(now())
+}
 
-  @@unique([jobId, authorId])
+// Single row (id = 1). Rates are copied onto each job when it's priced.
+model Settings {
+  id               Int   @id @default(1)
+  tradieRateCents  Int   @default(6000)
+  holidayPayPct    Float @default(8)
+  onCostPct        Float @default(12.5) // holiday pay + employer KiwiSaver + ACC
+  marginPct        Float @default(20)
+  gstPct           Float @default(15)
+  minHours         Float @default(2)
+  autoReleaseHours Int   @default(48) // payout releases if customer doesn't respond
 }

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { categoryStyle } from "@/lib/constants";
+import { JOB_STATUS, categoryStyle, formatNZD } from "@/lib/constants";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -26,19 +26,23 @@ export function CategoryChip({ name }: { name: string }) {
   );
 }
 
-const STATUS_STYLE: Record<string, string> = {
-  OPEN: "bg-leaf/15 text-leaf-dark",
-  ASSIGNED: "bg-sky-500/15 text-sky-800",
-  COMPLETED: "bg-black/10 text-ink",
-  CLOSED: "bg-black/5 text-muted",
+const OTHER_STATUS: Record<string, string> = {
+  REQUESTED: "bg-amber-400/20 text-amber-900",
   PENDING: "bg-amber-400/20 text-amber-900",
-  ACCEPTED: "bg-leaf/15 text-leaf-dark",
+  APPROVED: "bg-leaf/15 text-leaf-dark",
+  PAID: "bg-leaf/15 text-leaf-dark",
   DECLINED: "bg-black/5 text-muted",
 };
 
-export function StatusChip({ status }: { status: string }) {
+export function StatusChip({ status, audience = "staff" }: { status: string; audience?: "staff" | "customer" }) {
+  const job = JOB_STATUS[status];
+  if (job) return <span className={`chip ${job.style}`}>{audience === "customer" ? job.customer : job.label}</span>;
   const label = status.charAt(0) + status.slice(1).toLowerCase();
-  return <span className={`chip ${STATUS_STYLE[status] ?? ""}`}>{label}</span>;
+  return <span className={`chip ${OTHER_STATUS[status] ?? "bg-black/5"}`}>{label}</span>;
+}
+
+export function Money({ cents, className = "" }: { cents: number; className?: string }) {
+  return <span className={`tabular-nums ${className}`}>{formatNZD(cents)}</span>;
 }
 
 export function Avatar({ name, url, size = 40 }: { name: string; url?: string | null; size?: number }) {

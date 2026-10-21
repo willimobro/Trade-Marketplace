@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
-import { saveImages } from "@/lib/uploads";
+import { saveUploads } from "@/lib/uploads";
 import { REGIONS } from "@/lib/constants";
 import type { FormState } from "./types";
 
@@ -29,7 +29,7 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
 
   let avatarUrl: string | undefined;
   try {
-    [avatarUrl] = await saveImages([form.get("avatar") as File | null], 1);
+    [avatarUrl] = await saveUploads([form.get("avatar")], 1);
   } catch (e) {
     return { error: (e as Error).message };
   }

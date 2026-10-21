@@ -13,23 +13,19 @@ const reviewSchema = z.object({
 
 export async function leaveReview(jobId: string, _prev: FormState, form: FormData): Promise<FormState> {
   const user = await requireUser();
-  const job = await db.job.findUnique({
-    where: { id: jobId },
-    include: { quotes: { where: { status: "ACCEPTED" } } },
-  });
-  const accepted = job?.quotes[0];
-  if (!job || job.customerId !== user.id || job.status !== "COMPLETED" || !accepted)
+  const job = await db.job.findUnique({ where: { id: jobId } });
+  if (!job || job.customerId !== user.id || job.status !== "COMPLETED" || !job.tradieId)
     return { error: "You can only review a completed job you posted." };
 
   const parsed = reviewSchema.safeParse({ rating: form.get("rating"), comment: form.get("comment") });
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
   try {
-    await db.review.create({ data: { ...parsed.data, jobId, authorId: user.id, tradieId: accepted.tradieId } });
+    await db.review.create({ data: { ...parsed.data, jobId, authorId: user.id, tradieId: job.tradieId } });
   } catch {
     return { error: "You've already reviewed this job." };
   }
   revalidatePath(`/jobs/${jobId}`);
-  revalidatePath(`/tradies/${accepted.tradieId}`);
+  revalidatePath(`/tradies/${job.tradieId}`);
   return { ok: "Thanks for the review!" };
 }
