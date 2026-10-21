@@ -24,7 +24,7 @@ export default async function PayPage({ params }: { params: Promise<{ paymentId:
         {payment.variation && <p className="mt-2 text-sm text-muted">{payment.variation.description}</p>}
         <p className="mt-6 text-4xl font-bold">{formatNZD(payment.amountCents)}</p>
         <p className="text-sm text-muted">NZD · includes GST</p>
-        <p className="mt-4 text-sm text-muted">{payment.kind === "JOB" ? "Recording this test payment makes the job available for an electrician to claim. It does not schedule an appointment." : "Recording this test payment approves the extra work described above."}</p>
+        <p className="mt-4 text-sm text-muted">{payment.kind === "JOB" ? "Recording this test payment makes the job available for an eligible tradie to claim. It does not schedule an appointment." : "Recording this test payment approves the extra work described above."}</p>
 
         {canPay ? (
           <>

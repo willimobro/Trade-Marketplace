@@ -91,12 +91,12 @@ export default async function AdminPage() {
         </section>
         <Queue title="Admin · Review cancellations" urgent jobs={cancels} />
       </div>
-      <div><h2 className="text-xl font-bold">Waiting on customers & electricians</h2><p className="mt-2 text-sm text-muted">Monitor these stages. The next action belongs to the person named in each queue.</p></div>
+      <div><h2 className="text-xl font-bold">Waiting on customers & tradies</h2><p className="mt-2 text-sm text-muted">Monitor these stages. The next action belongs to the person named in each queue.</p></div>
       <div className={styles.queueGrid}>
         <Queue title="Customer · Confirm completed work" jobs={signOff} />
         <Queue title="Customer · Review price & test payment" jobs={awaitingPay} note={(j) => formatNZD(j.priceCents ?? 0)} />
-        <Queue title="Electrician · Claim available work" urgent jobs={bookable} note={(j) => `test payment recorded · ${j.region}`} />
-        <Queue title="Electrician · Complete assigned work" jobs={inProgress} />
+        <Queue title="Tradie · Claim available work" urgent jobs={bookable} note={(j) => `test payment recorded · ${j.region}`} />
+        <Queue title="Tradie · Complete assigned work" jobs={inProgress} />
       </div>
       {toPrice.length + variations.length + cancels.length + signOff.length + awaitingPay.length + bookable.length + inProgress.length + pendingTradies + pendingPayouts._count === 0 && (
         <p className="rounded-2xl border border-black/10 bg-white p-6 text-muted">No active jobs, licence checks or payroll records are waiting. New work will appear here.</p>

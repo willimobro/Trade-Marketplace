@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
-export const DRAFT_FIELDS = ["title", "description", "region", "suburb", "address"] as const;
+import { CATEGORY_NAMES } from "@/lib/constants";
+export const DRAFT_FIELDS = ["title", "description", "region", "suburb", "address", "category"] as const;
 export type DraftFields = Record<(typeof DRAFT_FIELDS)[number], string>;
 export type JobDraft = { fields: DraftFields; reviewed: boolean; savedAt: number; submittedAt?: number };
 const key = (userId: string) => `trade-marketplace:job-draft:v1:${userId}`;
@@ -10,7 +11,9 @@ export function readJobDraft(userId: string): JobDraft | null {
   if (!raw) return null;
   try {
     const draft = JSON.parse(raw) as JobDraft;
-    if (!Number.isFinite(draft.savedAt) || Date.now() - draft.savedAt > 86_400_000 || draft.savedAt > Date.now() || !draft.fields || DRAFT_FIELDS.some((name) => typeof draft.fields[name] !== "string" || draft.fields[name].length > 4000)) {
+    // Previous versions posted Electrical exclusively. Preserve those drafts.
+    if (draft.fields && draft.fields.category === undefined) draft.fields.category = "Electrical";
+    if (!Number.isFinite(draft.savedAt) || Date.now() - draft.savedAt > 86_400_000 || draft.savedAt > Date.now() || !draft.fields || !(CATEGORY_NAMES as readonly string[]).includes(draft.fields.category) || DRAFT_FIELDS.some((name) => typeof draft.fields[name] !== "string" || draft.fields[name].length > 4000)) {
       clearJobDraft(userId); return null;
     }
     return draft;

@@ -8,7 +8,7 @@ export default async function ProfilePage() {
   const session = await requireUser("/profile");
   const user = await db.user.findUniqueOrThrow({
     where: { id: session.id },
-    select: { name: true, email: true, role: true, region: true, phone: true, bio: true, registrationNo: true, avatarUrl: true, licenceVerified: true },
+    select: { name: true, email: true, role: true, trade: true, region: true, phone: true, bio: true, registrationNo: true, avatarUrl: true, licenceVerified: true },
   });
   return (
     <div className="mx-auto max-w-[760px] px-4 py-8 sm:px-6 sm:py-12">

@@ -5,7 +5,7 @@ import { createJob } from "@/app/actions/jobs";
 import { FormMessage } from "@/components/ui";
 import styles from "./post-job.module.css";
 import { clearJobDraft, DRAFT_FIELDS, readJobDraft, saveJobDraft } from "./job-draft";
-import { REGIONS } from "@/lib/constants";
+import { CATEGORY_NAMES, REGIONS } from "@/lib/constants";
 
 export function JobForm({ defaultRegion, userId }: { defaultRegion: string; userId: string }) {
   const submissionInFlight = useRef(false);
@@ -77,7 +77,7 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
       const data = new FormData(event.currentTarget);
       if (!review) {
         persist(true);
-        setReview(Object.fromEntries(["title", "description", "region", "suburb", "address"].map((key) => [key, String(data.get(key) ?? "")])));
+        setReview(Object.fromEntries(DRAFT_FIELDS.map((key) => [key, String(data.get(key) ?? "")])));
         return;
       }
       submissionInFlight.current = true;
@@ -104,8 +104,13 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
         <input ref={titleInput} className={styles.input} id="title" name="title" minLength={5} maxLength={80} placeholder="e.g. Move 2 kitchen plugs and add a dishwasher plug" required />
       </div>
 
-      {/* Electrical only for now - other trades are "coming soon". */}
-      <input type="hidden" name="category" value="Electrical" />
+      <div>
+        <label className="label" htmlFor="category">Trade (required)</label>
+        <select className={styles.input} id="category" name="category" defaultValue="Electrical" required>
+          {CATEGORY_NAMES.map(category => <option key={category} value={category}>{category}</option>)}
+        </select>
+        <p className="mt-1 text-xs text-muted">Choose the trade needed for this job. Plumbing, Gas Fitting and Construction verification and completion requirements are still being configured; those jobs can be posted for review but cannot yet be estimated, claimed or completed here.</p>
+      </div>
 
       <div>
         <label className="label" htmlFor="description">Describe the job</label>
@@ -136,7 +141,7 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
       <div>
         <label className="label" htmlFor="address">Street address</label>
         <input className={styles.input} id="address" name="address" minLength={5} maxLength={120} autoComplete="street-address" placeholder="e.g. 3 Maltby Street" required />
-        <p className="mt-1 text-xs text-muted">Visible to you, Trade Marketplace administrators and the assigned electrician. Other electricians see only your suburb and region.</p>
+        <p className="mt-1 text-xs text-muted">Visible to you, Trade Marketplace administrators and the assigned tradie. Other tradies see only your suburb and region.</p>
       </div>
 
       <div>
@@ -173,8 +178,8 @@ export function JobForm({ defaultRegion, userId }: { defaultRegion: string; user
         <h2 ref={reviewHeading} tabIndex={-1} className="text-xl font-bold">{review.title}</h2>
         <p className="whitespace-pre-wrap break-words">{review.description}</p>
         <p>{review.address}, {review.suburb}, {review.region}</p>
-        <p className="text-sm text-muted">{previews.length} photo{previews.length === 1 ? "" : "s"} attached · Electrical</p>
-        <div className="rounded-xl bg-paper p-4 text-sm">Electricians provide private estimates. Trade Marketplace reviews these and sets your fixed price. Posting does not book an electrician or take a payment.</div>
+        <p className="text-sm text-muted">{previews.length} photo{previews.length === 1 ? "" : "s"} attached · {review.category}</p>
+        <div className="rounded-xl bg-paper p-4 text-sm">{review.category !== "Electrical" && <p className="mb-2 font-semibold">{review.category} requirements are pending. This job can be saved for review; estimating, claiming and completion are not yet available for this trade.</p>}Tradies provide private estimates. Trade Marketplace reviews these and sets your fixed price. Posting does not book a tradie or take a payment.</div>
         <button type="button" className={styles.edit} disabled={pending} onClick={() => { persist(false); returnToDetails.current = true; setReview(null); }}>Edit details</button>
       </section>}
       <FormMessage state={state} />

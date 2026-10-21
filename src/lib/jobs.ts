@@ -26,7 +26,7 @@ export async function releaseOverdue() {
   const { autoReleaseHours } = await getSettings();
   const cutoff = new Date(Date.now() - autoReleaseHours * 3_600_000);
   const overdue = await db.job.findMany({
-    where: { status: "SUBMITTED", coc: { uploadedAt: { lt: cutoff } } },
+    where: { category: "Electrical", status: "SUBMITTED", coc: { uploadedAt: { lt: cutoff } } },
     select: { id: true },
   });
   for (const j of overdue) await completeJob(j.id);
@@ -35,7 +35,7 @@ export async function releaseOverdue() {
 /** Signs a job off and queues the tradie's payout. Safe to call twice. */
 export async function completeJob(jobId: string) {
   const { job, hours } = await paidScope(jobId);
-  if (job.status !== "SUBMITTED" || !job.tradieId) return false;
+  if (job.category !== "Electrical" || job.status !== "SUBMITTED" || !job.tradieId) return false;
   const rates = jobRates(job, await getSettings());
   const p = priceWork(hours, 0, rates, { applyMinimum: false });
 

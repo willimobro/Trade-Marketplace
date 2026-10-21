@@ -61,7 +61,8 @@ export function Avatar({ name, url, size = 40 }: { name: string; url?: string | 
   );
 }
 
-export function LicenceBadge({ verified }: { verified: boolean }) {
+export function LicenceBadge({ verified, trade = "Electrical" }: { verified: boolean; trade?: string | null }) {
+  if (trade !== "Electrical") return <span className="chip bg-amber-400/20 text-amber-900">Trade verification requirements pending</span>;
   return verified ? (
     <span className="chip bg-[#e8f4e3] text-[#326c20]" title="Licence marked verified by Trade Marketplace">
       ✓ Licence verified

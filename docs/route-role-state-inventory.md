@@ -9,14 +9,14 @@ Reviewed 2026-10-21 by static source inspection. This document is not a runtime 
 | `/` | Public | Browse, search view, menu dialog, horizontal examples/categories; examples are not live jobs. Homepage changes are outside this review. |
 | `/for-tradies` | Public | Current settings-based earnings examples, onboarding CTA, estimate/claim/completion explanation. Inspect long rates and multi-column sections inside the narrow frame. |
 | `/login` | Guest; signed-in users redirect to dashboard | Empty/entered fields, validation/server error, pending, retained inputs, recovery link. |
-| `/signup` | Guest; signed-in users redirect to dashboard | Identity step, account-details step, customer/tradie selection, region, electrical registration, back navigation, pending/error with retained values. |
+| `/signup` | Guest; signed-in users redirect to dashboard | Identity step, account-details step, customer/tradie selection, region, trade selection, required electrical versus optional other registration, back navigation, pending/error with retained values. |
 | `/recovery` | Public preview | `state=request`, `sent`, `expired`, `reset`, `complete`; unknown state falls back to request. No real recovery, email or password changes. |
 | `/support` | Public preview | Guidance including connection/session problems, sample topic selection and review/back. No support ticket is submitted. |
 | `/notifications` | Public preview | Fictional examples, local read-state, empty, connection-error and retry; no notification service. |
 | `/profile` | Authenticated | Customer/admin fields; tradie verification/registration information; avatar selection, validation, saving and retained inputs. |
 | `/dashboard` | Authenticated customer/tradie; admin redirects to `/admin` | Customer active/status filters, empty/populated jobs and next actions; tradie assignments, private estimates and pending/paid payroll. History expansion remains deferred. |
-| `/jobs` | Guest/tradie; customers redirect dashboard, admins admin | Query/region/stage filters, all/saved/recent collections, empty results, local-storage errors, missing/failed photos, estimate versus claimable jobs, full detail links. |
-| `/jobs/new` | Authenticated customer; other roles receive account guidance | Job fields, photos, draft recovery/storage unavailable, review/back, invalid input/upload, pending and action errors. Category currently hidden Electrical. |
+| `/jobs` | Guest/tradie; customers redirect dashboard, admins admin | Query/trade/region/stage filters, all/saved/recent collections, empty results, local-storage errors, missing/failed photos, estimate versus claimable jobs, full detail links. |
+| `/jobs/new` | Authenticated customer; other roles receive account guidance | Job fields, photos, draft recovery/storage unavailable, review/back, invalid input/upload, pending and action errors. Four-category selector retained through draft recovery and review. Saved receipt navigates to the persisted job. |
 | `/jobs/[id]` | Authenticated; owner, assigned tradie, admin; other tradies only eligible public stages | Missing/unauthorized customer -> not found; other-tradie stale/unavailable state. Role/status-specific estimates, claims, customer prices, test-payment links, messages, variations, CoC, completion, cancellation, reviews and payroll. See state matrix below. |
 | `/pay/[paymentId]` | Payment's owning customer | Missing/unauthorized -> not found; pending applicable job/variation -> test payment controls; already processed/refunded/stale-stage states. No real charge. |
 | `/receipts/[jobId]` | Owning customer or admin | Missing/unauthorized -> not found; payment/refund records, empty records and totals; refund timestamp explicitly unavailable. |
@@ -69,3 +69,10 @@ Reviewed current diffs excluding homepage/demo edits against `ui-review-acceptan
 - Exact original bottom glyph substitution remains unresolved per acceptance checklist. Existing independent icons are not evidence of exact source reproduction.
 
 No runtime/browser checks or new test commands were performed for this read-only review/document task. Root integration owns runtime QA and acceptance sign-off.
+
+
+## Mobile all-trades update (2026-10-21)
+
+This update supersedes the electrical-only input observations above; the state table describes the configured electrical workflow. All four existing categories (Electrical, Plumbing, Gas Fitting, Construction) are selectable and searchable. Non-electrical jobs can be posted, reviewed and discussed, but estimating/claiming/verification/completion are visibly unavailable until trade-specific requirements are configured. Existing data and schema are preserved; no user is automatically qualified. The server requires a matching category for estimates/claims and prevents an electrical CoC from completing another trade. Existing non-electrical verified flags are not treated as eligibility; an administrator can remove them.
+
+Additional review targets: each signup trade's registration requiredness; draft category restoration; matching/mismatched tradie and job; legacy non-electrical verified flag; pending compliance notice on job, profile and admin; no electrical certificate form on non-electrical assignment; no automatic release for unsupported trades. Payment controls remain test-only. Wider desktop design is deferred; narrow frames must still avoid collapsed columns and horizontal overflow.

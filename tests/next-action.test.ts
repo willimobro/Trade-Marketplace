@@ -7,7 +7,7 @@ describe("job guidance respects the next actor and financial state", () => {
     assert.match(nextAction("REVIEW", "tradie"), /private estimate/i);
     assert.match(nextAction("REVIEW", "tradie"), /Trade Marketplace sets/i);
     assert.match(nextAction("PRICED", "customer"), /review.*fixed price/i);
-    assert.match(nextAction("PRICED", "customer"), /No electrician is assigned/i);
+    assert.match(nextAction("PRICED", "customer"), /No tradie is assigned/i);
     assert.match(nextAction("BOOKABLE", "tradie"), /only after a successful claim/i);
   });
 

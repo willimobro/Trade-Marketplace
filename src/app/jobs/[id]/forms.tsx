@@ -110,7 +110,7 @@ export function ClaimForm({ action, earn }: { action: (prev: FormState) => Promi
     <RetainedForm pending={pending} action={formAction} className="space-y-3">
       <h3 ref={heading} tabIndex={-1} className="font-semibold">Before you claim</h3>
       <p className="text-sm">Gross pay: <strong>{earn}</strong>, including holiday pay and before payroll deductions. Review the scope and materials budget above. Claiming assigns this job to you; it does not set an appointment.</p>
-      <p className="text-sm text-muted">Another electrician may claim it first. A successful claim will reveal the customer’s contact details so you can agree timing.</p>
+      <p className="text-sm text-muted">Another tradie may claim it first. A successful claim will reveal the customer’s contact details so you can agree timing.</p>
       <label className="flex min-h-12 items-start gap-3 text-sm"><input className="mt-1" type="checkbox" required name="reviewedScope" />I have reviewed the scope and gross pay and want to claim this job.</label>
       <FormMessage state={state} />
       {state?.error && <p className="text-sm">The claim was not confirmed. <Link className="underline" href="/jobs">Return to available jobs</Link> to check current availability.</p>}

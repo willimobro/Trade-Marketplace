@@ -21,7 +21,7 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
       .catch(() => { if (active) setFontsUnavailable(true); });
     return () => { active = false; };
   }, []);
-  const title = path.startsWith("/admin") ? "Administration" : path.startsWith("/pay/") ? "Test payment" : path.startsWith("/receipts/") ? "Payment record" : path.startsWith("/profile") ? "Account" : path.startsWith("/messages") ? "Messages" : path.startsWith("/notifications") ? "Notifications" : path.startsWith("/support") ? "Help & support" : path.startsWith("/tradies/") ? "Electrician profile" : "Trade Marketplace";
+  const title = path.startsWith("/admin") ? "Administration" : path.startsWith("/pay/") ? "Test payment" : path.startsWith("/receipts/") ? "Payment record" : path.startsWith("/profile") ? "Account" : path.startsWith("/messages") ? "Messages" : path.startsWith("/notifications") ? "Notifications" : path.startsWith("/support") ? "Help & support" : path.startsWith("/tradies/") ? "Tradie profile" : "Trade Marketplace";
   const items = [
     { href: "/", label: "Home", icon: "home" },
     { href: role === "CUSTOMER" ? "/?view=search" : "/jobs", label: "Search", icon: "magnifier" },

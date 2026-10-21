@@ -1,12 +1,13 @@
-export function nextAction(status: string, role: "customer" | "assigned" | "tradie" | "admin") {
+export function nextAction(status: string, role: "customer" | "assigned" | "tradie" | "admin", category = "Electrical") {
+  if (category !== "Electrical" && ["REVIEW", "PRICED", "BOOKABLE", "ASSIGNED", "SUBMITTED"].includes(status)) return "Trade-specific verification and completion requirements are pending. Review the saved job details and contact Trade Marketplace; an electrical certificate does not verify this trade.";
   if (role === "tradie") return status === "REVIEW"
     ? "Your next step: provide or update your private estimate. Trade Marketplace sets the customer’s price."
     : status === "BOOKABLE" ? "Your next step: review the scope and gross pay before claiming. A job is assigned only after a successful claim." : "Review the latest saved job details; this job is not currently available to estimate or claim.";
   if (role === "admin") return ({
     REVIEW: "Next: review private estimates and set the customer’s fixed price.",
     PRICED: "Waiting for the customer to review and record their test payment.",
-    BOOKABLE: "Waiting for a verified electrician to claim the job.",
-    ASSIGNED: "The electrician is assigned. Review any requested variations before extra work proceeds.",
+    BOOKABLE: "Waiting for a verified tradie to claim the job.",
+    ASSIGNED: "The tradie is assigned. Review any requested variations before extra work proceeds.",
     SUBMITTED: "Next: review the CoC and sign off, or await customer sign-off and the automatic release threshold.",
     COMPLETED: "Job signed off. Review the separate manual payroll record; completion is not proof of payment.",
     CANCEL_REVIEW: "Next: investigate the cancellation and record the outcome.",
@@ -20,12 +21,12 @@ export function nextAction(status: string, role: "customer" | "assigned" | "trad
     CANCELLED: "This job is cancelled. Check messages and any existing payroll record for the recorded outcome.",
   } as Record<string, string>)[status] ?? "Review the latest saved job details.";
   return ({
-    REVIEW: "Waiting for private electrician estimates and Trade Marketplace’s fixed price. You do not need to pay yet.",
-    PRICED: "Your next step: review the fixed price and available test checkout. No electrician is assigned yet.",
-    BOOKABLE: "Waiting for a verified electrician to claim the job. No appointment has been scheduled.",
+    REVIEW: "Waiting for private tradie estimates and Trade Marketplace’s fixed price. You do not need to pay yet.",
+    PRICED: "Your next step: review the fixed price and available test checkout. No tradie is assigned yet.",
+    BOOKABLE: "Waiting for a verified tradie to claim the job. No appointment has been scheduled.",
     ASSIGNED: "Your next step: agree access and timing in messages. Review any extra-work price before approving it.",
     SUBMITTED: "Your next step: review the completed work and CoC, then confirm completion. Check the automatic sign-off threshold below.",
-    COMPLETED: "Job signed off. You can review the payment record and leave a review for your electrician.",
+    COMPLETED: "Job signed off. You can review the payment record and leave a review for your tradie.",
     CANCEL_REVIEW: "Waiting for Trade Marketplace to investigate your cancellation. A refund is not confirmed until recorded.",
     CANCELLED: "This job is cancelled. Check the payment record for any recorded refund; you can post a new job from your dashboard.",
   } as Record<string, string>)[status] ?? "Review the latest saved job details.";

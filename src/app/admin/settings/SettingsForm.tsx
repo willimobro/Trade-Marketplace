@@ -15,7 +15,7 @@ type S = {
 };
 
 const FIELDS: [keyof S, string, string, string][] = [
-  ["tradieRate", "Tradie rate ($/hr, gross)", "0.50", "What the electrician is paid per hour before PAYE. Set this first."],
+  ["tradieRate", "Tradie rate ($/hr, gross)", "0.50", "What the tradie is paid per hour before PAYE. Set this first."],
   ["holidayPayPct", "Holiday pay (%)", "0.1", "Prototype setting for the additional holiday-pay calculation."],
   ["onCostPct", "On-costs (%)", "0.1", "Labour on-cost allowance; must be at least the holiday-pay percentage."],
   ["marginPct", "Trade Marketplace margin (%)", "0.5", "Markup applied to labour cost and materials; not a net-profit forecast."],

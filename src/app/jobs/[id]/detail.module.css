@@ -33,7 +33,7 @@
 .screen .title { margin: 0; font-size: 28px; line-height: normal; }
 .posted { margin-top: 8px; font-size: 11px; color: #52645b; }
 .metadata { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
-.screen .quoteLink { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 61px; margin: 20px 0; padding: 12px; border-radius: var(--trade-radius-action); background: var(--trade-lime); color: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 10%); font-size: 24px; line-height: normal; text-align: center; }
+.screen .quoteLink { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 61px; margin: 20px 0; padding: 12px; border-radius: var(--trade-radius-action); background: var(--trade-lime); color: var(--trade-forest); box-shadow: 0 4px 4px rgb(0 0 0 / 10%); font-size: 24px; line-height: normal; text-align: center; }
 .screen .detailsHeading { margin-top: 20px; font-size: 20px; line-height: normal; }
 .location { margin-top: 9px; font-size: 16px; }
 .description { margin-top: 9px; white-space: pre-wrap; font-size: 16px; line-height: 1.4; }
@@ -46,10 +46,10 @@
 .screen :global(.label) { margin-bottom: 9px; }
 .screen :global(.input) { min-width: 0; min-height: 48px; border: 1px solid var(--trade-field-border); border-radius: 0; box-shadow: none; background: white; color: var(--trade-forest); font-size: 16px; }
 .screen textarea:global(.input) { min-height: 92px; resize: vertical; }
-.screen :global(.btn-primary) { min-height: 61px; border-radius: var(--trade-radius-action); background: var(--trade-lime); color: #fff; box-shadow: 0 4px 4px rgb(0 0 0 / 10%); padding: 12px 16px; font-size: 24px; line-height: 1.3; }
+.screen :global(.btn-primary) { min-height: 61px; border-radius: var(--trade-radius-action); background: var(--trade-lime); color: var(--trade-forest); box-shadow: 0 4px 4px rgb(0 0 0 / 10%); padding: 12px 16px; font-size: 24px; line-height: 1.3; }
 .estimateActions :global(.btn-primary) { background: var(--trade-leaf); }
 .screen :global(.btn-ghost) { min-height: 44px; border: 1px solid var(--trade-field-border); border-radius: var(--trade-radius-action); background: white; color: var(--trade-forest); box-shadow: none; }
-.screen :global(.btn-primary):disabled { background: #d9d9d9; color: #fff; }
+.screen :global(.btn-primary):disabled { background: #d9d9d9; color: #52645b; }
 .screen :is(a, button, input, select, textarea):focus-visible { outline: 2px solid #2163c6; outline-offset: 3px; }
 .actions { scroll-margin-top: 24px; }
 @media (max-width: 350px) { .detailPanel, .main > :global(.card), .main > section, .actions > :global(.card) { padding-left: 20px; padding-right: 20px; } }

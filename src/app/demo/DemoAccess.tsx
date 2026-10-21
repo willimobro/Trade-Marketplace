@@ -9,7 +9,7 @@ export function DemoAccess({ action }: { action: (previous: FormState, form: For
     <fieldset disabled={pending} className="grid gap-4">
       <legend className="mb-4 font-semibold">Choose a demo role</legend>
       <button type="submit" name="role" value="customer" className="btn-primary">Open customer demo</button>
-      <button type="submit" name="role" value="tradie" className="btn-primary">Open electrician demo</button>
+      <button type="submit" name="role" value="tradie" className="btn-primary">Open tradie demo</button>
       <button type="submit" name="role" value="admin" className="btn-primary">Open administrator demo</button>
     </fieldset>
     <p role="status" className="mt-4 text-sm">{pending ? "Signing in with the existing demo account…" : ""}</p>

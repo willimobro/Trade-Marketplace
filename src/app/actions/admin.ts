@@ -115,7 +115,11 @@ export async function markPayoutPaid(payoutId: string) {
 
 export async function setLicence(userId: string, verified: boolean) {
   await requireAdmin();
-  await db.user.updateMany({ where: { id: userId, role: "TRADIE" }, data: { licenceVerified: verified } });
+  const result = await db.user.updateMany({
+    where: { id: userId, role: "TRADIE", ...(verified ? { trade: "Electrical" } : {}) },
+    data: { licenceVerified: verified },
+  });
+  if (verified && result.count === 0) throw new Error("Verification is available only for electrical accounts with configured requirements. Other trades cannot be verified through the EWRB flow.");
   revalidatePath("/admin/tradies");
 }
 

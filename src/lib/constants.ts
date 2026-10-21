@@ -56,8 +56,8 @@ export function jobRef(jobNumber: number) {
 export const JOB_STATUS: Record<string, { label: string; customer: string; style: string }> = {
   REVIEW: { label: "Under review", customer: "We're getting your job priced", style: "bg-amber-400/20 text-amber-900" },
   PRICED: { label: "Priced", customer: "Your fixed price is ready", style: "bg-sky-500/15 text-sky-800" },
-  BOOKABLE: { label: "Available to claim", customer: "Paid — finding your electrician", style: "bg-leaf/15 text-leaf-dark" },
-  ASSIGNED: { label: "Assigned", customer: "Your electrician is assigned", style: "bg-sky-500/15 text-sky-800" },
+  BOOKABLE: { label: "Available to claim", customer: "Paid — finding your tradie", style: "bg-leaf/15 text-leaf-dark" },
+  ASSIGNED: { label: "Assigned", customer: "Your tradie is assigned", style: "bg-sky-500/15 text-sky-800" },
   SUBMITTED: { label: "Awaiting sign-off", customer: "CoC submitted — please review", style: "bg-violet-500/15 text-violet-800" },
   COMPLETED: { label: "Completed", customer: "Done", style: "bg-black/10 text-ink" },
   CANCEL_REVIEW: { label: "Cancellation under investigation", customer: "Cancellation under investigation", style: "bg-red-500/15 text-red-800" },

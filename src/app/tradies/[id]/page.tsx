@@ -34,7 +34,7 @@ export default async function TradiePage({ params }: { params: Promise<{ id: str
             <h1 className="text-2xl font-bold">{tradie.name}</h1>
             <p className="text-sm text-muted">{tradie.trade} · {tradie.region} · joined {timeAgo(tradie.createdAt)}</p>
             <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-              <LicenceBadge verified={tradie.licenceVerified} />
+              <LicenceBadge verified={tradie.licenceVerified} trade={tradie.trade} />
               {avg !== null && <span><Stars rating={avg} /> {avg.toFixed(1)} ({reviews.length})</span>}
               <span className="text-muted">{tradie._count.jobsAssigned} job{tradie._count.jobsAssigned === 1 ? "" : "s"} completed</span>
             </div>

@@ -8,6 +8,7 @@ import { REGIONS } from "@/lib/constants";
 type ProfileUser = {
   name: string;
   role: string;
+  trade: string | null;
   region: string;
   phone: string | null;
   bio: string | null;
@@ -57,12 +58,12 @@ export function ProfileForm({ user }: { user: ProfileUser }) {
       {isTradie && (
         <>
           <div>
-            <div className="mb-1 flex items-center justify-between">
-              <label className="label mb-0" htmlFor="registrationNo">Registration number</label>
-              <LicenceBadge verified={user.licenceVerified} />
+            <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+              <label className="label mb-0" htmlFor="registrationNo">{user.trade === "Electrical" ? "Electrical registration number" : "Registration number (optional)"}</label>
+              <LicenceBadge verified={user.licenceVerified} trade={user.trade} />
             </div>
             <input className="input" id="registrationNo" name="registrationNo" {...field("registrationNo")} />
-            <p className="mt-1 text-sm text-muted">Changing this resets your verified badge until it&apos;s checked again.</p>
+            <p className="mt-1 text-sm text-muted">{user.trade === "Electrical" ? "Changing this resets your verified badge until it is checked again." : "Requirements for your trade still need to be configured. Adding a number does not verify your account."}</p>
           </div>
           <div>
             <label className="label" htmlFor="bio">About you</label>

@@ -20,4 +20,4 @@ Matthew subsequently authorized source-exact navigation icons temporarily for th
 
 ## Contrast limitation
 
-Some original white-on-leaf CTAs fall below WCAG AA. Preserve source fidelity pending Matthew's decision; do not claim full AA compliance. New status badges and readable workflow amounts use stronger forest/dark-green text. Decorative borders and required input boundaries are different uses; verify each in context.
+Matthew approved minimum brand-consistent contrast corrections on 2026-10-21. Leaf (#6CBD45) and lime (#A6D754) fills, geometry, typography and shadows are retained; active CTA labels change from white to forest (#0C251D). Contrast changes from approximately 2.33:1 to 6.94:1 on leaf and 1.68:1 to 9.61:1 on lime. Auth secondary text changes from #898989 to #52645B; links/password toggles use #326C20. Required field outlines change from #AFACAC to #52645B (6.30:1 on white). This documents intentional source deviations for design review, not full WCAG certification.

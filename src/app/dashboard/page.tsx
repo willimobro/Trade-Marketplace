@@ -21,7 +21,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       <header className={styles.header}>
         <nav aria-label="Dashboard navigation" className={styles.nav}><Link href="/">Home</Link>{user.role === "TRADIE" && <Link href="/jobs">Browse</Link>}<Link href="/profile">Account</Link></nav>
         <div>
-          <p className={styles.eyebrow}>{user.role === "CUSTOMER" ? "Customer workspace" : "Electrician workspace"}</p>
+          <p className={styles.eyebrow}>{user.role === "CUSTOMER" ? "Customer workspace" : "Tradie workspace"}</p>
           <h1 className={styles.heading}>{user.role === "CUSTOMER" ? "Your jobs" : `Kia ora, ${user.name.split(" ")[0]}`}</h1>
           <p className={styles.subtitle}>{user.role === "TRADIE" ? `${user.trade} · ${user.region}` : user.region}</p>
         </div>
@@ -29,7 +29,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
           <Link href="/jobs/new" className={`${styles.primary} ${styles.actions}`}>+ Post a job</Link>
         ) : (
           <div className={styles.actions}>
-            <LicenceBadge verified={user.licenceVerified} />
+            <LicenceBadge verified={user.licenceVerified} trade={user.trade} />
             <Link href="/jobs" className={styles.primary}>Job board</Link>
           </div>
         )}
@@ -60,7 +60,7 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
         <div className="max-w-xl">
           <p >{attention ? "Your next action" : "A clear path from job to sign-off"}</p>
           <h2 >{attention ? attention.title : "What needs doing?"}</h2>
-          <p >{attention ? nextAction(attention.status, "customer") : "Post your electrical job with photos. Private electrician estimates help Trade Marketplace set your fixed price."}</p>
+          <p >{attention ? nextAction(attention.status, "customer", attention.category) : "Post your job with photos. Private tradie estimates help Trade Marketplace set your fixed price."}</p>
         </div>
         <Link href={attention ? `/jobs/${attention.id}` : "/jobs/new"} className={styles.primary}>{attention ? "Review job" : "Post a job"}</Link>
       </div>
@@ -80,7 +80,7 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
           {visible.map((job) => (
             <div key={job.id} className={styles.jobItem}>
               <JobCard job={job} audience="customer" aside={job.priceCents != null && <span className={styles.price}>{formatNZD(job.priceCents)}</span>} />
-              <p className={styles.next}>{nextAction(job.status, "customer")}</p>
+              <p className={styles.next}>{nextAction(job.status, "customer", job.category)}</p>
               <Link href={`/receipts/${job.id}`} className={styles.receipt}>Payment record</Link>
             </div>
           ))}
@@ -164,13 +164,13 @@ async function TradieDash({ userId }: { userId: string }) {
             ))}
           </div>
         ) : (
-          <EmptyState title="No pay yet">After you upload the CoC and the job is signed off, queued pay appears here.</EmptyState>
+          <EmptyState title="No pay yet">After the applicable completion checks and sign-off, queued pay appears here.</EmptyState>
         )}
         <p className="mt-2 text-xs text-muted">Amounts are gross including holiday pay, before deductions. PAYE and payment processing are handled outside this app through manual payroll.</p>
       </section>
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Your job history</h2>
-        {history.length ? <div className={styles.jobList}>{history.map((job) => <div key={job.id} className="space-y-3"><JobCard job={job} /><p className={styles.next}>{nextAction(job.status, "assigned")}</p></div>)}</div>
+        {history.length ? <div className={styles.jobList}>{history.map((job) => <div key={job.id} className="space-y-3"><JobCard job={job} /><p className={styles.next}>{nextAction(job.status, "assigned", job.category)}</p></div>)}</div>
           : <EmptyState title="No completed or cancelled jobs yet">Your assigned jobs appear here when they are completed or cancelled.</EmptyState>}
       </section>
     </>

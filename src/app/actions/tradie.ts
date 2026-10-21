@@ -5,11 +5,13 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { saveUploads } from "@/lib/uploads";
+import { getTradeActionBlocker, tradeRequirementsPending } from "@/lib/trade-readiness";
 import type { FormState } from "./types";
 
 async function requireVerifiedTradie() {
   const user = await requireUser();
   if (user.role !== "TRADIE") return { user, error: "Only tradie accounts can do that." };
+  if (tradeRequirementsPending(user.trade)) return { user, error: "Verification and completion requirements for your trade are not configured yet. This action is not available." };
   if (!user.licenceVerified) return { user, error: "Your licence needs to be verified first." };
   return { user, error: null };
 }
@@ -28,6 +30,8 @@ export async function submitEstimate(jobId: string, _prev: FormState, form: Form
   if (error) return { error };
   const job = await db.job.findUnique({ where: { id: jobId } });
   if (!job || job.status !== "REVIEW") return { error: "This job isn't being priced any more." };
+  const blocker = getTradeActionBlocker(user, job.category);
+  if (blocker) return { error: blocker };
 
   const parsed = estimateSchema.safeParse({
     hours: form.get("hours"),
@@ -58,9 +62,13 @@ export async function submitEstimate(jobId: string, _prev: FormState, form: Form
 export async function claimJob(jobId: string): Promise<FormState> {
   const { user, error } = await requireVerifiedTradie();
   if (error) return { error };
+  const job = await db.job.findUnique({ where: { id: jobId }, select: { category: true } });
+  if (!job) return { error: "This job is no longer available." };
+  const blocker = getTradeActionBlocker(user, job.category);
+  if (blocker) return { error: blocker };
   // Atomic: only one tradie can win the race for a bookable job.
   const res = await db.job.updateMany({
-    where: { id: jobId, status: "BOOKABLE", tradieId: null },
+    where: { id: jobId, status: "BOOKABLE", tradieId: null, category: user.trade! },
     data: { status: "ASSIGNED", tradieId: user.id, assignedAt: new Date() },
   });
   if (res.count === 0) return { error: "Someone else just took this job." };
@@ -110,10 +118,14 @@ const cocSchema = z.object({
 });
 
 export async function submitCoc(jobId: string, _prev: FormState, form: FormData): Promise<FormState> {
-  const { user, error } = await requireVerifiedTradie();
-  if (error) return { error };
+  const user = await requireUser();
+  if (user.role !== "TRADIE") return { error: "Only tradie accounts can do that." };
   const job = await db.job.findUnique({ where: { id: jobId }, include: { variations: true } });
   if (!job || job.tradieId !== user.id || job.status !== "ASSIGNED") return { error: "You can't submit this job." };
+  if (tradeRequirementsPending(job.category) || tradeRequirementsPending(user.trade))
+    return { error: "Completion requirements for this trade are not configured yet. The electrical CoC flow cannot complete this job." };
+  const blocker = getTradeActionBlocker(user, job.category);
+  if (blocker) return { error: blocker };
   if (job.variations.some((v) => v.status === "REQUESTED" || v.status === "PRICED"))
     return { error: "Wait until the open variation is approved or declined." };
 

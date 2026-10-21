@@ -50,7 +50,7 @@ export function PayrollExport({ count, total }: { count: number; total: string }
         <summary className="cursor-pointer py-3 font-semibold">Included columns & reconciliation checklist</summary>
         <p className="mt-2 text-sm text-muted">Name, email, registration, job reference, hours, rate, gross pay, holiday pay and total gross. The file contains personal information; use your approved payroll process.</p>
         <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm">
-          <li>Match each job, electrician, hours and amount against the completed work.</li>
+          <li>Match each job, tradie, hours and amount against the completed work.</li>
           <li>Check the CSV format and deductions in your payroll system. This is a generic export, not a payroll-provider integration.</li>
           <li>Reconcile payment outside this app, then review each record before marking it paid.</li>
         </ol>

@@ -52,20 +52,21 @@ function HomeContent() {
     <div className={styles.content}>
       {searching ? <>
         <h1 className={styles.searchTitle}>Recently Searched</h1>
-        <p className={styles.searchContext}>Example searches · More trades coming; electrical jobs available now.</p>
+        <p className={styles.searchContext}>Example searches across the trades.</p>
         {["Plug socket install", "Labour jobs"].map((term) => <section key={term} className={styles.searchGroup} aria-label={`Example search: ${term}`}><div className={styles.queryHeading}><span>“{term}”</span><Link href={term === "Labour jobs" ? "/jobs" : "/jobs?q=socket"}>Search again</Link></div><JobStrip label={`Example results for ${term}`} /></section>)}
-        <section className={styles.searchGroup}><div className={styles.heading}><h2>Electrical</h2><Link href="/jobs">See all</Link></div><JobStrip label="Electrical examples" /></section>
+        <section className={styles.searchGroup}><div className={styles.heading}><h2>Electrical</h2><Link href="/jobs?category=Electrical">See all</Link></div><JobStrip label="Electrical examples" /></section>
       </> : <>
         <div className={`${styles.strip} ${styles.categories}`} tabIndex={0} role="region" aria-label="Trade categories. Scroll horizontally; use left and right arrow keys." onKeyDown={arrowScroll}>
-          <Link href="/jobs" className={styles.category}><span className={`${styles.categoryTint} ${styles.electrical}`} />
+          <Link href="/jobs?category=Electrical" className={styles.category}><span className={`${styles.categoryTint} ${styles.electrical}`} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className={styles.multimeter} src="/original/browse-fb398d016e30d08fb00c4f5b0105a140173a8da9.png" alt="" /><span className={styles.categoryLabel}><strong>Electrical</strong><span>and related</span></span></Link>
-          <div className={styles.category} aria-label="Construction, not currently available"><span className={`${styles.categoryTint} ${styles.construction}`} />
+          <Link href="/jobs?category=Construction" className={styles.category}><span className={`${styles.categoryTint} ${styles.construction}`} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.staple} src="/original/browse-c9bd4c4af0c22f24a0abc58a8ed672ea849ef9a8.png" alt="" /><span className={styles.categoryLabel}><strong>Construction</strong><span>Coming later</span></span></div>
-          <div className={styles.category} aria-label="Plumbing, not currently available"><span className={`${styles.categoryTint} ${styles.plumbing}`} />
+            <img className={styles.staple} src="/original/browse-c9bd4c4af0c22f24a0abc58a8ed672ea849ef9a8.png" alt="" /><span className={styles.categoryLabel}><strong>Construction</strong><span>and related</span></span></Link>
+          <Link href="/jobs?category=Plumbing" className={styles.category}><span className={`${styles.categoryTint} ${styles.plumbing}`} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className={styles.pipe} src="/original/browse-2a782790be5cf1dfe155a220bd9c8853f067a73f.png" alt="" /><span className={styles.categoryLabel}><strong>Plumbing</strong><span>Coming later</span></span></div>
+            <img className={styles.pipe} src="/original/browse-2a782790be5cf1dfe155a220bd9c8853f067a73f.png" alt="" /><span className={styles.categoryLabel}><strong>Plumbing</strong><span>and related</span></span></Link>
+          <Link href="/jobs?category=Gas%20Fitting" className={styles.category}><span className={`${styles.categoryTint} ${styles.gas}`} /><span className={styles.categoryLabel}><strong>Gas Fitting</strong><span>and related</span></span></Link>
         </div>
         <section aria-label="Suggested jobs"><div className={styles.heading}><h2>Suggested Jobs</h2><Link href="/jobs">See all</Link></div><JobStrip label="Suggested job examples" twoRows /></section>
         <section className={styles.recent} aria-label="Recently viewed examples"><div className={styles.heading}><h2>Recently Viewed</h2><Link href="/jobs">See all</Link></div><div className={styles.verticalCards}>{[0,1,2,0,1,2].map((index, order) => <ExampleCard key={order} index={index} />)}</div></section>
@@ -74,7 +75,7 @@ function HomeContent() {
     <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? href === "/?view=search" : href === "/") ? "page" : undefined}><SourceIcon name={icon} size={26} navigation /><span className="sr-only">{label}</span></Link>)}</nav>
     <dialog ref={menu} className={styles.menu} aria-labelledby="home-menu-title" onClose={() => requestAnimationFrame(() => menuButton.current?.focus())}>
       <div className={styles.menuHeading}><h2 id="home-menu-title">Trade Marketplace</h2><button type="button" aria-label="Close menu" onClick={() => menu.current?.close()}><SourceIcon name="x" /></button></div>
-      <nav aria-label="Menu">{[["/jobs", "Find work"], ["/jobs/new", "Post a job"], ["/for-tradies", "For electricians"], ["/login", "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={href} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>
+      <nav aria-label="Menu">{[["/jobs", "Find work"], ["/jobs/new", "Post a job"], ["/for-tradies", "For tradies"], ["/login", "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={href} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>
     </dialog>
   </div>;
 }

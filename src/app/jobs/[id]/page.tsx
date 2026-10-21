@@ -1,3 +1,4 @@
+import { getTradeActionBlocker, tradeRequirementsPending } from "@/lib/trade-readiness";
 import { ClearPostedJobDraft } from "@/app/jobs/new/job-draft";
 import { SourceIcon } from "@/components/SourceIcon";
 import Link from "next/link";
@@ -43,7 +44,7 @@ export default async function JobPage({
         customer: { select: { id: true, name: true, phone: true, email: true } },
         tradie: {
           select: {
-            id: true, name: true, avatarUrl: true, phone: true, registrationNo: true, licenceVerified: true,
+            id: true, name: true, avatarUrl: true, phone: true, registrationNo: true, licenceVerified: true, trade: true,
             reviewsReceived: { select: { rating: true } },
           },
         },
@@ -59,6 +60,8 @@ export default async function JobPage({
   ]);
   if (!job) notFound();
 
+  const tradeBlocker = getTradeActionBlocker(user, job.category);
+  const pendingRequirements = tradeRequirementsPending(job.category);
   const isOwner = user.id === job.customerId;
   const isAdmin = user.role === "ADMIN";
   const isAssigned = user.id === job.tradieId;
@@ -67,7 +70,7 @@ export default async function JobPage({
   if (isOtherTradie && job.status !== "REVIEW" && job.status !== "BOOKABLE") {
     return <section className="mx-auto max-w-xl px-4 py-12">
       <h1 className="text-2xl font-semibold">This job is no longer available</h1>
-      <p role="status" className="mt-4 text-muted">{job.tradieId ? "This job has been assigned to another electrician. Your account is not assigned to it." : "This job’s stage has changed and it is not currently open for estimates or claims."} Check the job board for current opportunities.</p>
+      <p role="status" className="mt-4 text-muted">{job.tradieId ? "This job has been assigned to another tradie. Your account is not assigned to it." : "This job’s stage has changed and it is not currently open for estimates or claims."} Check the job board for current opportunities.</p>
       <div className="mt-6 flex flex-wrap gap-3"><Link href="/jobs" className="btn-primary">Find available jobs</Link><Link href="/dashboard" className="btn-ghost">Your workspace</Link></div>
     </section>;
   }
@@ -92,7 +95,7 @@ export default async function JobPage({
 
   return (
     <div className={styles.screen}>
-      {isOwner && <ClearPostedJobDraft userId={user.id} fields={{ title: job.title, description: job.description, region: job.region, suburb: job.suburb, address: job.address }} createdAt={job.createdAt.toISOString()} />}
+      {isOwner && <ClearPostedJobDraft userId={user.id} fields={{ category: job.category, title: job.title, description: job.description, region: job.region, suburb: job.suburb, address: job.address }} createdAt={job.createdAt.toISOString()} />}
       <div className={styles.main}>
         <article className={styles.job}>
           <div className={styles.backdrop}>
@@ -106,7 +109,7 @@ export default async function JobPage({
               <CategoryChip name={job.category} />
               <StatusChip status={job.status} audience={audience} />
             </div>
-            {isOtherTradie && job.status === "REVIEW" && user.licenceVerified && <a href="#job-actions" className={styles.quoteLink}>Provide blind estimate <span aria-hidden="true">↗</span></a>}
+            {isOtherTradie && job.status === "REVIEW" && !tradeBlocker && <a href="#job-actions" className={styles.quoteLink}>Provide blind estimate <span aria-hidden="true">↗</span></a>}
             <h2 className={styles.detailsHeading}>Details</h2>
             <p className={styles.location}>{canSeeAddress ? `${job.address}, ` : ""}{job.suburb}, {job.region}</p>
             <p className={styles.description}>{job.description}</p>
@@ -116,14 +119,14 @@ export default async function JobPage({
         {/* Current workflow sections below adapt original typography; no equivalent admin flow exists in the source. */}
         <section aria-label="Next step" className="card border-l-4 border-l-forest p-5">
           <h2 className="font-semibold">What happens next</h2>
-          <p className="mt-2 text-sm">{nextAction(job.status, isAdmin ? "admin" : isOwner ? "customer" : isAssigned ? "assigned" : "tradie")}</p>
+          <p className="mt-2 text-sm">{nextAction(job.status, isAdmin ? "admin" : isOwner ? "customer" : isAssigned ? "assigned" : "tradie", job.category)}</p>
           {(isOwner || isAdmin) && <Link href={`/receipts/${job.id}`} className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold underline">View payment record</Link>}
           {isOwner && (job.status === "REVIEW" || job.status === "BOOKABLE") && (
             <details className="mt-3 text-sm">
               <summary className="cursor-pointer py-3 font-semibold">Waiting for an update?</summary>
               <p className="mt-2 text-muted">{job.status === "REVIEW"
-                ? "Electricians’ private estimates help Trade Marketplace set your fixed price. An estimate is not a customer quote or an appointment. No fixed price is ready to accept at this stage."
-                : "Your job is available for an electrician to claim. A recorded test payment does not assign an electrician or schedule an appointment. Check this job’s status and payment record before attempting another payment."}</p>
+                ? "Tradies’ private estimates help Trade Marketplace set your fixed price. An estimate is not a customer quote or an appointment. No fixed price is ready to accept at this stage."
+                : "Your job is available for an tradie to claim. A recorded test payment does not assign an tradie or schedule an appointment. Check this job’s status and payment record before attempting another payment."}</p>
               <p className="mt-3 text-muted">You can add relevant details or ask about the current stage in the job conversation. Messages are saved here; sending one does not change the job’s status.</p>
               <a href="#messages" className="mt-2 inline-flex min-h-11 items-center font-semibold underline">Open job conversation</a>
               <p><Link href="/support" className="inline-flex min-h-11 items-center underline">View help and support options</Link></p>
@@ -145,7 +148,7 @@ export default async function JobPage({
               <p className="text-3xl font-bold text-leaf-dark"><Money cents={job.priceCents} /></p>
             </div>
             {breakdownMatchesSavedPrice && jobPrice ? <div className="mt-3 space-y-1 text-sm">
-              <div className="flex justify-between"><span>Labour ({jobPrice.hours} hrs, licensed electrician)</span><Money cents={jobPrice.exGstCents - materialsShown(jobPrice.materialsCents, rates.marginPct)} /></div>
+              <div className="flex justify-between"><span>Labour ({jobPrice.hours} hrs, licensed tradie)</span><Money cents={jobPrice.exGstCents - materialsShown(jobPrice.materialsCents, rates.marginPct)} /></div>
               <div className="flex justify-between"><span>Materials</span><Money cents={materialsShown(jobPrice.materialsCents, rates.marginPct)} /></div>
               <div className="flex justify-between text-muted"><span>GST</span><Money cents={jobPrice.gstCents} /></div>
             </div>
@@ -159,10 +162,12 @@ export default async function JobPage({
             {isPaid && <p className="mt-4 text-sm text-leaf-dark">Demo payment recorded {job.paidAt ? timeAgo(job.paidAt) : ""} · no money moved</p>}
             {isRefunded && <p className="mt-4 text-sm text-muted">Demo refund recorded · no money moved.</p>}
             <p className="mt-3 text-xs text-muted">
-              Includes your Certificate of Compliance. If the electrician finds extra work, you&apos;ll get photos and a price to approve before anything extra is done.
+              {job.category === "Electrical" ? "Includes the electrical Certificate of Compliance. " : "Completion documents for this trade still need to be defined. "}If the tradie finds extra work, you&apos;ll get photos and a price to approve before anything extra is done.
             </p>
           </section>
         )}
+
+        {pendingRequirements && <section className="card p-5" aria-label="Trade requirements"><h2 className="font-semibold">{job.category} requirements pending</h2><p className="mt-2 text-sm">You can post and review this job. Verification and completion requirements for this trade still need to be configured before estimates, claiming and completion are enabled. Use messages to ask Trade Marketplace about the next step.</p></section>}
 
         {/* Variations */}
         {job.variations.length > 0 && (isOwner || isAdmin || isAssigned) && (
@@ -214,15 +219,15 @@ export default async function JobPage({
                 Materials spent {formatNZD(job.coc.materialsSpentCents)} vs budget {formatNZD(scopeMaterials)} (ex GST) - check against Telfer order {jobRef(job.jobNumber)}.
               </p>
             )}
-            {job.status === "SUBMITTED" && autoReleaseAt && (
+            {job.status === "SUBMITTED" && !pendingRequirements && autoReleaseAt && (
               <div className="mt-4 rounded-xl bg-amber-50 p-4 text-sm text-amber-900">
                 <p className="font-semibold">Sign-off window: {settings.autoReleaseHours} hours after CoC upload</p>
-                <p className="mt-2">Threshold: <time dateTime={autoReleaseAt.toISOString()}>{autoReleaseAt.toLocaleString("en-NZ", { timeZone: "Pacific/Auckland", dateStyle: "medium", timeStyle: "short" })}</time> (New Zealand time). After this threshold, the next dashboard or job-page load automatically marks the job complete and queues the electrician’s pay for payroll. It does not transfer money immediately.</p>
+                <p className="mt-2">Threshold: <time dateTime={autoReleaseAt.toISOString()}>{autoReleaseAt.toLocaleString("en-NZ", { timeZone: "Pacific/Auckland", dateStyle: "medium", timeStyle: "short" })}</time> (New Zealand time). After this threshold, the next dashboard or job-page load automatically marks the job complete and queues the tradie’s pay for payroll. It does not transfer money immediately.</p>
                 <p className="mt-2">Sending a message does not pause this automatic sign-off.</p>
               </div>
             )}
-            {isOwner && job.status === "SUBMITTED" && (
-              <div className="mt-4"><ConfirmAction action={confirmCompletion.bind(null, job.id)} label="Review completion" description="Confirm that you have reviewed the completed work and CoC. Confirming marks the job complete and queues the electrician’s pay for manual payroll; it does not transfer money." confirmLabel="Confirm job is complete" /></div>
+            {isOwner && job.status === "SUBMITTED" && !pendingRequirements && (
+              <div className="mt-4"><ConfirmAction action={confirmCompletion.bind(null, job.id)} label="Review completion" description="Confirm that you have reviewed the completed work and CoC. Confirming marks the job complete and queues the tradie’s pay for manual payroll; it does not transfer money." confirmLabel="Confirm job is complete" /></div>
             )}
           </section>
         )}
@@ -232,7 +237,7 @@ export default async function JobPage({
           <section id="messages" className="card p-6">
             <h2 className="text-lg font-bold">Messages</h2>
             <p className="text-xs text-muted">
-              {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, electrician and Trade Marketplace"}
+              {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, tradie and Trade Marketplace"}
             </p>
             <div className={styles.messageList}>
               {job.messages.length === 0 && <p className="text-sm text-muted">No messages yet.</p>}
@@ -261,13 +266,13 @@ export default async function JobPage({
           <div className="card p-5">
             <h2 className="font-bold">Help price this job</h2>
             <p className="mb-4 text-xs text-muted">Blind estimate - only Trade Marketplace sees it. How long on site, and what materials at cost?</p>
-            {user.licenceVerified ? (
+            {!tradeBlocker ? (
               <EstimateForm
                 action={submitEstimate.bind(null, job.id)}
                 existing={myEstimate && { hours: myEstimate.hours, materials: myEstimate.materialsCents / 100, note: myEstimate.note }}
               />
             ) : (
-              <LicenceBadge verified={false} />
+              <p role="status" className="text-sm text-muted">{tradeBlocker}</p>
             )}
           </div>
         )}
@@ -283,10 +288,10 @@ export default async function JobPage({
               <li>✓ Materials budget {formatNZD(scopeMaterials)} ex GST on our Telfer account</li>
               <li>✓ Extra work needs a price and customer approval before you do it</li>
             </ul>
-            {user.licenceVerified ? (
+            {!tradeBlocker ? (
               <ClaimForm action={claimJob.bind(null, job.id)} earn={formatNZD(earn.tradieTotalCents)} />
             ) : (
-              <LicenceBadge verified={false} />
+              <p role="status" className="text-sm text-muted">{tradeBlocker}</p>
             )}
           </div>
         )}
@@ -315,12 +320,12 @@ export default async function JobPage({
                 <div className="card p-5">
                   <h2 className="font-bold">Found extra work?</h2>
                   <p className="mb-4 text-xs text-muted">Don&apos;t do it yet. Send photos - we price it and the customer pays before you carry on.</p>
-                  <VariationForm action={requestVariation.bind(null, job.id)} />
+                  {tradeBlocker ? <p role="status" className="text-sm text-muted">{tradeBlocker} Use messages to discuss extra work with Trade Marketplace.</p> : <VariationForm action={requestVariation.bind(null, job.id)} />}
                 </div>
                 <div className="card p-5">
                   <h2 className="font-bold">Finished?</h2>
-                  <p className="mb-4 text-xs text-muted">Upload the CoC for sign-off. After sign-off, pay is queued for manual payroll. The customer can view the CoC.</p>
-                  {openVariation ? (
+                  <p className="mb-4 text-xs text-muted">{pendingRequirements ? "Completion requirements for this trade are not configured yet. Contact Trade Marketplace in messages; an electrical CoC is not a substitute." : "Upload the electrical CoC for sign-off. After sign-off, pay is queued for manual payroll. The customer can view the CoC."}</p>
+                  {pendingRequirements ? <Link href="#messages" className="underline">Discuss completion requirements</Link> : openVariation ? (
                     <p className="text-sm text-muted">Waiting on the open variation first.</p>
                   ) : (
                     <CocForm action={submitCoc.bind(null, job.id)} />
@@ -337,10 +342,10 @@ export default async function JobPage({
             <h2 className="font-bold">Status</h2>
             <p className="text-sm">
               {{
-                REVIEW: "Next: electricians provide private estimates, then Trade Marketplace reviews them and sets your fixed price.",
-                PRICED: "Your fixed price is ready. Next: review the price and test payment. No electrician is assigned yet.",
-                BOOKABLE: "Test payment recorded. Next: a verified electrician can claim your job. No appointment is scheduled yet.",
-                ASSIGNED: "An electrician has claimed your job. Use messages to agree access and timing; no appointment is scheduled by the app.",
+                REVIEW: "Next: tradies provide private estimates, then Trade Marketplace reviews them and sets your fixed price.",
+                PRICED: "Your fixed price is ready. Next: review the price and test payment. No tradie is assigned yet.",
+                BOOKABLE: "Test payment recorded. Next: a verified tradie can claim your job. No appointment is scheduled yet.",
+                ASSIGNED: "An tradie has claimed your job. Use messages to agree access and timing; no appointment is scheduled by the app.",
                 SUBMITTED: "The work's done and the CoC is uploaded. Please confirm.",
                 COMPLETED: "All done. Thanks for using Trade Marketplace!",
                 CANCEL_REVIEW: "We're looking into your cancellation and will be in touch.",
@@ -353,7 +358,7 @@ export default async function JobPage({
                 <div className="text-sm">
                   <Link href={`/tradies/${job.tradie.id}`} className="font-semibold hover:underline">{job.tradie.name}</Link>
                   <p className="text-xs text-muted">{job.tradie.phone ?? ""}</p>
-                  <LicenceBadge verified={job.tradie.licenceVerified} />
+                  <LicenceBadge verified={job.tradie.licenceVerified} trade={job.tradie.trade} />
                 </div>
               </div>
             )}
@@ -407,7 +412,7 @@ export default async function JobPage({
                 <ResolveCancelForm action={resolveCancellation.bind(null, job.id)} />
               </div>
             )}
-            {job.status === "SUBMITTED" && (
+            {job.status === "SUBMITTED" && !pendingRequirements && (
               <div className="card p-5">
                 <h2 className="font-bold">Sign-off</h2>
                 <p className="mt-1 text-sm text-muted">
@@ -419,7 +424,7 @@ export default async function JobPage({
             )}
             {job.tradie && (
               <div className="card p-5 text-sm">
-                <h2 className="font-bold">Electrician</h2>
+                <h2 className="font-bold">Tradie</h2>
                 <p className="mt-1">{job.tradie.name} · reg {job.tradie.registrationNo}</p>
                 <p className="text-muted">Earns {formatNZD(earn.tradieTotalCents)} for {scopeHours} hrs</p>
                 {job.payout && <p className="mt-1">Payout: <StatusChip status={job.payout.status} /></p>}

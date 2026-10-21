@@ -6,7 +6,7 @@
   --trade-paper: #f1ece5;
   --trade-surface: #fff;
   --trade-source-muted: #898989;
-  --trade-field-border: #afacac;
+  --trade-field-border: #52645b; /* Approved contrast adjustment; source #afacac. */
   --trade-focus: #2163c6;
   --trade-danger: #a12424;
   --trade-font-body: 'Trade UI', sans-serif;
