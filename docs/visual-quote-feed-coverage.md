@@ -36,3 +36,9 @@ The supplied screenshot Library ID `libfile_0822589207c881919ef8fc90e4c0943f` co
 - Points and demo claims are per browser/sample account; they are separate from database-backed existing job activity and are not shared between users/devices. The existing activity is kept behind a disclosure. Production points accounting and eligibility must be designed later.
 - Twelve photo assets serve 26 database fixtures and 12 quote-workspace examples; repeated images still exist where subjects fit. Twenty added jobs use only fictional addresses/accounts; other-trade database jobs preserve pending-service guards, while the quote workspace demonstrates all four trades without invoking those backend actions.
 - Storage unavailable/corrupt states have recovery UI and model validation; manual browser corruption/storage-denial injection was not performed.
+
+## Skip focus correction after independent QA
+
+Independent review of `ee99678` passed the financial-simulation invariants, storage/account isolation, customer actions, messages and responsive checks, but found that Skip removed the focused button and left keyboard focus on the body. The correction schedules focus after the replacement render: next job heading, final empty-state heading, and restored first heading after Show skipped jobs. Other feed controls and dialog focus behavior stay unchanged.
+
+`tests/browser/quote-feed-skip.cua.js` adds an executable CUA regression for repeated Skip, the final empty state, restoration, Next and dialog Escape at 390/1440px. Its syntax and lint pass; execution is pending browser ownership handoff from the landing task. Build/TypeScript,70 application tests and8 security tests pass after the fix. No claim of browser signoff is made for this correction yet.

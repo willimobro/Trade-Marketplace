@@ -246,3 +246,7 @@
   .successBalance,.textButton { font-size:14px; }
   .modalFine { font-size:11px; }
 }
+
+/* Replacement feed headings receive keyboard focus after Skip, including empty state. */
+.photoCaption h3[tabindex], .empty h3[tabindex] { scroll-margin-block:120px; }
+.photoCaption h3:focus-visible, .empty h3:focus-visible { outline:3px solid var(--trade-focus); outline-offset:4px; }
