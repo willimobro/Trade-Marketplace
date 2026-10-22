@@ -61,8 +61,16 @@ preference isolation, safe navigation, draft expiry/corruption/write failures,
 quote draft idempotency, sample posting/acceptance and preservation of newer
 customer state when another tab saves a draft.
 
-Browser acceptance must cover the PDF switch at mobile and desktop widths;
-unchanged session identity; mode/reload navigation; quote, comment and posting
-draft round trips; repeated Post entry; gallery interaction and modal focus;
-sample price review; keyboard focus after switching; and narrow desktop header
-layout. This document does not claim browser signoff or production readiness.
+Integrator browser checks passed at 320, 390, 1024 and 1440px as applicable:
+the PDF switch and radio keyboard controls; unchanged Jack/Sarah account
+identities; persisted mode after reload; quote, comment and posting draft round
+trips; no reward merely restoring a quote draft; sample price acceptance; gallery
+controls without unintended detail navigation; modal close focus; repeated Post
+entry; successful sample-post return/focus; and direct work-link switch focus.
+The 1024px customer/trade header remains 88px tall without document overflow.
+The local posting check caught and fixed a history update that changed the URL
+without updating the rendered composer. Its CUA regression is retained.
+
+Screenshots and observations are in the task's `evidence/account-mode` folder.
+Independent browser review is still required. This does not claim production
+readiness, remote authenticated validation, or a full new messaging workflow.

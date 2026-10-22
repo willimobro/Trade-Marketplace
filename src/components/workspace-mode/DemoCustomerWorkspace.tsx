@@ -112,7 +112,9 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
     setReviewDraft(false); setFormError("");
     const url = new URL(window.location.href);
     if (next === "post") url.searchParams.set("customerView", "post"); else url.searchParams.delete("customerView");
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+    // Let Next synchronize useSearchParams instead of bypassing its history
+    // integration by forwarding the framework's internal state object.
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
   }
 
   function saveDraft(next: CustomerDraft) {
