@@ -24,12 +24,15 @@ test("simulated mode navigation does not enter server actions for another role",
   assert.equal(workspaceLinks("ADMIN", "customer", false).jobs, "/admin");
 });
 
-test("direct home and search enter the selected synthetic workspace without changing ordinary browsing", () => {
+test("public home and wordmark always open marketing while opposite-mode search stays scoped", () => {
   for (const search of [false, true]) {
-    assert.equal(workspaceHomeRedirect("TRADIE", "customer", true, search), "/dashboard");
-    assert.equal(workspaceHomeRedirect("CUSTOMER", "trade", true, search), search ? "/dashboard?quoteView=feed" : "/dashboard");
+    assert.equal(workspaceHomeRedirect("TRADIE", "customer", true, search), search ? "/dashboard" : null);
+    assert.equal(workspaceHomeRedirect("CUSTOMER", "trade", true, search), search ? "/dashboard?quoteView=feed" : null);
     for (const role of [null, "CUSTOMER", "TRADIE", "ADMIN"]) for (const mode of ["customer", "trade"] as const) {
       assert.equal(workspaceHomeRedirect(role, mode, false, search), null);
+      assert.equal(workspaceLinks(role, mode, true).home, "/");
+      assert.equal(workspaceLinks(role, mode, false).home, "/");
+      assert.equal(workspaceHomeRedirect(role, mode, true, false), null);
     }
     assert.equal(workspaceHomeRedirect("CUSTOMER", "customer", true, search), null);
     assert.equal(workspaceHomeRedirect("TRADIE", "trade", true, search), null);

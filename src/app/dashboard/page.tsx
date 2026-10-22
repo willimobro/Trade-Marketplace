@@ -120,14 +120,14 @@ async function TradieDash({ userId }: { userId: string }) {
     <>
       <section className={styles.stats}>
         {[
-          ["Active jobs", active.length.toString()],
-          ["Estimates sent", estimates.toString()],
-          ["Queued for manual payroll", formatNZD(sum("PENDING"))],
-          ["Marked paid by admin", formatNZD(sum("PAID"))],
-        ].map(([label, value]) => (
+          { label: "Active jobs", value: active.length.toString(), money: false },
+          { label: "Estimates sent", value: estimates.toString(), money: false },
+          { label: "Queued for manual payroll", value: formatNZD(sum("PENDING")), money: true },
+          { label: "Marked paid by admin", value: formatNZD(sum("PAID")), money: true },
+        ].map(({ label, value, money }) => (
           <div key={label} className={styles.stat}>
             <p className="text-xs text-muted">{label}</p>
-            <p className="mt-1 text-xl font-bold">{value}</p>
+            <p className={`mt-1 text-xl font-bold${money ? " trade-money" : ""}`}>{value}</p>
           </div>
         ))}
       </section>

@@ -67,15 +67,15 @@ export function readCustomerMessages(raw: string | null, userId: string, jobs: r
 }
 
 const fixtureNotes: Record<string, string> = {
-  "customer-sample-lights": "The sample fixed price covers three supplied pendant fittings, installation at the existing ceiling points and a check of the connections. Add any access notes here.",
+  "customer-sample-lights": "The fixed price covers three supplied pendant fittings, installation at the existing ceiling points and a check of the connections. Add any access notes here.",
   "customer-sample-basin": "This basin job is waiting for a quote. Add anything useful about the slow drain, the leak or access through the vanity cupboard.",
-  "customer-sample-gate": "The accepted sample scope covers realigning the gate, replacing the worn hinges and fitting a new latch. Keep any access notes with this job.",
+  "customer-sample-gate": "The accepted scope covers realigning the gate, replacing the worn hinges and fitting a new latch. Keep any access notes with this job.",
   "customer-sample-hob": "This hob replacement is waiting for a quote. Add the replacement model and any details about access to the existing gas connection.",
-  "customer-sample-deck": "This sample job is complete. The original scope and price remain available here if you need to refer to them.",
+  "customer-sample-deck": "This job is complete. The original scope and price remain available here if you need to refer to them.",
 };
 
 export function customerConversationMessages(state: CustomerMessagesState, job: CustomerSampleJob): CustomerConversationMessage[] {
-  const fixture = CUSTOMER_SAMPLE_JOBS.some((item) => item.id === job.id) ? [{ id: `customer-fixture:${job.id}`, jobId: job.id, body: fixtureNotes[job.id], createdAt: "", sender: "sample" as const, senderName: "Sample coordinator" }] : [];
+  const fixture = CUSTOMER_SAMPLE_JOBS.some((item) => item.id === job.id) ? [{ id: `customer-fixture:${job.id}`, jobId: job.id, body: fixtureNotes[job.id], createdAt: "", sender: "sample" as const, senderName: "Job note" }] : [];
   return [...fixture, ...state.messages.filter((message) => message.jobId === job.id).map((message) => ({ ...message, sender: "you" as const, senderName: "You" }))];
 }
 

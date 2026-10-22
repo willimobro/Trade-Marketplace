@@ -14,8 +14,9 @@ export const dynamic = "force-dynamic";
 export default async function Home({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const user = await getCurrentUser();
   const { view } = await searchParams;
-  // Acquisition has its own first step; existing account/search browsing stays intact.
-  if (!user && view !== "search") return <CustomerLanding />;
+  // Home is the public marketing landing for every account. Search keeps its
+  // existing role-scoped browse flow without changing the selected mode.
+  if (view !== "search") return <CustomerLanding role={user?.role ?? null} />;
   const [jobs, settings] = await Promise.all([
     db.job.findMany({
       where: {

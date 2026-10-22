@@ -120,6 +120,6 @@
 
 @media(max-width:1023px) { .page { padding-bottom:calc(96px + env(safe-area-inset-bottom)); } .page :is(a,button,input,textarea,select) { scroll-margin-bottom:calc(96px + env(safe-area-inset-bottom)); } }
 
-.quoteHeader { min-height:0; padding-bottom:24px; }
+.quoteHeader { min-height:0; padding-bottom:20px; }
 .quoteHeader .heading { margin-bottom:8px; }
 .quoteHeader .nav { margin-bottom:8px; }

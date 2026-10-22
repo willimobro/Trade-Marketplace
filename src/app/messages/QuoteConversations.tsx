@@ -20,7 +20,7 @@ export function QuoteConversations({ userId }: { userId: string }) {
       const saved = await loadQuoteDemo(userId);
       if (alive.current && currentRequest === request.current) { setState(saved); setError(""); }
     } catch {
-      if (alive.current && currentRequest === request.current) setError("We couldn’t load your sample conversations. Retry to reconnect to this device’s saved data.");
+      if (alive.current && currentRequest === request.current) setError("Couldn’t load conversations. Retry to reconnect.");
     }
   }, [userId]);
 
@@ -52,17 +52,16 @@ export function QuoteConversations({ userId }: { userId: string }) {
       completed: !!claim?.completedAt,
       activityAt: Math.max(...[latestSaved?.createdAt, quote?.updatedAt, claim?.completedAt ?? claim?.claimedAt].map((date) => date ? Date.parse(date) : 0)),
       latestMessage: latestSaved ? { id: latestSaved.id, senderId: userId, senderName: "You", body: latestSaved.body }
-        : latestFixture ? { id: latestFixture.id, senderId: `sample-${latestFixture.role.toLowerCase()}:${job.id}`, senderName: latestFixture.author, body: latestFixture.body }
+        : latestFixture ? { id: latestFixture.id, senderId: `sample-${latestFixture.role.toLowerCase()}:${job.id}`, senderName: latestFixture.author.replace(/ · sample tradie$/i, ""), body: latestFixture.body }
         : null,
     }];
   }).sort((a, b) => b.activityAt - a.activityAt) : [];
 
   return <section className={styles.section} aria-labelledby="quote-conversations-heading" aria-busy={!state && !error}>
-    <h2 id="quote-conversations-heading" className={styles.sectionHeading}>Quote conversations</h2>
-    <p className={styles.sectionCopy}>Your sample quotes and comments, saved for this account on this device.</p>
+    <h2 id="quote-conversations-heading" className={styles.sectionHeading}>Job conversations</h2>
     {error ? <div className={styles.quoteEmpty}><p role="status">{error}</p><button type="button" className={styles.markRead} onClick={() => void refresh()}>Retry</button></div>
       : !state ? <p className={styles.localNote} role="status">Loading saved conversations…</p>
-      : conversations.length ? <MessageList userId={userId} conversations={conversations} label="Sample quote conversations" />
-      : <p className={styles.quoteEmpty}>Send a quote or leave a comment on a sample job to keep the conversation here. <Link href="/dashboard">Browse sample jobs</Link>.</p>}
+      : conversations.length ? <MessageList userId={userId} conversations={conversations} label="Quote conversations" />
+      : <p className={styles.quoteEmpty}>No conversations yet. <Link href="/dashboard?quoteView=feed">Quote more jobs</Link>.</p>}
   </section>;
 }

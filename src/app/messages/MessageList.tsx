@@ -77,7 +77,7 @@ export function MessageList({ userId, conversations, label = "Job conversations"
                 {conversation.completed ? <span className={`${styles.quoteState} ${styles.completedState}`}><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m5 12 4 4L19 6" /></svg>COMPLETE</span>
                   : quoteStatus && <span className={`${styles.quoteState} ${conversation.quoteStatus === "accepted" ? styles.acceptedState : styles.quotedState}`}>{quoteStatus}</span>}
                 <span className={styles.reference}>{conversation.reference ?? (conversation.jobNumber !== undefined ? jobRef(conversation.jobNumber) : "")}</span>
-                <span className={styles.price}>{price}</span>
+                <span className={`${styles.price} ${conversation.priceCents !== null ? "trade-money" : ""}`}>{price}</span>
               </span>
             </span>
             <span className={styles.chevron} aria-hidden="true">›</span>

@@ -4,13 +4,11 @@
 .workspace button:disabled { cursor:not-allowed; opacity:.5; }
 .workspace button,.workspace select { min-height:44px; }
 .workspace button:focus-visible,.workspace input:focus-visible,.workspace select:focus-visible,.workspace textarea:focus-visible { outline:3px solid var(--trade-focus,#2163c6); outline-offset:4px; }
-.demoLine { display:flex; align-items:center; gap:7px; color:var(--quote-muted); font-size:10px; font-weight:700; letter-spacing:.08em; margin:0 0 11px; }
-.demoLine > span:last-child { margin-left:auto; font-size:11px; letter-spacing:0; font-weight:400; }
-.demoDot { width:6px; height:6px; border-radius:50%; background:var(--trade-action); }
-.pointsPanel { display:flex; align-items:center; gap:24px; flex-wrap:wrap; padding:26px 28px; background:var(--quote-ink); border-radius:11px; color:white; }
+.workspaceHeader { background:var(--quote-ink); color:white; }
+.pointsPanel { display:flex; align-items:center; gap:24px; flex-wrap:wrap; padding:0 29px 28px; background:transparent; color:white; }
 .pointsBalance { display:flex; align-items:center; gap:16px; flex:0 0 auto; }
 .bigCoin { color:var(--trade-action); width:58px; height:58px; border:1px solid #ffffff26; background:#ffffff08; border-radius:50%; display:grid; place-items:center; }
-.pointsLabel { font-size:12px; color:#c8d4cc; }
+.pointsLabel { font-size:14px; color:#c8d4cc; }
 .pointsBalance p { display:flex; align-items:baseline; gap:8px; margin:0; }
 .pointsBalance strong { font-family:var(--trade-font-heading); font-weight:900; font-size:42px; line-height:1.14; font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
 .pointsBalance p > span { font-size:14px; }
@@ -27,16 +25,16 @@
 .pointsPanel > .primary svg { color:var(--trade-action); }
 .workspaceNav { display:flex; align-items:center; justify-content:space-between; gap:20px; border-bottom:1px solid #d5dcd6; margin:24px 0 32px; }
 .tabs { display:flex; flex-wrap:wrap; align-items:center; column-gap:24px; }
-.tabs > button { display:flex; align-items:center; gap:7px; padding:14px 0 16px; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; background:transparent; color:var(--quote-muted); font-size:13px; white-space:nowrap; font-weight:500; }
+.tabs > a { display:flex; align-items:center; gap:7px; padding:14px 0 16px; border:0; border-bottom:3px solid transparent; margin-bottom:-1px; background:transparent; color:var(--quote-muted); font-size:13px; white-space:nowrap; font-weight:500; text-decoration:none; }
 .tabs > .activeTab { color:var(--quote-ink); border-bottom-color:var(--trade-action); font-weight:700; }
-.tabs > button > span { display:inline-grid; place-items:center; min-width:19px; height:19px; border-radius:6px; background:#e8ece7; font-size:10px; line-height:1; padding:3px 5px; }
+.tabs > a > span { display:inline-grid; place-items:center; min-width:19px; height:19px; border-radius:6px; background:#e8ece7; font-size:10px; line-height:1; padding:3px 5px; }
 .tabs > .activeTab > span { background:#ff82001f; color:var(--trade-link); }
 .tradeFilter { display:flex; align-items:center; gap:9px; color:var(--quote-muted); font-size:12px; }
 .tradeFilter select { background:transparent; border:0; font-size:12px; color:var(--quote-ink); max-width:160px; padding-right:4px; }
 .sectionHeading { display:flex; align-items:center; justify-content:space-between; gap:24px; margin:0 0 23px; }
 .eyebrow { margin:0 0 9px; font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--quote-muted); }
 .sectionHeading h2,.dialog h2 { font:900 28px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; margin:0; letter-spacing:-.5px; outline:0; }
-.sectionHeading > div > p:last-child { margin:9px 0 0; color:var(--quote-muted); font-size:13px; }
+.sectionHelp { margin:9px 0 0; color:var(--quote-muted); font-size:14px; }
 .feedCount { font:900 24px/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; white-space:nowrap; }
 .feedCount > span { font-size:14px; font-weight:500; color:#839086; }
 .feedCard { display:grid; grid-template-columns:1fr 1fr; border-radius:11px; background:white; box-shadow:var(--trade-shadow-category,0 4px 4px rgb(0 0 0 / 25%)); overflow:hidden; }
@@ -174,8 +172,8 @@
 .success .primary { width:100%; margin:8px 0; }
 .textButton { display:block; padding:6px 12px; font-size:12px; font-weight:600; text-decoration:underline; border:0; background:transparent; margin:0 auto; }
 @media(min-width:1250px) { .feedCard { grid-template-columns:minmax(0,1fr) minmax(0,1fr); } .feedDetails { padding:32px; } .description { font-size:14px; } .jobTopline { font-size:11px; } .detailTags > span { font-size:11px; } .feedDetails > h3 { margin-top:28px; } .timing { margin-bottom:28px; } .photoCaption h3 { font-size:32px; } }
-@media(max-width:800px) { .pointsPanel { gap:18px; padding:22px; } .pointsMessage { padding-left:18px; } .pointsMessage strong { font-size:12px; } .pointsPanel > .primary { min-height:48px!important; font-size:12px; } .workspaceNav { flex-wrap:wrap; gap:0; } .tradeFilter { margin-left:auto; padding:3px 0; } .tabs { width:100%; justify-content:space-between; gap:12px; } .tabs > button { font-size:12px; } .feedCard { grid-template-columns:1fr; max-width:600px; margin:0 auto; } .feedVisual > .photo { height:auto; } .feedDetails { padding:24px; } .feedDetails > h3 { margin-top:21px; } .rewardNote { padding-top:17px; margin-top:0; } .feedFooter { max-width:600px; margin:13px auto 0; } .photoCaption h3 { font-size:32px; } .jobGrid { gap:18px; } .smallBody { padding:18px; } .smallDescription { display:none; } .smallBody h3 { font-size:18px; } .cardPrice { flex-wrap:wrap; padding:16px 0; } .cardPrice strong { font-size:24px; } .smallVisual .photoTrade { left:10px; top:10px; font-size:9px; padding:6px 8px; } .readyBadge { right:10px; top:auto; bottom:10px; font-size:9px; } }
-@media(max-width:520px) { .workspace { padding-bottom:10px; } .demoLine { font-size:9px; } .demoLine > span:last-child { font-size:10px; } .pointsPanel { padding:22px 19px; gap:16px 14px; } .pointsBalance { gap:11px; } .bigCoin { width:46px; height:46px; } .pointsBalance strong { font-size:36px; } .pointsBalance p > span { font-size:12px; } .pointsLabel { font-size:10px; } .pointsMessage { display:none; } .pointsPanel > .primary { margin-left:auto; padding:10px 12px; min-height:48px!important; gap:8px; font-size:11px; } .pointsPanel > .primary svg { width:16px; } .workspaceNav { margin:17px 0 24px; } .tabs { gap:6px; } .tabs > button { font-size:10px; gap:4px; padding-bottom:13px; } .tabs > button > span { font-size:9px; min-width:16px; height:16px; padding:2px 4px; } .tradeFilter { font-size:10px; } .tradeFilter select { font-size:11px; min-height:38px; } .sectionHeading { gap:16px; margin-bottom:19px; } .sectionHeading h2 { font-size:24px; letter-spacing:-.3px; } .eyebrow { font-size:8px; letter-spacing:.09em; } .sectionHeading > div > p:last-child { font-size:11px; line-height:1.55; } .feedCount { font-size:22px; } .feedCount > span { font-size:12px; } .photoCaption { left:21px; right:21px; bottom:23px; } .photoCaption h3 { font-size:27px; } .photoCaption > span { font-size:10px; } .photoTrade,.earnBadge { top:14px; min-height:27px; font-size:10px; padding:6px 10px; } .photoTrade { left:14px; } .earnBadge { right:14px; } .feedDetails { padding:21px; } .feedDetails > h3 { font-size:18px; margin-top:18px; } .description { font-size:12px; } .rewardNote { padding:14px 0; } .rewardNote p { font-size:9px; } .feedActions .primary { font-size:13px; } .feedFooter { font-size:10px; } .jobGrid { grid-template-columns:1fr; } .smallVisual > .photo { aspect-ratio:1; } .smallBody h3 { font-size:20px; } .smallDescription { display:block; } .smallVisual .photoTrade { font-size:11px; left:15px; top:15px; padding:7px 11px; } .readyBadge { font-size:10px; right:15px; bottom:15px; } .savedCard { grid-template-columns:74px minmax(0,1fr); gap:13px; padding:13px; } .savedCard > .photo { align-self:start; margin-top:2px; } .savedBody { padding:0; } .savedMeta > span:first-child { font-size:9px; } .savedMeta { gap:5px; } .quotedBadge { font-size:9px; padding:4px 5px 4px 6px; } .badgeCoin { width:16px; height:16px; } .badgeCoin svg { width:13px; } .savedBody h3 { font-size:16px; margin:9px 0 8px; } .savedBody > p { font-size:11px; } .savedBottom { align-items:flex-start; flex-wrap:wrap; gap:5px; margin-top:10px; } .savedBottom strong { font-size:14px; margin-left:3px; } .savedBottom > span:first-child { font-size:10px; } .savedBottom button { min-height:30px; font-size:11px; margin-left:auto; } .claimedBadge { font-size:9px; } .claimCost { font-size:10px; } .dialog { width:calc(100% - 24px); max-height:calc(100dvh - 24px); } .dialogInner { padding:30px 23px 23px; } .dialog h2 { font-size:24px; } .dialog .eyebrow { font-size:8px; } .dialogJob h3 { font-size:13px; } .fieldLabel > span { display:block; margin:3px 0 0; } .empty { padding:35px 20px; } .empty h3 { font-size:21px; } .empty p { font-size:12px; } .notice { font-size:11px; padding:11px 12px; } .notice > button { font-size:11px; } .disclaimer { font-size:9px; margin:25px 0 0; } }
+@media(max-width:800px) { .pointsPanel { gap:18px; padding:22px; } .pointsMessage { padding-left:18px; } .pointsMessage strong { font-size:12px; } .pointsPanel > .primary { min-height:48px!important; font-size:12px; } .workspaceNav { flex-wrap:wrap; gap:0; } .tradeFilter { margin-left:auto; padding:3px 0; } .tabs { width:100%; justify-content:space-between; gap:12px; } .tabs > a { font-size:12px; } .feedCard { grid-template-columns:1fr; max-width:600px; margin:0 auto; } .feedVisual > .photo { height:auto; } .feedDetails { padding:24px; } .feedDetails > h3 { margin-top:21px; } .rewardNote { padding-top:17px; margin-top:0; } .feedFooter { max-width:600px; margin:13px auto 0; } .photoCaption h3 { font-size:32px; } .jobGrid { gap:18px; } .smallBody { padding:18px; } .smallDescription { display:none; } .smallBody h3 { font-size:18px; } .cardPrice { flex-wrap:wrap; padding:16px 0; } .cardPrice strong { font-size:24px; } .smallVisual .photoTrade { left:10px; top:10px; font-size:9px; padding:6px 8px; } .readyBadge { right:10px; top:auto; bottom:10px; font-size:9px; } }
+@media(max-width:520px) { .workspace { padding-bottom:10px; } .demoLine { font-size:9px; } .demoLine > span:last-child { font-size:10px; } .pointsPanel { padding:22px 19px; gap:16px 14px; } .pointsBalance { gap:11px; } .bigCoin { width:46px; height:46px; } .pointsBalance strong { font-size:36px; } .pointsBalance p > span { font-size:12px; } .pointsLabel { font-size:10px; } .pointsMessage { display:none; } .pointsPanel > .primary { margin-left:auto; padding:10px 12px; min-height:48px!important; gap:8px; font-size:11px; } .pointsPanel > .primary svg { width:16px; } .workspaceNav { margin:17px 0 24px; } .tabs { gap:6px; } .tabs > a { font-size:10px; gap:4px; padding-bottom:13px; } .tabs > a > span { font-size:9px; min-width:16px; height:16px; padding:2px 4px; } .tradeFilter { font-size:10px; } .tradeFilter select { font-size:11px; min-height:38px; } .sectionHeading { gap:16px; margin-bottom:19px; } .sectionHeading h2 { font-size:24px; letter-spacing:-.3px; } .eyebrow { font-size:8px; letter-spacing:.09em; } .sectionHelp { font-size:14px; line-height:1.55; } .feedCount { font-size:22px; } .feedCount > span { font-size:12px; } .photoCaption { left:21px; right:21px; bottom:23px; } .photoCaption h3 { font-size:27px; } .photoCaption > span { font-size:10px; } .photoTrade,.earnBadge { top:14px; min-height:27px; font-size:10px; padding:6px 10px; } .photoTrade { left:14px; } .earnBadge { right:14px; } .feedDetails { padding:21px; } .feedDetails > h3 { font-size:18px; margin-top:18px; } .description { font-size:12px; } .rewardNote { padding:14px 0; } .rewardNote p { font-size:9px; } .feedActions .primary { font-size:13px; } .feedFooter { font-size:10px; } .jobGrid { grid-template-columns:1fr; } .smallVisual > .photo { aspect-ratio:1; } .smallBody h3 { font-size:20px; } .smallDescription { display:block; } .smallVisual .photoTrade { font-size:11px; left:15px; top:15px; padding:7px 11px; } .readyBadge { font-size:10px; right:15px; bottom:15px; } .savedCard { grid-template-columns:74px minmax(0,1fr); gap:13px; padding:13px; } .savedCard > .photo { align-self:start; margin-top:2px; } .savedBody { padding:0; } .savedMeta > span:first-child { font-size:9px; } .savedMeta { gap:5px; } .quotedBadge { font-size:9px; padding:4px 5px 4px 6px; } .badgeCoin { width:16px; height:16px; } .badgeCoin svg { width:13px; } .savedBody h3 { font-size:16px; margin:9px 0 8px; } .savedBody > p { font-size:11px; } .savedBottom { align-items:flex-start; flex-wrap:wrap; gap:5px; margin-top:10px; } .savedBottom strong { font-size:14px; margin-left:3px; } .savedBottom > span:first-child { font-size:10px; } .savedBottom button { min-height:30px; font-size:11px; margin-left:auto; } .claimedBadge { font-size:9px; } .claimCost { font-size:10px; } .dialog { width:calc(100% - 24px); max-height:calc(100dvh - 24px); } .dialogInner { padding:30px 23px 23px; } .dialog h2 { font-size:24px; } .dialog .eyebrow { font-size:8px; } .dialogJob h3 { font-size:13px; } .fieldLabel > span { display:block; margin:3px 0 0; } .empty { padding:35px 20px; } .empty h3 { font-size:21px; } .empty p { font-size:12px; } .notice { font-size:11px; padding:11px 12px; } .notice > button { font-size:11px; } .disclaimer { font-size:9px; margin:25px 0 0; } }
 
 /* Mobile reading sizes follow the brand's 16 / 14 / 11 hierarchy. */
 @media(max-width:520px) {
@@ -191,12 +189,12 @@
   .pointsPanel > .primary { font-size:14px; padding:10px 12px; gap:8px; }
   .workspaceNav { margin:14px 0 19px; }
   .tabs { justify-content:flex-start; gap:0 18px; }
-  .tabs > button { font-size:14px; padding:11px 0; }
-  .tabs > button > span { font-size:11px; min-width:18px; height:18px; }
+  .tabs > a { font-size:14px; padding:11px 0; }
+  .tabs > a > span { font-size:11px; min-width:18px; height:18px; }
   .tradeFilter { font-size:14px; }
   .tradeFilter select { font-size:14px; }
   .sectionHeading { margin-bottom:16px; }
-  .sectionHeading .eyebrow,.sectionHeading > div > p:last-child { display:none; }
+  .sectionHeading .eyebrow { display:none; }
   .sectionHeading h2 { font-size:24px; }
   .feedCount { font-size:22px; }
   .feedCount > span { font-size:14px; }
@@ -276,8 +274,14 @@
 .pointsDialog p { margin:20px 0 0; font-size:16px; line-height:1.6; color:var(--quote-muted); }
 @media(max-width:1023px) {
   .workspace { padding-inline:16px; }
+  .workspaceHeader { margin-inline:-16px; }
   .feedColumn { width:100%; }
 }
+
+/* Greeting and points form one Forest band, with the same inset throughout. */
+.workspaceHeader .pointsPanel { padding:0 29px 28px; }
+@media(min-width:1024px) { .workspaceHeader .pointsPanel { padding:0 32px 32px; } }
+@media(max-width:350px) { .workspaceHeader .pointsPanel { padding-inline:20px; } }
 @media(max-width:520px) {
   .pointsPanel { gap:16px; }
   .pointsPanel > .pointsNav { width:100%; margin-left:0; }

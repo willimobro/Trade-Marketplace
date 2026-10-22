@@ -9,9 +9,16 @@ test("workspace return query preserves the chosen trade, tab and feed job", () =
 
 test("workspace query rejects unknown views, trades and non-feed job identifiers", () => {
   assert.deepEqual(readWorkspaceNavigation("?quoteView=unknown&trade=Other&quoteJob=demo-gas-03"), {
-    tab: "feed", trade: "all", quoteJob: undefined,
+    tab: "claimed", trade: "all", quoteJob: undefined,
   });
   assert.equal(workspaceSearch({ tab: "quoted", trade: "all", quoteJob: "missing" }), "quoteView=quoted");
+});
+
+test("Your Jobs and Find Work remain distinct direct routes", () => {
+  assert.equal(readWorkspaceNavigation("").tab, "claimed");
+  assert.equal(readWorkspaceNavigation("?quoteView=feed").tab, "feed");
+  assert.equal(readWorkspaceNavigation("?quoteView=quoted&trade=Plumbing").tab, "quoted");
+  assert.equal(readWorkspaceNavigation("?quoteView=available&trade=Plumbing").trade, "Plumbing");
 });
 
 test("session navigation keeps only distinct known feed jobs", () => {

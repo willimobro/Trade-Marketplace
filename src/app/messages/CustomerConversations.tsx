@@ -14,7 +14,7 @@ import shared from "./messages.module.css";
 import styles from "./customer-conversations.module.css";
 
 type Snapshot = { workspace: CustomerPreviewState; messages: CustomerMessagesState };
-const priceLabel = (job: CustomerSampleJob) => job.priceCents === undefined ? "Price pending" : `Sample fixed price ${formatNZD(job.priceCents)}`;
+const priceLabel = (job: CustomerSampleJob) => job.priceCents === undefined ? "Price pending" : `Fixed price ${formatNZD(job.priceCents)}`;
 
 /** Mounted only for an eligible tradie viewing the synthetic Customer workspace. */
 export function CustomerConversations({ userId }: { userId: string }) {
@@ -52,7 +52,7 @@ export function CustomerConversations({ userId }: { userId: string }) {
       const workspace = readCustomerPreview(localStorage.getItem(customerPreviewKey(userId)), userId);
       const messages = readCustomerMessages(localStorage.getItem(customerMessagesKey(userId)), userId, customerPreviewJobs(workspace));
       setSnapshot({ workspace, messages }); setDrafts(messages.drafts); setStorageError("");
-    } catch (error) { setSnapshot(null); setStorageError(error instanceof CustomerMessagesError || error instanceof CustomerPreviewError ? error.message : "This browser could not open your sample conversations. Retry when browser storage is available."); }
+    } catch (error) { setSnapshot(null); setStorageError(error instanceof CustomerMessagesError || error instanceof CustomerPreviewError ? error.message : "This browser could not open your conversations. Retry when browser storage is available."); }
   }, [userId]);
 
   useEffect(() => { setDrafts({}); setFormError(""); setNotice(""); pendingMessage.current = null; load(); }, [load]);
@@ -126,23 +126,23 @@ export function CustomerConversations({ userId }: { userId: string }) {
       const messageId = pendingMessage.current.id;
       persist((current, latestJobs) => addCustomerMessage(current, latestJobs, selected.id, messageId, body));
       setDrafts((current) => ({ ...current, [selected.id]: "" })); setFormError("");
-      setNotice("Message saved on this device. No real message was sent."); pendingMessage.current = null;
+      setNotice("Message saved on this device. Nothing was sent to a recipient."); pendingMessage.current = null;
     } catch (error) { setFormError(error instanceof CustomerMessagesError || error instanceof CustomerPreviewError ? error.message : "This browser could not save the message. Your draft is still here."); }
   }
 
   return <section className={styles.workspace} data-mode="customer" aria-labelledby={`${id}-heading`}>
-    <div className={styles.sectionHeader}><div><p className={styles.eyebrow}>CUSTOMER SAMPLE</p><h2 ref={inboxHeading} tabIndex={-1} id={`${id}-heading`}>Your conversations</h2></div><Link href="/dashboard">Your customer jobs <span aria-hidden="true">↗</span></Link></div>
+    <div className={styles.sectionHeader}><h2 ref={inboxHeading} tabIndex={-1} id={`${id}-heading`}>Your conversations</h2><Link href="/dashboard">Your jobs <span aria-hidden="true">↗</span></Link></div>
     {storageError && <div className={styles.error} role="alert"><p>{storageError}</p>{!active && <button type="button" className={styles.secondary} onClick={load}>Retry storage</button>}</div>}
-    {active && requestedJobId !== null && !selected && <div className={styles.error} role="status"><p ref={unavailableMessage} tabIndex={-1}>This sample conversation is unavailable in this account’s customer workspace. Choose one of your other conversations below, or return to your customer jobs.</p><Link href={customerConversationHref(null, filter)} className={styles.secondary} onClick={() => { restoreRowFocus.current = requestedJobId; }}>Show all conversations</Link></div>}
+    {active && requestedJobId !== null && !selected && <div className={styles.error} role="status"><p ref={unavailableMessage} tabIndex={-1}>This conversation is unavailable in this account’s customer workspace. Choose another conversation or return to your jobs.</p><Link href={customerConversationHref(null, filter)} className={styles.secondary} onClick={() => { restoreRowFocus.current = requestedJobId; }}>Show all conversations</Link></div>}
     {!active ? !storageError && <p role="status" className={styles.helper}>Opening saved conversations…</p> : <div className={`${styles.layout} ${selected ? styles.hasDetail : ""}`}>
-      <ul className={`${shared.list} ${styles.list}`} aria-label="Customer sample conversations">
+      <ul className={`${shared.list} ${styles.list}`} aria-label="Customer conversations">
         {orderedJobs.map((job) => {
           const latest = customerConversationMessages(active.messages, job).at(-1);
           const unread = customerConversationUnread(active.messages, job);
           const readState = !latest ? "No messages" : unread ? "Unread" : "Read";
           const photo = job.photos[0]?.url;
           return <li key={job.id} className={`${shared.conversation} ${unread ? shared.unread : shared.read} ${selectedId === job.id ? styles.selected : ""}`}>
-            <button ref={(node) => { if (node) rowButtons.current.set(job.id, node); else rowButtons.current.delete(job.id); }} type="button" className={`${shared.open} ${styles.open}`} aria-expanded={selectedId === job.id} aria-controls={`${id}-detail`} aria-label={`${job.title}. ${readState} on this device. ${customerStageLabel(job)}. ${priceLabel(job)}. Open sample conversation.`} onClick={() => open(job)}>
+            <button ref={(node) => { if (node) rowButtons.current.set(job.id, node); else rowButtons.current.delete(job.id); }} type="button" className={`${shared.open} ${styles.open}`} aria-expanded={selectedId === job.id} aria-controls={`${id}-detail`} aria-label={`${job.title}. ${readState}. ${customerStageLabel(job)}. ${priceLabel(job)}. Open conversation.`} onClick={() => open(job)}>
               <span className={`${shared.photo} ${styles.thumbnail} ${job.stage === "complete" ? shared.completedPhoto : job.stage === "underway" ? shared.acceptedPhoto : ""}`} aria-hidden="true">
                 {photo && !failedPhotos.includes(photo) ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -160,22 +160,20 @@ export function CustomerConversations({ userId }: { userId: string }) {
       <div id={`${id}-detail`} className={styles.detailSlot}>
         {selected ? <section className={styles.detail} aria-labelledby={`${id}-detail-heading`}>
           <div className={styles.returnLinks}><button type="button" className={styles.back} onClick={close}><span aria-hidden="true">←</span> Back to conversations</button><Link href={customerWorkspaceHref(selected.id, filter)} className={`${styles.secondary} ${styles.jobLink}`}>Back to this job <span aria-hidden="true">↗</span></Link></div>
-          <p className={styles.eyebrow}>SAMPLE CONVERSATION</p>
           <h3 id={`${id}-detail-heading`} ref={detailHeading} tabIndex={-1}>{selected.title}</h3>
           <p className={styles.price}>{priceLabel(selected)}</p>
-          <p className={styles.helper}>This conversation stays on this device. No real message is sent.</p>
           <details className={styles.jobDetails}><summary>Job details <span>{customerStageLabel(selected)}</span></summary><p>{selected.description}</p><dl><div><dt>Trade</dt><dd>{selected.trade}</dd></div><div><dt>Location</dt><dd>{selected.suburb}</dd></div><div><dt>Timing</dt><dd>{selected.timing}</dd></div></dl></details>
           <ol className={styles.messages} aria-label={`Messages about ${selected.title}`}>
-            {messages.map((message) => <li key={message.id} className={message.sender === "you" ? styles.mine : styles.sample}><p className={styles.sender}>{message.senderName}</p><p className={styles.body}>{message.body}</p>{message.sender === "you" ? <p className={styles.saved}>Saved on this device · <time dateTime={message.createdAt}>{new Date(message.createdAt).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</time></p> : <p className={styles.saved}>Sample note</p>}</li>)}
+            {messages.map((message) => <li key={message.id} className={message.sender === "you" ? styles.mine : styles.sample}><p className={styles.sender}>{message.senderName}</p><p className={styles.body}>{message.body}</p>{message.sender === "you" && <p className={styles.saved}><time dateTime={message.createdAt}>{new Date(message.createdAt).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</time></p>}</li>)}
           </ol>
-          {!messages.length && <p className={styles.helper}>No messages yet. Add a note to keep with this sample job.</p>}
+          {!messages.length && <p className={styles.helper}>No messages yet.</p>}
           <form className={styles.composer} onSubmit={send}>
             <label htmlFor={`${id}-message`}>Your message</label><textarea id={`${id}-message`} value={drafts[selected.id] ?? ""} onChange={(event) => changeDraft(selected.id, event.target.value)} maxLength={CUSTOMER_MESSAGE_LENGTH} rows={4} required aria-describedby={`${id}-message-help${formError ? ` ${id}-message-error` : ""}`} />
-            <p id={`${id}-message-help`} className={styles.helper}>Drafts save as you type. No real message is sent.</p>
+            <p id={`${id}-message-help`} className={styles.helper}>Messages stay on this device.</p>
             {formError && <p id={`${id}-message-error`} className={styles.error} role="alert">{formError}</p>}
-            <button type="submit" className={styles.primary}>Send locally <span aria-hidden="true">↗</span></button>
+            <button type="submit" className={styles.primary}>Save message <span aria-hidden="true">↗</span></button>
           </form>
-        </section> : <p className={styles.placeholder}>Open a conversation to view the job and add a local message.</p>}
+        </section> : <p className={styles.placeholder}>Open a conversation to view the job and add a message.</p>}
       </div>
     </div>}
     <p className={styles.notice} role="status" aria-live="polite">{notice}</p>

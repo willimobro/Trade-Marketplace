@@ -29,9 +29,7 @@ export default async function MessagesPage() {
   });
   jobs.sort((a, b) => Number(!!b.messages.length) - Number(!!a.messages.length) || (b.messages[0]?.createdAt ?? b.createdAt).getTime() - (a.messages[0]?.createdAt ?? a.createdAt).getTime());
   return <div className={`${styles.screen} mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8`}>
-    <p className="eyebrow">Your job conversations</p><h1 className="page-title mt-2">Messages</h1>
-    <p className="mt-3 text-sm text-muted">Open a conversation to keep your job moving.</p>
-    <p className={styles.localNote}>Read status is saved for your account in this browser. Mark a conversation as unread to come back to it.</p>
+    <h1 className="page-title">Messages</h1>
     {(workspaceDemo || quoteDemo) && <WorkspaceModeView mode="trade"><QuoteConversations key={`quotes-${user.id}`} userId={user.id} /></WorkspaceModeView>}
     <WorkspaceModeView mode={user.role === "TRADIE" ? "trade" : "customer"}>
     <section className={quoteDemo ? styles.section : undefined} aria-label={quoteDemo ? "Existing job conversations" : "Job conversations"}>

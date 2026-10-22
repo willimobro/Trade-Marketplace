@@ -17,14 +17,15 @@ export function ModeDashboard({ user, customerJobs, tradieActivity, initialCusto
   const { mode, ready } = useWorkspaceMode();
   const destinations = useWorkspaceLinks(user.role);
   const customer = mode === "customer";
+  const headerContent = <>
+    <nav className={styles.nav} aria-label="Dashboard navigation"><Link href={destinations.home}>Home</Link><CurrentModeLink /><Link href="/profile">Account</Link></nav>
+    <div><h1 className={styles.heading}>{customer ? "Your jobs" : `Kia ora, ${user.name.split(" ")[0]}`}</h1>{!customer && <p className={styles.subtitle}>{user.trade ?? "All trades"}{user.region ? ` · ${user.region}` : ""}</p>}</div>
+    {customer && <Link href={destinations.post} className={`${styles.secondary} ${styles.actions}`}><SourceIcon name="plus-square" size={20} />Post a job</Link>}
+  </>;
   return <div className={`${styles.page} ${customer ? styles.customerPage : ""}`}>
-    <header className={`${styles.header} ${customer ? styles.customerHeader : styles.quoteHeader}`}>
-      <nav className={styles.nav} aria-label="Dashboard navigation"><Link href={destinations.home}>Home</Link><CurrentModeLink /><Link href="/profile">Account</Link></nav>
-      <div><h1 className={styles.heading}>{customer ? "Your jobs" : `Kia ora, ${user.name.split(" ")[0]}`}</h1>{!customer && <p className={styles.subtitle}>{user.trade ?? "All trades"}{user.region ? ` · ${user.region}` : ""}</p>}</div>
-      {customer && <Link href={destinations.post} className={`${styles.secondary} ${styles.actions}`}><SourceIcon name="plus-square" size={20} />Post a job</Link>}
-    </header>
+    {(customer || !ready) && <header className={`${styles.header} ${customer ? styles.customerHeader : styles.quoteHeader}`}>{headerContent}</header>}
     {!ready ? <p className={styles.section} role="status">Opening your workspace…</p> : customer ? user.role === "CUSTOMER" ? customerJobs : <Suspense fallback={<p role="status">Opening customer jobs…</p>}><DemoCustomerWorkspace userId={user.id} initialView={initialCustomerView} /></Suspense> : <>
-      <Suspense fallback={<p role="status">Opening quote feed…</p>}><TradieQuoteWorkspace key={user.id} userId={user.id} trade={user.trade} /></Suspense>
+      <Suspense fallback={<p role="status">Opening quote feed…</p>}><TradieQuoteWorkspace key={user.id} userId={user.id} trade={user.trade} intro={<div className={`${styles.header} ${styles.quoteHeader}`}>{headerContent}</div>} /></Suspense>
       {tradieActivity && <details className={styles.existingWorkspace}><summary>Existing job activity</summary>{tradieActivity}</details>}
     </>}
     <DashboardMobileNavigation customer={customer} />

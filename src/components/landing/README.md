@@ -2,11 +2,11 @@
 
 Branch `feature/customer-landing-20261022`, based on inspected deployed checkpoint `95415b2`.
 
-The public `/` route introduces the customer journey: photo-led Forest/White split, "Sorted in a flash.", "What needs doing?", a primary post-job action, common trades, three steps and concise reassurance. Tradie acquisition is secondary. Preview/sample-data notices appear beside the first CTA and in the footer. No reviews, customer totals, pricing discounts, timing guarantees, insurance claims or launch claims are introduced.
+The public `/` route introduces the customer journey: photo-led Forest/White split, "Sorted in a flash.", "What needs doing?", a primary post-job action, common trades, three steps and concise reassurance. Tradie acquisition is secondary. The footer retains a concise no-live-booking/payment notice; the repeated sample-details prompt beside the first CTA has been removed. No reviews, customer totals, pricing discounts, timing guarantees, insurance claims or launch claims are introduced.
 
 ## Integration
 
-Cherry-pick the landing commit onto the reviewed integration branch. The only existing file changed is `src/app/page.tsx`: guests see `CustomerLanding` before any job/settings query; signed-in users and the existing `/?view=search` route retain `HomeBrowse`. The App Router `searchParams` prop is awaited. The dashboard, messages, job form, shared navigation, layouts, tokens, actions, database and workflows are untouched.
+The current `/` route shows the existing marketing landing to guests and signed-in accounts before any job/settings query. Signed-in visitors get a Dashboard link in the landing header and an outlined return action beside the existing post-job entry. These read the current account mode without changing it; the wordmark/home destination is `/` in both modes. `/?view=search` retains its existing role-scoped browse behavior and opposite-mode preview destinations. The App Router `searchParams` prop is awaited. No authentication, security gate, shared token or job action is changed by this home correction.
 
 The landing CSS hides the existing desktop workspace header only when this landing component is present, using `#application:has(.landing) > header`. It then supplies a customer header on all widths. Removing the component restores the workspace header. This keeps the header adaptation local to landing scope. Supported current browsers implement `:has()`.
 
@@ -30,7 +30,7 @@ Own `node_modules`, own `.next`, Node 22, and an explicitly disposable `trade-la
 - `npm run preview:test`: 8 passed, zero failures.
 - HTTP smoke checks cover guest landing, preserved search, all three signed-in roles, local WebP assets, Next hero optimization and the existing streamed login return path.
 - Coordinated browser review inspected 320, 390, 768, 1024 and 1440px layouts and confirmed the actual stock photo/category assets load. The 320px Construction heading was reduced to 14px after an inner-card overflow was detected; display axes remain unchanged.
-- Keyboard Tab revealed the shared skip link, Enter focused `main-content`, and sequential Tab reached the primary CTA with a visible 3px blue outline. Enter followed `/jobs/new` to `/login?next=%2Fjobs%2Fnew`; the disposable customer login returned to the existing job form. No job was submitted. Navigating home while signed in restored the original browse and shared desktop navigation; signing out restored the landing header.
+- Keyboard Tab revealed the shared skip link, Enter focused `main-content`, and sequential Tab reached the primary CTA with a visible 3px blue outline. Enter followed `/jobs/new` to `/login?next=%2Fjobs%2Fnew`; the disposable customer login returned to the existing job form. No job was submitted. At this historical checkpoint, signed-in home restored browse; the current home correction above supersedes that behavior and requires its own browser check.
 - Screenshot evidence is delivered outside the repository in the task's `evidence/landing/` directory, with desktop/mobile full pages, 768/1024px layouts, CTA focus and the existing job form. No real data was used.
 
 No push, pull request, deployment or production-data action is part of this branch.

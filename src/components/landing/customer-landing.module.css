@@ -26,7 +26,9 @@
 .primary { display:inline-flex; align-items:center; justify-content:space-between; gap:40px; min-height:var(--trade-height-action); padding:16px 24px; border-radius:var(--trade-radius-action); background:var(--trade-leaf); color:var(--trade-forest); font-size:14px; line-height:1.2; font-weight:700; box-shadow:var(--trade-shadow-action); }
 .primary:hover { background:var(--trade-action-hover); }
 .start .primary { margin-top:20px; min-width:260px; }
-.start .previewNote { margin-top:12px !important; font-size:11px; }
+.workspaceReturn { display:flex; align-items:center; justify-content:space-between; gap:16px; width:max-content; max-width:100%; min-height:var(--trade-height-action); margin-top:16px; padding:12px 18px; border:2px solid var(--trade-action); border-radius:var(--trade-radius-action); background:var(--trade-surface); color:var(--trade-forest); font-size:14px; line-height:1.4; font-weight:700; }
+.workspaceReturn svg { flex:none; }
+.workspaceReturn:hover { background:var(--trade-paper); }
 .explore { display:inline-flex; align-items:center; gap:16px; font-size:12px; min-height:44px; margin-top:24px; }
 .explore span { font-size:20px; color:var(--trade-lime); }
 .bolt { position:absolute; width:620px; height:auto; right:-5px; top:-55px; z-index:-1; max-width:70%; pointer-events:none; }

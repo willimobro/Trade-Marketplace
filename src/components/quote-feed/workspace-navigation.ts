@@ -16,7 +16,7 @@ export function readWorkspaceNavigation(search: string): WorkspaceNavigation {
   const params = new URLSearchParams(search);
   const tab = params.get("quoteView");
   return {
-    tab: tab && ["feed", "available", "quoted", "claimed"].includes(tab) ? tab as WorkspaceTab : "feed",
+    tab: tab && ["feed", "available", "quoted", "claimed"].includes(tab) ? tab as WorkspaceTab : "claimed",
     trade: validTrade(params.get("trade")),
     quoteJob: validFeedJob(params.get("quoteJob")),
   };

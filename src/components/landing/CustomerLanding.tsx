@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SourceIcon } from "@/components/SourceIcon";
 import { LandingAnchorRestore } from "./LandingAnchorRestore";
+import { LandingWorkspaceReturn } from "./LandingWorkspaceReturn";
 import styles from "./customer-landing.module.css";
 
 const categories = [
@@ -20,7 +21,7 @@ function PostJob({ children = "Post a job", className = "" }: { children?: React
 }
 
 /** Public customer introduction. All posting continues through the existing job flow. */
-export function CustomerLanding() {
+export function CustomerLanding({ role = null }: { role?: string | null }) {
   return <div className={styles.landing} data-mode="customer">
     <div className={styles.heroShell}>
       <header className={styles.header}>
@@ -28,7 +29,7 @@ export function CustomerLanding() {
         <nav aria-label="Landing navigation" className={styles.nav}>
           <Link href="/#how-it-works" className={styles.howLink}>How it works</Link>
           <Link href="/for-tradies" className={styles.tradeLink}>For tradies</Link>
-          <Link href="/login" className={styles.login}>Log in<SourceIcon name="person" size={18} /></Link>
+          {role ? <LandingWorkspaceReturn role={role} compact className={styles.login} /> : <Link href="/login" className={styles.login}>Log in<SourceIcon name="person" size={18} /></Link>}
         </nav>
       </header>
 
@@ -42,7 +43,7 @@ export function CustomerLanding() {
             <h2>What needs doing?</h2>
             <p>Tell us about your job to get started.</p>
             <PostJob />
-            <p className={styles.previewNote}>Preview only · use sample details.</p>
+            {role && <LandingWorkspaceReturn role={role} className={styles.workspaceReturn} />}
           </div>
           <Link href="/#how-it-works" className={styles.explore}>A simpler way to get it sorted<span aria-hidden="true">↓</span></Link>
         </div>
@@ -87,7 +88,7 @@ export function CustomerLanding() {
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerTop}><Link href="/" className={styles.logo} aria-label="Trade Marketplace home"><Image src="/brand/wordmark.svg" width={188} height={46} alt="Trade Marketplace" /></Link><p>Got the skills?<br /><Link href="/for-tradies">Take a look at the tradie side<Arrow /></Link></p></div>
-        <div className={styles.footerBottom}><p><strong>Preview only.</strong> Explore with sample details. Trade Marketplace is not taking live bookings or payments.</p><Link href="/support">Help & support</Link></div>
+        <div className={styles.footerBottom}><p>Trade Marketplace is not taking live bookings or payments.</p><Link href="/support">Help & support</Link></div>
         <p className={styles.credit}>Illustrative stock photography by <a href="https://www.pexels.com/photo/a-man-renovating-a-home-5493656/">Antoni Shkraba / Pexels</a>.</p>
       </div>
     </footer>

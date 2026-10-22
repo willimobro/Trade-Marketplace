@@ -24,7 +24,7 @@ export default async function ProfilePage() {
       <p className="mt-4 text-muted">Keep your details up to date so it’s easier to coordinate your jobs.</p>
       <AccountModeSwitch />
       <ProfileForm user={user} />
-      <nav aria-label="Account help" className="card mt-6 flex flex-wrap gap-x-6 p-5"><Link href="/notifications" className="inline-flex min-h-12 items-center font-semibold underline">Notifications preview</Link><Link href="/recovery" className="inline-flex min-h-12 items-center font-semibold underline">Recovery preview</Link><Link href="/support" className="inline-flex min-h-12 items-center font-semibold underline">Help and support</Link></nav>
+      <nav aria-label="Account help" className="card mt-6 flex flex-wrap gap-x-6 p-5"><Link href="/notifications" className="inline-flex min-h-12 items-center font-semibold underline">Notifications</Link><Link href="/recovery" className="inline-flex min-h-12 items-center font-semibold underline">Account recovery</Link><Link href="/support" className="inline-flex min-h-12 items-center font-semibold underline">Help and support</Link></nav>
       <form action={logout} className="mt-6">
         <button className="btn-ghost">Log out</button>
       </form>

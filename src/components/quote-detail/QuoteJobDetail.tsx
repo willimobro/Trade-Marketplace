@@ -16,6 +16,10 @@ function savedDate(value: string) {
   return new Intl.DateTimeFormat("en-NZ", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: "Pacific/Auckland" }).format(new Date(value));
 }
 
+function jobCopy(value: string) {
+  return value.replace(/\bsample (?=(?:fixed )?(?:price|scope)\b)/gi, "");
+}
+
 export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=feed" }: { userId: string; job: DemoJob; backHref?: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -75,7 +79,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
       if (!alive.current) return;
       applyState(next); setStorageFailure("");
     } catch (error) {
-      if (alive.current) setStorageFailure(error instanceof Error ? error.message : "Your sample data could not be loaded. Please retry.");
+      if (alive.current) setStorageFailure(error instanceof Error ? error.message : "Your saved data could not be loaded. Please retry.");
     }
   }, [userId, applyState]);
 
@@ -226,16 +230,16 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
         const saved = await saveDemoAcceptance(userId, job.id);
         if (!alive.current) return;
         applyState(saved.state); setEditorOpen(false);
-        showNotice(saved.result.alreadyAccepted ? "Your quote was already accepted in this preview." : "Preview updated: the customer selected your quote. Your quote is now locked and your points are unchanged.");
+        showNotice(saved.result.alreadyAccepted ? "Already accepted. Points unchanged." : "Quote accepted. Price and scope are locked; points unchanged.");
       } else if (kind === "claim") {
         const saved = await saveDemoClaim(userId, job.id);
         if (!alive.current) return;
         applyState(saved.state);
-        showNotice(saved.result.alreadyClaimed ? "You already claimed this sample job. No extra points were spent." : "Sample job claimed. 5 points spent.");
+        showNotice(saved.result.alreadyClaimed ? "Already claimed. No extra points spent." : "Claim saved. 5 points spent.");
       } else {
         const saved = await saveDemoCompletion(userId, job.id);
         if (!alive.current) return;
-        applyState(saved.state); showNotice("Sample job marked complete. Your points are unchanged.");
+        applyState(saved.state); showNotice("Marked complete. Points unchanged.");
       }
     } catch (error) {
       if (!alive.current) return;
@@ -259,7 +263,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
       if (!alive.current) return;
       reportDraft(cleared);
       applyState(saved.state); setComment(""); commentRequest.current = null;
-      setNotice("Your comment was saved in this account’s sample discussion.");
+      setNotice("Comment saved on this device.");
     } catch (error) {
       if (!alive.current) return;
       handleStorageFailure(error); setCommentError(error instanceof Error ? error.message : "Your comment could not be saved. Please retry.");
@@ -275,14 +279,13 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
   return <div className={styles.page} data-mode="trade">
     <header className={styles.header}>
       <Link href={backHref} className={styles.back}><SourceIcon name="back" size={18} />Back to jobs</Link>
-      <div className={styles.headerRow}><div><p className={styles.eyebrow}>Sample job details</p><p className={styles.headerTitle}>{job.trade} in {job.suburb}</p></div><div className={styles.balance}><span>Your demo points</span><strong>{state ? points : "—"}</strong></div></div>
+      <div className={styles.headerRow}><p className={styles.headerTitle}>{job.trade} in {job.suburb}</p><div className={styles.balance}><span>Points</span><strong>{state ? points : "—"}</strong></div></div>
     </header>
 
     <div className={styles.content}>
-      <p className={styles.demoNote}><span aria-hidden="true" />Sample workspace · Saved on this device for your account</p>
       {draftFailure && <p className={styles.error} role="status">{draftFailure}</p>}
       {!state && !storageFailure && <p className={styles.loading} role="status">Loading your saved quote and points…</p>}
-      {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Your sample data needs attention.</strong><p>{storageFailure}</p></div><button type="button" className={styles.outline} onClick={() => void read()} disabled={busy !== null}>Retry storage</button></div>}
+      {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Your saved data needs attention.</strong><p>{storageFailure}</p></div><button type="button" className={styles.outline} onClick={() => void read()} disabled={busy !== null}>Retry storage</button></div>}
       {notice && <p className={styles.notice} role="status" ref={noticeElement} tabIndex={-1}><SourceIcon name="check" size={18} />{notice}</p>}
 
       <article className={styles.columns} aria-labelledby="job-title">
@@ -291,24 +294,24 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
             <div className={styles.intro}>
               <div className={styles.topline}><span>{job.trade}</span><span>{job.posted}</span></div>
               <h1 id="job-title" tabIndex={-1}>{job.title}</h1>
-              <p className={styles.photoNote}>{job.photos.length} illustrative stock photos · All people and job details are synthetic.</p>
+              <p className={styles.photoNote}>{job.photos.length} photos · Illustrative images</p>
             </div>
           </section>
 
         <aside className={styles.sidebar} aria-label="Your quote and next steps">
           <section className={styles.actionPanel}>
-            <h2>{quoteStatus === "accepted" ? "Quote accepted" : claim ? claim.completedAt ? "Sample job complete" : "Your claim" : job.stage === "quoting" ? "Your quote" : "Claim this job"}</h2>
+            <h2>{quoteStatus === "accepted" ? "Accepted" : claim ? claim.completedAt ? "Complete" : "Claim" : job.stage === "quoting" ? "Quote" : "Claim"}</h2>
             {job.stage === "quoting" ? <>
               {quote && <div className={styles.quoteSummary}><span>Your quote · NZD</span><strong>{formatDemoMoney(quote.amountCents)}</strong><p>{quote.note}</p><span>Saved {savedDate(quote.updatedAt)} NZ time</span></div>}
-              {quoteStatus === "accepted" ? <div ref={acceptedSummary} className={styles.acceptedNote} tabIndex={-1} role="group" aria-label="Your accepted quote"><SourceIcon name="check" size={20} /><div><strong>Accepted in this preview</strong><p>This account’s quote is locked at the saved price and scope. Any unsent edits remain separate in this tab’s draft. Arrange the next steps in the sample discussion.</p></div></div> : editorOpen ? <form ref={quoteForm} className={styles.quoteForm} onSubmit={submitQuote} noValidate>
+              {quoteStatus === "accepted" ? <div ref={acceptedSummary} className={styles.acceptedNote} tabIndex={-1} role="group" aria-label="Your accepted quote"><SourceIcon name="check" size={20} /><div><strong>Accepted</strong><p>Price and scope are locked. Any unsent edits remain in this tab’s draft.</p></div></div> : editorOpen ? <form ref={quoteForm} className={styles.quoteForm} onSubmit={submitQuote} noValidate>
                 <label htmlFor={`${formId}-amount`}>Your quote <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input ref={amountInput} id={`${formId}-amount`} value={amount} onChange={(event) => changeQuoteDraft(event.target.value, scope)} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" required aria-invalid={invalidField === "amount"} aria-describedby={`${formId}-quote-error`} disabled={busy === "quote"} /></div>
                 <label htmlFor={`${formId}-scope`}>What’s included?</label><textarea ref={scopeInput} id={`${formId}-scope`} value={scope} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={5} maxLength={1000} placeholder="Labour, materials, timing and any assumptions…" required aria-invalid={invalidField === "scope"} aria-describedby={`${formId}-scope-help ${formId}-quote-error`} disabled={busy === "quote"} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
                 <p id={`${formId}-quote-error`} className={styles.error} role="alert">{quoteError}</p><button className={styles.primary} type="submit" disabled={disabled}>{busy === "quote" ? "Saving quote…" : quote ? "Save quote changes" : "Quote · +1 point"}</button><button className={styles.outline} type="button" onClick={closeEditor} disabled={busy !== null}>Cancel</button><button className={styles.outline} type="button" onClick={discardQuoteDraft} disabled={busy !== null}>Discard unsent quote</button>
               </form> : <button ref={editorOpener} className={quote ? styles.outline : styles.primary} type="button" onClick={openEditor} disabled={disabled}>{quote ? "Edit your quote" : "Quote · +1 point"}</button>}
               {quote && <p className={styles.rewardNote}>1 point earned for this quote. Edits and acceptance keep your balance the same.</p>}
             </> : <>
-              <div className={styles.price}><span>Sample fixed price</span><strong>{formatDemoMoney(job.priceCents!)}</strong></div>
-              {claim ? <><p className={styles.actionCopy}>{claim.completedAt ? "You marked this sample job complete. No real work or payment is recorded." : "You spent 5 points to claim this sample job. Use the discussion to try planning the visit."}</p>{!claim.completedAt && <button className={styles.outline} type="button" onClick={() => void runAction("complete")} disabled={disabled}>{busy === "complete" ? "Saving…" : "Complete sample job"}</button>}</> : <><dl className={styles.claimSummary}><div><dt>Your balance</dt><dd>{state ? points : "—"} points</dd></div><div><dt>Cost to claim</dt><dd>5 points</dd></div><div><dt>{points >= CLAIM_COST ? "Balance after claim" : "More points needed"}</dt><dd>{state ? points >= CLAIM_COST ? points - CLAIM_COST : CLAIM_COST - points : "—"} points</dd></div></dl>{state && points < CLAIM_COST ? <><p className={styles.actionCopy}>Each first quote earns 1 point. Earn {CLAIM_COST - points} more to claim this sample job.</p><Link className={styles.outline} href="/dashboard?quoteView=feed">Quote more jobs</Link></> : <button className={styles.primary} type="button" onClick={() => void runAction("claim")} disabled={disabled}>{busy === "claim" ? "Saving claim…" : "Claim · 5 points"}</button>}</>}
+              <div className={styles.price}><span>Fixed price</span><strong>{formatDemoMoney(job.priceCents!)}</strong></div>
+              {claim ? <><p className={styles.actionCopy}>{claim.completedAt ? "Marked complete. Points unchanged." : "5 points spent."}</p>{!claim.completedAt && <button className={styles.outline} type="button" onClick={() => void runAction("complete")} disabled={disabled}>{busy === "complete" ? "Saving…" : "Mark complete"}</button>}</> : <><dl className={styles.claimSummary}><div><dt>Your balance</dt><dd>{state ? points : "—"} points</dd></div><div><dt>Cost to claim</dt><dd>5 points</dd></div><div><dt>{points >= CLAIM_COST ? "Balance after claim" : "More points needed"}</dt><dd>{state ? points >= CLAIM_COST ? points - CLAIM_COST : CLAIM_COST - points : "—"} points</dd></div></dl>{state && points < CLAIM_COST ? <><p className={styles.actionCopy}>Each first quote earns 1 point. Earn {CLAIM_COST - points} more to claim.</p><Link className={styles.outline} href="/dashboard?quoteView=feed">Quote more jobs</Link></> : <button className={styles.primary} type="button" onClick={() => void runAction("claim")} disabled={disabled}>{busy === "claim" ? "Saving claim…" : "Claim · 5 points"}</button>}</>}
             </>}
             <p className={styles.error} ref={actionErrorElement} tabIndex={-1} role="alert">{actionError}</p>
             <Link className={styles.outline} href={discussionHref} prefetch={false} scroll={false} onClick={(event) => {
@@ -323,19 +326,18 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
                 document.getElementById("comments-heading")?.focus({ preventScroll: true });
               });
             }}><SourceIcon name="bubble" size={18} />View comments</Link>
-            <p className={styles.finePrint}>Sample quotes and claims stay on this device. No real booking, payment or customer contact is created.</p>
           </section>
 
-          <section className={styles.customerPanel}><span className={styles.avatar} aria-hidden="true">{job.customer.name.charAt(0)}</span><div><p className={styles.eyebrow}>Posted by</p><h2>{job.customer.name}</h2><p>Sample customer · {job.suburb}</p></div></section>
-          {job.stage === "quoting" && <details className={styles.previewControls}><summary>Preview controls</summary><p>Simulate this customer selecting <strong>your account’s saved quote</strong>. This only changes your local sample state. It locks this quote and adds no points.</p><button type="button" className={styles.outline} disabled={disabled || !quote || quoteStatus === "accepted"} onClick={() => void runAction("accept")}>{busy === "accept" ? "Saving preview…" : quoteStatus === "accepted" ? "Your quote is accepted" : "Simulate customer accepting my quote"}</button>{!quote && <p>Save a quote first to try this transition.</p>}</details>}
+          <section className={styles.customerPanel}><span className={styles.avatar} aria-hidden="true">{job.customer.name.charAt(0)}</span><div><p className={styles.postedBy}>Posted by</p><h2>{job.customer.name}</h2><p>{job.suburb}</p></div></section>
+          <details className={styles.previewControls}><summary>Preview controls</summary><p>Changes stay on this device. No real booking, payment or customer contact is created.</p>{job.stage === "quoting" && <><p>Simulate this customer selecting <strong>your saved quote</strong>. This locks its price and scope without adding points.</p><button type="button" className={styles.outline} disabled={disabled || !quote || quoteStatus === "accepted"} onClick={() => void runAction("accept")}>{busy === "accept" ? "Saving…" : quoteStatus === "accepted" ? "Accepted" : "Simulate customer accepting my quote"}</button>{!quote && <p>Save a quote first.</p>}</>}</details>
         </aside>
 
         <div className={styles.main}>
           <section className={styles.panel} aria-labelledby="description-heading">
             <h2 id="description-heading">Description</h2>
-            <p className={styles.description}>{job.description}</p>
-            <ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{item}</li>)}</ul>
-            <p className={styles.guidance}>{job.quoteGuidance.join(" ")}</p>
+            <p className={styles.description}>{jobCopy(job.description)}</p>
+            <ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{jobCopy(item)}</li>)}</ul>
+            <p className={styles.guidance}>{jobCopy(job.quoteGuidance.join(" "))}</p>
           </section>
           <section className={styles.panel} aria-labelledby="location-heading">
             <h2 id="location-heading">Location</h2>
@@ -348,12 +350,11 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
           <section className={styles.panel} id="comments" aria-labelledby="comments-heading">
             <MessageReadReceipt userId={userId} jobId={job.id} latestMessageId={latestCommentId} sectionId="comments" />
             <div className={styles.sectionTop}><h2 id="comments-heading" tabIndex={-1}>Comments</h2><div className={styles.discussionPrice}><strong>{quote ? `Your quote ${formatDemoMoney(quote.amountCents)}` : job.priceCents ? `Job price ${formatDemoMoney(job.priceCents)}` : "Price pending"}</strong><span>{quoteStatus === "accepted" ? "Your quote accepted" : quoteStatus === "quoted" ? "You have quoted" : claim ? "You claimed this job" : job.stage === "quoting" ? "Open for quotes" : "Available to claim"}</span></div></div>
-            <p className={styles.discussionHelp}>New comments stay in this account’s sample discussion on this device.</p>
-            <ol className={styles.discussion}>{job.comments.map((item) => <li key={item.id}><div className={styles.commentMeta}><strong>{item.author}</strong><span>{item.role} · {item.posted}</span></div><p>{item.body}</p></li>)}{ownComments.map((item) => <li className={styles.ownComment} key={item.id}><div className={styles.commentMeta}><strong>You</strong><time dateTime={item.createdAt}>{savedDate(item.createdAt)} NZ time</time></div><p>{item.body}</p><span className={styles.localLabel}>Saved locally</span></li>)}</ol>
+            <ol className={styles.discussion}>{job.comments.map((item) => <li key={item.id}><div className={styles.commentMeta}><strong>{item.author.replace(/ · sample tradie$/i, "")}</strong><span>{item.role} · {item.posted}</span></div><p>{item.body}</p></li>)}{ownComments.map((item) => <li className={styles.ownComment} key={item.id}><div className={styles.commentMeta}><strong>You</strong><time dateTime={item.createdAt}>{savedDate(item.createdAt)} NZ time</time></div><p>{item.body}</p><span className={styles.localLabel}>Saved locally</span></li>)}</ol>
             <form className={styles.commentForm} onSubmit={submitComment} noValidate>
               <label htmlFor={`${formId}-comment`}>Add a comment</label>
               <textarea ref={commentInput} id={`${formId}-comment`} value={comment} onChange={(event) => changeCommentDraft(event.target.value)} rows={3} maxLength={2000} placeholder="Add a comment…" required aria-invalid={!!commentError} aria-describedby={`${formId}-comment-help ${formId}-comment-error`} disabled={busy === "comment"} />
-              <p id={`${formId}-comment-help`} className={styles.fieldHelp}>2–2,000 characters. No message is sent to a real customer.</p>
+              <p id={`${formId}-comment-help`} className={styles.fieldHelp}>2–2,000 characters. Saved on this device.</p>
               <p id={`${formId}-comment-error`} className={styles.error} role="alert">{commentError}</p>
               <button className={styles.outline} type="submit" disabled={disabled}>{busy === "comment" ? "Saving comment…" : "Add comment"}<SourceIcon name="bubble" size={18} /></button>
               <button className={styles.outline} type="button" onClick={discardCommentDraft} disabled={busy !== null}>Discard unsent comment</button>

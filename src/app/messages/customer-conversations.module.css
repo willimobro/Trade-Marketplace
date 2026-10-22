@@ -1,6 +1,5 @@
 .workspace { margin-top:32px; min-width:0; color:var(--trade-forest); font-family:var(--trade-font-body); }
 .sectionHeader { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:12px 20px; margin-bottom:18px; }
-.eyebrow { margin:0 0 7px; color:var(--trade-source-muted); font-size:9px; font-weight:700; letter-spacing:.12em; line-height:1.5; }
 .sectionHeader h2 { margin:0; font:800 24px/1.25 var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 800; }
 .sectionHeader a { display:inline-flex; align-items:center; gap:8px; min-height:44px; color:var(--trade-forest); font-size:13px; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
 .layout,.list,.detailSlot { min-width:0; }

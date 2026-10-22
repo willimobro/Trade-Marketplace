@@ -17,21 +17,20 @@ export function parseWorkspaceMode(raw: string | null): WorkspaceMode | null {
 }
 export function serializeWorkspaceMode(mode: WorkspaceMode): string { return JSON.stringify({ version: 1, mode }); }
 
-/** Legacy home/search content is based on the actual server role. Opposite-mode
- * previews must enter their synthetic workspace before that content is shown. */
+/** Public home never redirects. Legacy search data is based on the actual server
+ * role, so opposite-mode searches keep their existing synthetic destinations. */
 export function workspaceHomeRedirect(role: string | null, mode: WorkspaceMode, enabled: boolean, search: boolean): string | null {
-  if (!enabled) return null;
+  if (!enabled || !search) return null;
   if (role === "TRADIE" && mode === "customer") return "/dashboard";
-  if (role === "CUSTOMER" && mode === "trade") return search ? "/dashboard?quoteView=feed" : "/dashboard";
+  if (role === "CUSTOMER" && mode === "trade") return "/dashboard?quoteView=feed";
   return null;
 }
 
-/** UI destinations remain inside the synthetic workspace for a simulated role. */
+/** Home always opens marketing; work and posting destinations stay mode-aware. */
 export function workspaceLinks(role: string | null, mode: WorkspaceMode, enabled: boolean) {
   const syntheticCustomer = enabled && mode === "customer" && role === "TRADIE";
-  const syntheticTrade = enabled && mode === "trade" && role === "CUSTOMER";
   return {
-    home: syntheticCustomer || syntheticTrade ? "/dashboard" : "/",
+    home: "/",
     search: enabled && mode === "trade" ? "/dashboard?quoteView=feed" : syntheticCustomer ? "/dashboard" : role === "CUSTOMER" ? "/?view=search" : "/jobs",
     jobs: role === "ADMIN" ? "/admin" : "/dashboard",
     post: syntheticCustomer ? "/dashboard?customerView=post" : "/jobs/new",

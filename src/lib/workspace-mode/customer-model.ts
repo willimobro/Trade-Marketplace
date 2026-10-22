@@ -31,15 +31,15 @@ function photos(...ids: DemoJobAssetId[]): { url: string; alt: string }[] {
 /** Fictional hiring examples, independent of every backend account and job. */
 export const CUSTOMER_SAMPLE_JOBS: readonly CustomerSampleJob[] = [
   { id: "customer-sample-lights", title: "New lights over the kitchen island", trade: "Electrical", suburb: "Grey Lynn", timing: "This week", stage: "priced", priceCents: 48000,
-    description: "Replace three pendant fittings over the kitchen island using the existing ceiling points. The fittings are supplied. The sample fixed price includes installation and a check of the existing connections.", photos: photos("ceiling-light", "kitchen-renovation", "room-renovation") },
+    description: "Replace three pendant fittings over the kitchen island using the existing ceiling points. The fittings are supplied. The fixed price includes installation and a check of the existing connections.", photos: photos("ceiling-light", "kitchen-renovation", "room-renovation") },
   { id: "customer-sample-basin", title: "A bathroom basin that drains properly", trade: "Plumbing", suburb: "Mount Eden", timing: "Flexible", stage: "waiting",
     description: "The bathroom basin drains slowly and occasionally leaks around the waste fitting. We would like the blockage checked and the waste seal replaced if needed. Access is through the vanity cupboard.", photos: photos("bathroom-vanity", "kitchen-sink") },
   { id: "customer-sample-gate", title: "Fix our sticking side gate", trade: "Construction", suburb: "Westmere", timing: "Next week", stage: "underway", priceCents: 36500,
-    description: "Realign the timber side gate, replace the worn hinges and fit a new latch. The scope and price have been accepted in this fictional example. A sample tradie is preparing the repair.", photos: photos("timber-fence", "house-exterior", "timber-detail") },
+    description: "Realign the timber side gate, replace the worn hinges and fit a new latch.", photos: photos("timber-fence", "house-exterior", "timber-detail") },
   { id: "customer-sample-hob", title: "Connect the replacement gas hob", trade: "Gas Fitting", suburb: "Kingsland", timing: "Next 2 weeks", stage: "waiting",
     description: "Replace a four-burner gas hob with a supplied unit in the same cut-out. Include disconnection, connection and the required checks. The existing gas connection is accessible inside the cupboard.", photos: photos("kitchen-renovation", "kitchen-sink") },
   { id: "customer-sample-deck", title: "The deck is ready for summer", trade: "Construction", suburb: "Point Chevalier", timing: "Finished", stage: "complete", priceCents: 79000,
-    description: "Six weathered deck boards have been replaced and the surrounding fixings checked. This completed example shows how finished jobs stay available in your job history.", photos: photos("deck-patio", "timber-detail", "house-exterior") },
+    description: "Six weathered deck boards have been replaced and the surrounding fixings checked.", photos: photos("deck-patio", "timber-detail", "house-exterior") },
 ];
 
 export function emptyCustomerDraft(): CustomerDraft {

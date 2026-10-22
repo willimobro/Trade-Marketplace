@@ -17,7 +17,7 @@ test("customer messages start with honest fixture notes and cannot route a backe
   const conversation = customerConversationMessages(state, first);
   assert.equal(conversation.length, 1);
   assert.equal(conversation[0].sender, "sample");
-  assert.equal(conversation[0].senderName, "Sample coordinator");
+  assert.equal(conversation[0].senderName, "Job note");
   assert.equal(conversation[0].createdAt, "");
   assert.equal(customerConversationUnread(state, first), true);
   assert.throws(() => addCustomerMessage(state, jobs, "backend-job-123", "customer-message-valid-id1", "Access through the side gate.", now), CustomerMessagesError);
