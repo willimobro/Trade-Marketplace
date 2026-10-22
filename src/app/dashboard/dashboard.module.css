@@ -1,7 +1,7 @@
 /* Original8:79/16:38: forest277px header; Open Quotes8:118 at29,374,
    SF Expanded36. Quote cards8:129–131 are322×85, radius11, shadow0 4 4/.25;
    photos13:135/142/144 are60×60 radius6. Live stage/pay/next-action text
-   needs variable card heights. Payroll and status filters are current additions. */
+   uses reserved slots in the shared photo-card system. Payroll and status filters are current additions. */
 .page { width:min(100%,390px); margin:0 auto; padding:0 0 24px; background:#fff; color:#0c251d; font:400 14px/19px 'Trade UI',sans-serif; }
 .header { min-height:277px; padding:0 29px 24px; background:#0c251d; color:#fff; }
 .nav { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; min-height:64px; margin:0 -9px 16px; }
@@ -111,7 +111,7 @@
   .customerFilter { grid-template-columns:minmax(200px,280px) auto 1fr; align-items:end; gap:16px; }
   .customerFilter > div { min-width:0; }
   .customerFilter .jobCount { grid-column:auto; justify-self:end; padding-bottom:12px; }
-  .customerJobs { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; }
+  .customerJobs { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; }
 }
 
 .existingWorkspace { margin-top:32px; border-top:1px solid #cbd5ce; padding-top:16px; }

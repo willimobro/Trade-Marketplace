@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SourceIcon } from "@/components/SourceIcon";
+import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
+import cardStyles from "@/components/job-cards/job-card.module.css";
 import { formatNZD } from "@/lib/constants";
 import { demoQuoteEta } from "@/lib/demo-quote-etas";
 import { tradeRequirementsPending } from "@/lib/trade-readiness";
@@ -45,7 +46,6 @@ function customerAction(job: CustomerJob, pendingPaymentId?: string) {
 }
 
 export function CustomerJobCard({ job, pendingPaymentId }: { job: CustomerJob; pendingPaymentId?: string }) {
-  const photo = job.photos[0]?.url;
   const pendingTradeSetup = tradeRequirementsPending(job.category);
   const eta = job.status === "REVIEW" && !pendingTradeSetup ? demoQuoteEta(job.id) : undefined;
   const action = customerAction(job, pendingPaymentId);
@@ -55,26 +55,16 @@ export function CustomerJobCard({ job, pendingPaymentId }: { job: CustomerJob; p
     : job.status === "PRICED" && job.priceCents === null ? "Waiting for price"
       : CUSTOMER_STAGES[job.status] ?? "View job status";
 
-  return (
-    <article className={styles.card} aria-labelledby={`customer-job-${job.id}`}>
-      <Link href={`/jobs/${job.id}`} className={styles.photo} aria-label={`View ${job.title}`}>
-        {photo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo} alt="" />
-        ) : <div className={styles.noPhoto}><SourceIcon name="jobs" size={40} /><span>No photo yet</span></div>}
-      </Link>
-      <div className={styles.body}>
-        <h2 id={`customer-job-${job.id}`} className={styles.title}><Link href={`/jobs/${job.id}`}>{job.title}</Link></h2>
-        <span className={`${styles.status} ${needsAction ? styles.needsAction : closed ? styles.closed : ""}`}>
-          <span className={styles.statusDot} aria-hidden="true" />{stage}
-        </span>
-        {job.priceCents !== null ? (
-          <dl className={styles.quote}><dt>Fixed price</dt><dd>{formatNZD(job.priceCents)}</dd></dl>
-        ) : eta ? (
-          <dl className={styles.quote}><dt>Quote ETA · demo</dt><dd className={styles.eta}>{eta}</dd></dl>
-        ) : null}
-        <Link href={action.href} className={styles.action}>{action.label}<span aria-hidden="true">↗</span></Link>
-      </div>
-    </article>
-  );
+  return <JobCardFrame
+    title={job.title}
+    href={`/jobs/${job.id}`}
+    photos={job.photos.map((photo, index) => ({ url: photo.url, alt: `${job.title}, photo ${index + 1}` }))}
+    completed={job.status === "COMPLETED"}
+    headingLevel={2}
+    meta={job.suburb}
+    status={<span className={`${styles.status} ${needsAction ? styles.needsAction : closed ? styles.closed : ""}`}><span className={styles.statusDot} aria-hidden="true" />{stage}</span>}
+    valueLabel={job.priceCents !== null ? "Fixed price" : closed ? "Price" : eta ? "Quote ETA · demo" : "Quote ETA"}
+    value={job.priceCents !== null ? formatNZD(job.priceCents) : closed ? "Not priced" : eta ?? "Pending"}
+    actions={<Link href={action.href} className={job.status === "PRICED" && job.priceCents !== null ? cardStyles.primaryAction : cardStyles.secondaryAction}>{action.label}<span aria-hidden="true">↗</span></Link>}
+  />;
 }

@@ -1,4 +1,4 @@
-import { claimDemoJob, completeDemoJob, createInitialState, parseStoredState, QuoteDemoError, type QuoteDemoState, submitDemoQuote } from "./model";
+import { acceptDemoQuote, addDemoComment, claimDemoJob, completeDemoJob, createInitialState, parseStoredState, QuoteDemoError, type QuoteDemoState, submitDemoQuote } from "./model";
 
 const DATABASE = "trade-marketplace-quote-demo";
 const STORE = "sample-users";
@@ -88,6 +88,14 @@ export async function loadQuoteDemo(userId: string): Promise<QuoteDemoState> {
 
 export async function saveDemoQuote(userId: string, jobId: string, amount: string, note: string) {
   return update(userId, (state) => { const next = submitDemoQuote(state, jobId, amount, note); return { state: next.state, result: { rewarded: next.rewarded } }; });
+}
+
+export async function saveDemoAcceptance(userId: string, jobId: string) {
+  return update(userId, (state) => { const next = acceptDemoQuote(state, jobId); return { state: next.state, result: { alreadyAccepted: next.alreadyAccepted } }; });
+}
+
+export async function saveDemoComment(userId: string, jobId: string, body: string, commentId: string) {
+  return update(userId, (state) => { const next = addDemoComment(state, jobId, body, commentId); return { state: next.state, result: { alreadyAdded: next.alreadyAdded } }; });
 }
 
 export async function saveDemoClaim(userId: string, jobId: string) {

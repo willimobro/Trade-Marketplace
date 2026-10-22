@@ -238,7 +238,10 @@ export default async function JobPage({
         {inThread && (
           <ConversationSection>
             <MessageReadReceipt userId={user.id} jobId={job.id} latestMessageId={job.messages.at(-1)?.id ?? null} />
-            <h2 id="conversation-heading" className="text-lg font-bold">Messages</h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h2 id="conversation-heading" className="text-lg font-bold">Messages</h2>
+              <p className="text-sm font-semibold text-forest">{job.priceCents !== null ? `Job price ${formatNZD(job.priceCents)}` : "Price pending"}</p>
+            </div>
             <p className="text-xs text-muted">
               {isOwner ? "Chat with Trade Marketplace" + (job.tradie ? ` and ${job.tradie.name.split(" ")[0]}` : "") : "Customer, tradie and Trade Marketplace"}
             </p>

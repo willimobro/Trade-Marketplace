@@ -1,23 +1,5 @@
-.card { min-width:0; overflow:hidden; border-radius:var(--trade-radius-category); background:var(--trade-surface); box-shadow:var(--trade-shadow-category); }
-.photo { display:block; aspect-ratio:16/10; overflow:hidden; background:#e6ece4; }
-.photo img { display:block; width:100%; height:100%; object-fit:cover; }
-.noPhoto { display:flex; height:100%; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#52645b; }
-.body { display:flex; min-width:0; flex-direction:column; padding:20px; }
-.title { margin:0 0 12px; color:var(--trade-forest); font:900 var(--trade-size-name)/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; overflow-wrap:anywhere; }
-.title a:hover { text-decoration:underline; text-underline-offset:4px; }
-.status { display:inline-flex; align-items:center; align-self:flex-start; gap:8px; min-height:28px; color:var(--trade-source-muted); font:400 var(--trade-size-small)/19px var(--trade-font-body); }
-.statusDot { flex:0 0 7px; width:7px; height:7px; border-radius:50%; background:#6cbd45; }
+.status { display:inline-flex; align-items:center; gap:8px; max-width:100%; color:var(--trade-source-muted); }
+.statusDot { flex:0 0 7px; width:7px; height:7px; border-radius:50%; background:var(--trade-leaf,#6cbd45); }
 .needsAction { color:#326c20; }
 .needsAction .statusDot { background:#326c20; }
 .closed .statusDot { background:#89978d; }
-.quote { margin:20px 0 0; }
-.quote dt { color:var(--trade-source-muted); font:400 var(--trade-size-small)/19px var(--trade-font-body); }
-.quote dd { margin:5px 0 0; color:var(--trade-forest); font:900 var(--trade-size-price)/1.2 var(--trade-font-heading); font-variation-settings:'wdth' 151, 'opsz' 28, 'wght' 900; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
-.quote .eta { font-size:var(--trade-size-name); line-height:1.2; }
-.action { display:flex; min-height:var(--trade-height-action); align-items:center; justify-content:space-between; gap:16px; margin-top:20px; padding:15px 18px; border-radius:var(--trade-radius-action); background:var(--trade-action); color:var(--trade-forest); font:700 var(--trade-size-small)/19px var(--trade-font-body); }
-.action:hover { background:var(--trade-action-hover); }
-.action span { font-size:22px; }
-@media(min-width:1024px) {
-  .body { padding:24px; }
-  .photo { aspect-ratio:16/9; }
-}

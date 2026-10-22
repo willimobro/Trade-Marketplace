@@ -46,7 +46,7 @@ export async function verifySkipFocus(tab, viewport) {
       await next.press("Enter");
       assert(await next.evaluate(node => node === document.activeElement), "Next must retain its stable control focus");
     }
-    const quote = tab.playwright.getByRole("button", { name: "Quote this job", exact: true });
+    const quote = tab.playwright.getByRole("button", { name: "Quote +1 point", exact: true });
     await quote.press("Enter");
     await tab.playwright.getByRole("dialog").press("Escape");
     assert(await quote.evaluate(node => node === document.activeElement), "Escape must restore quote opener focus");

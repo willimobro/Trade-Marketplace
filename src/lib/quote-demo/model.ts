@@ -1,13 +1,17 @@
 import { findDemoJob } from "./jobs";
 
-export const QUOTE_DEMO_VERSION = 1;
+// Keep the IndexedDB store unchanged, but make new writes unreadable by an old
+// version-1 client, which would otherwise discard comments and acceptances.
+export const QUOTE_DEMO_VERSION = 2;
 export const INITIAL_DEMO_POINTS = 3;
 export const CLAIM_COST = 5;
 
 export type DemoQuote = { jobId: string; amountCents: number; note: string; submittedAt: string; updatedAt: string };
 export type DemoClaim = { jobId: string; claimedAt: string; completedAt?: string };
-export type QuoteDemoState = { version: typeof QUOTE_DEMO_VERSION; userId: string; revision: number; quotes: DemoQuote[]; claims: DemoClaim[] };
-export type DemoErrorCode = "invalid-quote" | "invalid-job" | "insufficient-points" | "invalid-storage" | "storage-unavailable";
+export type DemoAcceptance = { jobId: string; acceptedAt: string };
+export type DemoComment = { id: string; jobId: string; body: string; createdAt: string };
+export type QuoteDemoState = { version: typeof QUOTE_DEMO_VERSION; userId: string; revision: number; quotes: DemoQuote[]; claims: DemoClaim[]; acceptances: DemoAcceptance[]; comments: DemoComment[] };
+export type DemoErrorCode = "invalid-quote" | "quote-accepted" | "invalid-comment" | "invalid-job" | "insufficient-points" | "invalid-storage" | "storage-unavailable";
 
 export class QuoteDemoError extends Error {
   constructor(public code: DemoErrorCode, message: string) { super(message); this.name = "QuoteDemoError"; }
@@ -15,11 +19,17 @@ export class QuoteDemoError extends Error {
 
 export function createInitialState(userId: string): QuoteDemoState {
   if (!userId.trim()) throw new QuoteDemoError("invalid-storage", "A sample user is required.");
-  return { version: QUOTE_DEMO_VERSION, userId, revision: 0, quotes: [], claims: [] };
+  return { version: QUOTE_DEMO_VERSION, userId, revision: 0, quotes: [], claims: [], acceptances: [], comments: [] };
 }
 
 export function getPointsBalance(state: QuoteDemoState): number {
   return INITIAL_DEMO_POINTS + state.quotes.length - CLAIM_COST * state.claims.length;
+}
+
+/** A claim is a separate action and never implies this tradie's quote was accepted. */
+export function getDemoQuoteStatus(state: QuoteDemoState, jobId: string): "quoted" | "accepted" | undefined {
+  if (!state.quotes.some((quote) => quote.jobId === jobId)) return undefined;
+  return state.acceptances?.some((acceptance) => acceptance.jobId === jobId) ? "accepted" : "quoted";
 }
 
 export function validateQuote(amount: string | number, note: string): { amountCents: number; note: string } {
@@ -42,7 +52,7 @@ function invalidStored(): never { throw new QuoteDemoError("invalid-storage", "T
 
 /** Reject incompatible/corrupt records; never silently turn them into a fresh balance. */
 export function parseStoredState(value: unknown, userId: string): QuoteDemoState {
-  if (!isRecord(value) || value.version !== QUOTE_DEMO_VERSION || value.userId !== userId ||
+  if (!isRecord(value) || (value.version !== 1 && value.version !== QUOTE_DEMO_VERSION) || value.userId !== userId ||
     !Number.isSafeInteger(value.revision) || (value.revision as number) < 0 ||
     !Array.isArray(value.quotes) || !Array.isArray(value.claims)) return invalidStored();
   const quoteIds = new Set<string>();
@@ -63,20 +73,75 @@ export function parseStoredState(value: unknown, userId: string): QuoteDemoState
     claimIds.add(claim.jobId);
     return { jobId: claim.jobId, claimedAt: claim.claimedAt, ...(claim.completedAt ? { completedAt: claim.completedAt as string } : {}) };
   });
-  const state: QuoteDemoState = { version: QUOTE_DEMO_VERSION, userId, revision: value.revision as number, quotes, claims };
-  if (getPointsBalance(state) < 0 || state.revision < quotes.length + claims.length) return invalidStored();
+  // Version-1 records did not contain these fields. Preserve their ledger and
+  // normalize them to version 2 without changing the IndexedDB database/store.
+  if (value.version === QUOTE_DEMO_VERSION && (!Array.isArray(value.acceptances) || !Array.isArray(value.comments))) return invalidStored();
+  if ((value.acceptances !== undefined && !Array.isArray(value.acceptances)) ||
+    (value.comments !== undefined && !Array.isArray(value.comments))) return invalidStored();
+  const acceptedIds = new Set<string>();
+  const acceptances: DemoAcceptance[] = (value.acceptances ?? []).map((acceptance: unknown) => {
+    if (!isRecord(acceptance) || typeof acceptance.jobId !== "string" || acceptedIds.has(acceptance.jobId) || !validDate(acceptance.acceptedAt)) return invalidStored();
+    const quote = quotes.find((item) => item.jobId === acceptance.jobId);
+    if (!quote || Date.parse(acceptance.acceptedAt) < Date.parse(quote.updatedAt)) return invalidStored();
+    acceptedIds.add(acceptance.jobId);
+    return { jobId: acceptance.jobId, acceptedAt: acceptance.acceptedAt };
+  });
+  const commentIds = new Set<string>();
+  const comments: DemoComment[] = (value.comments ?? []).map((comment: unknown) => {
+    if (!isRecord(comment) || typeof comment.id !== "string" || !validCommentId(comment.id) || commentIds.has(comment.id) ||
+      typeof comment.jobId !== "string" || !findDemoJob(comment.jobId) || typeof comment.body !== "string" ||
+      comment.body !== comment.body.trim() || comment.body.length < 2 || comment.body.length > 2000 || !validDate(comment.createdAt)) return invalidStored();
+    commentIds.add(comment.id);
+    return { id: comment.id, jobId: comment.jobId, body: comment.body, createdAt: comment.createdAt };
+  });
+  const state: QuoteDemoState = { version: QUOTE_DEMO_VERSION, userId, revision: value.revision as number, quotes, claims, acceptances, comments };
+  if (getPointsBalance(state) < 0 || state.revision < quotes.length + claims.length + acceptances.length + comments.length) return invalidStored();
   return state;
 }
 
 export function submitDemoQuote(state: QuoteDemoState, jobId: string, amount: string | number, note: string, now = new Date().toISOString()): { state: QuoteDemoState; rewarded: boolean } {
   const current = parseStoredState(state, state.userId);
   if (findDemoJob(jobId)?.stage !== "quoting") throw new QuoteDemoError("invalid-job", "This sample job is not open for quotes.");
+  if (getDemoQuoteStatus(current, jobId) === "accepted") throw new QuoteDemoError("quote-accepted", "This quote has been accepted in the preview and is now locked. Its scope and price cannot be edited.");
   if (!validDate(now)) throw new QuoteDemoError("invalid-quote", "The quote date is invalid.");
   const valid = validateQuote(amount, note);
   const existing = current.quotes.find((quote) => quote.jobId === jobId);
+  if (existing && Date.parse(now) < Date.parse(existing.updatedAt)) throw new QuoteDemoError("invalid-quote", "The quote update date is invalid.");
   const quote: DemoQuote = { jobId, ...valid, submittedAt: existing?.submittedAt ?? now, updatedAt: now };
   const quotes = existing ? current.quotes.map((item) => item.jobId === jobId ? quote : item) : [...current.quotes, quote];
   return { state: { ...current, revision: current.revision + 1, quotes }, rewarded: !existing };
+}
+
+/** Explicit preview-only customer selection of this user's already-saved quote. */
+export function acceptDemoQuote(state: QuoteDemoState, jobId: string, now = new Date().toISOString()): { state: QuoteDemoState; alreadyAccepted: boolean } {
+  const current = parseStoredState(state, state.userId);
+  const quote = current.quotes.find((item) => item.jobId === jobId);
+  if (!quote) throw new QuoteDemoError("invalid-job", "Save your quote before previewing customer acceptance.");
+  if (current.acceptances.some((item) => item.jobId === jobId)) return { state: current, alreadyAccepted: true };
+  if (!validDate(now) || Date.parse(now) < Date.parse(quote.updatedAt)) throw new QuoteDemoError("invalid-job", "The acceptance date is invalid.");
+  return { state: { ...current, revision: current.revision + 1, acceptances: [...current.acceptances, { jobId, acceptedAt: now }] }, alreadyAccepted: false };
+}
+
+function validCommentId(value: string): boolean { return /^[a-zA-Z0-9_-]{8,100}$/.test(value); }
+
+export function validateDemoComment(body: string): string {
+  const trimmed = body.trim();
+  if (trimmed.length < 2 || trimmed.length > 2000) throw new QuoteDemoError("invalid-comment", "Write a comment of 2–2,000 characters.");
+  return trimmed;
+}
+
+/** The caller retains the same ID for retries, so a committed comment cannot be duplicated. */
+export function addDemoComment(state: QuoteDemoState, jobId: string, body: string, commentId: string, now = new Date().toISOString()): { state: QuoteDemoState; alreadyAdded: boolean } {
+  const current = parseStoredState(state, state.userId);
+  if (!findDemoJob(jobId)) throw new QuoteDemoError("invalid-job", "This sample job could not be found.");
+  const validBody = validateDemoComment(body);
+  if (!validCommentId(commentId) || !validDate(now)) throw new QuoteDemoError("invalid-comment", "The comment could not be saved. Refresh this page, then retry.");
+  const existing = current.comments.find((comment) => comment.id === commentId);
+  if (existing) {
+    if (existing.jobId !== jobId || existing.body !== validBody) throw new QuoteDemoError("invalid-comment", "This comment changed while it was being saved. Please try again.");
+    return { state: current, alreadyAdded: true };
+  }
+  return { state: { ...current, revision: current.revision + 1, comments: [...current.comments, { id: commentId, jobId, body: validBody, createdAt: now }] }, alreadyAdded: false };
 }
 
 export function claimDemoJob(state: QuoteDemoState, jobId: string, now = new Date().toISOString()): { state: QuoteDemoState; alreadyClaimed: boolean } {

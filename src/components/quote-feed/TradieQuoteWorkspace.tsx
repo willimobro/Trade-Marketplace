@@ -1,16 +1,19 @@
 "use client";
 
-import Image from "next/image";
-import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent, type PointerEvent } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
+import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
+import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
+import cardStyles from "@/components/job-cards/job-card.module.css";
 import { DEMO_JOBS, DEMO_TRADES, demoTrade, findDemoJob, formatDemoMoney, type DemoJob } from "@/lib/quote-demo/jobs";
-import { CLAIM_COST, getPointsBalance, QuoteDemoError, type QuoteDemoState } from "@/lib/quote-demo/model";
+import { CLAIM_COST, getDemoQuoteStatus, getPointsBalance, QuoteDemoError, type QuoteDemoState } from "@/lib/quote-demo/model";
 import { loadQuoteDemo, resetQuoteDemo, saveDemoClaim, saveDemoCompletion, saveDemoQuote, subscribeQuoteDemo } from "@/lib/quote-demo/storage";
+import { readWorkspaceNavigation, readWorkspaceSession, workspaceSearch, workspaceSessionKey, type WorkspaceTab } from "./workspace-navigation";
 import styles from "./quote-feed.module.css";
 
-type Tab = "feed" | "available" | "quoted" | "claimed";
 type Modal = { kind: "quote" | "claim" | "success"; jobId: string } | null;
 
-function Icon({ name, size = 20 }: { name: "coin" | "arrow" | "pin" | "check" | "close" | "clock" | "chevron" | "bolt"; size?: number }) {
+function Icon({ name, size = 20 }: { name: "coin" | "arrow" | "pin" | "check" | "close" | "clock" | "chevron" | "bolt" | "info"; size?: number }) {
   const paths: Record<typeof name, React.ReactNode> = {
     coin: <><circle cx="12" cy="12" r="9" /><path d="M12 6v12M15 8.5h-4.5a2 2 0 0 0 0 4H13a2 2 0 0 1 0 4H8.5" /></>,
     arrow: <><path d="M4 12h15M13 6l6 6-6 6" /></>,
@@ -20,25 +23,23 @@ function Icon({ name, size = 20 }: { name: "coin" | "arrow" | "pin" | "check" | 
     clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>,
     chevron: <path d="m9 5 7 7-7 7" />,
     bolt: <path d="m13 2-8 12h6l-1 8 9-13h-6l1-7Z" />,
+    info: <><circle cx="12" cy="12" r="9" /><path d="M12 11v6M12 7h.01" /></>,
   };
   return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">{paths[name]}</svg>;
 }
 
-function JobPhoto({ job, className, priority = false }: { job: DemoJob; className?: string; priority?: boolean }) {
-  return <div className={`${styles.photo} ${className ?? ""}`}><Image src={job.image} alt={job.imageAlt} fill sizes="(max-width: 700px) 100vw, 500px" priority={priority} className={styles.photoImage} /></div>;
-}
-
-function QuotedBadge() {
-  return <span className={styles.quotedBadge}><Icon name="check" size={14} />Quoted<span className={styles.badgeCoin}><Icon name="coin" size={15} /></span></span>;
+function JobPhoto({ job }: { job: DemoJob }) {
+  return <div className={styles.dialogPhoto}><JobPhotoCarousel photos={job.photos} title={job.title} compact /></div>;
 }
 
 export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade: string | null }) {
   const ownTrade = demoTrade(trade);
   const [state, setState] = useState<QuoteDemoState | null>(null);
   const [storageFailure, setStorageFailure] = useState<QuoteDemoError | null>(null);
-  const [tab, setTab] = useState<Tab>("feed");
+  const [tab, setTab] = useState<WorkspaceTab>("feed");
   const [filter, setFilter] = useState("all");
-  const [cursor, setCursor] = useState(0);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [historyUser, setHistoryUser] = useState<string | null>(null);
   const [skipped, setSkipped] = useState<string[]>([]);
   const [modal, setModal] = useState<Modal>(null);
   const [amount, setAmount] = useState("");
@@ -47,12 +48,14 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [quoteSaved, setQuoteSaved] = useState(false);
+  const [pointsInfoOpen, setPointsInfoOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const pointsDialog = useRef<HTMLDialogElement>(null);
+  const pointsInfoButton = useRef<HTMLButtonElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const successHeading = useRef<HTMLHeadingElement>(null);
   const feedFocusTarget = useRef<HTMLHeadingElement>(null);
   const focusAfterFeedChange = useRef(false);
-  const pointer = useRef<{ x: number; y: number } | null>(null);
   const alive = useRef(true);
   const user = useRef(userId);
   const focusAfterClose = useRef(false);
@@ -70,11 +73,24 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   useEffect(() => {
     alive.current = true;
     user.current = userId;
-    setState(null); setStorageFailure(null); setModal(null); setNotice(""); setTab("feed"); setSkipped([]); setCursor(0);
+    const navigation = readWorkspaceNavigation(window.location.search);
+    let session = readWorkspaceSession(null);
+    try { session = readWorkspaceSession(sessionStorage.getItem(workspaceSessionKey(userId))); } catch { /* Navigation still works when session storage is unavailable. */ }
+    setState(null); setStorageFailure(null); setModal(null); setNotice("");
+    setTab(navigation.tab); setFilter(navigation.trade);
+    setSkipped(session.skipped.filter((id) => id !== navigation.quoteJob));
+    setSelectedJobId(navigation.quoteJob ?? session.quoteJob ?? null);
+    setHistoryUser(userId);
     void read();
     const unsubscribe = subscribeQuoteDemo(userId, () => void read());
     return () => { alive.current = false; unsubscribe(); };
   }, [read, userId]);
+
+  useEffect(() => {
+    const node = pointsDialog.current;
+    if (pointsInfoOpen && node && !node.open) node.showModal();
+    if (!pointsInfoOpen && node?.open) { node.close(); pointsInfoButton.current?.focus(); }
+  }, [pointsInfoOpen]);
 
   useEffect(() => {
     const node = dialog.current;
@@ -98,17 +114,29 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const sorted = [...DEMO_JOBS].sort((a, b) => Number(b.trade === ownTrade) - Number(a.trade === ownTrade));
   const matches = (job: DemoJob) => filter === "all" || job.trade === filter;
   const feed = sorted.filter((job) => job.stage === "quoting" && matches(job) && !quotedIds.has(job.id) && !skipped.includes(job.id));
-  const currentIndex = feed.length ? cursor % feed.length : 0;
+  const currentIndex = Math.max(0, feed.findIndex((job) => job.id === selectedJobId));
   const current = feed[currentIndex];
   const available = sorted.filter((job) => job.stage === "available" && matches(job) && !claimedIds.has(job.id));
   const quotes = [...(state?.quotes ?? [])].reverse().filter((quote) => { const job = findDemoJob(quote.jobId); return job && matches(job); });
-  const claims = [...(state?.claims ?? [])].reverse().filter((claim) => { const job = findDemoJob(claim.jobId); return job && matches(job); });
+  const claims = [...(state?.claims ?? [])].reverse().filter((claim) => { const job = findDemoJob(claim.jobId); return job && matches(job); }).sort((a, b) => Number(!!a.completedAt) - Number(!!b.completedAt));
   const modalJob = modal ? findDemoJob(modal.jobId) : undefined;
   const editing = !!modalJob && quotedIds.has(modalJob.id);
   const disabled = busy || !state || !!storageFailure;
 
-  // The keyed card (and its Skip button) unmounts. Focus only after React has
-  // committed the replacement card or empty state; never focus the old node.
+  useEffect(() => {
+    if (historyUser !== userId || !state || state.userId !== userId) return;
+    const url = new URL(window.location.href);
+    const navigation = new URLSearchParams(workspaceSearch({ tab, trade: filter, quoteJob: current?.id }));
+    for (const key of ["quoteView", "trade", "quoteJob"]) {
+      const value = navigation.get(key);
+      if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
+    }
+    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+    try { sessionStorage.setItem(workspaceSessionKey(userId), JSON.stringify({ skipped, quoteJob: current?.id })); } catch { /* URLs preserve return navigation without session storage. */ }
+  }, [current?.id, filter, historyUser, skipped, state, tab, userId]);
+
+  // Focus the replacement card heading only after React has committed it.
+  // Next keeps its stable control focus; Skip and restore focus the new card.
   useLayoutEffect(() => {
     if (focusAfterFeedChange.current && tab === "feed") {
       feedFocusTarget.current?.focus();
@@ -116,24 +144,18 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     }
   }, [current?.id, skipped, tab]);
 
-  function switchTab(next: Tab) { setTab(next); setNotice(""); setQuoteSaved(false); }
-  function goToFeed() { focusAfterClose.current = true; setModal(null); setTab("feed"); setFilter("all"); setSkipped([]); setCursor(0); setNotice(""); setQuoteSaved(false); requestAnimationFrame(() => heading.current?.focus()); }
+  function switchTab(next: WorkspaceTab) {
+    setTab(next); setNotice(""); setQuoteSaved(false);
+  }
+  function goToFeed() { focusAfterClose.current = !!modal; setModal(null); switchTab("feed"); setFilter("all"); setSkipped([]); setSelectedJobId(null); requestAnimationFrame(() => heading.current?.focus()); }
+  function detailHref(jobId: string) { return `/quote-jobs/${jobId}?${workspaceSearch({ tab, trade: filter, quoteJob: current?.id })}`; }
   function openQuote(job: DemoJob) {
     const existing = state?.quotes.find((quote) => quote.jobId === job.id);
     setAmount(existing ? String(existing.amountCents / 100) : ""); setNote(existing?.note ?? ""); setFormError(""); setModal({ kind: "quote", jobId: job.id });
   }
   function openClaim(job: DemoJob) { setFormError(""); setModal({ kind: "claim", jobId: job.id }); }
-  function next() { if (feed.length > 1) setCursor((value) => (value + 1) % feed.length); }
-  function skip() { if (current && !disabled) { focusAfterFeedChange.current = true; setSkipped((items) => [...items, current.id]); setNotice(`Skipped ${current.title}. You can come back to it.`); } }
-  function pointerStart(event: PointerEvent<HTMLDivElement>) { if (event.isPrimary) pointer.current = { x: event.clientX, y: event.clientY }; }
-  function pointerEnd(event: PointerEvent<HTMLDivElement>) {
-    if (!pointer.current) return;
-    const dx = event.clientX - pointer.current.x, dy = event.clientY - pointer.current.y;
-    pointer.current = null;
-    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-      if (dx < 0) next(); else if (feed.length > 1) setCursor((value) => (value + feed.length - 1) % feed.length);
-    }
-  }
+  function next() { if (feed.length > 1) setSelectedJobId(feed[(currentIndex + 1) % feed.length].id); }
+  function skip() { if (current && !disabled) { focusAfterFeedChange.current = true; setSelectedJobId(feed.length > 1 ? feed[(currentIndex + 1) % feed.length].id : null); setSkipped((items) => [...items, current.id]); setNotice(`Skipped ${current.title}. You can come back to it.`); } }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -184,7 +206,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
 
   async function reset() {
     setBusy(true);
-    try { setState(await resetQuoteDemo(userId)); setStorageFailure(null); setModal(null); setNotice("This user's sample data has been reset."); setSkipped([]); setCursor(0); }
+    try { setState(await resetQuoteDemo(userId)); setStorageFailure(null); setModal(null); setNotice("This user's sample data has been reset."); setSkipped([]); setSelectedJobId(null); }
     catch (error) { setStorageFailure(error instanceof QuoteDemoError ? error : new QuoteDemoError("storage-unavailable", "Could not reset sample data. Please retry.")); }
     finally { setBusy(false); }
   }
@@ -194,17 +216,16 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     <section className={styles.pointsPanel} aria-label="Your points">
       <div className={styles.pointsBalance}>
         <span className={styles.bigCoin}><Icon name="coin" size={31} /></span>
-        <div><span className={styles.pointsLabel}>Demo points</span><p><strong>{state ? points : "—"}</strong><span>points</span></p></div>
+        <div><span className={styles.pointsLabel}>Demo points</span><p><strong>{state ? points : "—"}</strong><span>points</span><button ref={pointsInfoButton} className={styles.pointsInfoButton} type="button" aria-label="How points work" aria-controls={`${formId}-points-info`} aria-expanded={pointsInfoOpen} onClick={() => setPointsInfoOpen(true)}><Icon name="info" size={20} /></button></p></div>
       </div>
-      <div className={styles.pointsMessage}><strong>Earn 1 per quote. Claim for 5.</strong><p>Includes 3 starter points for this demo.</p></div>
-      <button className={styles.primary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" /></button>
+      <button className={`${styles.secondary} ${styles.pointsNav}`} onClick={goToFeed}>Quote more jobs<Icon name="arrow" /></button>
     </section>
     <div className={styles.workspaceNav}>
       <div className={styles.tabs} role="group" aria-label="Workspace views">
         {([ ["feed", "Quote feed", null], ["available", "Available jobs", DEMO_JOBS.filter((job) => job.stage === "available" && !claimedIds.has(job.id)).length], ["quoted", "Quoted Jobs", state?.quotes.length ?? 0], ["claimed", "My claims", state?.claims.length ?? 0] ] as const).map(([value, label, count]) =>
           <button key={value} aria-pressed={tab === value} className={tab === value ? styles.activeTab : ""} onClick={() => switchTab(value)}>{label}{count !== null && <span>{count}</span>}</button>)}
       </div>
-      <label className={styles.tradeFilter}><span>Trade</span><select aria-label="Filter jobs by trade" value={filter} onChange={(event) => { setFilter(event.target.value); setCursor(0); }}>{<option value="all">All trades</option>}{DEMO_TRADES.map((item) => <option key={item}>{item}</option>)}</select></label>
+      <label className={styles.tradeFilter}><span>Trade</span><select aria-label="Filter jobs by trade" value={filter} onChange={(event) => { setFilter(event.target.value); setSelectedJobId(null); }}>{<option value="all">All trades</option>}{DEMO_TRADES.map((item) => <option key={item}>{item}</option>)}</select></label>
     </div>
 
     {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Demo storage needs a moment.</strong><p>{storageFailure.message}</p></div><div className={styles.errorActions}><button onClick={() => void read()} disabled={busy}>Retry storage</button>{storageFailure.code === "invalid-storage" && <button onClick={() => void reset()} disabled={busy}>Reset this user&apos;s sample data</button>}</div></div>}
@@ -213,33 +234,58 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     <div className={styles.sectionHeading}>
       <div><p className={styles.eyebrow}>{tab === "feed" ? "YOUR NEXT OPPORTUNITY" : tab === "quoted" ? "YOUR KNOW-HOW, PUT TO WORK" : tab === "claimed" ? "YOUR SAMPLE CLAIMS" : "READY WHEN YOU ARE"}</p>
         <h2 ref={heading} tabIndex={-1}>{tab === "feed" ? "Quote more jobs" : tab === "quoted" ? "Quoted Jobs" : tab === "claimed" ? "My claims" : "Available jobs"}</h2>
-        <p>{tab === "feed" ? "Take a look. Send a quote. Build your balance." : tab === "quoted" ? "Every first quote earned you 1 point. All in one place." : tab === "claimed" ? "Your claimed sample jobs and the points you spent." : "Use 5 points to claim a sample job that suits you."}</p>
+        <p>{tab === "feed" ? "Take a look. Send a quote. Build your balance." : tab === "quoted" ? "Your saved estimates, ready to review." : tab === "claimed" ? "Your claimed sample jobs and the points you spent." : "Use 5 points to claim a sample job that suits you."}</p>
       </div>
       {tab === "feed" && current && <span className={styles.feedCount}>{currentIndex + 1}<span> / {feed.length}</span></span>}
     </div>
 
-    {!state && !storageFailure ? <div className={styles.loading} role="status">Opening your sample workspace…</div> : tab === "feed" ? current ? <>
-      <article className={styles.feedCard} key={current.id}>
-        <div className={styles.feedVisual} onPointerDown={pointerStart} onPointerUp={pointerEnd} onPointerCancel={() => { pointer.current = null; }}>
-          <JobPhoto job={current} priority />
-          <span className={styles.photoTrade}>{current.trade}</span><span className={styles.earnBadge}><Icon name="coin" size={16} />+1 point</span>
-          <div className={styles.photoCaption}><span><Icon name="pin" size={15} />{current.suburb} · {current.distance}</span><h3 ref={feedFocusTarget} tabIndex={-1} data-testid="quote-feed-focus-target">{current.title}</h3></div>
+    {!state && !storageFailure ? <div className={styles.loading} role="status">Opening your sample workspace…</div> : tab === "feed" ? current ? <div className={styles.feedLayout}>
+      <div className={styles.feedColumn}>
+        <JobCardFrame key={current.id} title={current.title} href={detailHref(current.id)} photos={current.photos} quoteStatus={state ? getDemoQuoteStatus(state, current.id) : undefined}
+          headingRef={feedFocusTarget} focusTarget
+          meta={<span>{current.trade} · {current.suburb}</span>}
+          status={<><span className={cardStyles.statusDot} /><span>Open for quotes · {current.distance}</span></>}
+          valueLabel="Your estimate" value="To quote"
+          actions={<button className={cardStyles.primaryAction} onClick={() => openQuote(current)} disabled={disabled}>Quote <span className={styles.quoteReward}>+1 point</span><Icon name="arrow" size={18} /></button>} />
+        <div className={styles.feedControls}>
+          <button className={cardStyles.secondaryAction} onClick={skip} disabled={disabled} aria-label={`Skip ${current.title}`}>Skip</button>
+          <button className={cardStyles.secondaryAction} onClick={next} disabled={feed.length < 2 || disabled}>Next job<Icon name="arrow" size={18} /></button>
         </div>
-        <div className={styles.feedDetails}>
-          <div className={styles.jobTopline}><span className={styles.openDot} />Open for quotes<span>{current.posted}</span></div>
-          <h3>The job at a glance</h3><p className={styles.description}>{current.description}</p>
-          <div className={styles.detailTags}>{current.details.map((item) => <span key={item}>{item}</span>)}</div>
-          <p className={styles.timing}><Icon name="clock" size={17} />{current.timing}</p>
-          <div className={styles.feedActions}><button className={styles.skip} onClick={skip} disabled={disabled} aria-label={`Skip ${current.title}`}>Skip</button><button className={styles.primary} onClick={() => openQuote(current)} disabled={disabled}>Quote this job<Icon name="arrow" /></button></div>
-        </div>
-      </article>
-      <div className={styles.feedFooter}><span>{feed.length} jobs to explore{ownTrade && filter === "all" ? ` · ${ownTrade} first` : ""}</span><button onClick={next} disabled={feed.length < 2 || disabled}>Next job<Icon name="arrow" size={18} /></button></div>
-    </> : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="check" size={30} /></span><h3 ref={feedFocusTarget} tabIndex={-1} data-testid="quote-feed-focus-target">{skipped.length ? "A breather? You’ve earned it." : "You’re all caught up."}</h3><p>{skipped.length ? "Come back to the jobs you skipped, or see what is available." : "Your saved quotes are in Quoted Jobs. Find your next opportunity in Available jobs."}</p><div>{skipped.length > 0 && <button className={styles.primary} onClick={() => { focusAfterFeedChange.current = true; setSkipped([]); setCursor(0); setNotice(""); }}>Show skipped jobs</button>}<button className={styles.secondary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div></div>
-      : tab === "available" ? <div className={styles.jobGrid}>{available.length ? available.map((job) => <article className={styles.smallCard} key={job.id}><div className={styles.smallVisual}><JobPhoto job={job} /><span className={styles.photoTrade}>{job.trade}</span><span className={styles.readyBadge}>Ready to claim</span></div><div className={styles.smallBody}><p className={styles.location}><Icon name="pin" size={15} />{job.suburb} · {job.distance}</p><h3>{job.title}</h3><p className={styles.smallDescription}>{job.description}</p><div className={styles.cardPrice}><div><span>Sample fixed price</span><strong>{formatDemoMoney(job.priceCents!)}</strong></div><span className={styles.claimCost}><Icon name="coin" size={18} />5 points</span></div><button className={styles.primary} onClick={() => openClaim(job)} disabled={disabled}>Review &amp; claim<Icon name="arrow" size={18} /></button></div></article>) : <div className={styles.empty}><h3>No available jobs in this view.</h3><p>Try all trades, or review your sample claims.</p><button className={styles.secondary} onClick={() => { setFilter("all"); switchTab("claimed"); }}>View my claims</button></div>}</div>
-      : tab === "quoted" ? <div className={styles.quotedGrid}>{quotes.length ? quotes.map((quote) => { const job = findDemoJob(quote.jobId)!; return <article className={styles.quotedCard} key={job.id}><div className={styles.quotedVisual}><JobPhoto job={job} /><QuotedBadge /></div><div className={styles.quotedBody}><p className={styles.location}>{job.trade} · {job.suburb}</p><h3>{job.title}</h3><div className={styles.quotedBottom}><div><span>Your quote</span><strong>{formatDemoMoney(quote.amountCents)}</strong></div><button className={styles.secondary} onClick={() => openQuote(job)} disabled={disabled}>Edit quote<Icon name="chevron" size={16} /></button></div></div></article>; }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="coin" size={30} /></span><h3>Your first point starts here.</h3><p>Send a quote from the feed. We’ll keep it here for you.</p><button className={styles.primary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" size={18} /></button></div>}</div>
-      : <div className={styles.savedList}>{claims.length ? claims.map((saved) => { const job = findDemoJob(saved.jobId)!; return <article className={styles.savedCard} key={job.id}><JobPhoto job={job} /><div className={styles.savedBody}><div className={styles.savedMeta}><span>{job.trade} · {job.suburb}</span><span className={styles.claimedBadge}><Icon name="check" size={14} />{saved.completedAt ? "Sample complete" : "Sample claimed"}</span></div><h3>{job.title}</h3><p>{saved.completedAt ? "Completed in this demo. No real work or payment is recorded." : "Next: try completing this sample job."}</p><div className={styles.savedBottom}><strong>{formatDemoMoney(job.priceCents!)}</strong>{saved.completedAt ? <span className={styles.claimCost}><Icon name="coin" size={17} />5 points spent</span> : <button className={styles.completeButton} onClick={() => void complete(job)} disabled={disabled}>{busy ? "Saving…" : "Complete sample job"}<Icon name="check" size={16} /></button>}</div></div></article>; }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="bolt" size={30} /></span><h3>Make your points work for you.</h3><p>Claim an available sample job for 5 points.</p><button className={styles.primary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div>}</div>}
+        <p className={styles.feedFooter}>{feed.length} jobs to explore{ownTrade && filter === "all" ? ` · ${ownTrade} first` : ""}</p>
+      </div>
+    </div> : <div className={styles.empty}>
+      <span className={styles.emptyIcon}><Icon name="check" size={30} /></span><h3 ref={feedFocusTarget} tabIndex={-1} data-testid="quote-feed-focus-target">{skipped.length ? "A breather? You’ve earned it." : "You’re all caught up."}</h3>
+      <p>{skipped.length ? "Come back to the jobs you skipped, or see what is available." : "Your saved quotes are in Quoted Jobs. Find your next opportunity in Available jobs."}</p>
+      <div>{skipped.length > 0 && <button className={styles.secondary} onClick={() => { focusAfterFeedChange.current = true; setSkipped([]); setSelectedJobId(null); setNotice(""); }}>Show skipped jobs</button>}<button className={styles.secondary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div>
+    </div>
+      : tab === "available" ? <div className={cardStyles.grid}>{available.length ? available.map((job) => <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={state ? getDemoQuoteStatus(state, job.id) : undefined}
+        meta={<span>{job.trade} · {job.suburb}</span>}
+        status={<><span className={cardStyles.statusDot} /><span>Ready to claim · {job.distance}</span></>}
+        valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
+        actions={<button className={cardStyles.primaryAction} onClick={() => openClaim(job)} disabled={disabled}>Review &amp; claim<span className={styles.claimCost}><Icon name="coin" size={18} />5 points</span></button>} />) : <div className={styles.empty}><h3>No available jobs in this view.</h3><p>Try all trades, or review your sample claims.</p><button className={styles.secondary} onClick={() => { setFilter("all"); switchTab("claimed"); }}>View my claims</button></div>}</div>
+      : tab === "quoted" ? <div className={cardStyles.grid}>{quotes.length ? quotes.map((quote) => {
+        const job = findDemoJob(quote.jobId)!;
+        const quoteStatus = state ? getDemoQuoteStatus(state, job.id) : undefined;
+        return <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={quoteStatus}
+          meta={<span>{job.trade} · {job.suburb}</span>}
+          status={<span>{quoteStatus === "accepted" ? "Customer accepted your quote" : "Quote saved"} · {job.distance}</span>}
+          valueLabel="Your quote" value={formatDemoMoney(quote.amountCents)}
+          actions={quoteStatus === "accepted" ? <Link className={cardStyles.secondaryAction} href={detailHref(job.id)}>View job<Icon name="arrow" size={18} /></Link> : <button className={cardStyles.secondaryAction} onClick={() => openQuote(job)} disabled={disabled}>Edit quote<Icon name="chevron" size={18} /></button>} />;
+      }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="coin" size={30} /></span><h3>Your first point starts here.</h3><p>Send a quote from the feed. We’ll keep it here for you.</p><button className={styles.secondary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" size={18} /></button></div>}</div>
+      : <div className={cardStyles.grid}>{claims.length ? claims.map((saved) => {
+        const job = findDemoJob(saved.jobId)!;
+        return <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={state ? getDemoQuoteStatus(state, job.id) : undefined} completed={!!saved.completedAt}
+          meta={<span>{job.trade} · {job.suburb}</span>}
+          status={<><Icon name="check" size={16} /><span>{saved.completedAt ? "Sample complete" : "Sample claimed"} · 5 points spent</span></>}
+          valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
+          actions={saved.completedAt ? <Link className={cardStyles.secondaryAction} href={detailHref(job.id)}>View job<Icon name="arrow" size={18} /></Link> : <button className={cardStyles.primaryAction} onClick={() => void complete(job)} disabled={disabled}>{busy ? "Saving…" : "Complete sample job"}<Icon name="check" size={18} /></button>} />;
+      }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="bolt" size={30} /></span><h3>Make your points work for you.</h3><p>Claim an available sample job for 5 points.</p><button className={styles.secondary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div>}</div>}
 
-    <p className={styles.disclaimer}>3 starter demo points. Illustrative photos. No real quotes, bookings or payments are sent.</p>
+    <p className={styles.disclaimer}>Sample jobs and illustrative photos. No real quotes, bookings or payments are sent.</p>
+
+    <dialog className={`${styles.dialog} ${styles.pointsDialog}`} ref={pointsDialog} id={`${formId}-points-info`} aria-labelledby={`${formId}-points-title`} onCancel={(event) => { event.preventDefault(); setPointsInfoOpen(false); }} onClick={(event) => { if (event.target === event.currentTarget) setPointsInfoOpen(false); }}>
+      <div className={styles.dialogInner}><button className={styles.close} aria-label="Close points information" onClick={() => setPointsInfoOpen(false)}><Icon name="close" size={22} /></button><h2 id={`${formId}-points-title`}>How points work</h2><p>You start with 3 demo points. Submit your first quote on a job to earn 1 point. Editing that quote earns no extra points. Claiming an available sample job costs 5 points.</p></div>
+    </dialog>
 
     <dialog className={styles.dialog} ref={dialog} aria-labelledby={`${formId}-title`} onCancel={(event) => { if (busy) event.preventDefault(); else setModal(null); }} onClick={(event) => { if (event.target === event.currentTarget && !busy) setModal(null); }}>
       {modal && modalJob && <div className={styles.dialogInner}>
@@ -257,9 +303,9 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
           <p className={styles.eyebrow}>PUT YOUR POINTS TO WORK</p><h2 id={`${formId}-title`}>{points < CLAIM_COST ? "A few more points to go." : "Your next job starts here."}</h2>
           <div className={styles.dialogJob}><JobPhoto job={modalJob} /><div><span>{modalJob.trade} · {modalJob.suburb}</span><h3>{modalJob.title}</h3></div></div>
           <p className={styles.claimDescription}>{modalJob.description}</p><dl className={styles.claimSummary}><div><dt>Sample fixed price</dt><dd>{formatDemoMoney(modalJob.priceCents!)}</dd></div><div><dt>Your balance</dt><dd>{points} points</dd></div><div><dt>Cost to claim</dt><dd>−5 points</dd></div><div><dt>{points < CLAIM_COST ? "Points needed" : "Balance after claim"}</dt><dd>{points < CLAIM_COST ? CLAIM_COST - points : points - CLAIM_COST} points</dd></div></dl>
-          <p className={styles.formError} role="alert">{formError}</p>{points < CLAIM_COST ? <><p className={styles.claimHint}>Each first quote earns 1 point. You’re {CLAIM_COST - points} {CLAIM_COST - points === 1 ? "quote" : "quotes"} away.</p><button className={styles.primary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" size={18} /></button></> : <button className={styles.primary} onClick={() => void claim()} disabled={disabled}>{busy ? "Saving claim…" : "Confirm claim · 5 points"}<Icon name="arrow" size={18} /></button>}
+          <p className={styles.formError} role="alert">{formError}</p>{points < CLAIM_COST ? <><p className={styles.claimHint}>Each first quote earns 1 point. You’re {CLAIM_COST - points} {CLAIM_COST - points === 1 ? "quote" : "quotes"} away.</p><button className={styles.secondary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" size={18} /></button></> : <button className={styles.primary} onClick={() => void claim()} disabled={disabled}>{busy ? "Saving claim…" : "Confirm claim · 5 points"}<Icon name="arrow" size={18} /></button>}
           <p className={styles.modalFine}>This claims a sample job only. It does not book work or contact a customer.</p>
-        </> : <div className={styles.success}><span className={styles.successIcon}><Icon name="check" size={36} /></span><p className={styles.eyebrow}>NICE WORK</p><h2 ref={successHeading} tabIndex={-1} id={`${formId}-title`}>Sample job claimed.</h2><p>{modalJob.title}</p><div className={styles.successBalance}><Icon name="coin" size={23} /><strong>{points}</strong> points remaining</div><p className={styles.claimHint}>Next: open your claim and try completing the sample job.</p><button className={styles.primary} onClick={() => { focusAfterClose.current = true; setModal(null); setTab("claimed"); }}>View my claims<Icon name="arrow" size={18} /></button><button className={styles.textButton} onClick={goToFeed}>Keep quoting</button><p className={styles.modalFine}>No real work has been booked.</p></div>}
+        </> : <div className={styles.success}><span className={styles.successIcon}><Icon name="check" size={36} /></span><p className={styles.eyebrow}>NICE WORK</p><h2 ref={successHeading} tabIndex={-1} id={`${formId}-title`}>Sample job claimed.</h2><p>{modalJob.title}</p><div className={styles.successBalance}><Icon name="coin" size={23} /><strong>{points}</strong> points remaining</div><p className={styles.claimHint}>Next: open your claim and try completing the sample job.</p><button className={styles.secondary} onClick={() => { focusAfterClose.current = true; setModal(null); switchTab("claimed"); }}>View my claims<Icon name="arrow" size={18} /></button><button className={styles.textButton} onClick={goToFeed}>Keep quoting</button><p className={styles.modalFine}>No real work has been booked.</p></div>}
       </div>}
     </dialog>
   </section>;

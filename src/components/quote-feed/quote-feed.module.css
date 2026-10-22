@@ -250,3 +250,36 @@
 /* Replacement feed headings receive keyboard focus after Skip, including empty state. */
 .photoCaption h3[tabindex], .empty h3[tabindex] { scroll-margin-block:120px; }
 .photoCaption h3:focus-visible, .empty h3:focus-visible { outline:3px solid var(--trade-focus); outline-offset:4px; }
+
+/* Feed, available, quoted and claimed cards use the shared fixed card slots. */
+.feedLayout { display:block; }
+.feedColumn { min-width:0; width:calc((100% - 24px)/2); margin-inline:auto; }
+.feedControls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:16px; }
+.feedFooter { display:block; margin:12px 0 0; text-align:center; font-size:14px; }
+.quoteReward { font-size:14px; font-weight:500; }
+.claimCost { font-size:14px; color:inherit; white-space:nowrap; }
+.pointsInfoButton { display:grid; place-items:center; width:44px; height:44px; min-height:44px; padding:0; border:0; border-radius:50%; background:transparent; color:#fff; }
+.pointsInfoButton:hover { background:#ffffff16; }
+.pointsPanel > .pointsNav { margin-left:auto; min-height:55px; border:2px solid var(--trade-action); background:transparent; color:#fff; font-size:14px; }
+.pointsPanel > .pointsNav:hover { background:#ffffff14; }
+.pointsNav > svg { color:var(--trade-action); }
+.secondary { border:2px solid var(--trade-action); background:transparent; }
+.dialogPhoto { width:66px; flex:0 0 66px; border-radius:6px; overflow:hidden; }
+.dialogInner > .secondary { width:100%; margin-top:19px; }
+.success .secondary { width:100%; margin:8px 0; }
+.pointsDialog { width:min(460px,calc(100% - 32px)); }
+.pointsDialog p { margin:20px 0 0; font-size:16px; line-height:1.6; color:var(--quote-muted); }
+@media(max-width:1023px) {
+  .workspace { padding-inline:16px; }
+  .feedColumn { width:100%; }
+}
+@media(max-width:520px) {
+  .pointsPanel { gap:16px; }
+  .pointsPanel > .pointsNav { width:100%; margin-left:0; }
+  .pointsBalance { flex:1; }
+  .pointsBalance > div { flex:1; }
+  .pointsInfoButton { margin-left:auto; }
+  .pointsBalance strong { font-size:36px; }
+  .feedControls { gap:12px; }
+  .feedFooter { font-size:14px; }
+}

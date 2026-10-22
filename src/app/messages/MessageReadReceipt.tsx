@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { saveConversationRead } from "./message-read-state";
 
 /** Mount with the job thread; a receipt means the messages section was visible here. */
-export function MessageReadReceipt({ userId, jobId, latestMessageId }: { userId: string; jobId: string; latestMessageId: string | null }) {
+export function MessageReadReceipt({ userId, jobId, latestMessageId, sectionId = "messages" }: { userId: string; jobId: string; latestMessageId: string | null; sectionId?: string }) {
   useEffect(() => {
     if (!latestMessageId) return;
-    const section = document.getElementById("messages");
+    const section = document.getElementById(sectionId);
     if (!section) return;
     let marked = false;
     const markRead = () => {
@@ -24,6 +24,6 @@ export function MessageReadReceipt({ userId, jobId, latestMessageId }: { userId:
     const onVisibilityChange = () => { if (sectionVisible) markRead(); };
     document.addEventListener("visibilitychange", onVisibilityChange);
     return () => { observer.disconnect(); document.removeEventListener("visibilitychange", onVisibilityChange); };
-  }, [userId, jobId, latestMessageId]);
+  }, [userId, jobId, latestMessageId, sectionId]);
   return null;
 }

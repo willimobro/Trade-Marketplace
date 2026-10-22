@@ -16,6 +16,7 @@ import { JobCard } from "@/components/JobCard";
 import { EmptyState, LicenceBadge } from "@/components/ui";
 import { SourceIcon } from "@/components/SourceIcon";
 import { CustomerJobCard } from "./CustomerJobCard";
+import { activeJobsFirst } from "@/lib/job-presentation";
 
 export const dynamic = "force-dynamic";
 
@@ -58,7 +59,7 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
     where: { customerId: userId },
     orderBy: { createdAt: "desc" },
     include: {
-      photos: { take: 1, where: { variationId: null } },
+      photos: { where: { variationId: null } },
       payments: { where: { kind: "JOB", status: "PENDING" }, select: { id: true, amountCents: true }, orderBy: { createdAt: "desc" } },
     },
   });
@@ -67,9 +68,9 @@ async function CustomerDash({ userId, filter }: { userId: string; filter?: strin
     ["COMPLETED", "Completed"], ["CANCELLED", "Cancelled"],
   ];
   const selected = filters.some(([value]) => value === filter) ? filter! : "all";
-  const visible = jobs.filter((job) => selected === "all" ||
+  const visible = activeJobsFirst(jobs.filter((job) => selected === "all" ||
     (selected === "action" ? ["PRICED", "SUBMITTED"].includes(job.status) :
-      selected === "active" ? !["COMPLETED", "CANCELLED"].includes(job.status) : job.status === selected));
+      selected === "active" ? !["COMPLETED", "CANCELLED"].includes(job.status) : job.status === selected)), (job) => job.status === "COMPLETED");
   return (
     <section className={`${styles.section} ${styles.customerSection}`} aria-label="Your jobs">
       <form className={`${styles.filter} ${styles.customerFilter}`}>
