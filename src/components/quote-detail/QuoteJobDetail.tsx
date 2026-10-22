@@ -269,8 +269,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
       {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Your sample data needs attention.</strong><p>{storageFailure}</p></div><button type="button" className={styles.outline} onClick={() => void read()} disabled={busy !== null}>Retry storage</button></div>}
       {notice && <p className={styles.notice} role="status" ref={noticeElement} tabIndex={-1}><SourceIcon name="check" size={18} />{notice}</p>}
 
-      <div className={styles.columns}>
-        <article className={styles.main}>
+      <article className={styles.columns} aria-labelledby="job-title">
           <section className={styles.overview} aria-labelledby="job-title">
             <JobPhotoCarousel photos={job.photos} title={job.title} quoteStatus={quoteStatus} completed={!!claim?.completedAt} />
             <div className={styles.intro}>
@@ -282,26 +281,6 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
               <p className={styles.photoNote}>{job.photos.length} illustrative stock photos · All people and job details are synthetic.</p>
             </div>
           </section>
-
-          <section className={styles.panel} aria-labelledby="scope-heading"><p className={styles.eyebrow}>The work</p><h2 id="scope-heading">What needs doing</h2><ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{item}</li>)}</ul></section>
-          <section className={styles.panel} aria-labelledby="site-heading"><p className={styles.eyebrow}>Before you arrive</p><h2 id="site-heading">The property &amp; access</h2><p className={styles.property}>{job.customer.property}</p><ul className={styles.scopeList}>{job.siteNotes.map((item) => <li key={item}>{item}</li>)}</ul><div className={styles.availability}><h3>Preferred timing</h3><strong>{job.timing}</strong><p>{job.customer.availability}</p></div></section>
-          <section className={styles.panel} aria-labelledby="guidance-heading"><p className={styles.eyebrow}>{job.stage === "quoting" ? "A useful quote" : "Before you claim"}</p><h2 id="guidance-heading">{job.stage === "quoting" ? "What to include" : "What the sample price covers"}</h2><ul className={styles.scopeList}>{job.quoteGuidance.map((item) => <li key={item}>{item}</li>)}</ul></section>
-
-          <section className={styles.panel} id="comments" aria-labelledby="comments-heading">
-            <MessageReadReceipt userId={userId} jobId={job.id} latestMessageId={latestCommentId} sectionId="comments" />
-            <div className={styles.sectionTop}><div><p className={styles.eyebrow}>Ask &amp; clarify</p><h2 id="comments-heading" tabIndex={-1}>Job discussion</h2></div><div className={styles.discussionPrice}><strong>{quote ? `Your quote ${formatDemoMoney(quote.amountCents)}` : job.priceCents ? `Job price ${formatDemoMoney(job.priceCents)}` : "Price pending"}</strong><span>{quoteStatus === "accepted" ? "Your quote accepted" : quoteStatus === "quoted" ? "You have quoted" : claim ? "You claimed this job" : job.stage === "quoting" ? "Open for quotes" : "Available to claim"}</span></div></div>
-            <p className={styles.discussionHelp}>Ask about the scope, access or materials. New comments stay in this account’s sample discussion on this device.</p>
-            <ol className={styles.discussion}>{job.comments.map((item) => <li key={item.id}><div className={styles.commentMeta}><strong>{item.author}</strong><span>{item.role} · {item.posted}</span></div><p>{item.body}</p></li>)}{ownComments.map((item) => <li className={styles.ownComment} key={item.id}><div className={styles.commentMeta}><strong>You</strong><time dateTime={item.createdAt}>{savedDate(item.createdAt)} NZ time</time></div><p>{item.body}</p><span className={styles.localLabel}>Saved locally</span></li>)}</ol>
-            <form className={styles.commentForm} onSubmit={submitComment} noValidate>
-              <label htmlFor={`${formId}-comment`}>Add a comment</label>
-              <textarea ref={commentInput} id={`${formId}-comment`} value={comment} onChange={(event) => changeCommentDraft(event.target.value)} rows={3} maxLength={2000} placeholder="Anything you need to know before quoting?" required aria-invalid={!!commentError} aria-describedby={`${formId}-comment-help ${formId}-comment-error`} disabled={busy === "comment"} />
-              <p id={`${formId}-comment-help`} className={styles.fieldHelp}>2–2,000 characters. No message is sent to a real customer.</p>
-              <p id={`${formId}-comment-error`} className={styles.error} role="alert">{commentError}</p>
-              <button className={styles.outline} type="submit" disabled={disabled}>{busy === "comment" ? "Saving comment…" : "Add comment"}<SourceIcon name="bubble" size={18} /></button>
-              <button className={styles.outline} type="button" onClick={discardCommentDraft} disabled={busy !== null}>Discard unsent comment</button>
-            </form>
-          </section>
-        </article>
 
         <aside className={styles.sidebar} aria-label="Your quote and next steps">
           <section className={styles.actionPanel}>
@@ -338,7 +317,28 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
           <section className={styles.customerPanel}><span className={styles.avatar} aria-hidden="true">{job.customer.name.charAt(0)}</span><div><p className={styles.eyebrow}>Posted by</p><h2>{job.customer.name}</h2><p>Sample customer · {job.suburb}</p></div></section>
           {job.stage === "quoting" && <details className={styles.previewControls}><summary>Preview controls</summary><p>Simulate this customer selecting <strong>your account’s saved quote</strong>. This only changes your local sample state. It locks this quote and adds no points.</p><button type="button" className={styles.outline} disabled={disabled || !quote || quoteStatus === "accepted"} onClick={() => void runAction("accept")}>{busy === "accept" ? "Saving preview…" : quoteStatus === "accepted" ? "Your quote is accepted" : "Simulate customer accepting my quote"}</button>{!quote && <p>Save a quote first to try this transition.</p>}</details>}
         </aside>
-      </div>
+
+        <div className={styles.main}>
+          <section className={styles.panel} aria-labelledby="scope-heading"><p className={styles.eyebrow}>The work</p><h2 id="scope-heading">What needs doing</h2><ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{item}</li>)}</ul></section>
+          <section className={styles.panel} aria-labelledby="site-heading"><p className={styles.eyebrow}>Before you arrive</p><h2 id="site-heading">The property &amp; access</h2><p className={styles.property}>{job.customer.property}</p><ul className={styles.scopeList}>{job.siteNotes.map((item) => <li key={item}>{item}</li>)}</ul><div className={styles.availability}><h3>Preferred timing</h3><strong>{job.timing}</strong><p>{job.customer.availability}</p></div></section>
+          <section className={styles.panel} aria-labelledby="guidance-heading"><p className={styles.eyebrow}>{job.stage === "quoting" ? "A useful quote" : "Before you claim"}</p><h2 id="guidance-heading">{job.stage === "quoting" ? "What to include" : "What the sample price covers"}</h2><ul className={styles.scopeList}>{job.quoteGuidance.map((item) => <li key={item}>{item}</li>)}</ul></section>
+
+          <section className={styles.panel} id="comments" aria-labelledby="comments-heading">
+            <MessageReadReceipt userId={userId} jobId={job.id} latestMessageId={latestCommentId} sectionId="comments" />
+            <div className={styles.sectionTop}><div><p className={styles.eyebrow}>Ask &amp; clarify</p><h2 id="comments-heading" tabIndex={-1}>Job discussion</h2></div><div className={styles.discussionPrice}><strong>{quote ? `Your quote ${formatDemoMoney(quote.amountCents)}` : job.priceCents ? `Job price ${formatDemoMoney(job.priceCents)}` : "Price pending"}</strong><span>{quoteStatus === "accepted" ? "Your quote accepted" : quoteStatus === "quoted" ? "You have quoted" : claim ? "You claimed this job" : job.stage === "quoting" ? "Open for quotes" : "Available to claim"}</span></div></div>
+            <p className={styles.discussionHelp}>Ask about the scope, access or materials. New comments stay in this account’s sample discussion on this device.</p>
+            <ol className={styles.discussion}>{job.comments.map((item) => <li key={item.id}><div className={styles.commentMeta}><strong>{item.author}</strong><span>{item.role} · {item.posted}</span></div><p>{item.body}</p></li>)}{ownComments.map((item) => <li className={styles.ownComment} key={item.id}><div className={styles.commentMeta}><strong>You</strong><time dateTime={item.createdAt}>{savedDate(item.createdAt)} NZ time</time></div><p>{item.body}</p><span className={styles.localLabel}>Saved locally</span></li>)}</ol>
+            <form className={styles.commentForm} onSubmit={submitComment} noValidate>
+              <label htmlFor={`${formId}-comment`}>Add a comment</label>
+              <textarea ref={commentInput} id={`${formId}-comment`} value={comment} onChange={(event) => changeCommentDraft(event.target.value)} rows={3} maxLength={2000} placeholder="Anything you need to know before quoting?" required aria-invalid={!!commentError} aria-describedby={`${formId}-comment-help ${formId}-comment-error`} disabled={busy === "comment"} />
+              <p id={`${formId}-comment-help`} className={styles.fieldHelp}>2–2,000 characters. No message is sent to a real customer.</p>
+              <p id={`${formId}-comment-error`} className={styles.error} role="alert">{commentError}</p>
+              <button className={styles.outline} type="submit" disabled={disabled}>{busy === "comment" ? "Saving comment…" : "Add comment"}<SourceIcon name="bubble" size={18} /></button>
+              <button className={styles.outline} type="button" onClick={discardCommentDraft} disabled={busy !== null}>Discard unsent comment</button>
+            </form>
+          </section>
+        </div>
+      </article>
     </div>
   </div>;
 }

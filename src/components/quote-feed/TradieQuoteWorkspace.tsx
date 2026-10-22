@@ -10,9 +10,10 @@ import { clearComposerDraft, loadQuoteDraft, MAX_QUOTE_DRAFT_AMOUNT_LENGTH, save
 import { CLAIM_COST, getDemoQuoteStatus, getPointsBalance, QuoteDemoError, type QuoteDemoState } from "@/lib/quote-demo/model";
 import { loadQuoteDemo, resetQuoteDemo, saveDemoClaim, saveDemoCompletion, saveDemoQuote, subscribeQuoteDemo } from "@/lib/quote-demo/storage";
 import { readWorkspaceNavigation, readWorkspaceSession, workspaceSearch, workspaceSessionKey, type WorkspaceTab } from "./workspace-navigation";
+import { quoteFormError } from "./quote-form";
 import styles from "./quote-feed.module.css";
 
-type Modal = { kind: "quote" | "claim" | "success"; jobId: string } | null;
+type Modal = { kind: "quote" | "accepted" | "claim" | "success"; jobId: string } | null;
 
 function Icon({ name, size = 20 }: { name: "coin" | "arrow" | "pin" | "check" | "close" | "clock" | "chevron" | "bolt" | "info"; size?: number }) {
   const paths: Record<typeof name, React.ReactNode> = {
@@ -46,6 +47,8 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [formError, setFormError] = useState("");
+  const [invalidField, setInvalidField] = useState<"amount" | "scope" | null>(null);
+  const [formFocus, setFormFocus] = useState<"amount" | "scope" | "error" | "accepted" | null>(null);
   const [draftFailure, setDraftFailure] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
@@ -56,6 +59,10 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const pointsInfoButton = useRef<HTMLButtonElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const successHeading = useRef<HTMLHeadingElement>(null);
+  const acceptedHeading = useRef<HTMLHeadingElement>(null);
+  const amountInput = useRef<HTMLInputElement>(null);
+  const scopeInput = useRef<HTMLTextAreaElement>(null);
+  const formErrorElement = useRef<HTMLParagraphElement>(null);
   const feedFocusTarget = useRef<HTMLHeadingElement>(null);
   const focusAfterFeedChange = useRef(false);
   const alive = useRef(true);
@@ -67,7 +74,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const read = useCallback(async () => {
     try {
       const loaded = await loadQuoteDemo(userId);
-      if (alive.current && user.current === userId) { setState(loaded); setStorageFailure(null); }
+      if (alive.current && user.current === userId) { setState(current => !current || loaded.revision >= current.revision ? loaded : current); setStorageFailure(null); }
     } catch (error) {
       if (alive.current && user.current === userId) setStorageFailure(error instanceof QuoteDemoError ? error : new QuoteDemoError("storage-unavailable", "Demo storage is unavailable. Retry to reconnect."));
     }
@@ -106,8 +113,18 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   }, [modal]);
 
   useEffect(() => {
+    if (busy || !formFocus) return;
+    const target = { amount: amountInput, scope: scopeInput, error: formErrorElement, accepted: acceptedHeading }[formFocus].current;
+    if (target) { target.focus(); setFormFocus(null); }
+  }, [busy, formFocus, modal]);
+
+  useEffect(() => {
     if (modal?.kind === "claim" && state?.claims.some((claim) => claim.jobId === modal.jobId)) {
       setModal({ kind: "success", jobId: modal.jobId });
+    }
+    if (modal?.kind === "quote" && state && getDemoQuoteStatus(state, modal.jobId) === "accepted") {
+      setModal({ kind: "accepted", jobId: modal.jobId });
+      setFormError(""); setInvalidField(null); setFormFocus("accepted");
     }
   }, [modal, state]);
 
@@ -123,6 +140,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const quotes = [...(state?.quotes ?? [])].reverse().filter((quote) => { const job = findDemoJob(quote.jobId); return job && matches(job); });
   const claims = [...(state?.claims ?? [])].reverse().filter((claim) => { const job = findDemoJob(claim.jobId); return job && matches(job); }).sort((a, b) => Number(!!a.completedAt) - Number(!!b.completedAt));
   const modalJob = modal ? findDemoJob(modal.jobId) : undefined;
+  const modalQuote = state?.quotes.find(quote => quote.jobId === modal?.jobId);
   const editing = !!modalJob && quotedIds.has(modalJob.id);
   const disabled = busy || !state || !!storageFailure;
 
@@ -159,11 +177,11 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     const loaded = loadQuoteDraft(userId, job.id);
     const draft = loaded.ok ? loaded.value ?? quoteDraftMemory.current.get(draftKey(job.id)) : quoteDraftMemory.current.get(draftKey(job.id));
     setDraftFailure(loaded.ok ? "" : loaded.error.message);
-    setAmount(draft?.amount ?? (existing ? String(existing.amountCents / 100) : "")); setNote(draft?.scope ?? existing?.note ?? ""); setFormError(""); setModal({ kind: "quote", jobId: job.id });
+    setAmount(draft?.amount ?? (existing ? String(existing.amountCents / 100) : "")); setNote(draft?.scope ?? existing?.note ?? ""); setFormError(""); setInvalidField(null); setFormFocus(null); setModal({ kind: "quote", jobId: job.id });
   }
 
   function changeQuoteDraft(nextAmount: string, nextScope: string) {
-    setAmount(nextAmount); setNote(nextScope); setFormError("");
+    setAmount(nextAmount); setNote(nextScope); setFormError(""); setInvalidField(null);
     if (modal?.kind !== "quote") return;
     const value = { amount: nextAmount, scope: nextScope };
     quoteDraftMemory.current.set(draftKey(modal.jobId), value);
@@ -178,7 +196,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     if (!cleared.ok) return;
     quoteDraftMemory.current.delete(draftKey(modal.jobId));
     const existing = state?.quotes.find((quote) => quote.jobId === modal.jobId);
-    setAmount(existing ? String(existing.amountCents / 100) : ""); setNote(existing?.note ?? ""); setFormError("");
+    setAmount(existing ? String(existing.amountCents / 100) : ""); setNote(existing?.note ?? ""); setFormError(""); setInvalidField(null);
     document.getElementById(`${formId}-amount`)?.focus();
   }
   function openClaim(job: DemoJob) { setFormError(""); setModal({ kind: "claim", jobId: job.id }); }
@@ -187,7 +205,9 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!modalJob || disabled) return;
+    if (!modalJob || modal?.kind !== "quote" || disabled || state && getDemoQuoteStatus(state, modalJob.id) === "accepted") return;
+    const invalid = quoteFormError(amount, note);
+    if (invalid) { setFormError(invalid.message); setInvalidField(invalid.field); setFormFocus(invalid.field); return; }
     setBusy(true); setFormError("");
     try {
       const saved = await saveDemoQuote(userId, modalJob.id, amount, note);
@@ -200,6 +220,10 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
       if (!alive.current || user.current !== userId) return;
       if (error instanceof QuoteDemoError && ["storage-unavailable", "invalid-storage"].includes(error.code)) setStorageFailure(error);
       setFormError(error instanceof Error ? error.message : "Your quote could not be saved. Please retry.");
+      if (error instanceof QuoteDemoError && error.code === "quote-accepted") {
+        setModal({ kind: "accepted", jobId: modalJob.id }); setFormFocus("accepted");
+        await read();
+      } else setFormFocus("error");
     } finally { setBusy(false); }
   }
 
@@ -325,13 +349,19 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
           <p className={styles.eyebrow}>{editing ? "YOUR SAVED QUOTE" : "A LITTLE KNOW-HOW. ONE MORE POINT."}</p><h2 id={`${formId}-title`}>{editing ? "Fine-tune your quote." : "What’s your quote?"}</h2>
           <div className={styles.dialogJob}><JobPhoto job={modalJob} /><div><span>{modalJob.trade} · {modalJob.suburb}</span><h3>{modalJob.title}</h3></div></div>
           <form onSubmit={submit} noValidate>
-            <label className={styles.fieldLabel} htmlFor={`${formId}-amount`}>Your estimate <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input autoFocus id={`${formId}-amount`} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" value={amount} onChange={(event) => changeQuoteDraft(event.target.value, note)} aria-describedby={`${formId}-error`} aria-invalid={!!formError} required disabled={busy} /></div>
-            <label className={styles.fieldLabel} htmlFor={`${formId}-scope`}>What’s included?</label><textarea id={`${formId}-scope`} placeholder="Labour, materials and anything the customer should know…" value={note} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={4} maxLength={1000} aria-describedby={`${formId}-scope-help ${formId}-error`} aria-invalid={!!formError} required disabled={busy} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
+            <label className={styles.fieldLabel} htmlFor={`${formId}-amount`}>Your estimate <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input ref={amountInput} autoFocus id={`${formId}-amount`} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" value={amount} onChange={(event) => changeQuoteDraft(event.target.value, note)} aria-describedby={`${formId}-error`} aria-invalid={invalidField === "amount"} required disabled={busy} /></div>
+            <label className={styles.fieldLabel} htmlFor={`${formId}-scope`}>What’s included?</label><textarea ref={scopeInput} id={`${formId}-scope`} placeholder="Labour, materials and anything the customer should know…" value={note} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={4} maxLength={1000} aria-describedby={`${formId}-scope-help ${formId}-error`} aria-invalid={invalidField === "scope"} required disabled={busy} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
             <div className={styles.formReward}><Icon name="coin" size={21} /><span>{editing ? "Already earned: 1 point. Edits don’t earn more." : "Save your first quote on this job to earn 1 point."}</span></div>
-            <p id={`${formId}-error`} className={styles.formError} role="alert">{formError}</p><button className={styles.primary} type="submit" disabled={disabled}>{busy ? "Saving quote…" : editing ? "Save changes" : "Save quote + earn 1 point"}<Icon name="arrow" size={18} /></button>
+            <p ref={formErrorElement} tabIndex={-1} id={`${formId}-error`} className={styles.formError} role="alert">{formError}</p><button className={styles.primary} type="submit" disabled={disabled}>{busy ? "Saving quote…" : editing ? "Save changes" : "Save quote + earn 1 point"}<Icon name="arrow" size={18} /></button>
             {draftFailure && <p className={styles.formError} role="status">{draftFailure}</p>}
             <button className={styles.secondary} type="button" onClick={discardQuoteDraft} disabled={busy}>Discard unsent quote</button>
           </form><p className={styles.modalFine}>A sample estimate for this demo. Nothing is sent to a customer.</p>
+        </> : modal.kind === "accepted" ? <>
+          <p className={styles.eyebrow}>YOUR SAVED QUOTE</p><h2 ref={acceptedHeading} tabIndex={-1} id={`${formId}-title`}>Your quote was accepted.</h2>
+          <div className={styles.dialogJob}><JobPhoto job={modalJob} /><div><span>{modalJob.trade} · {modalJob.suburb}</span><h3>{modalJob.title}</h3></div></div>
+          <div className={styles.acceptedSummary}>{modalQuote && <><span>Accepted quote</span><strong>{formatDemoMoney(modalQuote.amountCents)}</strong><p>{modalQuote.note}</p></>}<p>This preview quote is now locked. Any unsent edits stay in this tab’s draft; they have not changed the accepted price or scope.</p></div>
+          <Link className={styles.secondary} href={detailHref(modalJob.id)}>View job details<Icon name="arrow" size={18} /></Link>
+          <p className={styles.modalFine}>Your points balance is unchanged.</p>
         </> : modal.kind === "claim" ? <>
           <p className={styles.eyebrow}>PUT YOUR POINTS TO WORK</p><h2 id={`${formId}-title`}>{points < CLAIM_COST ? "A few more points to go." : "Your next job starts here."}</h2>
           <div className={styles.dialogJob}><JobPhoto job={modalJob} /><div><span>{modalJob.trade} · {modalJob.suburb}</span><h3>{modalJob.title}</h3></div></div>

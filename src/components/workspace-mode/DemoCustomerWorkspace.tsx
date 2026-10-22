@@ -1,34 +1,34 @@
 "use client";
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
 import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
 import cardStyles from "@/components/job-cards/job-card.module.css";
 import {
   CUSTOMER_TRADES, CustomerPreviewError, acceptCustomerSamplePrice, customerPreviewJobs, customerPreviewKey,
+  customerConversationHref, customerJobFilter, customerJobSelection, customerStageLabel, customerWorkspaceHref,
   emptyCustomerDraft, initialCustomerPreview, mergeCustomerDraft, postCustomerSampleJob, readCustomerPreview, updateCustomerDraft, validateCustomerDraft,
-  type CustomerDraft, type CustomerPreviewState, type CustomerSampleJob,
+  type CustomerDraft, type CustomerJobFilter, type CustomerPreviewState, type CustomerSampleJob,
 } from "@/lib/workspace-mode/customer-model";
 import styles from "./customer-workspace.module.css";
 
 type View = "jobs" | "post";
-type Filter = "all" | "action" | "active" | "complete";
 type Attachment = { name: string; url: string };
-type Detail = { jobId: string; review: boolean } | null;
 const money = (cents: number) => new Intl.NumberFormat("en-NZ", { style: "currency", currency: "NZD", maximumFractionDigits: cents % 100 ? 2 : 0 }).format(cents / 100);
-const stageLabels = { waiting: "Waiting for a quote", priced: "Price ready", underway: "Getting underway", complete: "Completed" };
 
 function Arrow() { return <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>; }
 
 /** This hiring preview never reads backend jobs or changes the signed-in role. */
 export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?: View }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const view: View = searchParams.get("customerView") === "post" ? "post" : "jobs";
+  const filter = customerJobFilter(searchParams.get("customerFilter"));
+  const requestedJobId = searchParams.get("customerJob");
   const [state, setState] = useState<CustomerPreviewState | null>(null);
   const [draft, setDraft] = useState<CustomerDraft>(emptyCustomerDraft);
-  const [filter, setFilter] = useState<Filter>("all");
-  const [detail, setDetail] = useState<Detail>(null);
   const [reviewDraft, setReviewDraft] = useState(false);
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [jobPhotos, setJobPhotos] = useState<Record<string, Attachment[]>>({});
@@ -44,15 +44,20 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
   const detailHeading = useRef<HTMLHeadingElement>(null);
   const composerHeading = useRef<HTMLHeadingElement>(null);
   const jobsHeading = useRef<HTMLHeadingElement>(null);
+  const unavailableJob = useRef<HTMLParagraphElement>(null);
+  const recoverJobsFocus = useRef(false);
   const liveUrls = useRef(new Set<string>());
   const retainedUrls = useRef(new Set<string>());
   const focusViewAfterChange = useRef(false);
   const focusReviewAfterChange = useRef(false);
   const id = useId();
   const activeState = state?.userId === userId ? state : null;
+  const customerReady = !!activeState;
   const jobs = useMemo(() => activeState ? customerPreviewJobs(activeState) : [], [activeState]);
   const visible = jobs.filter((job) => filter === "all" || (filter === "action" ? job.stage === "priced" : filter === "active" ? job.stage !== "complete" : job.stage === "complete"));
-  const currentJob = detail ? jobs.find((job) => job.id === detail.jobId) : undefined;
+  const currentJob = view === "jobs" ? customerJobSelection(jobs, requestedJobId) : undefined;
+  const detailJobId = currentJob?.id ?? null;
+  const reviewingPrice = !!currentJob && currentJob.stage === "priced" && searchParams.get("customerReview") === "price";
 
   function load() {
     try {
@@ -62,7 +67,7 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
   }
 
   useEffect(() => {
-    setDetail(null); setNotice(""); setAcceptedNotice(""); setAttachments([]); setJobPhotos({}); setReviewDraft(false);
+    setNotice(""); setAcceptedNotice(""); setAttachments([]); setJobPhotos({}); setReviewDraft(false);
     try {
       const loaded = readCustomerPreview(localStorage.getItem(customerPreviewKey(userId)), userId);
       setState(loaded); setDraft(loaded.draft); setReattach(loaded.draft.photoNames.length > 0); setStorageError("");
@@ -74,15 +79,28 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
 
   useEffect(() => {
     setReviewDraft(false);
-    if (focusViewAfterChange.current) {
+    if (customerReady && (view === "post" || focusViewAfterChange.current)) {
       focusViewAfterChange.current = false;
       (view === "post" ? composerHeading.current : jobsHeading.current)?.focus();
     }
-  }, [view]);
+  }, [customerReady, view]);
+
+  useEffect(() => {
+    if (!customerReady || view !== "jobs") return;
+    if (requestedJobId !== null && !detailJobId) unavailableJob.current?.focus();
+    else if (requestedJobId === null && recoverJobsFocus.current) {
+      jobsHeading.current?.focus(); recoverJobsFocus.current = false;
+    }
+  }, [customerReady, detailJobId, requestedJobId, view]);
 
   const openJob = useCallback((job: CustomerSampleJob, review: boolean, trigger?: HTMLElement) => {
-    opener.current = trigger ?? null; lastDetailJob.current = job.id; setAcceptedNotice(""); setFormError(""); setDetail({ jobId: job.id, review });
-  }, []);
+    opener.current = trigger ?? null; lastDetailJob.current = job.id; setAcceptedNotice(""); setFormError("");
+    router.replace(customerWorkspaceHref(job.id, filter, review), { scroll: false });
+  }, [filter, router]);
+
+  function closeDetail() {
+    router.replace(customerWorkspaceHref(null, filter), { scroll: false });
+  }
 
   useEffect(() => {
     if (focusReviewAfterChange.current && view === "post") {
@@ -93,28 +111,27 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
 
   useEffect(() => {
     const node = dialog.current;
-    if (detail && node && !node.open) node.showModal();
-    if (detail) detailHeading.current?.focus();
-    if (!detail && node?.open) {
+    if (detailJobId && node && !node.open) node.showModal();
+    if (detailJobId) { lastDetailJob.current = detailJobId; detailHeading.current?.focus(); }
+    if (!detailJobId && node?.open) {
       node.close();
       const target = opener.current?.isConnected ? opener.current : actionButtons.current.get(lastDetailJob.current ?? "");
-      target?.focus();
+      (target ?? jobsHeading.current)?.focus();
     }
-  }, [detail]);
+  }, [detailJobId, reviewingPrice]);
 
   function write(next: CustomerPreviewState) {
     localStorage.setItem(customerPreviewKey(userId), JSON.stringify(next));
     setState(next); setStorageError("");
   }
 
-  function changeView(next: View) {
+  function changeView(next: View, nextFilter: CustomerJobFilter = filter) {
     focusViewAfterChange.current = true;
     setReviewDraft(false); setFormError("");
-    const url = new URL(window.location.href);
-    if (next === "post") url.searchParams.set("customerView", "post"); else url.searchParams.delete("customerView");
-    // Let Next synchronize useSearchParams instead of bypassing its history
-    // integration by forwarding the framework's internal state object.
-    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    const query = new URLSearchParams();
+    if (next === "post") query.set("customerView", "post");
+    if (nextFilter !== "all") query.set("customerFilter", nextFilter);
+    router.replace(`/dashboard${query.size ? `?${query}` : ""}`, { scroll: false });
   }
 
   function saveDraft(next: CustomerDraft) {
@@ -130,7 +147,7 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
       const latest = readCustomerPreview(localStorage.getItem(customerPreviewKey(userId)), userId);
       const saved = acceptCustomerSamplePrice(latest, currentJob.id);
       write(saved.state); setAcceptedNotice("Sample price accepted. No booking or payment was made.");
-      setDetail({ jobId: currentJob.id, review: false });
+      router.replace(customerWorkspaceHref(currentJob.id, filter), { scroll: false });
     } catch (error) { setFormError(error instanceof Error ? error.message : "Your sample acceptance could not be saved. Please retry."); }
   }
 
@@ -161,7 +178,7 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
       const posted = next.posted[next.posted.length - 1];
       attachments.forEach(({ url }) => retainedUrls.current.add(url));
       setJobPhotos((photos) => ({ ...photos, [posted.id]: attachments }));
-      setAttachments([]); setDraft(next.draft); setReattach(false); setFilter("all"); changeView("jobs");
+      setAttachments([]); setDraft(next.draft); setReattach(false); changeView("jobs", "all");
       setNotice("Sample job added. Nothing has been sent to a tradie.");
     } catch (error) { setFormError(error instanceof Error ? error.message : "Your sample job could not be saved. Your draft is still here."); }
   }
@@ -177,13 +194,14 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
     {notice && <p className={styles.notice} role="status">{notice}</p>}
     {!activeState ? !storageError && <p role="status" className={styles.loading}>Opening your customer workspace…</p> : view === "jobs" ? <>
       <div className={styles.toolbar}><h2 ref={jobsHeading} tabIndex={-1}>Your jobs</h2><button className={cardStyles.secondaryAction} onClick={() => changeView("post")}><span aria-hidden="true">＋</span>Post a job</button></div>
-      <div className={styles.filters}><label htmlFor={`${id}-filter`}>Show jobs<select id={`${id}-filter`} value={filter} onChange={(event) => setFilter(event.target.value as Filter)}><option value="all">All jobs</option><option value="action">Needs your action</option><option value="active">In progress</option><option value="complete">Completed</option></select></label><span role="status">{visible.length} of {jobs.length} jobs</span></div>
-      <div className={cardStyles.grid}>{visible.map((job) => <JobCardFrame key={job.id} title={job.title} href={`#${job.id}`} photos={jobPhotos[job.id]?.map((photo) => ({ url: photo.url, alt: photo.name })) ?? job.photos} onOpen={(trigger) => openJob(job, false, trigger)}
+      <div className={styles.filters}><label htmlFor={`${id}-filter`}>Show jobs<select id={`${id}-filter`} value={filter} onChange={(event) => router.replace(customerWorkspaceHref(null, customerJobFilter(event.target.value)), { scroll: false })}><option value="all">All jobs</option><option value="action">Needs your action</option><option value="active">In progress</option><option value="complete">Completed</option></select></label><span role="status">{visible.length} of {jobs.length} jobs</span></div>
+      {requestedJobId !== null && !currentJob && <div className={styles.error} role="status"><p ref={unavailableJob} tabIndex={-1}>This sample job is unavailable in this account’s customer workspace. Your other jobs are still available.</p><Link href={customerWorkspaceHref(null, filter)} className={cardStyles.secondaryAction} onClick={() => { recoverJobsFocus.current = true; }}>Return to your jobs</Link></div>}
+      <div className={cardStyles.grid}>{visible.map((job) => <JobCardFrame key={job.id} title={job.title} href={customerWorkspaceHref(job.id, filter)} photos={jobPhotos[job.id]?.map((photo) => ({ url: photo.url, alt: photo.name })) ?? job.photos} onOpen={(trigger) => openJob(job, false, trigger)}
         headingLevel={3} completed={job.stage === "complete"} quoteStatus={job.stage === "underway" ? "accepted" : undefined}
-        meta={<span>{job.trade} · {job.suburb}</span>} status={<><span className={cardStyles.statusDot} /><span>{stageLabels[job.stage]}</span></>}
+        meta={<span>{job.trade} · {job.suburb}</span>} status={<><span className={cardStyles.statusDot} /><span>{customerStageLabel(job)}</span></>}
         valueLabel="Sample fixed price" value={job.priceCents === undefined ? "Pending" : money(job.priceCents)}
         actions={<button ref={(node) => { if (node) actionButtons.current.set(job.id, node); else actionButtons.current.delete(job.id); }} className={cardStyles.secondaryAction} onClick={(event) => openJob(job, job.stage === "priced", event.currentTarget)}>{job.stage === "priced" ? "Accept price" : "View job"}<Arrow /></button>} />)}</div>
-      {!visible.length && <div className={styles.empty}><h3>No jobs in this view.</h3><button className={cardStyles.secondaryAction} onClick={() => setFilter("all")}>Show all jobs</button></div>}
+      {!visible.length && <div className={styles.empty}><h3>No jobs in this view.</h3><Link className={cardStyles.secondaryAction} href={customerWorkspaceHref()}>Show all jobs</Link></div>}
     </> : <section className={styles.composer} aria-label="Post a sample job">
       <button className={cardStyles.secondaryAction} onClick={() => changeView("jobs")}>Back to your jobs</button>
       <h2 ref={composerHeading} tabIndex={-1}>{reviewDraft ? "Review your sample job" : "Post a job"}</h2><p className={styles.helper}>{reviewDraft ? "This saves a sample job in your browser. No request is sent and no payment is made." : "Text saves as you type. Photos are previewed for this visit and need reattaching after you leave or change mode."}</p>
@@ -205,18 +223,19 @@ export function DemoCustomerWorkspace({ userId }: { userId: string; initialView?
       </form>
     </section>}
 
-    <dialog ref={dialog} className={styles.dialog} aria-labelledby={`${id}-detail-title`} onCancel={(event) => { event.preventDefault(); setDetail(null); }} onClick={(event) => { if (event.target === event.currentTarget) setDetail(null); }}>
+    <dialog ref={dialog} className={styles.dialog} aria-labelledby={`${id}-detail-title`} onCancel={(event) => { event.preventDefault(); closeDetail(); }} onClick={(event) => { if (event.target === event.currentTarget) closeDetail(); }}>
       {currentJob && <div className={styles.dialogInner}>
-        <div className={styles.dialogTop}><span className={styles.sampleTag}>Sample job</span><button className={styles.close} aria-label="Close job details" onClick={() => setDetail(null)}>×</button></div>
-        <h2 ref={detailHeading} tabIndex={-1} id={`${id}-detail-title`}>{detail?.review ? "Review this price" : currentJob.title}</h2>
+        <div className={styles.dialogTop}><span className={styles.sampleTag}>Sample job</span><button className={styles.close} aria-label="Close job details" onClick={closeDetail}>×</button></div>
+        <h2 ref={detailHeading} tabIndex={-1} id={`${id}-detail-title`}>{reviewingPrice ? "Review this price" : currentJob.title}</h2>
         <JobPhotoCarousel key={currentJob.id} title={currentJob.title} photos={jobPhotos[currentJob.id]?.map((photo) => ({ url: photo.url, alt: photo.name })) ?? currentJob.photos} completed={currentJob.stage === "complete"} quoteStatus={currentJob.stage === "underway" ? "accepted" : undefined} />
-        {detail?.review && <h3 className={styles.reviewTitle}>{currentJob.title}</h3>}
+        {reviewingPrice && <h3 className={styles.reviewTitle}>{currentJob.title}</h3>}
         <p className={styles.description}>{currentJob.description}</p>
-        <dl className={styles.details}><div><dt>Status</dt><dd>{stageLabels[currentJob.stage]}</dd></div><div><dt>Trade</dt><dd>{currentJob.trade}</dd></div><div><dt>Location</dt><dd>{currentJob.suburb}</dd></div><div><dt>Timing</dt><dd>{currentJob.timing}</dd></div><div><dt>Sample fixed price</dt><dd>{currentJob.priceCents === undefined ? "Pending" : money(currentJob.priceCents)}</dd></div></dl>
+        <dl className={styles.details}><div><dt>Status</dt><dd>{customerStageLabel(currentJob)}</dd></div><div><dt>Trade</dt><dd>{currentJob.trade}</dd></div><div><dt>Location</dt><dd>{currentJob.suburb}</dd></div><div><dt>Timing</dt><dd>{currentJob.timing}</dd></div><div><dt>Sample fixed price</dt><dd>{currentJob.priceCents === undefined ? "Pending" : money(currentJob.priceCents)}</dd></div></dl>
         {!!currentJob.photoNames?.length && !jobPhotos[currentJob.id]?.length && <p className={styles.helper}>Photo files are not kept between visits. The text of your sample job is saved.</p>}
         {acceptedNotice && <p className={styles.notice} role="status">{acceptedNotice}</p>}
         {formError && <p className={styles.formError} role="alert">{formError}</p>}
-        {currentJob.stage === "priced" ? detail?.review ? <><p className={styles.helper}>Accepting changes this sample to price accepted. It does not book a tradie or make a payment.</p><div className={styles.buttons}><button className={cardStyles.secondaryAction} onClick={() => { setFormError(""); setDetail({ jobId: currentJob.id, review: false }); }}>Back to job</button><button className={cardStyles.primaryAction} onClick={acceptPrice}>Accept sample price<Arrow /></button></div></> : <button className={cardStyles.secondaryAction} onClick={() => setDetail({ jobId: currentJob.id, review: true })}>Accept price<Arrow /></button> : <button className={cardStyles.secondaryAction} onClick={() => setDetail(null)}>Back to your jobs</button>}
+        {currentJob.stage === "priced" ? reviewingPrice ? <><p className={styles.helper}>Accepting changes this sample to price accepted. It does not book a tradie or make a payment.</p><div className={styles.buttons}><button className={cardStyles.secondaryAction} onClick={() => { setFormError(""); router.replace(customerWorkspaceHref(currentJob.id, filter), { scroll: false }); }}>Back to job</button><button className={cardStyles.primaryAction} onClick={acceptPrice}>Accept sample price<Arrow /></button></div></> : <button className={cardStyles.secondaryAction} onClick={() => router.replace(customerWorkspaceHref(currentJob.id, filter, true), { scroll: false })}>Accept price<Arrow /></button> : <button className={cardStyles.secondaryAction} onClick={closeDetail}>Back to your jobs</button>}
+        <Link href={customerConversationHref(currentJob.id, filter)} className={`${cardStyles.secondaryAction} ${styles.conversationLink}`}>Message about this job<Arrow /></Link>
       </div>}
     </dialog>
   </section>;

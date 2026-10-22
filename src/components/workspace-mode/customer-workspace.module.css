@@ -52,6 +52,8 @@
 .dialog h2 { margin-bottom:24px; }
 .description { margin:24px 0; white-space:pre-wrap; overflow-wrap:anywhere; }
 .reviewTitle { margin:24px 0 0; }
-.dialogInner > button:last-child { width:100%; }
+.dialogInner > button,.conversationLink { width:100%; }
+.conversationLink { margin-top:14px; }
+.error > a { margin-top:14px; }
 @media(max-width:1023px) { .workspace { padding:0 16px 28px; } }
 @media(max-width:520px) { .toolbar { gap:14px; flex-wrap:wrap; } .toolbar h2 { font-size:24px; } .toolbar > button { padding:12px 14px; } .fields { grid-template-columns:minmax(0,1fr); gap:0; } .buttons { align-items:stretch; } .buttons > * { flex:1 1 100%; } .dialog { width:calc(100% - 24px); max-height:calc(100dvh - 24px); } .dialogInner { padding:22px; } .dialog h2,.composer h2 { font-size:24px; } .sampleLine { margin-bottom:18px; } }

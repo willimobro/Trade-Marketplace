@@ -2,19 +2,20 @@ import Link from "next/link";
 import { requireUser } from "@/lib/session";
 import styles from "./post-job.module.css";
 import { JobForm } from "./JobForm";
+import { CustomerPostingHandoff } from "@/components/workspace-mode/CustomerPostingHandoff";
 
 export default async function NewJobPage() {
   const user = await requireUser("/jobs/new");
   if (user.role !== "CUSTOMER")
     return (
-      <div className="mx-auto max-w-xl px-4 py-12">
+      <CustomerPostingHandoff><div className="mx-auto max-w-xl px-4 py-12">
         <div className="card p-6">
           <p className="font-semibold">Tradie accounts can&apos;t post jobs</p>
           <p className="mt-1 text-sm text-muted">
             Need work done yourself? Make a separate customer account. Otherwise, <Link href="/jobs" className="underline">find jobs to estimate</Link>.
           </p>
         </div>
-      </div>
+      </div></CustomerPostingHandoff>
     );
   return (
     <div className={styles.screen}>

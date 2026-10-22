@@ -149,6 +149,11 @@
 .formReward { display:flex; align-items:center; gap:8px; padding:13px; border-radius:7px; background:#ff82000d; margin-top:19px; font-size:11px; color:var(--trade-link); }
 .formError { color:var(--trade-danger); font-size:12px; margin:12px 0; }
 .formError:empty { display:none; }
+.acceptedSummary { display:grid; gap:12px; margin:20px 0; font-size:16px; line-height:24px; }
+.acceptedSummary > span { color:var(--trade-source-muted); font-size:14px; line-height:20px; }
+.acceptedSummary > strong { font:900 28px/34px var(--trade-font-heading); font-variation-settings:'wdth' 151,'opsz' 28,'wght' 900; }
+.acceptedSummary > p { white-space:pre-wrap; }
+.acceptedSummary + .secondary { width:100%; }
 .dialog form > .primary,.dialogInner > .primary { width:100%; margin-top:19px; }
 .modalFine { color:var(--quote-muted); text-align:center; font-size:10px; margin:13px 0 0; }
 .claimDescription { font-size:12px; color:var(--quote-muted); line-height:1.7; margin:0 0 20px; }

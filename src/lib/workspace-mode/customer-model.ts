@@ -5,8 +5,9 @@ export const CUSTOMER_PREVIEW_VERSION = 1;
 export const CUSTOMER_TRADES = ["Electrical", "Plumbing", "Gas Fitting", "Construction"] as const;
 export type CustomerTrade = (typeof CUSTOMER_TRADES)[number];
 export type CustomerStage = "waiting" | "priced" | "underway" | "complete";
+export type CustomerJobFilter = "all" | "action" | "active" | "complete";
 export type CustomerDraft = { title: string; trade: CustomerTrade; description: string; suburb: string; timing: string; photoNames: string[] };
-export type CustomerSampleJob = Omit<CustomerDraft, "photoNames"> & { id: string; stage: CustomerStage; photos: { url: string; alt?: string }[]; priceCents?: number; photoNames?: string[] };
+export type CustomerSampleJob = Omit<CustomerDraft, "photoNames"> & { id: string; stage: CustomerStage; photos: { url: string; alt?: string }[]; priceCents?: number; photoNames?: string[]; priceAccepted?: boolean };
 export type CustomerPreviewState = {
   version: typeof CUSTOMER_PREVIEW_VERSION;
   userId: string;
@@ -95,8 +96,44 @@ export function readCustomerPreview(raw: string | null, userId: string): Custome
 
 export function customerPreviewJobs(state: CustomerPreviewState): CustomerSampleJob[] {
   const posted: CustomerSampleJob[] = [...state.posted].reverse().map((job) => ({ ...job.fields, id: job.id, stage: "waiting", photos: [] }));
-  const fixtures = CUSTOMER_SAMPLE_JOBS.map((job) => state.accepted.some((item) => item.jobId === job.id) ? { ...job, stage: "underway" as const } : { ...job });
+  const fixtures = CUSTOMER_SAMPLE_JOBS.map((job) => state.accepted.some((item) => item.jobId === job.id) ? { ...job, stage: "underway" as const, priceAccepted: true } : { ...job });
   return activeJobsFirst([...posted, ...fixtures], (job) => job.stage === "complete");
+}
+
+/** Presentation only: accepting a sample price does not start work or book it. */
+export function customerStageLabel(job: CustomerSampleJob): string {
+  if (job.priceAccepted && job.stage === "underway") return "Price accepted";
+  return { waiting: "Waiting for a quote", priced: "Price ready", underway: "Getting underway", complete: "Completed" }[job.stage];
+}
+
+export function customerJobFilter(raw: string | null): CustomerJobFilter {
+  return raw === "action" || raw === "active" || raw === "complete" ? raw : "all";
+}
+
+/** A URL can select only a job already present in this account's local sample. */
+export function customerJobSelection(jobs: readonly CustomerSampleJob[], requested: string | null): CustomerSampleJob | undefined {
+  return requested === null ? undefined : jobs.find((job) => job.id === requested);
+}
+
+function customerRoute(path: "/dashboard" | "/messages", jobId: string | null, filter: CustomerJobFilter, review = false): string {
+  const query = new URLSearchParams();
+  if (jobId !== null) query.set("customerJob", jobId);
+  if (filter !== "all") query.set("customerFilter", filter);
+  if (path === "/dashboard" && jobId !== null && review) query.set("customerReview", "price");
+  return `${path}${query.size ? `?${query}` : ""}`;
+}
+
+export function customerWorkspaceHref(jobId: string | null = null, filter: CustomerJobFilter = "all", review = false): string {
+  return customerRoute("/dashboard", jobId, filter, review);
+}
+
+export function customerConversationHref(jobId: string | null = null, filter: CustomerJobFilter = "all"): string {
+  return customerRoute("/messages", jobId, filter);
+}
+
+/** `enabled` comes from the existing reserved-account/runtime gate, never a URL. */
+export function customerPostingDestination(role: string | null, enabled: boolean, mode: "customer" | "trade"): string | null {
+  return enabled && role === "TRADIE" && mode === "customer" ? "/dashboard?customerView=post" : null;
 }
 
 export function validateCustomerDraft(draft: CustomerDraft): CustomerDraft {

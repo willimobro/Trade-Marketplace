@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type FormEvent } from "react";
 import { formatNZD } from "@/lib/constants";
 import { activeJobsFirst } from "@/lib/job-presentation";
-import { CustomerPreviewError, customerPreviewJobs, customerPreviewKey, readCustomerPreview, type CustomerPreviewState, type CustomerSampleJob } from "@/lib/workspace-mode/customer-model";
+import { CustomerPreviewError, customerConversationHref, customerJobFilter, customerJobSelection, customerPreviewJobs, customerPreviewKey, customerStageLabel, customerWorkspaceHref, readCustomerPreview, type CustomerPreviewState, type CustomerSampleJob } from "@/lib/workspace-mode/customer-model";
 import {
   CUSTOMER_MESSAGE_LENGTH, CustomerMessagesError, addCustomerMessage, customerConversationMessages, customerConversationUnread, customerMessagesKey,
   markCustomerConversation, readCustomerMessages, updateCustomerMessageDraft, type CustomerMessagesState,
@@ -13,25 +14,32 @@ import shared from "./messages.module.css";
 import styles from "./customer-conversations.module.css";
 
 type Snapshot = { workspace: CustomerPreviewState; messages: CustomerMessagesState };
-const stageLabels = { waiting: "Waiting for a quote", priced: "Price ready", underway: "Getting underway", complete: "Complete" };
 const priceLabel = (job: CustomerSampleJob) => job.priceCents === undefined ? "Price pending" : `Sample fixed price ${formatNZD(job.priceCents)}`;
 
 /** Mounted only for an eligible tradie viewing the synthetic Customer workspace. */
 export function CustomerConversations({ userId }: { userId: string }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const requestedJobId = searchParams.get("customerJob");
+  const filter = customerJobFilter(searchParams.get("customerFilter"));
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [drafts, setDrafts] = useState<Record<string, string>>({});
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [storageError, setStorageError] = useState("");
   const [formError, setFormError] = useState("");
   const [notice, setNotice] = useState("");
   const [failedPhotos, setFailedPhotos] = useState<string[]>([]);
   const detailHeading = useRef<HTMLHeadingElement>(null);
+  const inboxHeading = useRef<HTMLHeadingElement>(null);
+  const unavailableMessage = useRef<HTMLParagraphElement>(null);
+  const restoreRowFocus = useRef<string | null>(null);
   const rowButtons = useRef(new Map<string, HTMLButtonElement>());
   const pendingMessage = useRef<{ jobId: string; body: string; id: string } | null>(null);
   const id = useId();
   const active = snapshot?.messages.userId === userId ? snapshot : null;
   const jobs = useMemo(() => active ? customerPreviewJobs(active.workspace) : [], [active]);
-  const selected = jobs.find((job) => job.id === selectedId);
+  const selected = customerJobSelection(jobs, requestedJobId);
+  const selectedId = selected?.id ?? null;
+  const loaded = !!active;
   const messages = active && selected ? customerConversationMessages(active.messages, selected) : [];
   const orderedJobs = activeJobsFirst([...jobs].sort((a, b) => {
     const latest = (job: CustomerSampleJob) => Date.parse(active?.messages.messages.filter((message) => message.jobId === job.id).at(-1)?.createdAt ?? "") || 0;
@@ -46,10 +54,9 @@ export function CustomerConversations({ userId }: { userId: string }) {
     } catch (error) { setSnapshot(null); setStorageError(error instanceof CustomerMessagesError || error instanceof CustomerPreviewError ? error.message : "This browser could not open your sample conversations. Retry when browser storage is available."); }
   }, [userId]);
 
-  useEffect(() => { setSelectedId(null); setDrafts({}); setFormError(""); setNotice(""); pendingMessage.current = null; load(); }, [load]);
-  useEffect(() => { if (selectedId) detailHeading.current?.focus(); }, [selectedId]);
+  useEffect(() => { setDrafts({}); setFormError(""); setNotice(""); pendingMessage.current = null; load(); }, [load]);
 
-  function persist(transition: (current: CustomerMessagesState, jobs: CustomerSampleJob[]) => CustomerMessagesState) {
+  const persist = useCallback((transition: (current: CustomerMessagesState, jobs: CustomerSampleJob[]) => CustomerMessagesState) => {
     // Re-read before each edit so a draft/read action cannot overwrite messages
     // saved since this component mounted, or reintroduce a removed sample job.
     const workspace = readCustomerPreview(localStorage.getItem(customerPreviewKey(userId)), userId);
@@ -58,7 +65,23 @@ export function CustomerConversations({ userId }: { userId: string }) {
     const next = transition(current, latestJobs);
     localStorage.setItem(customerMessagesKey(userId), JSON.stringify(next));
     setSnapshot({ workspace, messages: next }); setStorageError("");
-  }
+  }, [userId]);
+
+  useEffect(() => {
+    setFormError(""); setNotice("");
+    if (selectedId) {
+      detailHeading.current?.focus();
+      try { persist((current, latestJobs) => markCustomerConversation(current, latestJobs, selectedId, false)); }
+      catch { setStorageError("This browser could not save read status. Your messages are still available below."); }
+    } else if (restoreRowFocus.current) {
+      (rowButtons.current.get(restoreRowFocus.current) ?? inboxHeading.current)?.focus();
+      restoreRowFocus.current = null;
+    }
+  }, [persist, requestedJobId, selectedId]);
+
+  useEffect(() => {
+    if (loaded && requestedJobId !== null && !selectedId) unavailableMessage.current?.focus();
+  }, [loaded, requestedJobId, selectedId]);
 
   function mark(job: CustomerSampleJob, unread: boolean) {
     try {
@@ -68,14 +91,15 @@ export function CustomerConversations({ userId }: { userId: string }) {
   }
 
   function open(job: CustomerSampleJob) {
-    mark(job, false); setFormError(""); setNotice(""); setSelectedId(job.id);
-    if (selectedId === job.id) detailHeading.current?.focus();
+    setFormError(""); setNotice("");
+    if (selectedId === job.id) { mark(job, false); detailHeading.current?.focus(); }
+    else router.push(customerConversationHref(job.id, filter), { scroll: false });
   }
 
   function close() {
-    const previous = selectedId;
-    setSelectedId(null); setFormError(""); setNotice("");
-    requestAnimationFrame(() => { if (previous) rowButtons.current.get(previous)?.focus(); });
+    restoreRowFocus.current = selectedId;
+    setFormError(""); setNotice("");
+    router.push(customerConversationHref(null, filter), { scroll: false });
   }
 
   function changeDraft(jobId: string, body: string) {
@@ -98,8 +122,9 @@ export function CustomerConversations({ userId }: { userId: string }) {
   }
 
   return <section className={styles.workspace} data-mode="customer" aria-labelledby={`${id}-heading`}>
-    <div className={styles.sectionHeader}><div><p className={styles.eyebrow}>CUSTOMER SAMPLE</p><h2 id={`${id}-heading`}>Your conversations</h2></div><Link href="/dashboard">Your customer jobs <span aria-hidden="true">↗</span></Link></div>
+    <div className={styles.sectionHeader}><div><p className={styles.eyebrow}>CUSTOMER SAMPLE</p><h2 ref={inboxHeading} tabIndex={-1} id={`${id}-heading`}>Your conversations</h2></div><Link href="/dashboard">Your customer jobs <span aria-hidden="true">↗</span></Link></div>
     {storageError && <div className={styles.error} role="alert"><p>{storageError}</p>{!active && <button type="button" className={styles.secondary} onClick={load}>Retry storage</button>}</div>}
+    {active && requestedJobId !== null && !selected && <div className={styles.error} role="status"><p ref={unavailableMessage} tabIndex={-1}>This sample conversation is unavailable in this account’s customer workspace. Choose one of your other conversations below, or return to your customer jobs.</p><Link href={customerConversationHref(null, filter)} className={styles.secondary} onClick={() => { restoreRowFocus.current = requestedJobId; }}>Show all conversations</Link></div>}
     {!active ? !storageError && <p role="status" className={styles.helper}>Opening saved conversations…</p> : <div className={`${styles.layout} ${selected ? styles.hasDetail : ""}`}>
       <ul className={`${shared.list} ${styles.list}`} aria-label="Customer sample conversations">
         {orderedJobs.map((job) => {
@@ -108,7 +133,7 @@ export function CustomerConversations({ userId }: { userId: string }) {
           const readState = !latest ? "No messages" : unread ? "Unread" : "Read";
           const photo = job.photos[0]?.url;
           return <li key={job.id} className={`${shared.conversation} ${unread ? shared.unread : shared.read} ${selectedId === job.id ? styles.selected : ""}`}>
-            <button ref={(node) => { if (node) rowButtons.current.set(job.id, node); else rowButtons.current.delete(job.id); }} type="button" className={`${shared.open} ${styles.open}`} aria-expanded={selectedId === job.id} aria-controls={`${id}-detail`} aria-label={`${job.title}. ${readState} on this device. ${stageLabels[job.stage]}. ${priceLabel(job)}. Open sample conversation.`} onClick={() => open(job)}>
+            <button ref={(node) => { if (node) rowButtons.current.set(job.id, node); else rowButtons.current.delete(job.id); }} type="button" className={`${shared.open} ${styles.open}`} aria-expanded={selectedId === job.id} aria-controls={`${id}-detail`} aria-label={`${job.title}. ${readState} on this device. ${customerStageLabel(job)}. ${priceLabel(job)}. Open sample conversation.`} onClick={() => open(job)}>
               <span className={`${shared.photo} ${styles.thumbnail} ${job.stage === "complete" ? shared.completedPhoto : job.stage === "underway" ? shared.acceptedPhoto : ""}`} aria-hidden="true">
                 {photo && !failedPhotos.includes(photo) ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -125,12 +150,12 @@ export function CustomerConversations({ userId }: { userId: string }) {
       </ul>
       <div id={`${id}-detail`} className={styles.detailSlot}>
         {selected ? <section className={styles.detail} aria-labelledby={`${id}-detail-heading`}>
-          <button type="button" className={styles.back} onClick={close}><span aria-hidden="true">←</span> Back to conversations</button>
+          <div className={styles.returnLinks}><button type="button" className={styles.back} onClick={close}><span aria-hidden="true">←</span> Back to conversations</button><Link href={customerWorkspaceHref(selected.id, filter)} className={`${styles.secondary} ${styles.jobLink}`}>Back to this job <span aria-hidden="true">↗</span></Link></div>
           <p className={styles.eyebrow}>SAMPLE CONVERSATION</p>
           <h3 id={`${id}-detail-heading`} ref={detailHeading} tabIndex={-1}>{selected.title}</h3>
           <p className={styles.price}>{priceLabel(selected)}</p>
           <p className={styles.helper}>This conversation stays on this device. No real message is sent.</p>
-          <details className={styles.jobDetails}><summary>Job details <span>{stageLabels[selected.stage]}</span></summary><p>{selected.description}</p><dl><div><dt>Trade</dt><dd>{selected.trade}</dd></div><div><dt>Location</dt><dd>{selected.suburb}</dd></div><div><dt>Timing</dt><dd>{selected.timing}</dd></div></dl></details>
+          <details className={styles.jobDetails}><summary>Job details <span>{customerStageLabel(selected)}</span></summary><p>{selected.description}</p><dl><div><dt>Trade</dt><dd>{selected.trade}</dd></div><div><dt>Location</dt><dd>{selected.suburb}</dd></div><div><dt>Timing</dt><dd>{selected.timing}</dd></div></dl></details>
           <ol className={styles.messages} aria-label={`Messages about ${selected.title}`}>
             {messages.map((message) => <li key={message.id} className={message.sender === "you" ? styles.mine : styles.sample}><p className={styles.sender}>{message.senderName}</p><p className={styles.body}>{message.body}</p>{message.sender === "you" ? <p className={styles.saved}>Saved on this device · <time dateTime={message.createdAt}>{new Date(message.createdAt).toLocaleString("en-NZ", { dateStyle: "medium", timeStyle: "short" })}</time></p> : <p className={styles.saved}>Sample note</p>}</li>)}
           </ol>
