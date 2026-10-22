@@ -250,7 +250,15 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
               {claim ? <><p className={styles.actionCopy}>{claim.completedAt ? "You marked this sample job complete. No real work or payment is recorded." : "You spent 5 points to claim this sample job. Use the discussion to try planning the visit."}</p>{!claim.completedAt && <button className={styles.outline} type="button" onClick={() => void runAction("complete")} disabled={disabled}>{busy === "complete" ? "Saving…" : "Complete sample job"}</button>}</> : <><dl className={styles.claimSummary}><div><dt>Your balance</dt><dd>{state ? points : "—"} points</dd></div><div><dt>Cost to claim</dt><dd>5 points</dd></div><div><dt>{points >= CLAIM_COST ? "Balance after claim" : "More points needed"}</dt><dd>{state ? points >= CLAIM_COST ? points - CLAIM_COST : CLAIM_COST - points : "—"} points</dd></div></dl>{state && points < CLAIM_COST ? <><p className={styles.actionCopy}>Each first quote earns 1 point. Earn {CLAIM_COST - points} more to claim this sample job.</p><Link className={styles.outline} href="/dashboard?quoteView=feed">Quote more jobs</Link></> : <button className={styles.primary} type="button" onClick={() => void runAction("claim")} disabled={disabled}>{busy === "claim" ? "Saving claim…" : "Claim · 5 points"}</button>}</>}
             </>}
             <p className={styles.error} ref={actionErrorElement} tabIndex={-1} role="alert">{actionError}</p>
-            <a className={styles.outline} href="#comments"><SourceIcon name="bubble" size={18} />Open job discussion</a>
+            <Link className={styles.outline} href="#comments" scroll={false} onClick={(event) => {
+              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              // Keep Next's route tree attached to this history entry, then
+              // focus the existing section after the fragment is committed.
+              requestAnimationFrame(() => {
+                document.getElementById("comments")?.scrollIntoView({ block: "start" });
+                document.getElementById("comments-heading")?.focus({ preventScroll: true });
+              });
+            }}><SourceIcon name="bubble" size={18} />Open job discussion</Link>
             <p className={styles.finePrint}>Sample quotes and claims stay on this device. No real booking, payment or customer contact is created.</p>
           </section>
 
