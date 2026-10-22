@@ -9,14 +9,15 @@ import { formatNZD } from "@/lib/constants";
 import { tradeRequirementsPending } from "@/lib/trade-readiness";
 import { CustomerLanding } from "@/components/landing/CustomerLanding";
 import { WorkspaceHome } from "@/components/workspace-mode/WorkspaceHome";
+import { SignedInHome } from "@/components/app-home/SignedInHome";
 
 export const dynamic = "force-dynamic";
 export default async function Home({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const user = await getCurrentUser();
   const { view } = await searchParams;
-  // Home is the public marketing landing for every account. Search keeps its
-  // existing role-scoped browse flow without changing the selected mode.
-  if (view !== "search") return <CustomerLanding role={user?.role ?? null} />;
+  // Signed-in Home stays inside the app; /website keeps public marketing.
+  // Explicit search retains its existing authorized data below.
+  if (view !== "search") return user ? <SignedInHome user={user} /> : <CustomerLanding />;
   const [jobs, settings] = await Promise.all([
     db.job.findMany({
       where: {

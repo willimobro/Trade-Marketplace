@@ -32,7 +32,7 @@ export function JobCardFrame({ title, href, photos, quoteStatus, completed = fal
     event.preventDefault();
     onOpen(event.currentTarget);
   }
-  return <article className={styles.card} aria-labelledby={id}>
+  return <article className={`${styles.card} trade-motion-card`} aria-labelledby={id}>
     <JobPhotoCarousel photos={photos} title={title} href={href} quoteStatus={quoteStatus} completed={completed} onOpen={onOpen} />
     <div className={styles.body}>
       <Heading className={styles.title} id={id} ref={headingRef} tabIndex={focusTarget ? -1 : undefined} data-testid={focusTarget ? "quote-feed-focus-target" : undefined}><Link href={href} title={title} aria-haspopup={onOpen ? "dialog" : undefined} onClick={openTitle}>{title}</Link></Heading>

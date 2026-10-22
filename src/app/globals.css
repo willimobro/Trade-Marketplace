@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../styles/brand.css";
+@import "../styles/motion.css";
 
 /* Approved webfont substitution. Original assets and measured geometry remain.
    Google Fonts Roboto Flex, SIL OFL1.1; see public/fonts/roboto-flex/OFL.txt. */

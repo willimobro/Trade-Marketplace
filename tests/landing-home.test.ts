@@ -20,6 +20,7 @@ function homeFixture(role: string | null) {
   let settingReads = 0;
   let query: { where: { customerId?: string; status: { in: string[] } } } | undefined;
   const Landing = () => null;
+  const AppHome = () => null;
   const Browse = () => null;
   const Workspace = () => null;
   const exports: { default?: (input: { searchParams: Promise<{ view?: string }> }) => Promise<Element> } = {};
@@ -32,19 +33,20 @@ function homeFixture(role: string | null) {
     "@/lib/constants": { formatNZD: () => "$0" },
     "@/lib/trade-readiness": { tradeRequirementsPending: () => false },
     "@/components/landing/CustomerLanding": { CustomerLanding: Landing },
+    "@/components/app-home/SignedInHome": { SignedInHome: AppHome },
     "@/components/HomeBrowse": { HomeBrowse: Browse },
     "@/components/workspace-mode/WorkspaceHome": { WorkspaceHome: Workspace },
   };
   runInNewContext(homeSource, { exports, require: (name: string) => name in mocks ? mocks[name] : require(name) });
-  return { render: (view?: string) => exports.default!({ searchParams: Promise.resolve({ view }) }), Landing, Workspace, reads: () => ({ jobs: jobReads, settings: settingReads }), query: () => query };
+  return { render: (view?: string) => exports.default!({ searchParams: Promise.resolve({ view }) }), Landing, AppHome, Workspace, reads: () => ({ jobs: jobReads, settings: settingReads }), query: () => query };
 }
 
-test("root marketing renders for guests and every signed-in role before any job/pricing query", async () => {
+test("root chooses public landing for guests and in-app Home for signed-in roles before browse queries", async () => {
   for (const role of [null, "CUSTOMER", "TRADIE", "ADMIN"]) {
     const fixture = homeFixture(role);
     const page = await fixture.render();
-    assert.equal(page.type, fixture.Landing);
-    assert.equal(page.props.role, role);
+    assert.equal(page.type, role ? fixture.AppHome : fixture.Landing);
+    if (role) assert.deepEqual(page.props.user, { id: "signed-in-account", role });
     assert.deepEqual(fixture.reads(), { jobs: 0, settings: 0 });
   }
 });
@@ -74,10 +76,10 @@ test("landing return reads the selected Customer/Trade mode without changing it 
     runInNewContext(returnSource, { exports, require: (name: string) => name in mocks ? mocks[name] : require(name) });
     const returned = exports.LandingWorkspaceReturn!({ role, className: "landing-return" });
     assert.equal(returned.type, Link);
-    assert.equal(returned.props.href, "/dashboard");
-    assert.equal(returned.props["aria-label"], `Return to ${mode === "trade" ? "Trade" : "Customer"} dashboard`);
+    assert.equal(returned.props.href, "/");
+    assert.equal(returned.props["aria-label"], `Return to ${mode === "trade" ? "Trade" : "Customer"} home`);
     const compact = exports.LandingWorkspaceReturn!({ role, compact: true, className: "landing-header" });
-    assert.equal(compact.props.children, "Dashboard");
+    assert.equal(compact.props.children, "Open app");
     assert.equal(modeChanges, 0);
   }
 });

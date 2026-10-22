@@ -18,5 +18,5 @@ export function DashboardMobileNavigation({ customer }: { customer: boolean }) {
     { href: "/messages", label: "Messages", icon: "bubble" },
     { href: "/profile", label: "Account", icon: "person" },
   ];
-  return <nav className={styles.navigation} aria-label="Main navigation">{items.map(item => <DashboardNavigationLink key={item.label} href={item.href} aria-label={item.label} title={item.label} aria-current={findWork ? item.label === "Search" ? "page" : undefined : item.label === "Jobs" && (path === "/dashboard" || path.startsWith("/quote-jobs/")) ? "page" : undefined}><SourceIcon name={item.icon} size={26} navigation /></DashboardNavigationLink>)}</nav>;
+  return <nav className={styles.navigation} aria-label="Main navigation">{items.map(item => <DashboardNavigationLink key={item.label} href={item.href} aria-label={item.label} title={item.label} aria-current={findWork ? item.label === "Search" ? "page" : undefined : item.label === "Home" && path === "/" && !search.get("view") ? "page" : item.label === "Jobs" && (path === "/dashboard" || path.startsWith("/quote-jobs/")) ? "page" : undefined}><SourceIcon name={item.icon} size={26} navigation /></DashboardNavigationLink>)}</nav>;
 }

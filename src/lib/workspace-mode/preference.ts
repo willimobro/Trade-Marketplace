@@ -17,7 +17,7 @@ export function parseWorkspaceMode(raw: string | null): WorkspaceMode | null {
 }
 export function serializeWorkspaceMode(mode: WorkspaceMode): string { return JSON.stringify({ version: 1, mode }); }
 
-/** Public home never redirects. Legacy search data is based on the actual server
+/** Home renders its current mode. Legacy search data is based on the actual server
  * role, so opposite-mode searches keep their existing synthetic destinations. */
 export function workspaceHomeRedirect(role: string | null, mode: WorkspaceMode, enabled: boolean, search: boolean): string | null {
   if (!enabled || !search) return null;
@@ -26,7 +26,7 @@ export function workspaceHomeRedirect(role: string | null, mode: WorkspaceMode, 
   return null;
 }
 
-/** Home always opens marketing; work and posting destinations stay mode-aware. */
+/** Home opens the signed-in app; work and posting destinations stay mode-aware. */
 export function workspaceLinks(role: string | null, mode: WorkspaceMode, enabled: boolean) {
   const syntheticCustomer = enabled && mode === "customer" && role === "TRADIE";
   return {

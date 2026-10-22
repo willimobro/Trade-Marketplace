@@ -1,0 +1,8 @@
+.page { min-height:calc(100vh - 88px); padding-bottom:calc(88px + env(safe-area-inset-bottom)); background:white; }
+.mobileHeader { display:flex; align-items:center; justify-content:space-between; gap:16px; background:var(--trade-forest); color:white; padding:16px 20px; }
+.mobileHeader > a { flex:none; }
+.mobileHeader > div { display:flex; align-items:flex-end; flex-direction:column; gap:2px; }
+.website { font-size:12px; min-height:36px; display:flex; align-items:center; gap:5px; padding-inline:8px; text-decoration:underline; text-underline-offset:3px; }
+.loading { padding:64px 24px; }
+@media(min-width:1024px) { .mobileHeader { display:none; } .page { padding-bottom:0; } }
+@media(max-width:359px) { .mobileHeader { padding-inline:16px; gap:8px; } .mobileHeader img { width:138px; height:auto; } }

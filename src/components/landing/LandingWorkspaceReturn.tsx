@@ -8,10 +8,10 @@ import { useWorkspaceMode } from "@/components/workspace-mode/WorkspaceMode";
 export function LandingWorkspaceReturn({ role, compact = false, className }: { role: string; compact?: boolean; className: string }) {
   const workspace = useWorkspaceMode();
   const mode = workspace.enabled ? workspace.mode : defaultWorkspaceMode(role);
-  const destination = workspaceLinks(role, mode, workspace.enabled).jobs;
+  const destination = role === "ADMIN" ? "/admin" : workspaceLinks(role, mode, workspace.enabled).home;
   const modeName = role === "ADMIN" ? "admin" : mode === "trade" ? "Trade" : "Customer";
-  const label = workspace.ready ? `Return to ${modeName} dashboard` : "Return to your dashboard";
+  const label = workspace.ready ? `Return to ${modeName} home` : "Return to your Home";
   return <Link href={destination} className={className} aria-label={label}>
-    {compact ? "Dashboard" : <>{label}<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></>}
+    {compact ? "Open app" : <>{label}<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></>}
   </Link>;
 }

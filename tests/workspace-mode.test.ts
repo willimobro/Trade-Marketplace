@@ -24,7 +24,7 @@ test("simulated mode navigation does not enter server actions for another role",
   assert.equal(workspaceLinks("ADMIN", "customer", false).jobs, "/admin");
 });
 
-test("public home and wordmark always open marketing while opposite-mode search stays scoped", () => {
+test("Home keeps its mode while explicit opposite-mode search stays scoped", () => {
   for (const search of [false, true]) {
     assert.equal(workspaceHomeRedirect("TRADIE", "customer", true, search), search ? "/dashboard" : null);
     assert.equal(workspaceHomeRedirect("CUSTOMER", "trade", true, search), search ? "/dashboard?quoteView=feed" : null);

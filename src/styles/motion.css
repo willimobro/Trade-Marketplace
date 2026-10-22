@@ -1,0 +1,46 @@
+/* Shared controls opt in by their existing utility classes. CSS-module
+   controls/cards can add trade-motion-action or trade-motion-card explicitly.
+   Keep motion local to interaction: no mount, route, or layout animation. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.btn, .btn-primary, .btn-lime, .btn-ghost, .btn-hero, .trade-motion-action) {
+    transition: transform 140ms cubic-bezier(.2, .7, .2, 1), opacity 140ms ease-out;
+  }
+
+  :is(a.card, button.card, .trade-motion-card) {
+    transition: transform 160ms cubic-bezier(.2, .7, .2, 1), opacity 160ms ease-out;
+  }
+
+  :is(.btn, .btn-primary, .btn-lime, .btn-ghost, .btn-hero, .trade-motion-action):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]):active {
+    transform: translateY(1px) scale(.985);
+    opacity: .92;
+  }
+
+  :is(a.card, button.card, .trade-motion-card):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]):active {
+    transform: scale(.995);
+    opacity: .96;
+  }
+}
+
+/* Hover feedback belongs to devices with a precise pointer and real hover. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  :is(.btn, .btn-primary, .btn-lime, .btn-ghost, .btn-hero, .trade-motion-action):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]):hover:not(:active),
+  :is(a.card, button.card, .trade-motion-card):not(:disabled):not([aria-disabled="true"]):not([aria-busy="true"]):hover:not(:active) {
+    transform: translateY(-1px);
+  }
+}
+
+/* Preserve all component focus outlines and static layout transforms. */
+@media (prefers-reduced-motion: reduce) {
+  :is(.btn, .btn-primary, .btn-lime, .btn-ghost, .btn-hero, .trade-motion-action, a.card, button.card, .trade-motion-card) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  html,
+  html:focus-within,
+  [data-mode],
+  [data-mode] * {
+    scroll-behavior: auto !important;
+  }
+}

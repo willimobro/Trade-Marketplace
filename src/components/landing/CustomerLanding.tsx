@@ -21,13 +21,13 @@ function PostJob({ children = "Post a job", className = "" }: { children?: React
 }
 
 /** Public customer introduction. All posting continues through the existing job flow. */
-export function CustomerLanding({ role = null }: { role?: string | null }) {
+export function CustomerLanding({ role = null, landingPath = "/" }: { role?: string | null; landingPath?: "/" | "/website" }) {
   return <div className={styles.landing} data-mode="customer">
     <div className={styles.heroShell}>
       <header className={styles.header}>
         <Link href="/" className={styles.logo} aria-label="Trade Marketplace home"><Image src="/brand/wordmark.svg" width={188} height={46} alt="Trade Marketplace" priority /></Link>
         <nav aria-label="Landing navigation" className={styles.nav}>
-          <Link href="/#how-it-works" className={styles.howLink}>How it works</Link>
+          <Link href={`${landingPath}#how-it-works`} className={styles.howLink}>How it works</Link>
           <Link href="/for-tradies" className={styles.tradeLink}>For tradies</Link>
           {role ? <LandingWorkspaceReturn role={role} compact className={styles.login} /> : <Link href="/login" className={styles.login}>Log in<SourceIcon name="person" size={18} /></Link>}
         </nav>
@@ -45,7 +45,7 @@ export function CustomerLanding({ role = null }: { role?: string | null }) {
             <PostJob />
             {role && <LandingWorkspaceReturn role={role} className={styles.workspaceReturn} />}
           </div>
-          <Link href="/#how-it-works" className={styles.explore}>A simpler way to get it sorted<span aria-hidden="true">↓</span></Link>
+          <Link href={`${landingPath}#how-it-works`} className={styles.explore}>A simpler way to get it sorted<span aria-hidden="true">↓</span></Link>
         </div>
         <figure className={styles.heroPhoto}>
           <Image src="/landing/home-renovation.webp" alt="A tradesperson applying a finish to a wall during a home renovation" width={1200} height={1500} sizes="(min-width: 1200px) 580px, (min-width: 800px) 48vw, 100vw" priority className={styles.photo} />

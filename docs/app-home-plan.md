@@ -1,0 +1,11 @@
+# In-app Home, 23 October 2026
+
+Source: **Trade Marketplace Brand Guidelines.pdf**, actual PDF page 6 (index 5), printed **06**, “The First Five Seconds”. Render: `../evidence/app-home-source/brand-page-6.png` outside the checkout. Adjacent pages confirm numbering.
+
+- Signed-in `/` is Home in the retained Customer/Trade presentation mode; guest `/` stays the public introduction. `/website` preserves that public introduction for signed-in users. Home/logo, Your jobs (`/dashboard`), Find work (`/dashboard?quoteView=feed` in the isolated prototype) and Website have separate destinations. Existing native dashboard navigation remains.
+- Customer Home follows the actual illustrated page: Forest hero and existing wordmark, large white “Sorted in a flash.”, one short sentence, white request/location bar with Lime Get a price, outlined chips, subdued upright bolt and original green van/tradie art, then the three numbered steps and orange trade entry. No invented active-jobs dashboard. Mobile reflows this same hierarchy; the PDF supplies a desktop concept only.
+- All-trades copy replaces the source's electrical-only claims. No invented ratings/review counts, licensing/certificate guarantees or immediate price. The compact reassurance row says only what the existing flow supports. Signed-in navigation replaces the mockup's Log in. Slide annotations/browser chrome are excluded.
+- The request bar carries title/location/trade into the current account's existing posting draft, preserving other fields and refusing navigation on storage errors. It does not quote, post or charge. The orange door uses authorized presentation switching only; actual permissions stay unchanged.
+- Trade Home reuses the existing quote ledger, shared cards and owned assignments/payroll summaries. It links to the existing quoting/available/current jobs flows. No new accounting, data access or backend services.
+- Add local 140–160ms transform/opacity feedback, fine-pointer hover and immediate press response; reduced motion disables movement. No timed navigation, input delay or route interception.
+- Freeze a candidate after build/lint/types/app/gate tests plus mobile/desktop screenshot and interaction checks. Give QA the page-6 render, screenshots, exact SHA, route/history/mode/draft and reduced-motion checks. Do not deploy before independent GO.
