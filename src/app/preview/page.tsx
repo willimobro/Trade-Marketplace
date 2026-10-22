@@ -1,11 +1,10 @@
 import "server-only";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { login } from "@/app/actions/auth";
-import type { FormState } from "@/app/actions/types";
+import { createPasswordSession } from "@/lib/password-session";
 import { canUseHostedPreview } from "@/lib/hosted-preview";
 import { previewAccount } from "../../../scripts/preview-identity.mjs";
-import { PreviewRoles } from "./PreviewRoles";
+import { PreviewRoles, type PreviewRoleState } from "./PreviewRoles";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Choose preview role", robots: { index: false, follow: false } };
@@ -14,19 +13,17 @@ async function requireHostedPreview() {
   if (!(await canUseHostedPreview())) notFound();
 }
 
-async function chooseRole(_previous: FormState, form: FormData): Promise<FormState> {
+async function chooseRole(_previous: PreviewRoleState, form: FormData): Promise<PreviewRoleState> {
   "use server";
   await requireHostedPreview();
   const account = previewAccount(form.get("role"));
   if (!account) return { error: "Choose one of the listed preview roles." };
   const password = process.env.PREVIEW_ACCOUNT_PASSWORD;
   if (!password || password.length < 32) return { error: "Preview accounts are unavailable." };
-  const credentials = new FormData();
-  credentials.set("email", account.email);
-  credentials.set("password", password);
-  credentials.set("next", account.next);
-  // Use the unchanged password verification, authorization and session flow.
-  return login(undefined, credentials);
+  if (!(await createPasswordSession(account.email, password))) return { error: "Preview accounts are unavailable." };
+  // Let the browser open the destination. Next's server-action redirect tries
+  // an HTTPS self-fetch against the custom server's HTTP listener behind Render.
+  return { destination: account.next };
 }
 
 export default async function PreviewPage() {

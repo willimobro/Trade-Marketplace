@@ -1,10 +1,19 @@
 "use client";
 
 import { useActionState } from "react";
-import type { FormState } from "@/app/actions/types";
+export type PreviewRoleState = { error?: string; destination?: string } | undefined;
 
-export function PreviewRoles({ action }: { action: (previous: FormState, form: FormData) => Promise<FormState> }) {
-  const [state, submit, pending] = useActionState(action, undefined);
+export function PreviewRoles({ action }: { action: (previous: PreviewRoleState, form: FormData) => Promise<PreviewRoleState> }) {
+  async function selectRole(previous: PreviewRoleState, form: FormData): Promise<PreviewRoleState> {
+    const result = await action(previous, form);
+    if (!result?.destination) return result;
+    if (result.destination !== "/dashboard" && result.destination !== "/admin") return { error: "We couldn’t open that preview. Choose a role again." };
+    window.location.assign(result.destination);
+    // Do not retain a success destination: Back must reopen the picker without
+    // replaying navigation, and successive roles can share /dashboard.
+    return undefined;
+  }
+  const [state, submit, pending] = useActionState(selectRole, undefined);
   return <form action={submit} aria-busy={pending}>
     <fieldset disabled={pending} className="grid gap-4">
       <legend className="mb-4 font-semibold">Preview as</legend>

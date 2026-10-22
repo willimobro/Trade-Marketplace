@@ -63,7 +63,7 @@ export function CustomerJobCard({ job, pendingPaymentId }: { job: CustomerJob; p
     headingLevel={2}
     meta={job.suburb}
     status={<span className={`${styles.status} ${needsAction ? styles.needsAction : closed ? styles.closed : ""}`}><span className={styles.statusDot} aria-hidden="true" />{stage}</span>}
-    valueLabel={job.priceCents !== null ? "Fixed price" : closed ? "Price" : eta ? "Quote ETA · demo" : "Quote ETA"}
+    valueLabel={job.priceCents !== null ? "Fixed price" : closed ? "Price" : "Quote ETA"}
     value={job.priceCents !== null ? formatNZD(job.priceCents) : closed ? "Not priced" : eta ?? "Pending"}
     actions={<Link href={action.href} className={job.status === "PRICED" && job.priceCents !== null ? cardStyles.primaryAction : cardStyles.secondaryAction}>{action.label}<span aria-hidden="true">↗</span></Link>}
   />;

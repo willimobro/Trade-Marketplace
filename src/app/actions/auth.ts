@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { createSession, destroySession } from "@/lib/session";
+import { createPasswordSession } from "@/lib/password-session";
 import { CATEGORY_NAMES, REGIONS } from "@/lib/constants";
 import type { FormState } from "./types";
 
@@ -58,10 +59,8 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
 export async function login(_prev: FormState, form: FormData): Promise<FormState> {
   const email = String(form.get("email") ?? "").trim().toLowerCase();
   const password = String(form.get("password") ?? "");
-  const user = await db.user.findUnique({ where: { email } });
-  if (!user || !(await bcrypt.compare(password, user.passwordHash)))
+  if (!(await createPasswordSession(email, password)))
     return { error: "Wrong email or password." };
-  await createSession(user.id);
   redirect(safeNext(form.get("next")));
 }
 

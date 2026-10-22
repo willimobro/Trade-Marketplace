@@ -18,6 +18,7 @@ function fixture() {
     "next/navigation": { redirect: () => { throw new Error("FIXTURE_REDIRECT"); } },
     "@/lib/db": { db: { user: { findUnique: async () => null, create: async ({ data }: { data: Record<string, unknown> }) => { written = data; return { id: "fixture-user" }; } } } },
     "@/lib/session": { createSession: async () => { sessions++; }, destroySession: async () => {} },
+    "@/lib/password-session": { createPasswordSession: async () => { throw new Error("Signup must not use password login"); } },
     "@/lib/constants": { CATEGORY_NAMES, REGIONS },
   };
   runInNewContext(compiled, { exports, require: (name: string) => name in mocks ? mocks[name] : require(name) });

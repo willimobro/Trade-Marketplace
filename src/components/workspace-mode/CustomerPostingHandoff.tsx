@@ -19,7 +19,7 @@ export function CustomerPostingHandoff({ children }: { children: ReactNode }) {
   return <section className="mx-auto max-w-xl px-4 py-12" aria-labelledby="customer-posting-heading">
     <div className="card p-6" data-mode="customer">
       <h1 id="customer-posting-heading" className="text-2xl font-semibold">Post a job in Customer mode</h1>
-      <p className="mt-3 text-sm text-muted">Use the same account to explore the customer sample. Your trade jobs and drafts stay saved. Posting here saves a local sample job; nothing is sent to a tradie.</p>
+      <p className="mt-3 text-sm text-muted">Use Customer mode to post a job. Your trade jobs and drafts stay saved. Posting here saves on this device; nothing is sent to a tradie.</p>
       <div className="mt-5 flex flex-wrap gap-3"><button type="button" className="btn-ghost" onClick={() => setMode("customer")}>Open Customer posting</button><Link href="/dashboard" className="btn-ghost">Back to trade jobs</Link></div>
     </div>
   </section>;
