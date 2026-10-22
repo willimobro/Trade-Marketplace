@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { readJobDraft } from "@/app/jobs/new/job-draft";
-import { homeCustomerDraft, homeJobDraft } from "@/lib/home-request";
+import { homeCustomerDraft, homeJobDraft, type HomeRequest } from "@/lib/home-request";
 import { customerPreviewKey, mergeCustomerDraft, readCustomerPreview } from "@/lib/workspace-mode/customer-model";
 import { useWorkspaceLinks, useWorkspaceMode } from "@/components/workspace-mode/WorkspaceMode";
 import styles from "./customer-home.module.css";
@@ -24,7 +24,9 @@ export function CustomerHome({ userId, role, region }: { userId: string; role: s
   const [error, setError] = useState("");
   const question = useRef<HTMLInputElement>(null);
   const errorRef = useRef<HTMLParagraphElement>(null);
+  const edited = useRef(new Set<keyof HomeRequest>());
   useEffect(() => {
+    edited.current.clear();
     try {
       const draft = localCustomer ? readCustomerPreview(localStorage.getItem(customerPreviewKey(userId)), userId).draft : readJobDraft(userId)?.fields;
       if (draft) { setTitle(draft.title); setLocation(draft.suburb); setCategory("trade" in draft ? draft.trade : draft.category); }
@@ -35,12 +37,16 @@ export function CustomerHome({ userId, role, region }: { userId: string; role: s
   function startRequest(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const request = { title, location, category };
+      // Re-read the latest saved draft below, and apply only explicit edits.
+      // Loaded display values may be stale after another tab changes the draft.
+      const values = { title, location, category };
+      const request: HomeRequest = {};
+      for (const field of edited.current) request[field] = values[field];
       if (localCustomer) {
         const key = customerPreviewKey(userId);
         const raw = localStorage.getItem(key);
         const current = readCustomerPreview(raw, userId);
-        localStorage.setItem(key, JSON.stringify(mergeCustomerDraft(raw, userId, homeCustomerDraft(current.draft, request))));
+        if (edited.current.size) localStorage.setItem(key, JSON.stringify(mergeCustomerDraft(raw, userId, homeCustomerDraft(current.draft, request))));
       } else {
         const draft = homeJobDraft(readJobDraft(userId), request, region);
         sessionStorage.setItem(`trade-marketplace:job-draft:v1:${userId}`, JSON.stringify(draft));
@@ -57,12 +63,12 @@ export function CustomerHome({ userId, role, region }: { userId: string; role: s
           <h1 id="customer-home-title">Sorted in a flash.</h1>
           <p className={styles.intro}>Post your job free. Review one fixed price. Get it sorted.</p>
           <form className={styles.request} onSubmit={startRequest} aria-label="Start your job">
-            <label className={styles.question}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="10" cy="10" r="7" /><path d="m15 15 6 6" /></svg><span className="sr-only">What needs doing?</span><input ref={question} name="title" value={title} onChange={event => setTitle(event.target.value)} placeholder="What needs doing?" minLength={5} maxLength={80} required autoComplete="off" /></label>
-            <label className={styles.location}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></svg><span className="sr-only">Suburb or city</span><input name="location" value={location} onChange={event => setLocation(event.target.value)} placeholder="Suburb or city" maxLength={60} autoComplete="address-level2" /></label>
+            <label className={styles.question}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="10" cy="10" r="7" /><path d="m15 15 6 6" /></svg><span className="sr-only">What needs doing?</span><input ref={question} name="title" value={title} onChange={event => { edited.current.add("title"); setTitle(event.target.value); }} placeholder="What needs doing?" minLength={5} maxLength={80} required autoComplete="off" /></label>
+            <label className={styles.location}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M19 10c0 6-7 11-7 11S5 16 5 10a7 7 0 1 1 14 0Z" /><circle cx="12" cy="10" r="2" /></svg><span className="sr-only">Suburb or city</span><input name="location" value={location} onChange={event => { edited.current.add("location"); setLocation(event.target.value); }} placeholder="Suburb or city" maxLength={60} autoComplete="address-level2" /></label>
             <button className={`${styles.price} trade-motion-action`} type="submit">Get a price</button>
           </form>
           {error && <p ref={errorRef} tabIndex={-1} className={styles.error} role="alert">{error}</p>}
-          <div className={styles.chips} role="group" aria-label="Common jobs">{chips.map(chip => <button key={chip.title} type="button" aria-pressed={category === chip.category && title === chip.title} className="trade-motion-action" onClick={() => { setTitle(chip.title); setCategory(chip.category); question.current?.focus(); }}>{chip.title}</button>)}</div>
+          <div className={styles.chips} role="group" aria-label="Common jobs">{chips.map(chip => <button key={chip.title} type="button" aria-pressed={category === chip.category && title === chip.title} className="trade-motion-action" onClick={() => { edited.current.add("title"); edited.current.add("category"); setTitle(chip.title); setCategory(chip.category); question.current?.focus(); }}>{chip.title}</button>)}</div>
           <p className={styles.trust}><span aria-hidden="true">✓</span> Free to post · Review before you accept · Your choice</p>
         </div>
         <Image className={styles.van} src="/brand/green-van.png" width={4000} height={2800} alt="" aria-hidden="true" sizes="(min-width: 1024px) 390px, 270px" priority />

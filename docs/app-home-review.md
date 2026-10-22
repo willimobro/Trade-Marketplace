@@ -2,6 +2,18 @@
 
 Branch: `feature/in-app-home-20261023`, based on verified live `f668a37`. The protected hosted branch and Render settings are unchanged. No deployment is authorized until independent QA GO.
 
+## Draft-conflict correction after independent QA
+
+QA passed the scoped source composition, role/navigation/history, responsive, reduced-motion and gate checks on `e6e246b`, but held release for one reproducible cross-tab overwrite. Home loaded Plumbing/Mount Eden, another tab saved Gas Fitting/Te Aro, and a title-only Home submission incorrectly restored the old trade/suburb.
+
+Home now tracks explicit edits, rather than treating restored display values as edits. Title/location inputs mark their own field; chips mark title and category. Submission rereads the latest account snapshot and applies only those fields. Empty text remains an intentional clearing. A clean local Customer submission does not write storage at all; ordinary posting still requires a fresh review. No layout, routing, accounting, security or integration change is included in this correction.
+
+Production build, full lint and TypeScript pass. **24 focused tests** pass, including title-only, location-only, category-only, clean/no-change, intentional clearing and chip combinations against newer ordinary and shared Customer drafts. Tests retain scope, address/region, timing, photo names, posted/accepted data and source snapshot immutability.
+
+The real two-tab UI reproduction passed using an actual Tradie in Customer mode, then location-only, clean/no-change, chip and explicit-location-clear cases passed. No backend job was submitted. Evidence: `/Users/mattmacbook/Documents/Codex/2026-10-21/task/evidence/app-home-draft-fix/two-tab-results.json` and `title-only-retains-latest.png`. Category-only is a helper regression: Home currently exposes category changes through chips together with title. Ordinary Customer session storage is tab-scoped; the confirmed shared-tab reproduction concerns the local Customer workspace.
+
+No React #418 was captured in this targeted browser run. The longer-run unlocalized observation remains documented below; fresh independent QA had also failed to reproduce it. No speculative hydration rewrite was made. Candidate awaits targeted independent draft recheck; previous scoped acceptance remains applicable.
+
 ## Routes and source comparison
 
 - Signed-in `/`: current-mode app Home. Guest `/`: preserved marketing landing.
