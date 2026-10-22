@@ -7,10 +7,14 @@ import { getSettings } from "@/lib/settings";
 import { jobRates, priceWork } from "@/lib/pricing";
 import { formatNZD } from "@/lib/constants";
 import { tradeRequirementsPending } from "@/lib/trade-readiness";
+import { CustomerLanding } from "@/components/landing/CustomerLanding";
 
 export const dynamic = "force-dynamic";
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const user = await getCurrentUser();
+  const { view } = await searchParams;
+  // Acquisition has its own first step; existing account/search browsing stays intact.
+  if (!user && view !== "search") return <CustomerLanding />;
   const [jobs, settings] = await Promise.all([
     db.job.findMany({
       where: {
