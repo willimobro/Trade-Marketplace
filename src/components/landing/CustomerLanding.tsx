@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SourceIcon } from "@/components/SourceIcon";
+import { LandingAnchorRestore } from "./LandingAnchorRestore";
 import styles from "./customer-landing.module.css";
 
 const categories = [
@@ -25,7 +26,7 @@ export function CustomerLanding() {
       <header className={styles.header}>
         <Link href="/" className={styles.logo} aria-label="Trade Marketplace home"><Image src="/brand/wordmark.svg" width={188} height={46} alt="Trade Marketplace" priority /></Link>
         <nav aria-label="Landing navigation" className={styles.nav}>
-          <a href="#how-it-works" className={styles.howLink}>How it works</a>
+          <Link href="/#how-it-works" className={styles.howLink}>How it works</Link>
           <Link href="/for-tradies" className={styles.tradeLink}>For tradies</Link>
           <Link href="/login" className={styles.login}>Log in<SourceIcon name="person" size={18} /></Link>
         </nav>
@@ -43,7 +44,7 @@ export function CustomerLanding() {
             <PostJob />
             <p className={styles.previewNote}>Preview only · use sample details.</p>
           </div>
-          <a href="#how-it-works" className={styles.explore}>A simpler way to get it sorted<span aria-hidden="true">↓</span></a>
+          <Link href="/#how-it-works" className={styles.explore}>A simpler way to get it sorted<span aria-hidden="true">↓</span></Link>
         </div>
         <figure className={styles.heroPhoto}>
           <Image src="/landing/home-renovation.webp" alt="A tradesperson applying a finish to a wall during a home renovation" width={1200} height={1500} sizes="(min-width: 1200px) 580px, (min-width: 800px) 48vw, 100vw" priority className={styles.photo} />
@@ -90,5 +91,6 @@ export function CustomerLanding() {
         <p className={styles.credit}>Illustrative stock photography by <a href="https://www.pexels.com/photo/a-man-renovating-a-home-5493656/">Antoni Shkraba / Pexels</a>.</p>
       </div>
     </footer>
+    <LandingAnchorRestore />
   </div>;
 }

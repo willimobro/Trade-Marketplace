@@ -34,3 +34,11 @@ Own `node_modules`, own `.next`, Node 22, and an explicitly disposable `trade-la
 - Screenshot evidence is delivered outside the repository in the task's `evidence/landing/` directory, with desktop/mobile full pages, 768/1024px layouts, CTA focus and the existing job form. No real data was used.
 
 No push, pull request, deployment or production-data action is part of this branch.
+
+## History/hash regression correction
+
+Independent QA found that clicking a native `#how-it-works` anchor, following the footer tradie link, then using Back restored the landing URL while retaining the tradie page. Reproduced on the production build before the fix. Both landing anchors now use Next `Link` with `/#how-it-works`, keeping the hash navigation in the same router history as route changes; markup appearance and styles are unchanged. A landing-only effect restores this exact fragment after the streamed content and fonts are ready, covering direct mobile fragment loads where the native target was not yet present. It cancels on unmount and rechecks the fragment before scrolling; no global history listener or shared router changes.
+
+`qa/regressions/landing-history.mjs` runs through an agent-owned cua_repl tab on a disposable loopback preview, without launching another browser or writing any product data. It checks the rendered route and URL through the anchor, tradie navigation, repeated Back/Forward, same-page history, direct anchor navigation and reload, including section position. Run the hero anchor at 390 and 1440px and the header anchor at 1440px. Evidence and results are in the task's `evidence/landing-history/` directory. The original checkpoint fails the regression at Back to the landing hash.
+
+Final result: all 33 browser checkpoints passed across those three scenarios. Back, direct loads and reloads place the section about 48px below the viewport edge using the existing scroll padding/margin. No browser console warnings/errors were recorded. The final production build, ESLint/TypeScript, 56 application tests and 8 preview-security tests pass. No visual styles, shared routing/layout, product actions or data changed in this correction.
