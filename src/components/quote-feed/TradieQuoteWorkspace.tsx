@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
+import { DashboardNavigationLink } from "@/components/DashboardNavigationLink";
 import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
 import cardStyles from "@/components/job-cards/job-card.module.css";
 import { DEMO_JOBS, DEMO_TRADES, demoTrade, findDemoJob, formatDemoMoney, type DemoJob } from "@/lib/quote-demo/jobs";
@@ -256,7 +257,7 @@ export function TradieQuoteWorkspace({ userId, trade, intro }: { userId: string;
     <div className={styles.workspaceNav}>
       <nav className={styles.tabs} aria-label="Workspace views">
         {([ ["feed", "Find work", null], ["available", "Jobs", DEMO_JOBS.filter((job) => job.stage === "available" && !claimedIds.has(job.id)).length], ["quoted", "Quoted jobs", state?.quotes.length ?? 0], ["claimed", "Your jobs", state?.claims.length ?? 0] ] as const).map(([value, label, count]) =>
-          <Link key={value} href={`/dashboard?${workspaceSearch({ tab: value, trade: filter })}`} scroll={false} aria-current={tab === value ? "page" : undefined} className={tab === value ? styles.activeTab : ""}>{label}{count !== null && <span>{count}</span>}</Link>)}
+          <DashboardNavigationLink key={value} href={`/dashboard?${workspaceSearch({ tab: value, trade: filter })}`} aria-current={tab === value ? "page" : undefined} className={tab === value ? styles.activeTab : ""}>{label}{count !== null && <span>{count}</span>}</DashboardNavigationLink>)}
       </nav>
       <label className={styles.tradeFilter}><span>Trade</span><select aria-label="Filter jobs by trade" value={filter} onChange={(event) => router.push(`/dashboard?${workspaceSearch({ tab, trade: event.target.value })}`, { scroll: false })}>{<option value="all">All trades</option>}{DEMO_TRADES.map((item) => <option key={item}>{item}</option>)}</select></label>
     </div>

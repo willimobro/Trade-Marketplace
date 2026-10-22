@@ -31,6 +31,16 @@ Review the final candidate on its own isolated fixtures. Target the later deltas
 
 Final browser caveat: after repeated local production rebuilds and viewport changes, the integrator's browser session produced inconsistent query-only link/tab activation results. The normal Account → workspace → mobile Search path succeeded, but a subsequent scripted workspace-tab check did not settle at its destination. Workspace view controls now expose explicit Next links and `aria-current`; this last navigation delta must be independently checked before publication. This report does not grant final routing signoff.
 
+### Navigation-only correction after independent NO-GO on `be5bfce`
+
+Independent QA reproduced the failure on fresh isolated fixtures, including actual Tradie desktop Find Work and workspace mouse/Enter activation. Correct hrefs, received click events and working direct page loads narrow the issue to the intercepted same-path navigation, rather than URL parsing or a pointer-covering element. The exact framework/cache cause is not asserted.
+
+`DashboardNavigationLink` now leaves `/dashboard` destinations as native anchors, bypassing Next's click interception for those view changes. Non-dashboard destinations keep Next links. Main desktop/mobile navigation and workspace view links use this one boundary. No visual styling, model, authorization, payment or data behavior changed. The trade-off is a document load for dashboard navigation; mode and saved drafts remain in their existing browser persistence, and normal modifier clicks/history remain native.
+
+The corrected production build passes lint/type validation and 13 focused navigation/mode/home tests. Rendered-browser regression `tests/browser/dashboard-navigation.cua.js` passed all four actual-identity/width combinations: actual Tradie and actual Customer switched to Trade, each at 390/1440. Each combination completed three main Your Jobs → Find Work → Your Jobs cycles with Back/Forward, all four workspace destinations by both mouse and Enter, eight unfiltered feed cards, and two Plumbing cards after filter/reload. Native links retain `aria-current` and there was no horizontal overflow. Existing Sarah's accepted quote/four points and Jack's separate three points remained intact.
+
+Screenshots for both identities and widths plus `results.json` are in `task/evidence/navigation-fix/`. This supersedes the integrator's earlier navigation caveat for local verification; independent targeted QA and deployment approval remain outstanding. The broader visual pass is not repeated.
+
 ## Remaining boundaries
 
 Quote/comment/claim and opposite-account-mode journeys remain isolated frontend simulations with browser persistence. No real booking, payment, message delivery, password recovery, verification service or cross-device sync was added. Necessary warnings stay beside consequential actions or in collapsed preview controls. Wider backend integration and the full product-wide state audit remain separate work. The current hosted preview stays at `92c8ae8` until this candidate is independently cleared and publication is requested.

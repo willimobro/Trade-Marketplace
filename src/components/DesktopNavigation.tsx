@@ -7,6 +7,7 @@ import { hasDesktopNavigation } from "@/lib/desktop-routes";
 import styles from "./DesktopNavigation.module.css";
 import { useWorkspaceLinks, useWorkspaceMode } from "./workspace-mode/WorkspaceMode";
 import { CurrentModeLink } from "./workspace-mode/AccountModeSwitch";
+import { DashboardNavigationLink } from "./DashboardNavigationLink";
 
 /** Desktop adaptation of the approved mobile brand; mobile navigation stays intact. */
 export function DesktopNavigation({ role }: { role: string | null }) {
@@ -26,7 +27,7 @@ export function DesktopNavigation({ role }: { role: string | null }) {
   ];
   return <header className={styles.header}>
     <div className={styles.inner}><Logo href={destinations.home} />
-      <nav aria-label="Desktop navigation" className={styles.links}>{items.map(item => <Link key={item.label} href={item.href} aria-current={findWork ? item.label === "Find work" ? "page" : undefined : path === item.href && (item.label !== "Browse" || item.href === "/") ? "page" : item.href !== "/" && path.startsWith(item.href + "/") ? "location" : undefined}><SourceIcon name={item.icon} size={21} navigation /><span>{item.label}</span></Link>)}</nav>
+      <nav aria-label="Desktop navigation" className={styles.links}>{items.map(item => <DashboardNavigationLink key={item.label} href={item.href} aria-current={findWork ? item.label === "Find work" ? "page" : undefined : path === item.href && (item.label !== "Browse" || item.href === "/") ? "page" : item.href !== "/" && path.startsWith(item.href + "/") ? "location" : undefined}><SourceIcon name={item.icon} size={21} navigation /><span>{item.label}</span></DashboardNavigationLink>)}</nav>
       <CurrentModeLink compact />
       {(!viewRole || viewRole === "CUSTOMER") && <Link href={destinations.post} className={styles.post}>Post a job</Link>}
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { DashboardNavigationLink } from "./DashboardNavigationLink";
 import { usePathname, useSearchParams } from "next/navigation";
 import { SourceIcon, type SourceIconName } from "./SourceIcon";
 import styles from "./DashboardMobileNavigation.module.css";
@@ -18,5 +18,5 @@ export function DashboardMobileNavigation({ customer }: { customer: boolean }) {
     { href: "/messages", label: "Messages", icon: "bubble" },
     { href: "/profile", label: "Account", icon: "person" },
   ];
-  return <nav className={styles.navigation} aria-label="Main navigation">{items.map(item => <Link key={item.label} href={item.href} aria-label={item.label} title={item.label} aria-current={findWork ? item.label === "Search" ? "page" : undefined : item.label === "Jobs" && (path === "/dashboard" || path.startsWith("/quote-jobs/")) ? "page" : undefined}><SourceIcon name={item.icon} size={26} navigation /></Link>)}</nav>;
+  return <nav className={styles.navigation} aria-label="Main navigation">{items.map(item => <DashboardNavigationLink key={item.label} href={item.href} aria-label={item.label} title={item.label} aria-current={findWork ? item.label === "Search" ? "page" : undefined : item.label === "Jobs" && (path === "/dashboard" || path.startsWith("/quote-jobs/")) ? "page" : undefined}><SourceIcon name={item.icon} size={26} navigation /></DashboardNavigationLink>)}</nav>;
 }
