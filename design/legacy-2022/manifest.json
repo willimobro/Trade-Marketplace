@@ -1,0 +1,139 @@
+[
+  {
+    "file": "assets/Logo.png",
+    "sha256": "806c67eb82e8477d211281973c6ea62c4581a668aab6b58e0dd82e3c054b74cb",
+    "bytes": 868,
+    "sources": [
+      "Trade Marketplace/Logo.png"
+    ]
+  },
+  {
+    "file": "assets/Logo.svg",
+    "sha256": "2b6c43f5add3fc24e4d7add53cb0c1c6cdf6949ea0930a54eebc40f8e48a2a43",
+    "bytes": 682,
+    "sources": [
+      "Trade Marketplace/Logo.svg"
+    ]
+  },
+  {
+    "file": "Trade Marketplace 1.pdf",
+    "sha256": "ce3b739b684adc760fedf6ff9a2623e1c4303952bc4f733582597fc237b36c2b",
+    "bytes": 29552091,
+    "sources": [
+      "Trade Marketplace/Trade Marketplace 1.pdf"
+    ]
+  },
+  {
+    "file": "assets/createaccountpc.png",
+    "sha256": "94516752199fe1cce5ef55a7b83782ef11fa12412203b6cd46f1d9094ad19d6f",
+    "bytes": 27025,
+    "sources": [
+      "Trade Marketplace/createaccountpc.png",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/Assets.xcassets/createaccountpc.imageset/createaccountpc.png",
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/createaccountpc.imageset/createaccountpc.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/createaccountpc.imageset/createaccountpc.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/createaccountpc.imageset/createaccountpc.png"
+    ]
+  },
+  {
+    "file": "assets/green van.png",
+    "sha256": "a1c087e3cccf6f2a37eaae51e4b4258245a669dbee3baf7f59f299662303aa0d",
+    "bytes": 3667339,
+    "sources": [
+      "Trade Marketplace/green van.png",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/Assets.xcassets/greenvan.imageset/green van.png",
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/greenvan.imageset/green van.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/greenvan.imageset/green van.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/greenvan.imageset/green van.png"
+    ]
+  },
+  {
+    "file": "assets/loginphone.png",
+    "sha256": "61aa48f2919be5e6985a50d38f9e17ddc28c71ebede6543b57800e764db6dd71",
+    "bytes": 43486,
+    "sources": [
+      "Trade Marketplace/loginphone.png",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/Assets.xcassets/loginphone.imageset/loginphone.png",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/iPhone 13/5143514 1.png",
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/loginphone.imageset/loginphone.png",
+      "Trade-Marketplace-main/Trade Marketplace/iPhone 13/5143514 1.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/loginphone.imageset/loginphone.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/iPhone 13/5143514 1.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/loginphone.imageset/loginphone.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/iPhone 13/5143514 1.png"
+    ]
+  },
+  {
+    "file": "assets/money.jpg",
+    "sha256": "b5147ab95c3e68c2281d2064bf2d17af3405f0c31df35cfba6b5bde41d2c9f27",
+    "bytes": 170877,
+    "sources": [
+      "Trade Marketplace/money.jpg",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/Assets.xcassets/money.imageset/money.jpg",
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/money.imageset/money.jpg",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/money.imageset/money.jpg",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/money.imageset/money.jpg"
+    ]
+  },
+  {
+    "file": "assets/multimeter 1.png",
+    "sha256": "0d68dd386edc21b7a18ea0a57aa44a17e771f5faec1d1d68c2b6f6fdefa4ba58",
+    "bytes": 17353,
+    "sources": [
+      "Trade Marketplace/multimeter 1.png",
+      "Trade Marketplace/Trade Marketplace/Trade Marketplace/Assets.xcassets/categoryimage1.imageset/multimeter 1.png",
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/categoryimage1.imageset/multimeter 1.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/categoryimage1.imageset/multimeter 1.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/categoryimage1.imageset/multimeter 1.png"
+    ]
+  },
+  {
+    "file": "assets/Rectangle 27.png",
+    "sha256": "46579e338d97f9b1ad6e73f32a8e410ddd86424f293f90b950e3923fbeb67f46",
+    "bytes": 50156,
+    "sources": [
+      "Trade Marketplace/Trade Marketplace/iPhone 13/Rectangle 27.png",
+      "Trade-Marketplace-main/iPhone 13/Rectangle 27.png",
+      "Trade-Marketplace-main 2/iPhone 13/Rectangle 27.png",
+      "Trade-Marketplace-main 3/iPhone 13/Rectangle 27.png"
+    ]
+  },
+  {
+    "file": "assets/green van 1.png",
+    "sha256": "d37a1ad83848713c8e14d6e1d005d414b8874736699b093652d1e8afc277d102",
+    "bytes": 63228,
+    "sources": [
+      "Trade Marketplace/Trade Marketplace/iPhone 13/green van 1.png",
+      "Trade-Marketplace-main/iPhone 13/green van 1.png",
+      "Trade-Marketplace-main 2/iPhone 13/green van 1.png",
+      "Trade-Marketplace-main 3/iPhone 13/green van 1.png"
+    ]
+  },
+  {
+    "file": "assets/Rectangle 21.png",
+    "sha256": "489f66afb0a7e061733159127dfe4124f13675358b4c6ce731a2c3a9820da18c",
+    "bytes": 9319,
+    "sources": [
+      "Trade Marketplace/iPhone 13/Rectangle 21.png"
+    ]
+  },
+  {
+    "file": "assets/Rectangle 64.png",
+    "sha256": "e73f1e9620782464daa897849e0cde790919963dc8bf522cb3e93f7616323772",
+    "bytes": 6327,
+    "sources": [
+      "Trade-Marketplace-main/Trade Marketplace/Assets.xcassets/quotepdf.imageset/Rectangle 64.png",
+      "Trade-Marketplace-main 2/Trade Marketplace/Assets.xcassets/quotepdf.imageset/Rectangle 64.png",
+      "Trade-Marketplace-main 3/Trade Marketplace/Assets.xcassets/quotepdf.imageset/Rectangle 64.png"
+    ]
+  },
+  {
+    "file": "Trade Marketplace 1.fig",
+    "sha256": "d94d9a8189941ade8852ae17e4deadc1edd6d85a115699606a9fac26d2fb794f",
+    "bytes": 17228220,
+    "sources": [
+      "Downloads/Trade Marketplace 1.fig"
+    ],
+    "figma_url": "https://www.figma.com/design/WurSo76mY67lO23D4Zlu7v/Trade-Marketplace-1?node-id=0-1"
+  }
+]
