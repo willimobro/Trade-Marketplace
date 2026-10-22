@@ -41,6 +41,12 @@ The corrected production build passes lint/type validation and 13 focused naviga
 
 Screenshots for both identities and widths plus `results.json` are in `task/evidence/navigation-fix/`. This supersedes the integrator's earlier navigation caveat for local verification; independent targeted QA and deployment approval remain outstanding. The broader visual pass is not repeated.
 
+### Residual category control correction after QA on `ee6af1a`
+
+QA cleared the links but reproduced the actual Tradie's selector resetting to All trades because its imperative handler still used `router.push`. The component now centralizes select/button-driven view navigation in `navigateView`, using `window.location.assign` with the existing bounded URL builder. The same correction covers `switchTab`, Quote more jobs/reset and the available-view empty-state link button. There are no remaining Next router calls in this component. No model, data, visual or security behavior was changed.
+
+Actual Tradie at 390/1440, starting on a fresh full-page feed: interactive Plumbing selection produced the correct filtered URL, selected Plumbing and two cards; resetting produced the unfiltered URL, All trades and eight cards. Back/Forward restored these states. Quote more jobs reset, Browse jobs and the Jobs-view category change/reset also passed. `verifyTradeFilter` in the browser regression file records these checks. Production build with lint/type validation and 13 focused tests pass. Exact rendered counts/URLs, four screenshots and results are under `task/evidence/filter-navigation-fix/`. Independent targeted retest is still required; no deployment occurred.
+
 ## Remaining boundaries
 
 Quote/comment/claim and opposite-account-mode journeys remain isolated frontend simulations with browser persistence. No real booking, payment, message delivery, password recovery, verification service or cross-device sync was added. Necessary warnings stay beside consequential actions or in collapsed preview controls. Wider backend integration and the full product-wide state audit remain separate work. The current hosted preview stays at `92c8ae8` until this candidate is independently cleared and publication is requested.

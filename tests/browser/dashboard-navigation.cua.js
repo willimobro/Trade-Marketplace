@@ -52,3 +52,49 @@ export async function verifyDashboardNavigation(tab, viewport, identity) {
   }
   return results;
 }
+
+/* Start each width on a fresh full-page feed, rather than depending on a prior
+ * successful route transition to initialize the controlled select. */
+export async function verifyTradeFilter(tab, viewport, identity) {
+  const origin = new URL(await tab.url()).origin;
+  const results = [];
+  const workspace = tab.playwright.getByRole("region", { name: "Tradie quote workspace", exact: true });
+  const select = tab.playwright.getByRole("combobox", { name: "Filter jobs by trade", exact: true });
+  async function check(view, trade, count) {
+    const query = `quoteView=${view}${trade === "all" ? "" : `&trade=${trade}`}`;
+    await tab.playwright.waitForURL(`${origin}/dashboard?${query}`);
+    await workspace.getByRole("article").first().waitFor({ state: "visible" });
+    if (await select.evaluate(node => node.value) !== trade) throw new Error("Selected trade must match the URL");
+    if (await workspace.getByRole("article").count() !== count) throw new Error("Trade filter must update rendered cards");
+  }
+  for (const width of [390, 1440]) {
+    await viewport.set({ width, height: 900 });
+    await tab.goto(`${origin}/dashboard?quoteView=feed`);
+    await check("feed", "all", 8);
+    await select.selectOption("Plumbing");
+    await tab.getAXState({ emit: false });
+    await check("feed", "Plumbing", 2);
+    await select.selectOption("all");
+    await tab.getAXState({ emit: false });
+    await check("feed", "all", 8);
+    await tab.back();
+    await check("feed", "Plumbing", 2);
+    await tab.forward();
+    await check("feed", "all", 8);
+    await select.selectOption("Plumbing");
+    await check("feed", "Plumbing", 2);
+    await workspace.getByRole("button", { name: "Quote more jobs", exact: true }).first().click();
+    await tab.getAXState({ emit: false });
+    await check("feed", "all", 8);
+    await workspace.getByRole("navigation", { name: "Workspace views", exact: true }).getByRole("link", { name: /^Your jobs \d+$/ }).click();
+    await workspace.getByRole("button", { name: "Browse jobs", exact: true }).click();
+    await tab.getAXState({ emit: false });
+    await check("available", "all", 4);
+    await select.selectOption("Plumbing");
+    await check("available", "Plumbing", 1);
+    await select.selectOption("all");
+    await check("available", "all", 4);
+    results.push({ identity, width, freshFeed: true, categoryChangeAndReset: true, history: true, quoteMoreReset: true, browseJobs: true, availableFilter: true });
+  }
+  return results;
+}
