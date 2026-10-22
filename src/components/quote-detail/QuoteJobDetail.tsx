@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { MessageReadReceipt } from "@/app/messages/MessageReadReceipt";
 import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
@@ -15,6 +16,9 @@ function savedDate(value: string) {
 }
 
 export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=feed" }: { userId: string; job: DemoJob; backHref?: string }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const discussionHref = `${pathname}${searchParams.size ? `?${searchParams}` : ""}#comments`;
   const [state, setState] = useState<QuoteDemoState | null>(null);
   const [storageFailure, setStorageFailure] = useState<string>("");
   const [editorOpen, setEditorOpen] = useState(false);
@@ -250,10 +254,13 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
               {claim ? <><p className={styles.actionCopy}>{claim.completedAt ? "You marked this sample job complete. No real work or payment is recorded." : "You spent 5 points to claim this sample job. Use the discussion to try planning the visit."}</p>{!claim.completedAt && <button className={styles.outline} type="button" onClick={() => void runAction("complete")} disabled={disabled}>{busy === "complete" ? "Saving…" : "Complete sample job"}</button>}</> : <><dl className={styles.claimSummary}><div><dt>Your balance</dt><dd>{state ? points : "—"} points</dd></div><div><dt>Cost to claim</dt><dd>5 points</dd></div><div><dt>{points >= CLAIM_COST ? "Balance after claim" : "More points needed"}</dt><dd>{state ? points >= CLAIM_COST ? points - CLAIM_COST : CLAIM_COST - points : "—"} points</dd></div></dl>{state && points < CLAIM_COST ? <><p className={styles.actionCopy}>Each first quote earns 1 point. Earn {CLAIM_COST - points} more to claim this sample job.</p><Link className={styles.outline} href="/dashboard?quoteView=feed">Quote more jobs</Link></> : <button className={styles.primary} type="button" onClick={() => void runAction("claim")} disabled={disabled}>{busy === "claim" ? "Saving claim…" : "Claim · 5 points"}</button>}</>}
             </>}
             <p className={styles.error} ref={actionErrorElement} tabIndex={-1} role="alert">{actionError}</p>
-            <Link className={styles.outline} href="#comments" scroll={false} onClick={(event) => {
-              if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-              // Keep Next's route tree attached to this history entry, then
-              // focus the existing section after the fragment is committed.
+            <Link className={styles.outline} href={discussionHref} prefetch={false} scroll={false} onClick={(event) => {
+              if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              // Next integrates native pushState with its route tree. A fresh
+              // query-bearing page's cached server URL can drop the fragment
+              // during a full router navigation; this is a same-page update.
+              if (window.location.hash !== "#comments") window.history.pushState(null, "", discussionHref);
               requestAnimationFrame(() => {
                 document.getElementById("comments")?.scrollIntoView({ block: "start" });
                 document.getElementById("comments-heading")?.focus({ preventScroll: true });
