@@ -1,0 +1,41 @@
+{
+  "description": "Replaceable landing assets. Stock photography is illustrative and does not depict a Trade Marketplace customer, worker or completed job.",
+  "licenceChecked": "2026-10-22",
+  "assets": [
+    {
+      "file": "home-renovation.webp",
+      "bytes": 83910,
+      "sha256": "53887e142fe64b1ab2044b557d8fa8b7963fdbceae74a7e91ea926b9016cfaf3",
+      "creator": "Antoni Shkraba",
+      "source": "https://www.pexels.com/photo/a-man-renovating-a-home-5493656/",
+      "download": "https://images.pexels.com/photos/5493656/pexels-photo-5493656.jpeg?auto=compress&cs=tinysrgb&w=1800",
+      "licence": "https://www.pexels.com/license/",
+      "licenceSummary": "Free website/commercial use and modifications; attribution optional. Do not imply endorsement. Not for resale as unaltered stock.",
+      "treatment": "Centre crop to 1200 × 1500, WebP quality 82; no AI edits."
+    },
+    {
+      "file": "electrical.webp",
+      "bytes": 34458,
+      "sha256": "cfa3887f9e082aa70845e5b23d108381769f4e5ddc03938d35cfe0adaea3e300",
+      "source": "public/original/browse-fb398d016e30d08fb00c4f5b0105a140173a8da9.png",
+      "provenance": "Existing user-provided original Figma artwork; source files and brand assets preserved unchanged.",
+      "treatment": "320 × 320 transparent contain, WebP quality 85."
+    },
+    {
+      "file": "plumbing.webp",
+      "bytes": 9660,
+      "sha256": "7620314d6a776511389d6c951d6c6c84db2c704730d4ed9eb96e73be810bc50c",
+      "source": "public/original/browse-2a782790be5cf1dfe155a220bd9c8853f067a73f.png",
+      "provenance": "Existing user-provided original Figma artwork; source files and brand assets preserved unchanged.",
+      "treatment": "320 × 320 transparent contain, WebP quality 85."
+    },
+    {
+      "file": "construction.webp",
+      "bytes": 17814,
+      "sha256": "fda2ccb0b16f0c8b1cc9dc24a41d0b61fb4f98c67204ccf735c0417053144e4e",
+      "source": "public/original/browse-c9bd4c4af0c22f24a0abc58a8ed672ea849ef9a8.png",
+      "provenance": "Existing user-provided original Figma artwork; source files and brand assets preserved unchanged.",
+      "treatment": "320 × 320 transparent contain, WebP quality 85."
+    }
+  ]
+}
