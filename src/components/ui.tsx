@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { JOB_STATUS, categoryStyle, formatNZD } from "@/lib/constants";
 
-export function Logo({ className = "" }: { className?: string }) {
+export function Logo({ className = "", href = "/" }: { className?: string; href?: string }) {
   return (
-    <Link href="/" aria-label="Trade Marketplace home" className={`flex min-h-12 items-center gap-3 rounded-lg ${className}`}>
+    <Link href={href} aria-label="Trade Marketplace home" className={`flex min-h-12 items-center gap-3 rounded-lg ${className}`}>
       {/* Exact original Figma vector lockup, including the original wordmark. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/brand/wordmark.svg" width={188} height={46} alt="" className="shrink-0" />

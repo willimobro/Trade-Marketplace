@@ -8,6 +8,7 @@ import { jobRates, priceWork } from "@/lib/pricing";
 import { formatNZD } from "@/lib/constants";
 import { tradeRequirementsPending } from "@/lib/trade-readiness";
 import { CustomerLanding } from "@/components/landing/CustomerLanding";
+import { WorkspaceHome } from "@/components/workspace-mode/WorkspaceHome";
 
 export const dynamic = "force-dynamic";
 export default async function Home({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
@@ -37,5 +38,5 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ v
       ? formatNZD(priceWork(job.hours ?? 0, 0, jobRates(job, settings), { applyMinimum: false }).tradieTotalCents)
       : null,
   }));
-  return <Suspense fallback={<p role="status">Loading browse…</p>}><HomeBrowse jobs={cards} storageScope={user?.id ?? "guest"} /></Suspense>;
+  return <WorkspaceHome search={view === "search"}><Suspense fallback={<p role="status">Loading browse…</p>}><HomeBrowse jobs={cards} storageScope={user?.id ?? "guest"} /></Suspense></WorkspaceHome>;
 }

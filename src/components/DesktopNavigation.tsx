@@ -23,7 +23,7 @@ export function DesktopNavigation({ role }: { role: string | null }) {
     { href: role ? "/profile" : "/login", label: role ? "Account" : "Log in", icon: "person" },
   ];
   return <header className={styles.header}>
-    <div className={styles.inner}><Logo />
+    <div className={styles.inner}><Logo href={destinations.home} />
       <nav aria-label="Desktop navigation" className={styles.links}>{items.map(item => <Link key={item.label} href={item.href} aria-current={path === item.href && (item.label !== "Browse" || item.href === "/") ? "page" : item.href !== "/" && path.startsWith(item.href + "/") ? "location" : undefined}><SourceIcon name={item.icon} size={21} navigation /><span>{item.label}</span></Link>)}</nav>
       <CurrentModeLink compact />
       {(!viewRole || viewRole === "CUSTOMER") && <Link href={destinations.post} className={styles.post}>Post a job</Link>}

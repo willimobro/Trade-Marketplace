@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { SourceIcon, type SourceIconName } from "@/components/SourceIcon";
+import { useWorkspaceLinks, useWorkspaceMode } from "@/components/workspace-mode/WorkspaceMode";
 import styles from "@/app/home.module.css";
 
 function arrowScroll(event: KeyboardEvent<HTMLDivElement>) {
@@ -25,6 +26,8 @@ function HomeJobCard({ job, onOpen }: { job: HomeJob; onOpen: (id: string) => vo
 }
 export type HomeJob = { id: string; title: string; cover: string | null; payAmount: string | null; distanceKm?: number };
 export function HomeBrowse({ jobs, storageScope }: { jobs: HomeJob[]; storageScope: string }) {
+  const workspace = useWorkspaceMode();
+  const destinations = useWorkspaceLinks(workspace.actualRole);
   const [recent, setRecent] = useState<string[]>([]);
   const [searches, setSearches] = useState<string[]>([]);
   const [storageError, setStorageError] = useState(false);
@@ -62,7 +65,8 @@ export function HomeBrowse({ jobs, storageScope }: { jobs: HomeJob[]; storageSco
   const searching = useSearchParams().get("view") === "search";
   const menu = useRef<HTMLDialogElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
-  const navigation: [string, string, SourceIconName][] = [["/", "Home", "home"], ["/?view=search", "Browse", "magnifier"], ["/dashboard", "My jobs", "jobs"], ["/messages", "Messages", "bubble"], ["/profile", "Account", "person"]];
+  const browseHref = workspace.enabled && workspace.mode === "trade" ? destinations.search : "/?view=search";
+  const navigation: [string, string, SourceIconName][] = [[destinations.home, "Home", "home"], [browseHref, "Browse", "magnifier"], [destinations.jobs, "My jobs", "jobs"], ["/messages", "Messages", "bubble"], ["/profile", "Account", "person"]];
   return <div className={styles.wrapper}>
     <header className={`${styles.header} ${searching ? styles.searchHeader : ""}`}>
       <button ref={menuButton} type="button" className={styles.menuButton} aria-label="Open navigation menu" aria-haspopup="dialog" onClick={() => menu.current?.showModal()}><SourceIcon name="menu" size={26} /></button>
@@ -70,7 +74,7 @@ export function HomeBrowse({ jobs, storageScope }: { jobs: HomeJob[]; storageSco
         <button type="submit" aria-label="Submit search"><SourceIcon name="magnifier" size={16} /></button>
         <input type="search" name="q" aria-label="Search currently available jobs" placeholder={searching ? "Search for any job" : "Search"} />
       </form>
-      <Link href="/jobs/new" className={styles.post} aria-label="Post a job"><SourceIcon name="plus-square" size={26} /></Link>
+      <Link href={destinations.post} className={styles.post} aria-label="Post a job"><SourceIcon name="plus-square" size={26} /></Link>
       {!searching && <h1>Browse</h1>}
     </header>
     <div className={styles.content}>
@@ -99,10 +103,10 @@ export function HomeBrowse({ jobs, storageScope }: { jobs: HomeJob[]; storageSco
       </>}
       {storageError && <p className={styles.empty} role="status">Browser history is unavailable. You can still browse and open jobs.</p>}
     </div>
-    <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? href === "/?view=search" : href === "/") ? "page" : undefined}><SourceIcon name={icon} size={26} navigation /><span className="sr-only">{label}</span></Link>)}</nav>
+    <nav className={styles.bottomNav} aria-label="Main navigation">{navigation.map(([href, label, icon]) => <Link key={href} href={href} aria-label={label} aria-current={(searching ? label === "Browse" : label === "Home") ? "page" : undefined}><SourceIcon name={icon} size={26} navigation /><span className="sr-only">{label}</span></Link>)}</nav>
     <dialog ref={menu} className={styles.menu} aria-labelledby="home-menu-title" onClose={() => requestAnimationFrame(() => menuButton.current?.focus())}>
       <div className={styles.menuHeading}><h2 id="home-menu-title">Trade Marketplace</h2><button type="button" aria-label="Close menu" onClick={() => menu.current?.close()}><SourceIcon name="x" /></button></div>
-      <nav aria-label="Menu">{[["/jobs", "Find work"], ["/jobs/new", "Post a job"], ["/for-tradies", "For tradies"], ["/login", "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={href} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>
+      <nav aria-label="Menu">{[[destinations.search, "Browse jobs"], [destinations.post, "Post a job"], ["/for-tradies", "For tradies"], [workspace.actualRole ? "/profile" : "/login", workspace.actualRole ? "Account" : "Log in"], ["/support", "Help"]].map(([href,label]) => <Link key={label} href={href} onClick={() => menu.current?.close()}>{label}</Link>)}</nav>
     </dialog>
   </div>;
 }

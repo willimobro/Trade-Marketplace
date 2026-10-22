@@ -9,6 +9,7 @@ import { db } from "@/lib/db";
 import { EmptyState } from "@/components/ui";
 import { MessageList } from "./MessageList";
 import { QuoteConversations } from "./QuoteConversations";
+import { CustomerConversations } from "./CustomerConversations";
 import { allowsWorkspaceDemo } from "@/lib/workspace-mode/preference";
 import { WorkspaceModeView } from "@/components/workspace-mode/WorkspaceMode";
 
@@ -51,6 +52,6 @@ export default async function MessagesPage() {
     }))} /> : <div className="mt-8"><EmptyState title={quoteDemo ? "No existing job conversations" : "No conversations yet"}>Messages will appear here when you have a job to discuss. <Link className="font-medium underline" href={user.role === "ADMIN" ? "/admin" : "/dashboard"}>Go to your workspace</Link>.</EmptyState></div>}
     </section>
     </WorkspaceModeView>
-    {workspaceDemo && user.role === "TRADIE" && <WorkspaceModeView mode="customer"><div className="mt-8"><EmptyState title="Your customer conversations">Open a customer job to review its details and next step. <Link className="font-medium underline" href="/dashboard">View your customer jobs</Link>.</EmptyState></div></WorkspaceModeView>}
+    {workspaceDemo && user.role === "TRADIE" && <WorkspaceModeView mode="customer"><CustomerConversations key={`customer-messages-${user.id}`} userId={user.id} /></WorkspaceModeView>}
   </div>;
 }

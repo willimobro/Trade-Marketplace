@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { allowsWorkspaceDemo, defaultWorkspaceMode, parseWorkspaceMode, serializeWorkspaceMode, workspaceLinks, workspaceModeKey } from "../src/lib/workspace-mode/preference";
+import { allowsWorkspaceDemo, defaultWorkspaceMode, parseWorkspaceMode, serializeWorkspaceMode, workspaceHomeRedirect, workspaceLinks, workspaceModeKey } from "../src/lib/workspace-mode/preference";
 
 test("mode simulation requires allowed runtime and exact reserved customer/tradie identities", () => {
   for (const [role, email] of [["CUSTOMER", "customer@demo.test"], ["TRADIE", "sparky@demo.test"]]) {
@@ -22,4 +22,17 @@ test("simulated mode navigation does not enter server actions for another role",
   assert.equal(workspaceLinks("CUSTOMER", "customer", true).post, "/jobs/new");
   assert.equal(workspaceLinks("TRADIE", "trade", false).search, "/jobs");
   assert.equal(workspaceLinks("ADMIN", "customer", false).jobs, "/admin");
+});
+
+test("direct home and search enter the selected synthetic workspace without changing ordinary browsing", () => {
+  for (const search of [false, true]) {
+    assert.equal(workspaceHomeRedirect("TRADIE", "customer", true, search), "/dashboard");
+    assert.equal(workspaceHomeRedirect("CUSTOMER", "trade", true, search), search ? "/dashboard?quoteView=feed" : "/dashboard");
+    for (const role of [null, "CUSTOMER", "TRADIE", "ADMIN"]) for (const mode of ["customer", "trade"] as const) {
+      assert.equal(workspaceHomeRedirect(role, mode, false, search), null);
+    }
+    assert.equal(workspaceHomeRedirect("CUSTOMER", "customer", true, search), null);
+    assert.equal(workspaceHomeRedirect("TRADIE", "trade", true, search), null);
+    assert.equal(workspaceHomeRedirect("ADMIN", "trade", true, search), null);
+  }
 });

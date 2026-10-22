@@ -48,14 +48,17 @@ get this control. `WorkspaceMode` must never be used as backend authorization.
 Customer preview data and quote data are intentionally separate, replaceable
 adapters. A newly posted local sample job is not distributed to other users.
 Price acceptance is explicitly a sample state change, not a booking or payment.
-Customer-mode conversations for a sample tradie are not yet a separate simulated
-messaging workflow; navigation offers the customer jobs workspace. Real multi-role
+Customer-mode conversations for a sample tradie use the same sample hiring jobs,
+including locally posted jobs. Read/unread state, per-job drafts and viewer notes
+persist per account on this device. Notes are explicitly local, without a real
+recipient, delivery acknowledgement or generated replies. The adapter retains up
+to 100 messages of 2,000 characters and has no attachment sending. Real multi-role
 accounts, onboarding, permissions and cross-device persistence remain future
 backend work.
 
 ## Verification
 
-114 app tests, eight preview-security tests, lint and the isolated production build
+121 app tests, eight preview-security tests, lint and the isolated production build
 pass before browser review. New tests cover exact preview eligibility, account
 preference isolation, safe navigation, draft expiry/corruption/write failures,
 quote draft idempotency, sample posting/acceptance and preservation of newer
@@ -72,5 +75,15 @@ The local posting check caught and fixed a history update that changed the URL
 without updating the rendered composer. Its CUA regression is retained.
 
 Screenshots and observations are in the task's `evidence/account-mode` folder.
-Independent browser review is still required. This does not claim production
-readiness, remote authenticated validation, or a full new messaging workflow.
+The initial independent review passed identity, authorization and draft checks,
+but found a desktop wordmark escape and rounded hiring fields. The follow-up
+keeps direct home/search and every shared home entry in the selected mode, makes
+web fields square, and adds the missing synthetic Customer inbox. Targeted
+independent recheck of this follow-up is required before publication. This does
+not claim production readiness or remote authenticated validation.
+
+Follow-up integrator checks: both opposite-mode home/search entries, desktop
+wordmark, mobile sample posting, computed square field styling, local message
+saving, draft round-trip through mode switches, read/unread controls, conversation
+close focus, and 320/390/1440px layouts. The new home-entry CUA regression is in
+`tests/browser/account-mode-home.cua.js`.
