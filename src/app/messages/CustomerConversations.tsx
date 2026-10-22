@@ -32,6 +32,7 @@ export function CustomerConversations({ userId }: { userId: string }) {
   const inboxHeading = useRef<HTMLHeadingElement>(null);
   const unavailableMessage = useRef<HTMLParagraphElement>(null);
   const restoreRowFocus = useRef<string | null>(null);
+  const previousSelection = useRef<string | null>(null);
   const rowButtons = useRef(new Map<string, HTMLButtonElement>());
   const pendingMessage = useRef<{ jobId: string; body: string; id: string } | null>(null);
   const id = useId();
@@ -68,14 +69,22 @@ export function CustomerConversations({ userId }: { userId: string }) {
   }, [userId]);
 
   useEffect(() => {
+    const previousId = previousSelection.current;
+    previousSelection.current = selectedId;
     setFormError(""); setNotice("");
     if (selectedId) {
       detailHeading.current?.focus();
       try { persist((current, latestJobs) => markCustomerConversation(current, latestJobs, selectedId, false)); }
       catch { setStorageError("This browser could not save read status. Your messages are still available below."); }
-    } else if (restoreRowFocus.current) {
-      (rowButtons.current.get(restoreRowFocus.current) ?? inboxHeading.current)?.focus();
+    } else if (requestedJobId === null) {
+      const returnId = restoreRowFocus.current ?? previousId;
       restoreRowFocus.current = null;
+      if (returnId) {
+        // Browser Back does not call close(). Wait until the selected-view
+        // class has been removed so the mobile inbox row is visible again.
+        const frame = requestAnimationFrame(() => { (rowButtons.current.get(returnId) ?? inboxHeading.current)?.focus(); });
+        return () => cancelAnimationFrame(frame);
+      }
     }
   }, [persist, requestedJobId, selectedId]);
 

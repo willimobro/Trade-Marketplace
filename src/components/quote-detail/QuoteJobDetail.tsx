@@ -34,7 +34,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
   const [actionError, setActionError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState<"quote" | "claim" | "complete" | "accept" | "comment" | null>(null);
-  const [focusTarget, setFocusTarget] = useState<"comment" | "scope" | "notice" | "error" | "editor" | null>(null);
+  const [focusTarget, setFocusTarget] = useState<"comment" | "scope" | "notice" | "error" | "editor" | "accepted" | null>(null);
   const alive = useRef(false);
   const actionLock = useRef(false);
   const amountInput = useRef<HTMLInputElement>(null);
@@ -43,6 +43,9 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
   const noticeElement = useRef<HTMLParagraphElement>(null);
   const actionErrorElement = useRef<HTMLParagraphElement>(null);
   const editorOpener = useRef<HTMLButtonElement>(null);
+  const quoteForm = useRef<HTMLFormElement>(null);
+  const acceptedSummary = useRef<HTMLDivElement>(null);
+  const focusAcceptedAfterUpdate = useRef(false);
   const handledInitialHash = useRef(false);
   const restoredQuoteDraft = useRef(false);
   const quoteDraftMemory = useRef<{ userId: string; jobId: string; value: QuoteDraft } | null>(null);
@@ -58,8 +61,13 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
 
   const applyState = useCallback((next: QuoteDemoState) => {
     if (!alive.current) return;
+    // Capture focus while the editor still exists. An accepted-state render
+    // removes it, but must leave someone typing in the discussion undisturbed.
+    if (getDemoQuoteStatus(next, job.id) === "accepted") {
+      if (quoteForm.current?.contains(document.activeElement)) focusAcceptedAfterUpdate.current = true;
+    } else focusAcceptedAfterUpdate.current = false;
     setState((current) => !current || next.revision >= current.revision ? next : current);
-  }, []);
+  }, [job.id]);
 
   const read = useCallback(async () => {
     try {
@@ -100,11 +108,19 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
 
   useEffect(() => { if (editorOpen) amountInput.current?.focus(); }, [editorOpen]);
 
+  useEffect(() => {
+    if (quoteStatus !== "accepted" || !editorOpen) return;
+    setEditorOpen(false);
+    if (focusAcceptedAfterUpdate.current && document.activeElement === document.body) setFocusTarget("accepted");
+    else setFocusTarget(current => current === "scope" || current === "editor" ? null : current);
+    focusAcceptedAfterUpdate.current = false;
+  }, [quoteStatus, editorOpen]);
+
   // Effects run after React commits the enabled/remounted control. A single
   // animation frame can run before that commit when a storage write resolves.
   useEffect(() => {
     if (busy !== null || !focusTarget) return;
-    const target = { comment: commentInput, scope: scopeInput, notice: noticeElement, error: actionErrorElement, editor: editorOpener }[focusTarget].current;
+    const target = { comment: commentInput, scope: scopeInput, notice: noticeElement, error: actionErrorElement, editor: editorOpener, accepted: acceptedSummary }[focusTarget].current;
     if (target) { target.focus(); setFocusTarget(null); }
   }, [busy, editorOpen, focusTarget]);
 
@@ -288,7 +304,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
             <h2>{quoteStatus === "accepted" ? "Quote accepted" : quote ? "You’ve quoted this job" : claim ? claim.completedAt ? "Sample job complete" : "You claimed this job" : job.stage === "quoting" ? "Make it your next job" : "A clear scope. A fixed price."}</h2>
             {job.stage === "quoting" ? <>
               {quote ? <div className={styles.quoteSummary}><span>Your quote · NZD</span><strong>{formatDemoMoney(quote.amountCents)}</strong><p>{quote.note}</p><span>Saved {savedDate(quote.updatedAt)} NZ time</span></div> : <p className={styles.actionCopy}>Read the scope, ask any questions and send your sample quote. Your first valid quote earns 1 point.</p>}
-              {quoteStatus === "accepted" ? <div className={styles.acceptedNote}><SourceIcon name="check" size={20} /><div><strong>Accepted in this preview</strong><p>This account’s quote is locked at the saved price and scope. Arrange the next steps in the sample discussion.</p></div></div> : editorOpen ? <form className={styles.quoteForm} onSubmit={submitQuote} noValidate>
+              {quoteStatus === "accepted" ? <div ref={acceptedSummary} className={styles.acceptedNote} tabIndex={-1} role="group" aria-label="Your accepted quote"><SourceIcon name="check" size={20} /><div><strong>Accepted in this preview</strong><p>This account’s quote is locked at the saved price and scope. Any unsent edits remain separate in this tab’s draft. Arrange the next steps in the sample discussion.</p></div></div> : editorOpen ? <form ref={quoteForm} className={styles.quoteForm} onSubmit={submitQuote} noValidate>
                 <label htmlFor={`${formId}-amount`}>Your quote <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input ref={amountInput} id={`${formId}-amount`} value={amount} onChange={(event) => changeQuoteDraft(event.target.value, scope)} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" required aria-invalid={invalidField === "amount"} aria-describedby={`${formId}-quote-error`} disabled={busy === "quote"} /></div>
                 <label htmlFor={`${formId}-scope`}>What’s included?</label><textarea ref={scopeInput} id={`${formId}-scope`} value={scope} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={5} maxLength={1000} placeholder="Labour, materials, timing and any assumptions…" required aria-invalid={invalidField === "scope"} aria-describedby={`${formId}-scope-help ${formId}-quote-error`} disabled={busy === "quote"} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
                 <p id={`${formId}-quote-error`} className={styles.error} role="alert">{quoteError}</p><button className={styles.primary} type="submit" disabled={disabled}>{busy === "quote" ? "Saving quote…" : quote ? "Save quote changes" : "Quote · +1 point"}</button><button className={styles.outline} type="button" onClick={closeEditor} disabled={busy !== null}>Cancel</button><button className={styles.outline} type="button" onClick={discardQuoteDraft} disabled={busy !== null}>Discard unsent quote</button>

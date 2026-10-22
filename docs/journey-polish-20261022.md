@@ -34,4 +34,6 @@ Use fresh isolated synthetic fixtures; do not use or reset user databases.
 
 ## Remaining product boundaries
 
+Independent review of the initial candidate passed the scoped data, authorization, history, points and layout checks, including actual 320/390/768/1440 widths and unchanged database rows. Two keyboard issues were found and corrected in a follow-up: native browser Back now restores the previous conversation row, and full-detail acceptance focuses its locked summary only when it removes the focused quote editor. Someone typing in discussion keeps their focus. The follow-up requires targeted independent verification before deployment.
+
 This release does not make the full frontend complete. A systematic pass across admin/payroll, variations, completion/recovery and offline/error states remains separate work. Same-person role switching, new hiring jobs, sample messages and quote points remain isolated browser-local prototypes. Real delivery, cross-device persistence, payments, verification and backend multi-role authorization require later implementation. Account job history remains deferred. The authenticated live check still depends on Matthew's existing preview sign-in; no credentials or gate settings changed.
