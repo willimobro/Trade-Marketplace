@@ -6,6 +6,7 @@ import styles from "./job-card.module.css";
 
 export type JobPhoto = { url: string; alt?: string };
 export type JobQuoteStatus = "quoted" | "accepted";
+export type JobOpenHandler = (trigger: HTMLAnchorElement) => void;
 
 export type JobPhotoCarouselProps = {
   photos: JobPhoto[];
@@ -14,10 +15,11 @@ export type JobPhotoCarouselProps = {
   quoteStatus?: JobQuoteStatus;
   completed?: boolean;
   compact?: boolean;
+  onOpen?: JobOpenHandler;
 };
 
 /** The photo link and carousel controls are siblings, never nested controls. */
-export function JobPhotoCarousel({ photos, title, href, quoteStatus, completed = false, compact = false }: JobPhotoCarouselProps) {
+export function JobPhotoCarousel({ photos, title, href, quoteStatus, completed = false, compact = false, onOpen }: JobPhotoCarouselProps) {
   const [position, setPosition] = useState(0);
   const [failedPhotos, setFailedPhotos] = useState<string[]>([]);
   const gesture = useRef<{ x: number; y: number } | null>(null);
@@ -39,6 +41,12 @@ export function JobPhotoCarousel({ photos, title, href, quoteStatus, completed =
     event.preventDefault();
     event.stopPropagation();
     change(next);
+  }
+
+  function openPhoto(event: MouseEvent<HTMLAnchorElement>) {
+    if (!onOpen || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onOpen(event.currentTarget);
   }
 
   function keyboard(event: KeyboardEvent<HTMLDivElement>) {
@@ -65,7 +73,7 @@ export function JobPhotoCarousel({ photos, title, href, quoteStatus, completed =
   ) : <span className={styles.photoFallback}><svg aria-hidden="true" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8" cy="8" r="1.5" /><path d="m3 17 5-5 4 4 3-3 6 6" /></svg><span>{photo ? "Photo unavailable" : "No photo yet"}</span></span>;
 
   return <div className={`${styles.carousel} ${compact ? styles.compact : ""} ${completed ? styles.completed : ""}`} role={multiple ? "group" : undefined} aria-label={multiple ? `${title} photos` : undefined} aria-roledescription={multiple ? "carousel" : undefined} onKeyDown={keyboard} onPointerDown={(event) => { suppressClick.current = false; if (event.isPrimary && event.pointerType !== "mouse" && !(event.target as HTMLElement).closest("button")) gesture.current = { x: event.clientX, y: event.clientY }; }} onPointerUp={pointerEnd} onPointerCancel={() => { gesture.current = null; }} onClickCapture={(event) => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}>
-    {href ? <Link className={styles.photoLink} href={href} aria-label={`View ${title}`}>{visual}</Link> : <div className={styles.photoLink} tabIndex={multiple ? 0 : undefined}>{visual}</div>}
+    {href ? <Link className={styles.photoLink} href={href} aria-label={`View ${title}`} aria-haspopup={onOpen ? "dialog" : undefined} onClick={openPhoto}>{visual}</Link> : <div className={styles.photoLink} tabIndex={multiple ? 0 : undefined}>{visual}</div>}
     {(completed || quoteStatus) && <div className={`${styles.quoteOverlay} ${overlayClass}`}><span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="m8 12 3 3 5-6" /></svg>{overlayLabel}</span></div>}
     {multiple && <>
       <button className={`${styles.photoArrow} ${styles.photoPrevious}`} type="button" aria-label={`Previous photo of ${title}`} aria-controls={id} onClick={(event) => control(event, index - 1)}><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m14 6-6 6 6 6" /></svg></button>

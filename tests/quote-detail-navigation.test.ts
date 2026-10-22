@@ -23,8 +23,8 @@ test("sample detail route keeps the authenticated, runtime and account boundarie
   const route = readFileSync(new URL("../src/app/quote-jobs/[id]/page.tsx", import.meta.url), "utf8");
   assert.match(route, /requireUser\(`\/quote-jobs\/\$\{id\}`\)/);
   assert.match(route, /await canUseHostedPreview\(\) \|\| allowsLocalDemo\(process\.env\.TRADE_LOCAL_DEMO, \(await headers\(\)\)\.get\("host"\)\)/);
-  assert.match(route, /if \(!allowsQuoteDemo\(runtimeAllowed, user\)\) notFound\(\)/);
+  assert.match(route, /if \(!allowsWorkspaceDemo\(runtimeAllowed, user\)\) notFound\(\)/);
   assert.match(route, /if \(!job\) notFound\(\)/);
-  assert.ok(route.indexOf("!allowsQuoteDemo") < route.indexOf("<QuoteJobDetail"));
+  assert.ok(route.indexOf("!allowsWorkspaceDemo") < route.indexOf("<QuoteJobDetail"));
   assert.doesNotMatch(route, /from ["']@\/lib\/db["']/);
 });

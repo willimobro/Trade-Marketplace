@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { requireUser } from "@/lib/session";
 import { logout } from "@/app/actions/auth";
 import { ProfileForm } from "./ProfileForm";
+import { AccountModeSwitch } from "@/components/workspace-mode/AccountModeSwitch";
 
 export default async function ProfilePage() {
   const session = await requireUser("/profile");
@@ -21,6 +22,7 @@ export default async function ProfilePage() {
       </div>
       <p className="mt-3 break-words text-sm text-muted">{user.email} · {user.role === "ADMIN" ? "Administrator account" : user.role === "TRADIE" ? "Tradie account" : "Customer account"}</p>
       <p className="mt-4 text-muted">Keep your details up to date so it’s easier to coordinate your jobs.</p>
+      <AccountModeSwitch />
       <ProfileForm user={user} />
       <nav aria-label="Account help" className="card mt-6 flex flex-wrap gap-x-6 p-5"><Link href="/notifications" className="inline-flex min-h-12 items-center font-semibold underline">Notifications preview</Link><Link href="/recovery" className="inline-flex min-h-12 items-center font-semibold underline">Recovery preview</Link><Link href="/support" className="inline-flex min-h-12 items-center font-semibold underline">Help and support</Link></nav>
       <form action={logout} className="mt-6">

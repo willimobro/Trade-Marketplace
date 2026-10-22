@@ -6,6 +6,7 @@ import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
 import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
 import cardStyles from "@/components/job-cards/job-card.module.css";
 import { DEMO_JOBS, DEMO_TRADES, demoTrade, findDemoJob, formatDemoMoney, type DemoJob } from "@/lib/quote-demo/jobs";
+import { clearComposerDraft, loadQuoteDraft, MAX_QUOTE_DRAFT_AMOUNT_LENGTH, saveQuoteDraft, type QuoteDraft } from "@/lib/quote-demo/drafts";
 import { CLAIM_COST, getDemoQuoteStatus, getPointsBalance, QuoteDemoError, type QuoteDemoState } from "@/lib/quote-demo/model";
 import { loadQuoteDemo, resetQuoteDemo, saveDemoClaim, saveDemoCompletion, saveDemoQuote, subscribeQuoteDemo } from "@/lib/quote-demo/storage";
 import { readWorkspaceNavigation, readWorkspaceSession, workspaceSearch, workspaceSessionKey, type WorkspaceTab } from "./workspace-navigation";
@@ -45,6 +46,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [formError, setFormError] = useState("");
+  const [draftFailure, setDraftFailure] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [quoteSaved, setQuoteSaved] = useState(false);
@@ -59,6 +61,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const alive = useRef(true);
   const user = useRef(userId);
   const focusAfterClose = useRef(false);
+  const quoteDraftMemory = useRef(new Map<string, QuoteDraft>());
   const formId = useId();
 
   const read = useCallback(async () => {
@@ -76,7 +79,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     const navigation = readWorkspaceNavigation(window.location.search);
     let session = readWorkspaceSession(null);
     try { session = readWorkspaceSession(sessionStorage.getItem(workspaceSessionKey(userId))); } catch { /* Navigation still works when session storage is unavailable. */ }
-    setState(null); setStorageFailure(null); setModal(null); setNotice("");
+    setState(null); setStorageFailure(null); setModal(null); setNotice(""); setDraftFailure("");
     setTab(navigation.tab); setFilter(navigation.trade);
     setSkipped(session.skipped.filter((id) => id !== navigation.quoteJob));
     setSelectedJobId(navigation.quoteJob ?? session.quoteJob ?? null);
@@ -149,9 +152,34 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   }
   function goToFeed() { focusAfterClose.current = !!modal; setModal(null); switchTab("feed"); setFilter("all"); setSkipped([]); setSelectedJobId(null); requestAnimationFrame(() => heading.current?.focus()); }
   function detailHref(jobId: string) { return `/quote-jobs/${jobId}?${workspaceSearch({ tab, trade: filter, quoteJob: current?.id })}`; }
+  function draftKey(jobId: string) { return JSON.stringify([userId, jobId]); }
   function openQuote(job: DemoJob) {
+    if (state && getDemoQuoteStatus(state, job.id) === "accepted") return;
     const existing = state?.quotes.find((quote) => quote.jobId === job.id);
-    setAmount(existing ? String(existing.amountCents / 100) : ""); setNote(existing?.note ?? ""); setFormError(""); setModal({ kind: "quote", jobId: job.id });
+    const loaded = loadQuoteDraft(userId, job.id);
+    const draft = loaded.ok ? loaded.value ?? quoteDraftMemory.current.get(draftKey(job.id)) : quoteDraftMemory.current.get(draftKey(job.id));
+    setDraftFailure(loaded.ok ? "" : loaded.error.message);
+    setAmount(draft?.amount ?? (existing ? String(existing.amountCents / 100) : "")); setNote(draft?.scope ?? existing?.note ?? ""); setFormError(""); setModal({ kind: "quote", jobId: job.id });
+  }
+
+  function changeQuoteDraft(nextAmount: string, nextScope: string) {
+    setAmount(nextAmount); setNote(nextScope); setFormError("");
+    if (modal?.kind !== "quote") return;
+    const value = { amount: nextAmount, scope: nextScope };
+    quoteDraftMemory.current.set(draftKey(modal.jobId), value);
+    const saved = saveQuoteDraft(userId, modal.jobId, value);
+    setDraftFailure(saved.ok ? "" : saved.error.message);
+  }
+
+  function discardQuoteDraft() {
+    if (modal?.kind !== "quote") return;
+    const cleared = clearComposerDraft(userId, modal.jobId, "quote");
+    setDraftFailure(cleared.ok ? "" : cleared.error.message);
+    if (!cleared.ok) return;
+    quoteDraftMemory.current.delete(draftKey(modal.jobId));
+    const existing = state?.quotes.find((quote) => quote.jobId === modal.jobId);
+    setAmount(existing ? String(existing.amountCents / 100) : ""); setNote(existing?.note ?? ""); setFormError("");
+    document.getElementById(`${formId}-amount`)?.focus();
   }
   function openClaim(job: DemoJob) { setFormError(""); setModal({ kind: "claim", jobId: job.id }); }
   function next() { if (feed.length > 1) setSelectedJobId(feed[(currentIndex + 1) % feed.length].id); }
@@ -163,7 +191,9 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     setBusy(true); setFormError("");
     try {
       const saved = await saveDemoQuote(userId, modalJob.id, amount, note);
+      const cleared = clearComposerDraft(userId, modalJob.id, "quote", { amount, scope: note });
       if (!alive.current || user.current !== userId) return;
+      quoteDraftMemory.current.delete(draftKey(modalJob.id)); setDraftFailure(cleared.ok ? "" : cleared.error.message);
       focusAfterClose.current = true; setState(saved.state); setModal(null); setQuoteSaved(true);
       setNotice(saved.result.rewarded ? "+1 point. Quote saved to Quoted Jobs." : "Quote updated. Your point was already earned on this job.");
     } catch (error) {
@@ -229,6 +259,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     </div>
 
     {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Demo storage needs a moment.</strong><p>{storageFailure.message}</p></div><div className={styles.errorActions}><button onClick={() => void read()} disabled={busy}>Retry storage</button>{storageFailure.code === "invalid-storage" && <button onClick={() => void reset()} disabled={busy}>Reset this user&apos;s sample data</button>}</div></div>}
+    {draftFailure && !modal && <p className={styles.formError} role="status">{draftFailure}</p>}
     {notice && <div className={styles.notice} role="status"><Icon name="check" size={18} /><span>{notice}</span>{quoteSaved && <button onClick={() => switchTab("quoted")}>View quoted jobs<Icon name="arrow" size={16} /></button>}</div>}
 
     <div className={styles.sectionHeading}>
@@ -294,10 +325,12 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
           <p className={styles.eyebrow}>{editing ? "YOUR SAVED QUOTE" : "A LITTLE KNOW-HOW. ONE MORE POINT."}</p><h2 id={`${formId}-title`}>{editing ? "Fine-tune your quote." : "What’s your quote?"}</h2>
           <div className={styles.dialogJob}><JobPhoto job={modalJob} /><div><span>{modalJob.trade} · {modalJob.suburb}</span><h3>{modalJob.title}</h3></div></div>
           <form onSubmit={submit} noValidate>
-            <label className={styles.fieldLabel} htmlFor={`${formId}-amount`}>Your estimate <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input autoFocus id={`${formId}-amount`} inputMode="decimal" autoComplete="off" placeholder="0.00" value={amount} onChange={(event) => setAmount(event.target.value)} aria-describedby={`${formId}-error`} aria-invalid={!!formError} required /></div>
-            <label className={styles.fieldLabel} htmlFor={`${formId}-scope`}>What’s included?</label><textarea id={`${formId}-scope`} placeholder="Labour, materials and anything the customer should know…" value={note} onChange={(event) => setNote(event.target.value)} rows={4} maxLength={1000} aria-describedby={`${formId}-scope-help ${formId}-error`} aria-invalid={!!formError} required /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
+            <label className={styles.fieldLabel} htmlFor={`${formId}-amount`}>Your estimate <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input autoFocus id={`${formId}-amount`} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" value={amount} onChange={(event) => changeQuoteDraft(event.target.value, note)} aria-describedby={`${formId}-error`} aria-invalid={!!formError} required disabled={busy} /></div>
+            <label className={styles.fieldLabel} htmlFor={`${formId}-scope`}>What’s included?</label><textarea id={`${formId}-scope`} placeholder="Labour, materials and anything the customer should know…" value={note} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={4} maxLength={1000} aria-describedby={`${formId}-scope-help ${formId}-error`} aria-invalid={!!formError} required disabled={busy} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
             <div className={styles.formReward}><Icon name="coin" size={21} /><span>{editing ? "Already earned: 1 point. Edits don’t earn more." : "Save your first quote on this job to earn 1 point."}</span></div>
             <p id={`${formId}-error`} className={styles.formError} role="alert">{formError}</p><button className={styles.primary} type="submit" disabled={disabled}>{busy ? "Saving quote…" : editing ? "Save changes" : "Save quote + earn 1 point"}<Icon name="arrow" size={18} /></button>
+            {draftFailure && <p className={styles.formError} role="status">{draftFailure}</p>}
+            <button className={styles.secondary} type="button" onClick={discardQuoteDraft} disabled={busy}>Discard unsent quote</button>
           </form><p className={styles.modalFine}>A sample estimate for this demo. Nothing is sent to a customer.</p>
         </> : modal.kind === "claim" ? <>
           <p className={styles.eyebrow}>PUT YOUR POINTS TO WORK</p><h2 id={`${formId}-title`}>{points < CLAIM_COST ? "A few more points to go." : "Your next job starts here."}</h2>

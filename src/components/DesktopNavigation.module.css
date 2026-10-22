@@ -1,7 +1,7 @@
 .header { display:none; }
 @media(min-width:1024px) {
   .header { display:block; position:sticky; top:0; z-index:50; background:var(--trade-forest); color:#fff; box-shadow:var(--trade-shadow-header); }
-  .inner { max-width:1280px; min-height:88px; margin:auto; padding:12px 32px; display:flex; align-items:center; gap:24px; }
+  .inner { max-width:1440px; min-height:88px; margin:auto; padding:12px 32px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px; }
   .links { display:flex; flex:1; justify-content:flex-end; align-items:center; gap:4px; }
   .links a { display:flex; align-items:center; gap:8px; min-height:48px; padding:10px 12px; border-radius:var(--trade-radius-action); font:700 14px/20px 'Trade UI',sans-serif; white-space:nowrap; }
   .links a:hover { background:var(--trade-action-hover); color:var(--trade-forest); }

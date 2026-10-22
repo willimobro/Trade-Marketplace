@@ -9,12 +9,15 @@ import { db } from "@/lib/db";
 import { EmptyState } from "@/components/ui";
 import { MessageList } from "./MessageList";
 import { QuoteConversations } from "./QuoteConversations";
+import { allowsWorkspaceDemo } from "@/lib/workspace-mode/preference";
+import { WorkspaceModeView } from "@/components/workspace-mode/WorkspaceMode";
 
 export const metadata = { title: "Messages" };
 export default async function MessagesPage() {
   const user = await requireUser("/messages");
   const demoRuntime = await canUseHostedPreview() || allowsLocalDemo(process.env.TRADE_LOCAL_DEMO, (await headers()).get("host"));
   const quoteDemo = allowsQuoteDemo(demoRuntime, user);
+  const workspaceDemo = allowsWorkspaceDemo(demoRuntime, user);
   const jobs = await db.job.findMany({
     where: user.role === "ADMIN" ? { messages: { some: {} } } : { OR: [{ customerId: user.id }, { tradieId: user.id }] },
     include: {
@@ -28,7 +31,8 @@ export default async function MessagesPage() {
     <p className="eyebrow">Your job conversations</p><h1 className="page-title mt-2">Messages</h1>
     <p className="mt-3 text-sm text-muted">Open a conversation to keep your job moving.</p>
     <p className={styles.localNote}>Read status is saved for your account in this browser. Mark a conversation as unread to come back to it.</p>
-    {quoteDemo && <QuoteConversations key={`quotes-${user.id}`} userId={user.id} />}
+    {(workspaceDemo || quoteDemo) && <WorkspaceModeView mode="trade"><QuoteConversations key={`quotes-${user.id}`} userId={user.id} /></WorkspaceModeView>}
+    <WorkspaceModeView mode={user.role === "TRADIE" ? "trade" : "customer"}>
     <section className={quoteDemo ? styles.section : undefined} aria-label={quoteDemo ? "Existing job conversations" : "Job conversations"}>
     {quoteDemo && <h2 className={styles.sectionHeading}>Existing job conversations</h2>}
     {jobs.length ? <MessageList key={user.id} userId={user.id} conversations={jobs.map((job) => ({
@@ -46,5 +50,7 @@ export default async function MessagesPage() {
       } : null,
     }))} /> : <div className="mt-8"><EmptyState title={quoteDemo ? "No existing job conversations" : "No conversations yet"}>Messages will appear here when you have a job to discuss. <Link className="font-medium underline" href={user.role === "ADMIN" ? "/admin" : "/dashboard"}>Go to your workspace</Link>.</EmptyState></div>}
     </section>
+    </WorkspaceModeView>
+    {workspaceDemo && user.role === "TRADIE" && <WorkspaceModeView mode="customer"><div className="mt-8"><EmptyState title="Your customer conversations">Open a customer job to review its details and next step. <Link className="font-medium underline" href="/dashboard">View your customer jobs</Link>.</EmptyState></div></WorkspaceModeView>}
   </div>;
 }

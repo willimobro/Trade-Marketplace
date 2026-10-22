@@ -1,0 +1,18 @@
+.section { margin:24px 0; padding:24px; background:var(--trade-paper); border-radius:11px; }
+.section h2 { margin:0; font:900 24px/29px 'Trade Display',sans-serif; font-variation-settings:'wght' 900,'wdth' 151,'opsz' 28; }
+.section p { margin:8px 0 0; color:#52645b; font:400 14px/20px 'Trade UI',sans-serif; }
+.switch { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:5px; margin-top:20px; max-width:360px; border-radius:30px; background:white; box-shadow:0 0 0 1px #52645b; }
+.switch button { min-height:44px; border:0; border-radius:30px; padding:10px 16px; background:transparent; color:#52645b; font:700 14px/20px 'Trade UI',sans-serif; cursor:pointer; }
+.switch .customer { background:#6cbd45; color:#0c251d; }
+.switch .trade { background:#ff8200; color:#0c251d; }
+.switch button:hover:not([aria-checked=true]) { background:#f1ece5; }
+.switch button:disabled { opacity:.6; cursor:wait; }
+.section .state { margin-top:14px; }
+.open { display:inline-flex; gap:12px; align-items:center; min-height:44px; margin-top:12px; color:#0c251d; font:700 14px/20px 'Trade UI',sans-serif; text-decoration:underline; }
+.section :focus-visible,.modeLink:focus-visible { outline:3px solid #2163c6; outline-offset:3px; }
+.modeLink { display:inline-flex; align-items:center; gap:8px; min-height:44px; color:inherit; font:700 14px/20px 'Trade UI',sans-serif; text-decoration:none; white-space:nowrap; }
+.modeLink:hover { text-decoration:underline; }
+.greenDot,.orangeDot { width:8px; height:8px; flex:0 0 8px; border-radius:50%; background:#6cbd45; }
+.orangeDot { background:#ff8200; }
+.compact { font-size:12px; }
+@media(max-width:390px) { .section { padding:20px 16px; } }

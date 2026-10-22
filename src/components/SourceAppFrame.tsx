@@ -7,6 +7,8 @@ import { logout } from "@/app/actions/auth";
 import { SourceIcon, type SourceIconName } from "./SourceIcon";
 import { hasDesktopWorkspace } from "@/lib/desktop-routes";
 import styles from "./SourceAppFrame.module.css";
+import { useWorkspaceLinks } from "./workspace-mode/WorkspaceMode";
+import { CurrentModeLink } from "./workspace-mode/AccountModeSwitch";
 
 /** Generic adaptation for routes with no original screen, not an original admin design.
  * Header: 115:110 (61px white / forest text, black 5% shadow).
@@ -14,6 +16,7 @@ import styles from "./SourceAppFrame.module.css";
  */
 export function SourceAppFrame({ children, role }: { children: ReactNode; role: string | null }) {
   const path = usePathname();
+  const destinations = useWorkspaceLinks(role);
   const [fontsUnavailable, setFontsUnavailable] = useState(false);
   useEffect(() => {
     let active = true;
@@ -24,8 +27,8 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
   }, []);
   const title = path.startsWith("/admin") ? "Administration" : path.startsWith("/pay/") ? "Test payment" : path.startsWith("/receipts/") ? "Payment record" : path.startsWith("/profile") ? "Account" : path.startsWith("/messages") ? "Messages" : path.startsWith("/notifications") ? "Notifications" : path.startsWith("/support") ? "Help & support" : path.startsWith("/tradies/") ? "Tradie profile" : "Trade Marketplace";
   const items = [
-    { href: "/", label: "Home", icon: "home" },
-    { href: role === "CUSTOMER" ? "/?view=search" : "/jobs", label: "Search", icon: "magnifier" },
+    { href: destinations.home, label: "Home", icon: "home" },
+    { href: destinations.search, label: "Search", icon: "magnifier" },
     { href: role === "ADMIN" ? "/admin" : "/dashboard", label: "Jobs", icon: "jobs" },
     { href: "/messages", label: "Messages", icon: "bubble" },
     { href: role ? "/profile" : "/login", label: "Account", icon: "person" },
@@ -35,6 +38,7 @@ export function SourceAppFrame({ children, role }: { children: ReactNode; role: 
     {fontsUnavailable && <p role="status" className={styles.notice}>The web font could not load. Fallback text is displayed.</p>}
     <main id="main-content" tabIndex={-1} className={styles.content}>{children}</main>
     <nav aria-label="Workspace utilities" className={styles.utilities}>
+      <CurrentModeLink />
       <Link href="/support">Help &amp; support</Link>
       <Link href="/notifications">Notifications</Link>
       {role === "ADMIN" && <Link href="/admin">Administration</Link>}

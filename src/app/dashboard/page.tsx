@@ -17,16 +17,24 @@ import { EmptyState, LicenceBadge } from "@/components/ui";
 import { SourceIcon } from "@/components/SourceIcon";
 import { CustomerJobCard } from "./CustomerJobCard";
 import { activeJobsFirst } from "@/lib/job-presentation";
+import { allowsWorkspaceDemo } from "@/lib/workspace-mode/preference";
+import { ModeDashboard } from "@/components/workspace-mode/ModeDashboard";
 
 export const dynamic = "force-dynamic";
 
-export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
-  const { status } = await searchParams;
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ status?: string; customerView?: string }> }) {
+  const { status, customerView } = await searchParams;
   const user = await requireUser("/dashboard");
   if (user.role === "ADMIN") redirect("/admin");
   await releaseOverdue();
   const demoRuntime = await canUseHostedPreview() || allowsLocalDemo(process.env.TRADE_LOCAL_DEMO, (await headers()).get("host"));
   const quoteDemo = allowsQuoteDemo(demoRuntime, user);
+  if (allowsWorkspaceDemo(demoRuntime, user)) return <ModeDashboard
+    user={{ id: user.id, name: user.name, role: user.role, trade: user.trade, region: user.region }}
+    customerJobs={user.role === "CUSTOMER" ? <CustomerDash userId={user.id} filter={status} /> : undefined}
+    tradieActivity={user.role === "TRADIE" ? <TradieDash userId={user.id} /> : undefined}
+    initialCustomerView={customerView === "post" ? "post" : "jobs"}
+  />;
   return (
     <div className={`${styles.page} ${user.role === "CUSTOMER" ? styles.customerPage : ""}`}>
       <header className={`${styles.header} ${user.role === "CUSTOMER" ? styles.customerHeader : quoteDemo ? styles.quoteHeader : ""}`}>
