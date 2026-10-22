@@ -14,32 +14,29 @@
 .demoNote>span { width:6px; height:6px; flex-shrink:0; border-radius:50%; background:var(--trade-action); }
 .columns { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr); grid-template-areas:"overview sidebar" "details sidebar"; column-gap:28px; row-gap:22px; align-items:start; }
 .main,.sidebar { display:flex; min-width:0; flex-direction:column; gap:22px; }
-.main { grid-area:details; }
+.main { grid-area:details; gap:0; background:var(--trade-surface); border:1px solid var(--color-border); border-radius:var(--trade-radius-category); overflow:hidden; }
 .sidebar { grid-area:sidebar; }
 .overview { grid-area:overview; min-width:0; }
-.overview,.panel,.actionPanel,.customerPanel { background:white; border:1px solid #d7dcd4; border-radius:var(--trade-radius-category); overflow:hidden; }
+.overview,.actionPanel,.customerPanel { background:white; border:1px solid #d7dcd4; border-radius:var(--trade-radius-category); overflow:hidden; }
 .intro { padding:27px 30px 25px; }
 .topline { display:flex; justify-content:space-between; gap:16px; color:var(--trade-source-muted); font-size:14px; line-height:20px; }
 .topline>span:first-child { font-weight:700; color:var(--trade-link); }
 .intro h1 { margin:14px 0 12px; font-family:var(--trade-font-heading); font-size:36px; font-weight:900; font-variation-settings:"wdth" 151,"opsz" 28,"wght" 900; line-height:1.2; }
-.location { font-size:14px; line-height:20px; font-weight:600; color:var(--trade-source-muted); }
-.description { margin-top:20px; font-size:16px; line-height:24px; }
-.tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; }
-.tags span { background:#f1ece5; padding:6px 10px; border-radius:4px; font-size:14px; line-height:20px; font-weight:500; }
+.location { margin-top:18px; font-size:16px; line-height:24px; font-weight:600; }
+.description,.guidance { margin-top:18px; font-size:16px; line-height:24px; }
 .photoNote { margin-top:19px; font-size:11px; line-height:16px; color:var(--trade-source-muted); }
 .panel { padding:29px 30px; }
-.panel>.eyebrow,.actionPanel>.eyebrow { color:var(--trade-link); margin-bottom:6px; }
+.panel + .panel { border-top:1px solid var(--color-border); }
 .panel h2,.actionPanel h2 { font-family:var(--trade-font-heading); font-size:29px; font-weight:900; font-variation-settings:"wdth" 151,"opsz" 28,"wght" 900; line-height:1.2; }
 .scopeList { display:grid; gap:14px; margin:21px 0 0; padding-left:20px; list-style:disc; font-size:16px; line-height:24px; }
 .scopeList li { padding-left:4px; }
 .scopeList li::marker { color:var(--trade-link); }
-.property { margin-top:14px; font-size:16px; line-height:24px; font-weight:600; }
-.availability { margin-top:23px; padding:18px; background:#f7f5f0; border-radius:5px; font-size:16px; line-height:24px; }
-.availability h3 { font-size:14px; line-height:20px; font-weight:500; color:var(--trade-source-muted); margin-bottom:4px; }
+.property { margin-top:12px; font-size:16px; line-height:24px; }
+.availability { margin-top:23px; font-size:16px; line-height:24px; }
+.availability h3 { font-size:14px; line-height:20px; font-weight:700; margin-bottom:6px; }
 .availability>strong { font-size:16px; line-height:24px; }
 .availability p { margin-top:7px; }
 .sectionTop { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px; }
-.sectionTop .eyebrow { color:var(--trade-link); margin-bottom:6px; }
 .discussionPrice { display:flex; flex-direction:column; gap:4px; font-size:14px; line-height:20px; }
 .discussionPrice>span { color:var(--trade-source-muted); font-size:11px; line-height:16px; }
 .discussionHelp { margin-top:16px; font-size:16px; line-height:24px; color:var(--trade-source-muted); }
@@ -72,7 +69,7 @@
 .actionCopy { margin-top:16px; font-size:16px; line-height:24px; color:var(--trade-source-muted); }
 .quoteSummary { display:flex; flex-direction:column; margin:22px 0; padding:18px 0; gap:7px; border-top:1px solid #e0e4dc; border-bottom:1px solid #e0e4dc; }
 .quoteSummary>span,.price>span { font-size:11px; line-height:16px; color:var(--trade-source-muted); }
-.quoteSummary>strong,.price>strong { font-size:28px; font-weight:900; line-height:34px; }
+.quoteSummary>strong,.price>strong { font-size:28px; font-weight:900; line-height:34px; color:var(--trade-pay-amount); }
 .quoteSummary>p { font-size:16px; line-height:24px; white-space:pre-wrap; margin:5px 0; }
 .quoteForm { margin-top:23px; }
 .quoteForm label:not(:first-child) { margin-top:9px; }

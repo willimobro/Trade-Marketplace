@@ -288,3 +288,6 @@
   .feedControls { gap:12px; }
   .feedFooter { font-size:14px; }
 }
+
+/* Monetary amounts stay green in trade mode; points and status keep their own tones. */
+.claimSummary>div:first-child>dd,.acceptedSummary>strong { color:var(--trade-pay-amount); }

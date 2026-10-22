@@ -154,7 +154,7 @@ async function TradieDash({ userId }: { userId: string }) {
                   <p className="text-xs text-muted">{jobRef(p.job.jobNumber)} · {p.hours} hrs · {timeAgo(p.createdAt)}</p>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold">{formatNZD(p.grossCents + p.holidayPayCents)}</p>
+                  <p className="trade-money font-bold">{formatNZD(p.grossCents + p.holidayPayCents)}</p>
                   <span className="text-sm text-muted">{p.status === "PAID" ? "Marked paid by administrator" : "Queued for manual payroll"}</span>
                 </div>
               </Link>
@@ -162,10 +162,10 @@ async function TradieDash({ userId }: { userId: string }) {
                 <summary className="min-h-11 cursor-pointer py-3 underline">View saved earnings breakdown</summary>
                 <dl className="space-y-2">
                   <div className="flex justify-between gap-3"><dt>Saved hours</dt><dd>{p.hours}</dd></div>
-                  <div className="flex justify-between gap-3"><dt>Saved hourly rate</dt><dd>{formatNZD(p.rateCents)}</dd></div>
-                  <div className="flex justify-between gap-3"><dt>Gross earnings</dt><dd>{formatNZD(p.grossCents)}</dd></div>
-                  <div className="flex justify-between gap-3"><dt>Holiday pay</dt><dd>{formatNZD(p.holidayPayCents)}</dd></div>
-                  <div className="flex justify-between gap-3 font-bold"><dt>Total before deductions</dt><dd>{formatNZD(p.grossCents + p.holidayPayCents)}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Saved hourly rate</dt><dd className="trade-money">{formatNZD(p.rateCents)}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Gross earnings</dt><dd className="trade-money">{formatNZD(p.grossCents)}</dd></div>
+                  <div className="flex justify-between gap-3"><dt>Holiday pay</dt><dd className="trade-money">{formatNZD(p.holidayPayCents)}</dd></div>
+                  <div className="flex justify-between gap-3 font-bold"><dt>Total before deductions</dt><dd className="trade-money">{formatNZD(p.grossCents + p.holidayPayCents)}</dd></div>
                 </dl>
                 <p className="mt-3 text-muted">These are saved manual payroll amounts, not a payslip or bank-transfer confirmation. Deductions and net pay are not recorded here.</p>
               </details>

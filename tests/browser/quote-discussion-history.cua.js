@@ -11,10 +11,10 @@ export async function verifyDiscussionHistory(tab, viewport) {
     await tab.reload();
     await tab.playwright.waitForLoadState({ state: "networkidle" });
     await tab.playwright.getByRole("button", { name: /^(Quote · \+1 point|Edit your quote)$/ }).and(tab.playwright.locator(":enabled")).waitFor({ state: "visible" });
-    await tab.playwright.getByRole("link", { name: "Open job discussion", exact: true }).click();
+    await tab.playwright.getByRole("link", { name: "View comments", exact: true }).click();
     await tab.playwright.waitForURL(`${entryUrl}#comments`);
     if (await tab.url() !== `${entryUrl}#comments`) throw new Error("Discussion link must retain the path/query and save its fragment after reload");
-    const discussion = tab.playwright.getByRole("heading", { name: "Job discussion", exact: true });
+    const discussion = tab.playwright.getByRole("heading", { name: "Comments", exact: true });
     await discussion.waitFor({ state: "visible" });
     if (!await discussion.evaluate(node => node === document.activeElement)) throw new Error("Discussion heading must retain keyboard focus");
     await tab.playwright.getByRole("link", { name: "Back to jobs", exact: true }).click();

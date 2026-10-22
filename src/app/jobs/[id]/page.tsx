@@ -317,7 +317,7 @@ export default async function JobPage({
               </dl>
               {job.payout && (
                 <p className="mt-4 rounded-lg bg-leaf/10 p-3 text-sm text-leaf-dark">
-                  {job.payout.status === "PAID" ? "Marked paid by an administrator" : "Queued for manual payroll"} - {formatNZD(job.payout.grossCents + job.payout.holidayPayCents)}
+                  {job.payout.status === "PAID" ? "Marked paid by an administrator" : "Queued for manual payroll"} - <span className="trade-money">{formatNZD(job.payout.grossCents + job.payout.holidayPayCents)}</span>
                 </p>
               )}
             </div>

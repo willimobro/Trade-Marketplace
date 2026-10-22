@@ -291,19 +291,15 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
             <div className={styles.intro}>
               <div className={styles.topline}><span>{job.trade}</span><span>{job.posted}</span></div>
               <h1 id="job-title" tabIndex={-1}>{job.title}</h1>
-              <p className={styles.location}>{job.suburb}, Auckland · {job.distance} away</p>
-              <p className={styles.description}>{job.description}</p>
-              <div className={styles.tags}>{job.details.map((detail) => <span key={detail}>{detail}</span>)}</div>
               <p className={styles.photoNote}>{job.photos.length} illustrative stock photos · All people and job details are synthetic.</p>
             </div>
           </section>
 
         <aside className={styles.sidebar} aria-label="Your quote and next steps">
           <section className={styles.actionPanel}>
-            <p className={styles.eyebrow}>{quoteStatus === "accepted" ? "The customer chose you" : quote ? "Your saved quote" : claim ? "Your sample claim" : job.stage === "quoting" ? "Put your know-how to work" : "Ready to claim"}</p>
-            <h2>{quoteStatus === "accepted" ? "Quote accepted" : quote ? "You’ve quoted this job" : claim ? claim.completedAt ? "Sample job complete" : "You claimed this job" : job.stage === "quoting" ? "Make it your next job" : "A clear scope. A fixed price."}</h2>
+            <h2>{quoteStatus === "accepted" ? "Quote accepted" : claim ? claim.completedAt ? "Sample job complete" : "Your claim" : job.stage === "quoting" ? "Your quote" : "Claim this job"}</h2>
             {job.stage === "quoting" ? <>
-              {quote ? <div className={styles.quoteSummary}><span>Your quote · NZD</span><strong>{formatDemoMoney(quote.amountCents)}</strong><p>{quote.note}</p><span>Saved {savedDate(quote.updatedAt)} NZ time</span></div> : <p className={styles.actionCopy}>Read the scope, ask any questions and send your sample quote. Your first valid quote earns 1 point.</p>}
+              {quote && <div className={styles.quoteSummary}><span>Your quote · NZD</span><strong>{formatDemoMoney(quote.amountCents)}</strong><p>{quote.note}</p><span>Saved {savedDate(quote.updatedAt)} NZ time</span></div>}
               {quoteStatus === "accepted" ? <div ref={acceptedSummary} className={styles.acceptedNote} tabIndex={-1} role="group" aria-label="Your accepted quote"><SourceIcon name="check" size={20} /><div><strong>Accepted in this preview</strong><p>This account’s quote is locked at the saved price and scope. Any unsent edits remain separate in this tab’s draft. Arrange the next steps in the sample discussion.</p></div></div> : editorOpen ? <form ref={quoteForm} className={styles.quoteForm} onSubmit={submitQuote} noValidate>
                 <label htmlFor={`${formId}-amount`}>Your quote <span>NZD, including GST if applicable</span></label><div className={styles.amountField}><span>$</span><input ref={amountInput} id={`${formId}-amount`} value={amount} onChange={(event) => changeQuoteDraft(event.target.value, scope)} inputMode="decimal" autoComplete="off" maxLength={MAX_QUOTE_DRAFT_AMOUNT_LENGTH} placeholder="0.00" required aria-invalid={invalidField === "amount"} aria-describedby={`${formId}-quote-error`} disabled={busy === "quote"} /></div>
                 <label htmlFor={`${formId}-scope`}>What’s included?</label><textarea ref={scopeInput} id={`${formId}-scope`} value={scope} onChange={(event) => changeQuoteDraft(amount, event.target.value)} rows={5} maxLength={1000} placeholder="Labour, materials, timing and any assumptions…" required aria-invalid={invalidField === "scope"} aria-describedby={`${formId}-scope-help ${formId}-quote-error`} disabled={busy === "quote"} /><p id={`${formId}-scope-help`} className={styles.fieldHelp}>A clear scope note, 10–1,000 characters.</p>
@@ -326,7 +322,7 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
                 document.getElementById("comments")?.scrollIntoView({ block: "start" });
                 document.getElementById("comments-heading")?.focus({ preventScroll: true });
               });
-            }}><SourceIcon name="bubble" size={18} />Open job discussion</Link>
+            }}><SourceIcon name="bubble" size={18} />View comments</Link>
             <p className={styles.finePrint}>Sample quotes and claims stay on this device. No real booking, payment or customer contact is created.</p>
           </section>
 
@@ -335,18 +331,28 @@ export function QuoteJobDetail({ userId, job, backHref = "/dashboard?quoteView=f
         </aside>
 
         <div className={styles.main}>
-          <section className={styles.panel} aria-labelledby="scope-heading"><p className={styles.eyebrow}>The work</p><h2 id="scope-heading">What needs doing</h2><ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{item}</li>)}</ul></section>
-          <section className={styles.panel} aria-labelledby="site-heading"><p className={styles.eyebrow}>Before you arrive</p><h2 id="site-heading">The property &amp; access</h2><p className={styles.property}>{job.customer.property}</p><ul className={styles.scopeList}>{job.siteNotes.map((item) => <li key={item}>{item}</li>)}</ul><div className={styles.availability}><h3>Preferred timing</h3><strong>{job.timing}</strong><p>{job.customer.availability}</p></div></section>
-          <section className={styles.panel} aria-labelledby="guidance-heading"><p className={styles.eyebrow}>{job.stage === "quoting" ? "A useful quote" : "Before you claim"}</p><h2 id="guidance-heading">{job.stage === "quoting" ? "What to include" : "What the sample price covers"}</h2><ul className={styles.scopeList}>{job.quoteGuidance.map((item) => <li key={item}>{item}</li>)}</ul></section>
+          <section className={styles.panel} aria-labelledby="description-heading">
+            <h2 id="description-heading">Description</h2>
+            <p className={styles.description}>{job.description}</p>
+            <ul className={styles.scopeList}>{job.scope.map((item) => <li key={item}>{item}</li>)}</ul>
+            <p className={styles.guidance}>{job.quoteGuidance.join(" ")}</p>
+          </section>
+          <section className={styles.panel} aria-labelledby="location-heading">
+            <h2 id="location-heading">Location</h2>
+            <p className={styles.location}>{job.suburb}, Auckland · {job.distance} away</p>
+            <p className={styles.property}>{job.customer.property}</p>
+            <ul className={styles.scopeList}>{job.siteNotes.map((item) => <li key={item}>{item}</li>)}</ul>
+            <div className={styles.availability}><h3>Preferred timing</h3><strong>{job.timing}</strong><p>{job.customer.availability}</p></div>
+          </section>
 
           <section className={styles.panel} id="comments" aria-labelledby="comments-heading">
             <MessageReadReceipt userId={userId} jobId={job.id} latestMessageId={latestCommentId} sectionId="comments" />
-            <div className={styles.sectionTop}><div><p className={styles.eyebrow}>Ask &amp; clarify</p><h2 id="comments-heading" tabIndex={-1}>Job discussion</h2></div><div className={styles.discussionPrice}><strong>{quote ? `Your quote ${formatDemoMoney(quote.amountCents)}` : job.priceCents ? `Job price ${formatDemoMoney(job.priceCents)}` : "Price pending"}</strong><span>{quoteStatus === "accepted" ? "Your quote accepted" : quoteStatus === "quoted" ? "You have quoted" : claim ? "You claimed this job" : job.stage === "quoting" ? "Open for quotes" : "Available to claim"}</span></div></div>
-            <p className={styles.discussionHelp}>Ask about the scope, access or materials. New comments stay in this account’s sample discussion on this device.</p>
+            <div className={styles.sectionTop}><h2 id="comments-heading" tabIndex={-1}>Comments</h2><div className={styles.discussionPrice}><strong>{quote ? `Your quote ${formatDemoMoney(quote.amountCents)}` : job.priceCents ? `Job price ${formatDemoMoney(job.priceCents)}` : "Price pending"}</strong><span>{quoteStatus === "accepted" ? "Your quote accepted" : quoteStatus === "quoted" ? "You have quoted" : claim ? "You claimed this job" : job.stage === "quoting" ? "Open for quotes" : "Available to claim"}</span></div></div>
+            <p className={styles.discussionHelp}>New comments stay in this account’s sample discussion on this device.</p>
             <ol className={styles.discussion}>{job.comments.map((item) => <li key={item.id}><div className={styles.commentMeta}><strong>{item.author}</strong><span>{item.role} · {item.posted}</span></div><p>{item.body}</p></li>)}{ownComments.map((item) => <li className={styles.ownComment} key={item.id}><div className={styles.commentMeta}><strong>You</strong><time dateTime={item.createdAt}>{savedDate(item.createdAt)} NZ time</time></div><p>{item.body}</p><span className={styles.localLabel}>Saved locally</span></li>)}</ol>
             <form className={styles.commentForm} onSubmit={submitComment} noValidate>
               <label htmlFor={`${formId}-comment`}>Add a comment</label>
-              <textarea ref={commentInput} id={`${formId}-comment`} value={comment} onChange={(event) => changeCommentDraft(event.target.value)} rows={3} maxLength={2000} placeholder="Anything you need to know before quoting?" required aria-invalid={!!commentError} aria-describedby={`${formId}-comment-help ${formId}-comment-error`} disabled={busy === "comment"} />
+              <textarea ref={commentInput} id={`${formId}-comment`} value={comment} onChange={(event) => changeCommentDraft(event.target.value)} rows={3} maxLength={2000} placeholder="Add a comment…" required aria-invalid={!!commentError} aria-describedby={`${formId}-comment-help ${formId}-comment-error`} disabled={busy === "comment"} />
               <p id={`${formId}-comment-help`} className={styles.fieldHelp}>2–2,000 characters. No message is sent to a real customer.</p>
               <p id={`${formId}-comment-error`} className={styles.error} role="alert">{commentError}</p>
               <button className={styles.outline} type="submit" disabled={disabled}>{busy === "comment" ? "Saving comment…" : "Add comment"}<SourceIcon name="bubble" size={18} /></button>

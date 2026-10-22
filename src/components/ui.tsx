@@ -37,7 +37,7 @@ export function StatusChip({ status, audience = "staff" }: { status: string; aud
 }
 
 export function Money({ cents, className = "" }: { cents: number; className?: string }) {
-  return <span className={`tabular-nums ${className}`}>{formatNZD(cents)}</span>;
+  return <span className={`trade-money tabular-nums ${className}`}>{formatNZD(cents)}</span>;
 }
 
 export function Avatar({ name, url, size = 40 }: { name: string; url?: string | null; size?: number }) {

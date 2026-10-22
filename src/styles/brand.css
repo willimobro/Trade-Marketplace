@@ -10,6 +10,7 @@
   --trade-action: var(--trade-leaf);
   --trade-signature: var(--trade-lime);
   --trade-link: #326c20;
+  --trade-pay-amount: #326c20; /* Monetary value only; payment status stays explicit. */
   --trade-action-hover: #78c653;
   --trade-signature-hover: #b4df6c;
   --trade-height-action: 55px;
@@ -67,3 +68,4 @@ html { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
   --color-lime: var(--trade-signature);
   --color-leaf-dark: var(--trade-link);
 }
+[data-mode="trade"] .trade-money { color:var(--trade-pay-amount); }

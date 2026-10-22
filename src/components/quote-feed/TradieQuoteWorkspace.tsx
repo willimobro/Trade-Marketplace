@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type FormEvent } from "react";
 import { JobCardFrame } from "@/components/job-cards/JobCardFrame";
 import { JobPhotoCarousel } from "@/components/job-cards/JobPhotoCarousel";
@@ -9,7 +10,7 @@ import { DEMO_JOBS, DEMO_TRADES, demoTrade, findDemoJob, formatDemoMoney, type D
 import { clearComposerDraft, loadQuoteDraft, MAX_QUOTE_DRAFT_AMOUNT_LENGTH, saveQuoteDraft, type QuoteDraft } from "@/lib/quote-demo/drafts";
 import { CLAIM_COST, getDemoQuoteStatus, getPointsBalance, QuoteDemoError, type QuoteDemoState } from "@/lib/quote-demo/model";
 import { loadQuoteDemo, resetQuoteDemo, saveDemoClaim, saveDemoCompletion, saveDemoQuote, subscribeQuoteDemo } from "@/lib/quote-demo/storage";
-import { readWorkspaceNavigation, readWorkspaceSession, workspaceSearch, workspaceSessionKey, type WorkspaceTab } from "./workspace-navigation";
+import { readWorkspaceNavigation, workspaceSearch, type WorkspaceTab } from "./workspace-navigation";
 import { quoteFormError } from "./quote-form";
 import styles from "./quote-feed.module.css";
 
@@ -35,14 +36,14 @@ function JobPhoto({ job }: { job: DemoJob }) {
 }
 
 export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade: string | null }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const navigation = readWorkspaceNavigation(searchParams.toString());
+  const tab = navigation.tab;
+  const filter = navigation.trade;
   const ownTrade = demoTrade(trade);
   const [state, setState] = useState<QuoteDemoState | null>(null);
   const [storageFailure, setStorageFailure] = useState<QuoteDemoError | null>(null);
-  const [tab, setTab] = useState<WorkspaceTab>("feed");
-  const [filter, setFilter] = useState("all");
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-  const [historyUser, setHistoryUser] = useState<string | null>(null);
-  const [skipped, setSkipped] = useState<string[]>([]);
   const [modal, setModal] = useState<Modal>(null);
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
@@ -63,8 +64,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const amountInput = useRef<HTMLInputElement>(null);
   const scopeInput = useRef<HTMLTextAreaElement>(null);
   const formErrorElement = useRef<HTMLParagraphElement>(null);
-  const feedFocusTarget = useRef<HTMLHeadingElement>(null);
-  const focusAfterFeedChange = useRef(false);
+  const feedHeadings = useRef(new Map<string, HTMLHeadingElement>());
   const alive = useRef(true);
   const user = useRef(userId);
   const focusAfterClose = useRef(false);
@@ -83,14 +83,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   useEffect(() => {
     alive.current = true;
     user.current = userId;
-    const navigation = readWorkspaceNavigation(window.location.search);
-    let session = readWorkspaceSession(null);
-    try { session = readWorkspaceSession(sessionStorage.getItem(workspaceSessionKey(userId))); } catch { /* Navigation still works when session storage is unavailable. */ }
     setState(null); setStorageFailure(null); setModal(null); setNotice(""); setDraftFailure("");
-    setTab(navigation.tab); setFilter(navigation.trade);
-    setSkipped(session.skipped.filter((id) => id !== navigation.quoteJob));
-    setSelectedJobId(navigation.quoteJob ?? session.quoteJob ?? null);
-    setHistoryUser(userId);
     void read();
     const unsubscribe = subscribeQuoteDemo(userId, () => void read());
     return () => { alive.current = false; unsubscribe(); };
@@ -133,9 +126,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const claimedIds = new Set(state?.claims.map((claim) => claim.jobId));
   const sorted = [...DEMO_JOBS].sort((a, b) => Number(b.trade === ownTrade) - Number(a.trade === ownTrade));
   const matches = (job: DemoJob) => filter === "all" || job.trade === filter;
-  const feed = sorted.filter((job) => job.stage === "quoting" && matches(job) && !quotedIds.has(job.id) && !skipped.includes(job.id));
-  const currentIndex = Math.max(0, feed.findIndex((job) => job.id === selectedJobId));
-  const current = feed[currentIndex];
+  const feed = sorted.filter((job) => job.stage === "quoting" && matches(job));
   const available = sorted.filter((job) => job.stage === "available" && matches(job) && !claimedIds.has(job.id));
   const quotes = [...(state?.quotes ?? [])].reverse().filter((quote) => { const job = findDemoJob(quote.jobId); return job && matches(job); });
   const claims = [...(state?.claims ?? [])].reverse().filter((claim) => { const job = findDemoJob(claim.jobId); return job && matches(job); }).sort((a, b) => Number(!!a.completedAt) - Number(!!b.completedAt));
@@ -144,32 +135,20 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
   const editing = !!modalJob && quotedIds.has(modalJob.id);
   const disabled = busy || !state || !!storageFailure;
 
-  useEffect(() => {
-    if (historyUser !== userId || !state || state.userId !== userId) return;
-    const url = new URL(window.location.href);
-    const navigation = new URLSearchParams(workspaceSearch({ tab, trade: filter, quoteJob: current?.id }));
-    for (const key of ["quoteView", "trade", "quoteJob"]) {
-      const value = navigation.get(key);
-      if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
-    }
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-    try { sessionStorage.setItem(workspaceSessionKey(userId), JSON.stringify({ skipped, quoteJob: current?.id })); } catch { /* URLs preserve return navigation without session storage. */ }
-  }, [current?.id, filter, historyUser, skipped, state, tab, userId]);
-
-  // Focus the replacement card heading only after React has committed it.
-  // Next keeps its stable control focus; Skip and restore focus the new card.
+  const ready = state?.userId === userId;
+  // Returning from a detail page restores its card without making the old
+  // single-card selection or skipped-job session a source of routing state.
   useLayoutEffect(() => {
-    if (focusAfterFeedChange.current && tab === "feed") {
-      feedFocusTarget.current?.focus();
-      focusAfterFeedChange.current = false;
-    }
-  }, [current?.id, skipped, tab]);
+    if (ready && tab === "feed" && navigation.quoteJob) feedHeadings.current.get(navigation.quoteJob)?.focus();
+  }, [ready, tab, filter, navigation.quoteJob]);
+
+  useEffect(() => { setModal(null); setNotice(""); setQuoteSaved(false); }, [tab, filter]);
 
   function switchTab(next: WorkspaceTab) {
-    setTab(next); setNotice(""); setQuoteSaved(false);
+    router.push(`/dashboard?${workspaceSearch({ tab: next, trade: filter })}`, { scroll: false });
   }
-  function goToFeed() { focusAfterClose.current = !!modal; setModal(null); switchTab("feed"); setFilter("all"); setSkipped([]); setSelectedJobId(null); requestAnimationFrame(() => heading.current?.focus()); }
-  function detailHref(jobId: string) { return `/quote-jobs/${jobId}?${workspaceSearch({ tab, trade: filter, quoteJob: current?.id })}`; }
+  function goToFeed() { focusAfterClose.current = !!modal; setModal(null); router.push(`/dashboard?${workspaceSearch({ tab: "feed", trade: "all" })}`, { scroll: false }); requestAnimationFrame(() => heading.current?.focus()); }
+  function detailHref(jobId: string) { return `/quote-jobs/${jobId}?${workspaceSearch({ tab, trade: filter, quoteJob: jobId })}`; }
   function draftKey(jobId: string) { return JSON.stringify([userId, jobId]); }
   function openQuote(job: DemoJob) {
     if (state && getDemoQuoteStatus(state, job.id) === "accepted") return;
@@ -200,8 +179,6 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
     document.getElementById(`${formId}-amount`)?.focus();
   }
   function openClaim(job: DemoJob) { setFormError(""); setModal({ kind: "claim", jobId: job.id }); }
-  function next() { if (feed.length > 1) setSelectedJobId(feed[(currentIndex + 1) % feed.length].id); }
-  function skip() { if (current && !disabled) { focusAfterFeedChange.current = true; setSelectedJobId(feed.length > 1 ? feed[(currentIndex + 1) % feed.length].id : null); setSkipped((items) => [...items, current.id]); setNotice(`Skipped ${current.title}. You can come back to it.`); } }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -260,7 +237,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
 
   async function reset() {
     setBusy(true);
-    try { setState(await resetQuoteDemo(userId)); setStorageFailure(null); setModal(null); setNotice("This user's sample data has been reset."); setSkipped([]); setSelectedJobId(null); }
+    try { setState(await resetQuoteDemo(userId)); setStorageFailure(null); setModal(null); setNotice("This user's sample data has been reset."); }
     catch (error) { setStorageFailure(error instanceof QuoteDemoError ? error : new QuoteDemoError("storage-unavailable", "Could not reset sample data. Please retry.")); }
     finally { setBusy(false); }
   }
@@ -279,7 +256,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
         {([ ["feed", "Quote feed", null], ["available", "Available jobs", DEMO_JOBS.filter((job) => job.stage === "available" && !claimedIds.has(job.id)).length], ["quoted", "Quoted Jobs", state?.quotes.length ?? 0], ["claimed", "My claims", state?.claims.length ?? 0] ] as const).map(([value, label, count]) =>
           <button key={value} aria-pressed={tab === value} className={tab === value ? styles.activeTab : ""} onClick={() => switchTab(value)}>{label}{count !== null && <span>{count}</span>}</button>)}
       </div>
-      <label className={styles.tradeFilter}><span>Trade</span><select aria-label="Filter jobs by trade" value={filter} onChange={(event) => { setFilter(event.target.value); setSelectedJobId(null); }}>{<option value="all">All trades</option>}{DEMO_TRADES.map((item) => <option key={item}>{item}</option>)}</select></label>
+      <label className={styles.tradeFilter}><span>Trade</span><select aria-label="Filter jobs by trade" value={filter} onChange={(event) => router.push(`/dashboard?${workspaceSearch({ tab, trade: event.target.value })}`, { scroll: false })}>{<option value="all">All trades</option>}{DEMO_TRADES.map((item) => <option key={item}>{item}</option>)}</select></label>
     </div>
 
     {storageFailure && <div className={styles.storageError} role="alert"><div><strong>Demo storage needs a moment.</strong><p>{storageFailure.message}</p></div><div className={styles.errorActions}><button onClick={() => void read()} disabled={busy}>Retry storage</button>{storageFailure.code === "invalid-storage" && <button onClick={() => void reset()} disabled={busy}>Reset this user&apos;s sample data</button>}</div></div>}
@@ -288,43 +265,34 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
 
     <div className={styles.sectionHeading}>
       <div><p className={styles.eyebrow}>{tab === "feed" ? "YOUR NEXT OPPORTUNITY" : tab === "quoted" ? "YOUR KNOW-HOW, PUT TO WORK" : tab === "claimed" ? "YOUR SAMPLE CLAIMS" : "READY WHEN YOU ARE"}</p>
-        <h2 ref={heading} tabIndex={-1}>{tab === "feed" ? "Quote more jobs" : tab === "quoted" ? "Quoted Jobs" : tab === "claimed" ? "My claims" : "Available jobs"}</h2>
+        <h2 ref={heading} tabIndex={-1}>{tab === "feed" ? "Find work" : tab === "quoted" ? "Quoted Jobs" : tab === "claimed" ? "My claims" : "Available jobs"}</h2>
         <p>{tab === "feed" ? "Take a look. Send a quote. Build your balance." : tab === "quoted" ? "Your saved estimates, ready to review." : tab === "claimed" ? "Your claimed sample jobs and the points you spent." : "Use 5 points to claim a sample job that suits you."}</p>
       </div>
-      {tab === "feed" && current && <span className={styles.feedCount}>{currentIndex + 1}<span> / {feed.length}</span></span>}
+      {tab === "feed" && <span className={styles.feedCount}>{feed.length}<span> jobs</span></span>}
     </div>
 
-    {!state && !storageFailure ? <div className={styles.loading} role="status">Opening your sample workspace…</div> : tab === "feed" ? current ? <div className={styles.feedLayout}>
-      <div className={styles.feedColumn}>
-        <JobCardFrame key={current.id} title={current.title} href={detailHref(current.id)} photos={current.photos} quoteStatus={state ? getDemoQuoteStatus(state, current.id) : undefined}
-          headingRef={feedFocusTarget} focusTarget
-          meta={<span>{current.trade} · {current.suburb}</span>}
-          status={<><span className={cardStyles.statusDot} /><span>Open for quotes · {current.distance}</span></>}
-          valueLabel="Your estimate" value="To quote"
-          actions={<button className={cardStyles.primaryAction} onClick={() => openQuote(current)} disabled={disabled}>Quote <span className={styles.quoteReward}>+1 point</span><Icon name="arrow" size={18} /></button>} />
-        <div className={styles.feedControls}>
-          <button className={cardStyles.secondaryAction} onClick={skip} disabled={disabled} aria-label={`Skip ${current.title}`}>Skip</button>
-          <button className={cardStyles.secondaryAction} onClick={next} disabled={feed.length < 2 || disabled}>Next job<Icon name="arrow" size={18} /></button>
-        </div>
-        <p className={styles.feedFooter}>{feed.length} jobs to explore{ownTrade && filter === "all" ? ` · ${ownTrade} first` : ""}</p>
-      </div>
-    </div> : <div className={styles.empty}>
-      <span className={styles.emptyIcon}><Icon name="check" size={30} /></span><h3 ref={feedFocusTarget} tabIndex={-1} data-testid="quote-feed-focus-target">{skipped.length ? "A breather? You’ve earned it." : "You’re all caught up."}</h3>
-      <p>{skipped.length ? "Come back to the jobs you skipped, or see what is available." : "Your saved quotes are in Quoted Jobs. Find your next opportunity in Available jobs."}</p>
-      <div>{skipped.length > 0 && <button className={styles.secondary} onClick={() => { focusAfterFeedChange.current = true; setSkipped([]); setSelectedJobId(null); setNotice(""); }}>Show skipped jobs</button>}<button className={styles.secondary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div>
-    </div>
+    {!state && !storageFailure ? <div className={styles.loading} role="status">Opening your sample workspace…</div> : tab === "feed" ? <div className={cardStyles.grid}>{feed.length ? feed.map((job) => {
+      const quote = state?.quotes.find((item) => item.jobId === job.id);
+      const status = state ? getDemoQuoteStatus(state, job.id) : undefined;
+      return <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={status}
+        headingRef={(node) => { if (node) feedHeadings.current.set(job.id, node); else feedHeadings.current.delete(job.id); }} focusTarget
+        meta={<span>{job.trade} · {job.suburb}</span>}
+        status={<span>{status === "accepted" ? "Customer accepted your quote" : quote ? "Quote saved" : "Open for quotes"} · {job.distance}</span>}
+        moneyValue={!!quote} valueLabel={quote ? "Your quote" : "Your estimate"} value={quote ? formatDemoMoney(quote.amountCents) : "To quote"}
+        actions={status === "accepted" ? <Link className={cardStyles.secondaryAction} href={detailHref(job.id)}>View job<Icon name="arrow" size={18} /></Link> : quote ? <button className={cardStyles.secondaryAction} onClick={() => openQuote(job)} disabled={disabled}>Edit quote<Icon name="chevron" size={18} /></button> : <button className={cardStyles.primaryAction} onClick={() => openQuote(job)} disabled={disabled}>Quote <span className={styles.quoteReward}>+1 point</span><Icon name="arrow" size={18} /></button>} />;
+    }) : <div className={styles.empty}><h3>No jobs in this view.</h3><p>Choose another trade to find work to quote.</p><button className={styles.secondary} onClick={goToFeed}>Show all trades</button></div>}</div>
       : tab === "available" ? <div className={cardStyles.grid}>{available.length ? available.map((job) => <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={state ? getDemoQuoteStatus(state, job.id) : undefined}
         meta={<span>{job.trade} · {job.suburb}</span>}
         status={<><span className={cardStyles.statusDot} /><span>Ready to claim · {job.distance}</span></>}
-        valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
-        actions={<button className={cardStyles.primaryAction} onClick={() => openClaim(job)} disabled={disabled}>Review &amp; claim<span className={styles.claimCost}><Icon name="coin" size={18} />5 points</span></button>} />) : <div className={styles.empty}><h3>No available jobs in this view.</h3><p>Try all trades, or review your sample claims.</p><button className={styles.secondary} onClick={() => { setFilter("all"); switchTab("claimed"); }}>View my claims</button></div>}</div>
+        moneyValue valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
+        actions={<button className={cardStyles.primaryAction} onClick={() => openClaim(job)} disabled={disabled}>Review &amp; claim<span className={styles.claimCost}><Icon name="coin" size={18} />5 points</span></button>} />) : <div className={styles.empty}><h3>No available jobs in this view.</h3><p>Try all trades, or review your sample claims.</p><button className={styles.secondary} onClick={() => router.push(`/dashboard?${workspaceSearch({ tab: "claimed", trade: "all" })}`, { scroll: false })}>View my claims</button></div>}</div>
       : tab === "quoted" ? <div className={cardStyles.grid}>{quotes.length ? quotes.map((quote) => {
         const job = findDemoJob(quote.jobId)!;
         const quoteStatus = state ? getDemoQuoteStatus(state, job.id) : undefined;
         return <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={quoteStatus}
           meta={<span>{job.trade} · {job.suburb}</span>}
           status={<span>{quoteStatus === "accepted" ? "Customer accepted your quote" : "Quote saved"} · {job.distance}</span>}
-          valueLabel="Your quote" value={formatDemoMoney(quote.amountCents)}
+          moneyValue valueLabel="Your quote" value={formatDemoMoney(quote.amountCents)}
           actions={quoteStatus === "accepted" ? <Link className={cardStyles.secondaryAction} href={detailHref(job.id)}>View job<Icon name="arrow" size={18} /></Link> : <button className={cardStyles.secondaryAction} onClick={() => openQuote(job)} disabled={disabled}>Edit quote<Icon name="chevron" size={18} /></button>} />;
       }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="coin" size={30} /></span><h3>Your first point starts here.</h3><p>Send a quote from the feed. We’ll keep it here for you.</p><button className={styles.secondary} onClick={goToFeed}>Quote more jobs<Icon name="arrow" size={18} /></button></div>}</div>
       : <div className={cardStyles.grid}>{claims.length ? claims.map((saved) => {
@@ -332,7 +300,7 @@ export function TradieQuoteWorkspace({ userId, trade }: { userId: string; trade:
         return <JobCardFrame key={job.id} title={job.title} href={detailHref(job.id)} photos={job.photos} quoteStatus={state ? getDemoQuoteStatus(state, job.id) : undefined} completed={!!saved.completedAt}
           meta={<span>{job.trade} · {job.suburb}</span>}
           status={<><Icon name="check" size={16} /><span>{saved.completedAt ? "Sample complete" : "Sample claimed"} · 5 points spent</span></>}
-          valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
+          moneyValue valueLabel="Sample fixed price" value={formatDemoMoney(job.priceCents!)}
           actions={saved.completedAt ? <Link className={cardStyles.secondaryAction} href={detailHref(job.id)}>View job<Icon name="arrow" size={18} /></Link> : <button className={cardStyles.primaryAction} onClick={() => void complete(job)} disabled={disabled}>{busy ? "Saving…" : "Complete sample job"}<Icon name="check" size={18} /></button>} />;
       }) : <div className={styles.empty}><span className={styles.emptyIcon}><Icon name="bolt" size={30} /></span><h3>Make your points work for you.</h3><p>Claim an available sample job for 5 points.</p><button className={styles.secondary} onClick={() => switchTab("available")}>Browse available jobs<Icon name="arrow" size={18} /></button></div>}</div>}
 

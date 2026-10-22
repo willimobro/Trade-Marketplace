@@ -15,6 +15,7 @@ export type JobCardFrameProps = {
   status?: ReactNode;
   valueLabel?: ReactNode;
   value?: ReactNode;
+  moneyValue?: boolean;
   actions?: ReactNode;
   headingLevel?: 2 | 3;
   headingRef?: Ref<HTMLHeadingElement>;
@@ -23,7 +24,7 @@ export type JobCardFrameProps = {
 };
 
 /** Every slot is reserved, including absent data, to keep all job cards equal. */
-export function JobCardFrame({ title, href, photos, quoteStatus, completed = false, meta, status, valueLabel, value, actions, headingLevel = 3, headingRef, focusTarget = false, onOpen }: JobCardFrameProps) {
+export function JobCardFrame({ title, href, photos, quoteStatus, completed = false, meta, status, valueLabel, value, moneyValue = false, actions, headingLevel = 3, headingRef, focusTarget = false, onOpen }: JobCardFrameProps) {
   const id = useId();
   const Heading = headingLevel === 2 ? "h2" : "h3";
   function openTitle(event: MouseEvent<HTMLAnchorElement>) {
@@ -37,7 +38,7 @@ export function JobCardFrame({ title, href, photos, quoteStatus, completed = fal
       <Heading className={styles.title} id={id} ref={headingRef} tabIndex={focusTarget ? -1 : undefined} data-testid={focusTarget ? "quote-feed-focus-target" : undefined}><Link href={href} title={title} aria-haspopup={onOpen ? "dialog" : undefined} onClick={openTitle}>{title}</Link></Heading>
       <div className={styles.meta}>{meta}</div>
       <div className={styles.status}>{status}</div>
-      <div className={styles.value}><span className={styles.valueLabel}>{valueLabel}</span><strong className={styles.valueAmount}>{value}</strong></div>
+      <div className={styles.value}><span className={styles.valueLabel}>{valueLabel}</span><strong className={`${styles.valueAmount} ${moneyValue ? "trade-money" : ""}`}>{value}</strong></div>
       <div className={styles.actions}>{actions}</div>
     </div>
   </article>;

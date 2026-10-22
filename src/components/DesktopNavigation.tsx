@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Logo } from "./ui";
 import { SourceIcon, type SourceIconName } from "./SourceIcon";
 import { hasDesktopNavigation } from "@/lib/desktop-routes";
@@ -11,9 +11,11 @@ import { CurrentModeLink } from "./workspace-mode/AccountModeSwitch";
 /** Desktop adaptation of the approved mobile brand; mobile navigation stays intact. */
 export function DesktopNavigation({ role }: { role: string | null }) {
   const path = usePathname();
+  const search = useSearchParams();
   const workspace = useWorkspaceMode();
   const destinations = useWorkspaceLinks(role);
   const viewRole = workspace.enabled ? workspace.mode === "trade" ? "TRADIE" : "CUSTOMER" : role;
+  const findWork = workspace.enabled && workspace.mode === "trade" && path === "/dashboard" && search.get("quoteView") === "feed";
   if (!hasDesktopNavigation(path)) return null;
   const items: { href: string; label: string; icon: SourceIconName }[] = [
     { href: destinations.home, label: "Browse", icon: "home" },
@@ -24,7 +26,7 @@ export function DesktopNavigation({ role }: { role: string | null }) {
   ];
   return <header className={styles.header}>
     <div className={styles.inner}><Logo href={destinations.home} />
-      <nav aria-label="Desktop navigation" className={styles.links}>{items.map(item => <Link key={item.label} href={item.href} aria-current={path === item.href && (item.label !== "Browse" || item.href === "/") ? "page" : item.href !== "/" && path.startsWith(item.href + "/") ? "location" : undefined}><SourceIcon name={item.icon} size={21} navigation /><span>{item.label}</span></Link>)}</nav>
+      <nav aria-label="Desktop navigation" className={styles.links}>{items.map(item => <Link key={item.label} href={item.href} aria-current={findWork ? item.label === "Find work" ? "page" : undefined : path === item.href && (item.label !== "Browse" || item.href === "/") ? "page" : item.href !== "/" && path.startsWith(item.href + "/") ? "location" : undefined}><SourceIcon name={item.icon} size={21} navigation /><span>{item.label}</span></Link>)}</nav>
       <CurrentModeLink compact />
       {(!viewRole || viewRole === "CUSTOMER") && <Link href={destinations.post} className={styles.post}>Post a job</Link>}
     </div>
